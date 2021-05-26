@@ -1,0 +1,617 @@
+﻿
+@{
+	ViewBag.Title = "Generar Financiamiento";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="cliente">CLIENTE</label>
+		<div class="form-group " id="dvcliente">
+			<div class="input-group">
+				<label class="input-group-addon" for="cliente"><i class="glyphicon glyphicon-user"></i></label>
+				<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">
+				<span id="spancliente" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="Fiador">FIADOR</label>
+		<div class="form-group" id="dvFiador">
+			<div class="input-group">
+				<label class="input-group-addon" for="Fiador"><i class="glyphicon glyphicon-user"></i></label>
+				<input type="text" class="form-control widtTotal" placeholder="Fiador" id="Fiador">
+				<span id="spanFiador" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="Promotor">PROMOTOR</label>
+		<div class="form-group" id="dvPromotor">
+			<div class="input-group">
+				<label class="input-group-addon" for="Promotor"><i class="glyphicon glyphicon-user"></i></label>
+				<input type="text" class="form-control widtTotal" placeholder="Promotor" id="Promotor">
+				<span id="spanPromotor" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	@*</div>*@
+
+
+	@*<div class="row">*@
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="tipofin">TIPO FINANCIAMIENTO</label>
+		<div class="form-group" id="dvtipofin">
+			<div class="input-group">
+				<label class="input-group-addon" for="tipofin"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select class="form-control widtTotal" id="tipofin"></select>
+				@*<input type="text" class="form-control widtTotal" placeholder="Tipo financiamiento" id="tipofin">*@
+				<span id="spantipofin" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="Monto">MONTO</label>
+		<div class="form-group" id="dvMonto">
+			<div class="input-group">
+				<label class="input-group-addon" for="Monto"><i class="glyphicon glyphicon-usd"></i></label>
+				<input type="text" class="form-control widtTotal number" placeholder="Monto" id="Monto">
+				<span id="spanMonto" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="Fecha">FECHA</label>
+		<div class="form-group" id="dvFecha">
+			<div class="input-group">
+				<label class="input-group-addon" for="Fecha"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control widtTotal date" placeholder="Fecha" id="Fecha">
+				<span id="spanFecha" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	@*</div>*@
+
+	@*<div class="row">*@
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="frpago">FORMA DE PAGO</label>
+		<div class="form-group" id="dvfrpago">
+			<div class="input-group">
+				<label class="input-group-addon" for="frpago"><i class="glyphicon glyphicon-credit-card"></i></label>
+				<select class="form-control widtTotal" id="frpago"></select>
+				@*<input type="text" class="form-control widtTotal" placeholder="Forma de pago" id="frpago">*@
+				<span id="spanfrpago" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="tipoin">TIPO INTERES</label>
+		<div class="form-group" id="dvtipoin">
+			<div class="input-group">
+				<label class="input-group-addon" for="tipoin"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select class="form-control widtTotal" id="tipoin"></select>
+				@*<input type="text" class="form-control widtTotal" placeholder="Tipo interes" id="tipoin">*@
+				<span id="spantipoin" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="porIn">PORCIENTO INTERES</label>
+		<div class="form-group" id="dvporIn">
+			<div class="input-group">
+				<label class="input-group-addon" for="porIn">%</label>
+				<input type="text" class="form-control widtTotal number" placeholder="porciento interes" id="porIn">
+				<span id="spanporIn" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	@*</div>*@
+
+	@*<div class="row">*@
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="cuno">CUOTAS NORMALES</label>
+		<div class="form-group" id="dvcuno">
+			<div class="input-group">
+				<label class="input-group-addon" for="cuno">N</label>
+				<input type="text" class="form-control widtTotal number" placeholder="Cuotas normales" id="cuno">
+				<span id="spancuno" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="feven">FECHA VENCIMIENTO 1RA CUOTA</label>
+		<div class="form-group" id="dvfeven">
+			<div class="input-group">
+				<label class="input-group-addon" for="feven"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control widtTotal date" placeholder="Fecha vencimiento" id="feven">
+				<span id="spanfeven" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="cuad">CUOTAS ADICCIONALES</label>
+		<div class="form-group" id="dvcuad">
+			<div class="input-group">
+				<label class="input-group-addon" for="cuad"><i class="glyphicon glyphicon-font"></i></label>
+				<input type="text" class="form-control widtTotal number" placeholder="Cuotas adiccionales" id="cuad">
+				<span id="spancuad" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<label class="control-label" for="garantia">GARANTIA</label>
+		<div class="form-group" id="dvgarantia">
+			<div class="input-group">
+				<label class="input-group-addon" for="garantia"><i class="glyphicon glyphicon-check"></i></label>
+				<input type="text" class="form-control widtTotal" style="max-width: 3000px !important;" placeholder="Garantia" id="garantia">
+				<span id="spangarantia" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<label class="control-label" for="observacion">OBSERVACION</label>
+		<div class="form-group" id="dvobservacion">
+			<div class="input-group">
+				<label class="input-group-addon" for="observacion"><i class="glyphicon glyphicon-text-size"></i></label>
+				<input type="text" class="form-control widtTotal" multiple placeholder="Observacion" id="observacion">
+				<span id="spanobservacion" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-md-3">
+		<button class="btn btn-pink btn-block" id="btn-genAmortiza">Generar tabla de amortización</button>
+	</div>
+	<div class="col-xs-12 col-md-3 pull-right">
+		<button class="btn btn-success btn-block" id="btn-activarPrestamo">Activar préstamo</button>
+	</div>
+</div>
+<br />
+<div class="row" style="background-color:#fff7e1;">
+	<div class="col-xs-6 col-md-6">
+		<label class="control-label">TABLA DE AMORTIZACION</label>
+	</div>
+
+	<div class="col-xs-6 col-md-6  text-right">
+		<label class="control-label">FINACIAMIENTO 999</label>
+	</div>
+</div>
+
+<div class="row" style="background-color:#fff7e1;">
+	<div class="table-responsive">
+		<table class="table table-condensed table-striped table-hover" id="tbl-fin">
+			<thead>
+				<tr>
+					<th class="text-center">Cuota</th>
+					<th class="text-center">Fecha</th>
+					<th class="text-center">Monto</th>
+					<th class="text-center">Capital</th>
+					<th class="text-center">Interes</th>
+					<th class="text-center">Balance</th>
+					<th class="text-center">Tipo de cuota</th>
+				</tr>
+			</thead>
+			<tbody style="background-color:white;">
+				<tr>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-center"><b id="total-balance"></b></td>
+					<td class="text-right"></td>
+				</tr>
+
+
+			</tbody>
+			@*<tfoot>
+				<tr>
+
+					<td class="text-center"></td>
+					<td class="text-center"><label>Total</label></td>
+					<td class="text-center"><b id="total-monto">287,600.00</b></td>
+					<td class="text-center"><b id="total-capital">260,000.00</b></td>
+					<td class="text-center"><b id="total-interes">22,600.00</b></td>
+					<td class="text-center"><b id="total-balance"></b></td>
+					<td class="text-center"></td>
+				</tr>
+					</tfoot>*@
+		</table>
+	</div>
+
+</div>
+@section scripts {
+
+	<script src="~/Scripts/GeneralScript.js"></script>
+	<script type="text/javascript">
+		function roundTo(value, places) {
+			var power = Math.pow(10, places);
+			return Math.round(value * power) / power;
+		}
+
+		function returnDate(date) {
+			var indexcurrentMonth = Number(date) - 1;
+			var currentDay = date.substr(0, 2);
+			var currentYear = date.substr(6, 4);
+			var currentDate = currentDay + "/" + monthName(indexcurrentMonth) + "/" + currentYear;
+			return currentDate;
+		}
+
+		$(document).ready(function () {
+
+			$("#tipoin").selectMania({
+				width: '100%',
+				size: 'small',
+				search: true
+
+			});
+
+			$("#tipofin").selectMania({
+				width: '100%',
+				size: 'small',
+				search: true
+
+			});
+
+			$("#frpago").selectMania({
+				width: '100%',
+				size: 'small',
+				search: true
+				
+
+			});
+
+			$("#tbl-fin").DataTable(
+				{
+					"searching": false,
+					"lengthChange": false,
+					"paging": false,
+					"ordering": true,
+					"info": false
+				}
+			);
+
+
+			var date = new Date();
+			var dateToday = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+
+			// LLenar los Dropdown al inicio
+			iniciollenarDrops();
+
+			$("#btn-genAmortiza").click(function () {
+				var totalcuotasN = Number($("#cuno").val());
+				var monto = $("#Monto").val();
+				var currentinput = $("#feven");
+				var currentDay = currentinput.val().substr(0, 2);
+				var currentMonth = monthNumber(currentinput.val().substr(3, 3));
+				var currentYear = currentinput.val().substr(7, 4);
+				var currentDate = new Date(currentYear, currentMonth - 1, currentDay);
+
+				if ($("#cuad").val() == "") {
+					$("#cuad").val(0); 
+				}
+				if (($("#tipofin").val() == 0)) {
+					
+					MessageNotification("Debe introducir tipo de financiamiento", false);
+					return;
+				}
+				else if ($("#Monto").val() == "" || $("#Monto").val() == "0")
+				{
+					$("#Monto").blur();
+					MessageNotification("Debe introducir un monto", false);
+					return;
+				}
+				else if (($("#Fecha").val() == ""))
+				{
+					$("#Fecha").blur();
+					MessageNotification("Debe introducir fecha financiamiento", false);
+					return;
+				}
+				else if (($("#frpago").val() == 0))
+				{
+					MessageNotification("Debe introducir forma de pago", false);
+					return;
+				}
+				else if (($("#tipoin").val() == 0))
+				{
+					MessageNotification("Debe introducir tipo de financiamiento", false);
+					return;
+				}
+				else if (($("#porIn").val() == 0))
+				{
+					$("#porIn").blur();
+					MessageNotification("Debe introducir porciento interes", false);
+					return;
+				}
+				else if (($("#cuno").val() == 0))
+				{
+					$("#cuno").blur();
+					MessageNotification("Debe introducir cuotas normales", false);
+					return;
+				}
+				else if (($("#feven").val() == 0))
+				{
+					$("#feven").blur();
+					MessageNotification("Debe introducir fecha vencimiento 1ra cuota", false);
+					return;
+				}
+				
+
+				var _Cliente = $("#cliente").val()
+					, _Fiador = $("#Fiador").val()
+					, _Promotor = $("#Promotor").val()
+					, _TipoFin = $("#tipofin").val()
+					, _Monto = $("#Monto").val()
+					, _Fecha = $("#Fecha").val()
+					, _FormaPago = $("#frpago").val()
+					, _TipoInteres = $("#tipoin").val()
+					, _PorInt = $("#porIn").val()
+					, _CuotasNormales = $("#cuno").val()
+					, _FechaVencimiento = currentDate
+					, _CuotasAdiccionales = $("#cuad").val()
+					, _Garantia = $("#garantia").val()
+					, _Observacion = $("#observacion").val()
+					, total_balance =  0;
+
+
+				var strDatos = JSON.stringify({
+					numCuota: 0, Cliente: _Cliente
+					, Fiador: _Fiador, Promotor: _Promotor
+					, TipoFin: _TipoFin, Monto: _Monto
+					, Fecha: _Fecha, FormaPago: _FormaPago
+					, TipoInteres: _TipoInteres, PorInt: _PorInt
+					, CuotasNormales: _CuotasNormales
+					, FechaVencimiento: _FechaVencimiento
+					, CuotasAdiccionales: _CuotasAdiccionales
+					, Garantia: _Garantia, Observacion: _Observacion
+				});
+				// Llenar Tabla amortizacion
+
+			var url = "@Url.Action("CalcularAmortizacion", "Financiamientos")";
+				$.ajax({
+					type: "GET",
+					url: url,
+					data: {
+						json: strDatos
+					},
+					dataType: "json",
+					success: function (_data) {
+						var tipoCuota = "";
+						$('#tbl-fin  > tbody .tr ').remove();
+						_data.forEach(function (index, key) {
+							tipoCuota = index.TipoCuota;
+								$('#tbl-fin > tbody:last-child').append(`'<tr class="tr">
+									<td class="text-center">` + index.numCuota  + `</td>
+									<td class= "text-center">` + index.Fecha + ` </td>
+									<td class="text-center">` + roundTo(index.Monto, 2).toFixed(2) + `</td>
+									<td class="text-center">` + roundTo(index.capital, 2).toFixed(2) + `</td>
+									<td class="text-center">` + roundTo(index.interes, 2).toFixed(2) + `</td>
+									<td class="text-center"><b id="total-balance">` + roundTo(index.Balance, 2).toFixed(2) + `</b></td>
+									<td class="text-center">` + tipoCuota + `</td></tr>'`);							
+							total_balance += index.Balance;	
+
+							console.log(new Date(index.FechaVencimiento));
+
+						});
+						total_balance = roundTo(total_balance, 2).toFixed(2);
+						
+						$("#total-balance").text(total_balance);
+					}
+				});
+
+				//for (var i = 0; i < totalcuotasN; i++) {
+				//	console.log(i);
+				//	var txtMonth = currentDate.getMonth() + 1;
+				//	var currentYear = currentDate.getFullYear();
+
+				//	var date = currentDay + "/" + monthName(txtMonth - 1) + "/" + currentYear;
+
+				//	currentDate.setMonth(currentDate.getMonth() + 1);
+
+				//	var cuota = i + 1 + "/" + totalcuotasN;
+				//	$('#tbl-fin > tbody:last-child').append(`'<tr>
+				//					<td class="text-center">` + cuota + `</td>
+				//					<td class= "text-center">` + date + ` </td>
+				//					<td class="text-center">` + monto + `</td>
+				//					<td class="text-center"></td>
+				//					<td class="text-center"></td>
+				//					<td class="text-center"><b id="total-balance">287,600.00</b></td>
+				//					<td class="text-center"></td></tr>'`);
+				//	totalMonto += Number(monto);
+
+				//}
+				//$('#tbl-fin > tfoot:last-child').append(`'<tr>
+				//				<td class="text-center"> </td>
+				//				<td class= "text-center"> <label>Total </label> </td>
+				//				<td class="text-center">` + totalMonto + `</td>
+				//				<td class="text-center"></td>
+				//				<td class="text-center"></td>
+				//				<td class="text-center"><b id="total-balance">287,600.00</b></td>
+				//				<td class="text-center"></td></tr>'`);
+
+
+			});
+
+			$('#Fecha,#feven').datepicker({
+				onSelect: function (date, datepicker) {
+
+					if (date.length != 0) {
+
+						$(this).blur();
+					}
+
+				},
+				minDate: dateToday,
+				dateFormat: 'dd-mm-yy'
+
+			});
+			
+
+			$("select").blur(function () {
+				var currentinput = $(this);
+				var inputLenth = currentinput.val();
+				var currentDiv = $("#dv" + currentinput.attr("id"));
+				var currentSpan = $("#span" + currentinput.attr("id"));
+
+				if (inputLenth == 0) {
+
+					currentDiv.removeClass("has-correct");
+					currentDiv.addClass("has-incorrect");				
+
+				} else {
+					currentDiv.removeClass("has-incorrect");
+					currentDiv.addClass("has-correct");					
+				}
+
+			});
+			$("input").blur(function () {
+				
+				var currentinput = $(this);
+
+				// Validar si el campo acepta solo numero
+				if (currentinput.hasClass("number") && isNaN(currentinput.val())) {
+					currentinput.val("");
+				}
+
+				var inputLenth = currentinput.val().length;
+				var currentDiv = $("#dv" + currentinput.attr("id"));
+				var currentSpan = $("#span" + currentinput.attr("id"));
+
+
+
+				if (inputLenth == 0) {
+
+					currentDiv.removeClass("has-success");
+					currentDiv.addClass("has-error");
+					currentSpan.removeClass("glyphicon-ok");
+					currentSpan.addClass("glyphicon-remove");
+
+				} else {
+					currentDiv.removeClass("has-error");
+					currentDiv.addClass("has-success");
+					currentSpan.removeClass("glyphicon-remove");
+					currentSpan.addClass("glyphicon-ok");
+					// Mostrar la fecha con el mes modificado en texto
+					if (currentinput.hasClass("date")) {
+						var indexcurrentMonth = Number(currentinput.val().substr(3, 2)) - 1;
+						var currentDay = currentinput.val().substr(0, 2);
+						var currentYear = currentinput.val().substr(6, 4);
+						var currentDate = currentDay + "-" + monthName(indexcurrentMonth) + "-" + currentYear;
+						currentinput.val(currentDate);
+					}
+
+
+				}
+
+
+			});
+
+			$("input:text").keydown(function (event) {
+				if (event.keyCode == 13) {
+					enterAsTab();
+					event.preventDefault();
+					return false;
+
+				}
+			});
+
+			function enterAsTab() {
+				var keyPressed = event.keyCode; // get the Key that is pressed
+				if (keyPressed == 13) {
+					//case the KeyPressed is the [Enter]
+					var inputs = $('input'); // storage a array of Inputs
+					var a = inputs.index(document.activeElement);
+					//get the Index of Active Element Input inside the Inputs(array)
+
+					if (inputs[a + 1] !== null) {
+						// case the next index of array is not null
+						var nextBox = inputs[a + 1];
+						nextBox.focus(); // Focus the next input element. Make him an Active Element
+						event.preventDefault();
+					}
+
+					return false;
+				}
+
+				else { return keyPressed; }
+			}
+
+			// Llenar drowdowns
+			function llenarDrop(data,IdObject,texto) {
+
+				IdDw = "#" + IdObject;
+				$(IdDw).append($('<option />', {
+					text: '-- Selecciona un ' + texto+ ' --',
+					value: '',
+				}));
+
+				$(data).each(function (index, element) {
+					$(IdDw).append($('<option />', {
+						text: element.value,
+						value: element.id,
+					}));
+
+
+				});
+				$(IdDw).selectMania('update');
+
+			}
+
+			function iniciollenarDrops() {
+				// Llenar Tipo interes
+
+					  var url = "@Url.Action("GetTypeINT", "Financiamientos")";
+				$.ajax({
+					type: "GET",
+					url: url,
+					dataType: "json",
+					success: function (_data) {
+						llenarDrop(_data, 'tipoin',"Tipo interes");
+					}
+				});
+
+				// Llenar Tipo Financiamiento
+
+					 url = "@Url.Action("GetTypeFin", "Financiamientos")";
+				$.ajax({
+					type: "GET",
+					url: url,
+					dataType: "json",
+					success: function (_data) {
+						llenarDrop(_data, 'tipofin',"Tipo financiamiento");
+					}
+				});
+
+				// Llenar Tipo Forma de pago
+
+					url = "@Url.Action("GetFormaPago", "Financiamientos")";
+				$.ajax({
+					type: "GET",
+					url: url,
+					dataType: "json",
+					success: function (_data) {
+						llenarDrop(_data, 'frpago',"Tipo forma pago");
+					}
+				});
+			}
+		});
+
+
+	</script>
+}

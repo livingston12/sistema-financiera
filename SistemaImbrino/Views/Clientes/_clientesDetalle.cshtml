@@ -1,0 +1,37 @@
+﻿@model SistemaImbrino.Models.CLIENTE
+
+
+
+<tr>
+	@{ 
+		string nombre_completo = string.Format("{0} {1}", Model.CTE_NOMBRE, Model.CTE_APELLI);
+	}
+	<td class="">
+		@nombre_completo
+	</td>
+	<td>@Model.CTE_CEDULA</td>
+	<td>@Model.CTE_TELEFO</td>
+	<td class="">@Model.CTE_DIRECC</td>
+	<td class="">@Model.ZONA.ZON_DESCRI</td>
+	<td>
+		@{
+			string color = "",Tipo = Model.TIPOCTE.TIP_DESCRI;
+			if (Tipo == "NORMAL")
+			{
+				color = "label-default";
+			}
+			else
+			{
+				color = "label-warning";
+			}
+
+		}
+		<label class="label text-center  @color">@Tipo</label>
+	</td>
+	<td class="col-lg-1 text-center">
+		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.CTE_CODIGO)" id="Ceditar" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentClient(@Model.CTE_CODIGO,'@nombre_completo')" id="Celiminar" aria-hidden="true"></span>
+
+	</td>   	  
+
+</tr>

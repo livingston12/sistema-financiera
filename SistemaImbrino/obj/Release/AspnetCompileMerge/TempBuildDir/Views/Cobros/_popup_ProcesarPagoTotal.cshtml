@@ -1,0 +1,40 @@
+﻿@model SistemaImbrino.Models.View_cobrosHeader
+
+
+<input type="hidden" id="modal_finID" value="@Model.cliente" />
+<input type="hidden" id="modal_MontoTotal" value="@Model.montoTotal" />
+@{
+	double interesTotal = Model.interesTotal;
+	double moraTotal = Model.moraTotal;
+	double CapitalTotal = Model.capitalTotal;
+
+}
+
+<div class="row">
+	<div class="col-sm-4 text-left ">
+		<label>Monto Interes</label>
+		<input type="number" disabled max="@Model.interesTotal" min="1" value="@interesTotal"  class="form-control" id="modal_monto">
+	</div>
+
+	<div class="col-sm-4 text-center ">
+		<label>Monto Mora</label>
+		<input type="number" disabled  max="@Model.moraTotal" value="@moraTotal" class="form-control" id="modal_mora">
+	</div>
+	<div class="col-sm-4 text-center ">
+		<label>Monto capital</label>
+		<input type="number" disabled max="@Model.capitalTotal" value="@CapitalTotal" class="form-control" id="modal_mora">
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 text-left ">
+			<label>Descuento Interes</label>
+			<input type="number" max="@Model.interesTotal" min="1" value="0" class="form-control" id="modal_descuentoInt">
+		</div>
+
+		<div class="col-sm-4 text-center ">
+			<label>Descuemto Mora</label>
+			<input type="number" max="@Model.moraTotal" value="0" class="form-control" id="modal_descuentoMora">
+		</div>
+	</div>
+
+

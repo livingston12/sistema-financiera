@@ -1,0 +1,87 @@
+﻿@model SistemaImbrino.Models.CLIENTE
+
+
+<input type="hidden" id="CTE_CODIGO" name="CTE_CODIGO"/>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="ECTE_NOMBRE">Nombre cliente</label>
+		<div class="form-group" id="dvECTE_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
+				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
+				@Html.EditorFor(model => model.CTE_NOMBRE, new { htmlAttributes = new { @class = "form-control texto", @id = "ECTE_NOMBRE" } })
+				<span id="spanECTE_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="ECTE_APELLI">Apellido cliente</label>
+		<div class="form-group" id="dvECTE_APELLI">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_APELLI"><i class="glyphicon glyphicon-font"></i></label>
+				@Html.EditorFor(model => model.CTE_APELLI, new { htmlAttributes = new { @class = "form-control", @id = "ECTE_APELLI" } })
+				<span id="spanECTE_APELLI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="ECTE_CEDULA">Cedula cliente</label>
+		<div class="form-group" id="dvECTE_CEDULA">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.CTE_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula", @id = "ECTE_CEDULA" } })
+				<span id="spanECTE_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="ECTE_TELEFO">Telefono cliente</label>
+		<div class="form-group" id="dvECTE_TELEFO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.CTE_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono", @id = "ECTE_TELEFO" } })
+				<span id="spanECTE_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-8 ">
+		<label class="control-label" for="ECTE_DIRECC">Dirección cliente</label>
+		<div class="form-group" id="dvECTE_DIRECC">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
+				@Html.EditorFor(model => model.CTE_DIRECC, new { htmlAttributes = new { @class = "form-control", @id = "ECTE_DIRECC" } })
+				<span id="spanECTE_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="ECTE_ZONA">Zona cliente</label>
+		<div class="form-group" id="dvECTE_ZONA">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_ZONA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select class="form-control" id="ECTE_ZONA" name="CTE_ZONA"></select>
+				<span id="spanECTE_ZONA" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="ECTE_TIPO">Tipo cliente</label>
+		<div class="form-group" id="dvECTE_TIPO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTE_TIPO"><i class="glyphicon glyphicon-object-align-left"></i></label>
+				<select class="form-control" id="ECTE_TIPO" name="CTE_TIPO"></select>
+				<span id="spanECTE_TIPO" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+

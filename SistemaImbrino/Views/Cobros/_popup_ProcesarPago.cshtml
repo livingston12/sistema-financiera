@@ -1,0 +1,87 @@
+﻿
+<input type="hidden" id="modal_descMora" />
+<input type="hidden" id="modal_descInt" />
+<input type="hidden" id="modal_isTotal" value="false" />
+<input type="hidden" id="modal_lblFin" />
+<input type="hidden" id="modal_lblfecha" />
+
+
+<div class="row">
+
+	<div class="col-sm-6">
+		<label class="control-label col-sm-6 text-center">
+			<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+			Forma pago:
+		</label>
+		<select class="dropdown form-control dw-cobro " id="modal_forma_pago" name="modal_forma_pago" style="width: 215px !important;">
+			<option value="E" selected>Efectivo</option>
+			<option value="T">Tarjeta</option>
+			<option value="C">Cheque</option>
+		</select>
+	</div>
+
+	<div class="col-sm-4 pull-right">
+		<label class="control-label col-sm-12 text-center">			
+			Aumento de recibo
+		</label>
+		<input type="number" value="0" min="0" max="5" id="modal_aumento_recibo" class="form-control" />
+	</div>
+
+</div>
+
+
+
+<br />
+<br />
+
+
+@*Listado de monto*@
+<div class="col-sm-12 panel panel-warning">
+	<div class="row">
+		<div class="col-sm-6 text-left ">
+			<label class="control-label col-sm-6">Monto cuota:</label>
+			<label id="modal_lblSubtotal" class="control-label not-bold col-sm-6"> </label>
+			<label class="control-label col-sm-6">Monto mora:</label>
+			<label id="modal_lblotros_cargos" class="control-label not-bold col-sm-6"> </label>
+			<hr width=50% style="height:1px; margin:0;" class="col-sm-6 pull-right" />
+			<label class="control-label col-sm-6 pull-right" id="modal_lblsub"></label>
+			<hr width=50% style="height:1px; margin:0;" class="col-sm-6 pull-right" />
+			<div class="col-sm-12">
+				<label class="control-label col-sm-6">Descuento:</label>
+				<label id="modal_lblDescuento" class="control-label not-bold col-sm-6"> </label>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="row">
+
+		<div class="col-sm-12 text-right" style="font-size: 25px;">
+			<label class="control-label">  <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Total:</label>
+			<label id="modal_lblTotal" class="control-label not-bold"> </label>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+
+@*<script language="javascript">
+
+	$(document).ready(function () {
+		$(document).on('focus', "input[type='text']", function () {
+			console.log("entro")
+		});
+		//	console.log("entro");
+		//	$("input").blur(function ()
+		//	{
+		//		console.log("entro");
+		//		//validarNumero(this);
+		//});
+	});
+
+</script>*@
+

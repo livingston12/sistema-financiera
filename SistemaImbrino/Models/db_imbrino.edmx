@@ -1,0 +1,1893 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_IMBRINOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ABOCUOTA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ABO_NUMFAC" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ABO_NUMCUO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ABO_NUMABO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ABO_MONTOT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_MONTOC" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_MONTOI" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CARTERA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CAR_MONTOC" Type="float" />
+          <Property Name="CAR_MONTOI" Type="float" />
+          <Property Name="CAR_OTRCAR" Type="float" />
+          <Property Name="CAR_DEDUCC" Type="float" />
+          <Property Name="CAR_CAPPER" Type="float" />
+          <Property Name="CAR_INTPER" Type="float" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="CTE_CODIGO" />
+          </Key>
+          <Property Name="CTE_CODIGO" Type="int" Nullable="false" />
+          <Property Name="CTE_NOMBRE" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_APELLI" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_CEDULA" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_TELEFO" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_DIRECC" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_ZONA" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_TIPO" Type="int" />
+          <Property Name="CTE_TELEFO2" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="CUOTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CUO_NUMFAC" Type="int" Nullable="false" />
+          <Property Name="CUO_NUMCUO" Type="int" Nullable="false" />
+          <Property Name="CUO_NUMREC" Type="int" Nullable="false" />
+          <Property Name="CUO_STATUS" Type="varchar" MaxLength="5" />
+          <Property Name="CUO_MONTOT" Type="float" />
+          <Property Name="CUO_MONTOC" Type="float" />
+          <Property Name="CUO_MONTOI" Type="float" />
+          <Property Name="CUO_FECHAV" Type="varchar" MaxLength="15" />
+          <Property Name="CUO_FECHAP" Type="varchar" MaxLength="15" />
+          <Property Name="CUO_TIPO" Type="varchar" MaxLength="2" />
+          <Property Name="CUO_STAANT" Type="varchar" MaxLength="5" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ESTDCTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="EST_NUMFIN" Type="int" />
+          <Property Name="EST_BALINI" Type="float" />
+          <Property Name="EST_CAPINI" Type="float" />
+          <Property Name="EST_INTINI" Type="float" />
+          <Property Name="EST_OTRCAR" Type="float" />
+          <Property Name="EST_BALACT" Type="float" />
+          <Property Name="EST_CAPPAG" Type="float" />
+          <Property Name="EST_INTPAG" Type="float" />
+          <Property Name="EST_CARRYP" Type="float" />
+          <Property Name="EST_CARNRP" Type="float" />
+          <Property Name="EST_CAPPER" Type="float" />
+          <Property Name="EST_INTPER" Type="float" />
+          <Property Name="EST_STATUS" Type="varchar" MaxLength="5" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="FAC_NUMERO" />
+          </Key>
+          <Property Name="FAC_NUMERO" Type="int" Nullable="false" />
+          <Property Name="FAC_NUMFIN" Type="int" />
+          <Property Name="FAC_TIPINT" Type="int" />
+          <Property Name="FAC_FORMPG" Type="int" />
+          <Property Name="FAC_TIPFIN" Type="int" />
+          <Property Name="FAC_MONTO" Type="float" />
+          <Property Name="FAC_FECHA" Type="varchar" MaxLength="15" />
+          <Property Name="FAC_NUMCUO" Type="int" />
+          <Property Name="FAC_INTERE" Type="float" />
+          <Property Name="FAC_GARANT" Type="varchar" MaxLength="150" />
+          <Property Name="FAC_STATUS" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="FIADOR">
+          <Key>
+            <PropertyRef Name="FIA_CODIGO" />
+          </Key>
+          <Property Name="FIA_CODIGO" Type="int" Nullable="false" />
+          <Property Name="FIA_NOMBRE" Type="varchar" MaxLength="100" />
+          <Property Name="FIA_CEDULA" Type="varchar" MaxLength="100" />
+          <Property Name="FIA_TELEFO" Type="varchar" MaxLength="100" />
+          <Property Name="FIA_DIRECC" Type="varchar" MaxLength="100" />
+          <Property Name="FIA_CODCTE" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="FINANCY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FIN_NUMERO" Type="int" Nullable="false" />
+          <Property Name="FIN_NUMCTE" Type="int" />
+          <Property Name="FIN_NUMFAC" Type="int" />
+          <Property Name="FIN_NUMFIA" Type="int" />
+          <Property Name="FIN_NUMVEN" Type="int" />
+          <Property Name="FIN_STATUS" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FORMAPG">
+          <Key>
+            <PropertyRef Name="FOR_CODIGO" />
+          </Key>
+          <Property Name="FOR_CODIGO" Type="int" Nullable="false" />
+          <Property Name="FOR_DESCRI" Type="varchar" MaxLength="100" />
+          <Property Name="FOR_PERIOD" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="INGCUOTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="int" Nullable="false" />
+          <Property Name="ING_NUMFIN" Type="int" />
+          <Property Name="ING_STATUS" Type="varchar" MaxLength="10" />
+          <Property Name="ING_MONTOT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOC" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOI" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ING_FECHA" Type="varchar" MaxLength="15" />
+          <Property Name="ING_FORMPG" Type="varchar" MaxLength="10" />
+          <Property Name="ING_DESCRI" Type="varchar(max)" />
+          <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INGOTRO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="int" />
+          <Property Name="ING_NUMFIN" Type="int" />
+          <Property Name="ING_CODING" Type="int" />
+          <Property Name="ING_STATUS" Type="varchar" MaxLength="100" />
+          <Property Name="ING_MONTOT" Type="float" />
+          <Property Name="ING_FECHA" Type="varchar" MaxLength="15" />
+          <Property Name="ING_FORMPG" Type="varchar" MaxLength="5" />
+          <Property Name="ING_REGIST" Type="varchar" MaxLength="10" />
+          <Property Name="ING_DESCRI" Type="varchar(max)" />
+          <Property Name="ING_NOMBRE" Type="varchar" MaxLength="150" />
+          <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPOCTE">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TIPOFIN">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TIPOINT">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="VENDEDOR">
+          <Key>
+            <PropertyRef Name="VEN_CODIGO" />
+          </Key>
+          <Property Name="VEN_CODIGO" Type="int" Nullable="false" />
+          <Property Name="VEN_NOMBRE" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ZONA">
+          <Key>
+            <PropertyRef Name="ZON_CODIGO" />
+          </Key>
+          <Property Name="ZON_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ZON_DESCRI" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="archivos_subir">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="nombreArchivo" Type="varchar" MaxLength="100" />
+          <Property Name="nombreTabla" Type="varchar" MaxLength="100" />
+          <Property Name="subir" Type="bit" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptCuotasVencidas">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="FIADOR" />
+            <PropertyRef Name="TELEFONO_FIADOR" />
+            <PropertyRef Name="Cedula_FIADOR" />
+            <PropertyRef Name="PROMOTOR" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="TELEFONO" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="FechaAbono" />
+            <PropertyRef Name="NUM_CUOTA" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="CapitalTotal" />
+            <PropertyRef Name="InteresTotal" />
+            <PropertyRef Name="capitalAbono" />
+            <PropertyRef Name="interesAbono" />
+            <PropertyRef Name="capital" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="CUO_STATUS" />
+            <PropertyRef Name="FAC_GARANT" />
+            <PropertyRef Name="FAC_INTERE" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="mora" />
+            <PropertyRef Name="CUO_TIPO" />
+            <PropertyRef Name="fechadt" />
+          </Key>
+          <Property Name="C__FIN" Type="int" Nullable="false" />
+          <Property Name="CodigoCLiente" Type="int" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="CEDULA_CLIENTE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DIRE_CLIENTE" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TELEFONO_FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Cedula_FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PROMOTOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Fecha" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="CUOTA" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TELEFONO" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="148" Nullable="false" />
+          <Property Name="FechaAbono" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NUM_CUOTA" Type="int" Nullable="false" />
+          <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CapitalTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="InteresTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="capitalAbono" Type="float" Nullable="false" />
+          <Property Name="interesAbono" Type="float" Nullable="false" />
+          <Property Name="capital" Type="float" Nullable="false" />
+          <Property Name="INTERES" Type="float" Nullable="false" />
+          <Property Name="CUO_STATUS" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="FAC_GARANT" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="FAC_INTERE" Type="float" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="mora" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CUO_TIPO" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="fechadt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptEstadoCuenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptEstadoCuenta">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="MONTO_FINANCIAR" />
+            <PropertyRef Name="BALANCE_INCIAL" />
+            <PropertyRef Name="BALANCE_ACTUAL" />
+            <PropertyRef Name="BALANCE_CAPITAL" />
+            <PropertyRef Name="BALANCE_INTERES" />
+            <PropertyRef Name="CUOTA_TOTAL" />
+            <PropertyRef Name="CUOTA_PENDIENTE" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="C__FIN" Type="int" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="MONTO_FINANCIAR" Type="float" Nullable="false" />
+          <Property Name="BALANCE_INCIAL" Type="float" Nullable="false" />
+          <Property Name="BALANCE_ACTUAL" Type="float" Nullable="false" />
+          <Property Name="BALANCE_CAPITAL" Type="float" Nullable="false" />
+          <Property Name="BALANCE_INTERES" Type="float" Nullable="false" />
+          <Property Name="CUOTA_TOTAL" Type="int" Nullable="false" />
+          <Property Name="CUOTA_PENDIENTE" Type="int" Nullable="false" />
+          <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="EMPRESA" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptFinAtrasados">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="TELEFONO1" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="CuotaTxt" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="CAPITAL" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="FIADOR" />
+            <PropertyRef Name="TELEFONO_FIADOR" />
+            <PropertyRef Name="CEDULA_FIADOR" />
+            <PropertyRef Name="PROMOTOR" />
+            <PropertyRef Name="BalanceCapitalTOTAL" />
+            <PropertyRef Name="BalanceInteresTOTAL" />
+            <PropertyRef Name="balanceTOTAL" />
+            <PropertyRef Name="MontoTotal" />
+            <PropertyRef Name="FAC_GARANT" />
+            <PropertyRef Name="FAC_INTERE" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="fechadt" />
+            <PropertyRef Name="CUOTA_PENDIENTE" />
+            <PropertyRef Name="CUOTA_TOTAL" />
+            <PropertyRef Name="mora" />
+            <PropertyRef Name="forma_pago" />
+            <PropertyRef Name="fecha" />
+          </Key>
+          <Property Name="C__FIN" Type="int" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="CEDULA_CLIENTE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DIRE_CLIENTE" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="TELEFONO1" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="CUOTA" Type="int" Nullable="false" />
+          <Property Name="CuotaTxt" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CAPITAL" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="INTERES" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TELEFONO_FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CEDULA_FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PROMOTOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BalanceCapitalTOTAL" Type="float" Nullable="false" />
+          <Property Name="BalanceInteresTOTAL" Type="float" Nullable="false" />
+          <Property Name="balanceTOTAL" Type="float" Nullable="false" />
+          <Property Name="MontoTotal" Type="float" Nullable="false" />
+          <Property Name="FAC_GARANT" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="FAC_INTERE" Type="float" Nullable="false" />
+          <Property Name="CodigoCLiente" Type="int" Nullable="false" />
+          <Property Name="fechadt" Type="date" Nullable="false" />
+          <Property Name="CUOTA_PENDIENTE" Type="int" Nullable="false" />
+          <Property Name="CUOTA_TOTAL" Type="int" Nullable="false" />
+          <Property Name="mora" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="forma_pago" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="dia" Type="varchar" MaxLength="2" />
+          <Property Name="mes" Type="varchar" MaxLength="3" />
+          <Property Name="year" Type="varchar" MaxLength="4" />
+          <Property Name="fecha" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptFinAtrasados_details">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="TELEFONO1" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="CAPITAL" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="fechadt" />
+          </Key>
+          <Property Name="C__FIN" Type="int" Nullable="false" />
+          <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="CEDULA_CLIENTE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DIRE_CLIENTE" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="TELEFONO1" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="CUOTA" Type="int" Nullable="false" />
+          <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CAPITAL" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="INTERES" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoCLiente" Type="int" Nullable="false" />
+          <Property Name="fechadt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptRegistroNCF">
+          <Key>
+            <PropertyRef Name="ING_NUMREC" />
+            <PropertyRef Name="ING_NUMFIN" />
+            <PropertyRef Name="ING_STATUS" />
+            <PropertyRef Name="ING_MONTOT" />
+            <PropertyRef Name="ING_MONTOC" />
+            <PropertyRef Name="ING_MONTOI" />
+            <PropertyRef Name="ING_FECHA" />
+            <PropertyRef Name="ING_FORMPG" />
+            <PropertyRef Name="ING_DESCRI" />
+            <PropertyRef Name="ING_NCF" />
+            <PropertyRef Name="mes" />
+            <PropertyRef Name="dia" />
+            <PropertyRef Name="year" />
+            <PropertyRef Name="mesAbr" />
+            <PropertyRef Name="MORA" />
+            <PropertyRef Name="Cliente" />
+            <PropertyRef Name="ClienteId" />
+            <PropertyRef Name="fechadt" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
+          <Property Name="ING_STATUS" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ING_MONTOT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ING_MONTOC" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ING_MONTOI" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ING_FECHA" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="ING_FORMPG" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ING_DESCRI" Type="varchar(max)" Nullable="false" />
+          <Property Name="ING_NCF" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="mes" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="dia" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="year" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="mesAbr" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="MORA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+          <Property Name="fechadt" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vw_SearchClientes_Fiadores">
+          <Key>
+            <PropertyRef Name="CTE_CODIGO" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="CTE_CODIGO" Type="int" Nullable="false" />
+          <Property Name="CTE_NOMBRE" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_APELLI" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_CEDULA" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_TELEFO" Type="varchar" MaxLength="100" />
+          <Property Name="CTE_DIRECC" Type="varchar" MaxLength="100" />
+          <Property Name="Zona" Type="varchar" MaxLength="100" />
+          <Property Name="Tipo" Type="varchar" MaxLength="100" />
+          <Property Name="type" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_TIPOCTE">
+          <End Role="TIPOCTE" Type="Self.TIPOCTE" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOCTE">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CTE_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_ZONA">
+          <End Role="ZONA" Type="Self.ZONA" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZONA">
+              <PropertyRef Name="ZON_CODIGO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CTE_ZONA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_FORMAPG">
+          <End Role="FORMAPG" Type="Self.FORMAPG" Multiplicity="0..1" />
+          <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMAPG">
+              <PropertyRef Name="FOR_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_FORMPG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_TIPOFIN">
+          <End Role="TIPOFIN" Type="Self.TIPOFIN" Multiplicity="0..1" />
+          <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOFIN">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_TIPFIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_TIPOINT">
+          <End Role="TIPOINT" Type="Self.TIPOINT" Multiplicity="0..1" />
+          <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOINT">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_TIPINT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CTE_CODIGO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMCTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_FACTURA">
+          <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="0..1" />
+          <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACTURA">
+              <PropertyRef Name="FAC_NUMERO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMFAC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_VENDEDOR">
+          <End Role="VENDEDOR" Type="Self.VENDEDOR" Multiplicity="0..1" />
+          <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDEDOR">
+              <PropertyRef Name="VEN_CODIGO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMVEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_cuotasVencidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Fecha_Pago" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ColumnsTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STG">
+          <Parameter Name="table_name" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_IMBRINOModelStoreContainer">
+          <EntitySet Name="ABOCUOTA" EntityType="Self.ABOCUOTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARTERA" EntityType="Self.CARTERA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUOTA" EntityType="Self.CUOTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTDCTA" EntityType="Self.ESTDCTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACTURA" EntityType="Self.FACTURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FIADOR" EntityType="Self.FIADOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FINANCY" EntityType="Self.FINANCY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FORMAPG" EntityType="Self.FORMAPG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INGCUOTA" EntityType="Self.INGCUOTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INGOTRO" EntityType="Self.INGOTRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZONA" EntityType="Self.ZONA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" Schema="STG" store:Type="Tables" />
+          <EntitySet Name="VW_rptCuotasVencidas" EntityType="Self.VW_rptCuotasVencidas" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptCuotasVencidas].[C__FIN] AS [C__FIN], 
+    [VW_rptCuotasVencidas].[CodigoCLiente] AS [CodigoCLiente], 
+    [VW_rptCuotasVencidas].[CLIENTE] AS [CLIENTE], 
+    [VW_rptCuotasVencidas].[CEDULA_CLIENTE] AS [CEDULA_CLIENTE], 
+    [VW_rptCuotasVencidas].[DIRE_CLIENTE] AS [DIRE_CLIENTE], 
+    [VW_rptCuotasVencidas].[FIADOR] AS [FIADOR], 
+    [VW_rptCuotasVencidas].[TELEFONO_FIADOR] AS [TELEFONO_FIADOR], 
+    [VW_rptCuotasVencidas].[Cedula_FIADOR] AS [Cedula_FIADOR], 
+    [VW_rptCuotasVencidas].[PROMOTOR] AS [PROMOTOR], 
+    [VW_rptCuotasVencidas].[Fecha] AS [Fecha], 
+    [VW_rptCuotasVencidas].[CUOTA] AS [CUOTA], 
+    [VW_rptCuotasVencidas].[MONTO] AS [MONTO], 
+    [VW_rptCuotasVencidas].[TELEFONO] AS [TELEFONO], 
+    [VW_rptCuotasVencidas].[TELEFONO2] AS [TELEFONO2], 
+    [VW_rptCuotasVencidas].[DESCRIPCION] AS [DESCRIPCION], 
+    [VW_rptCuotasVencidas].[FechaAbono] AS [FechaAbono], 
+    [VW_rptCuotasVencidas].[NUM_CUOTA] AS [NUM_CUOTA], 
+    [VW_rptCuotasVencidas].[empresa] AS [empresa], 
+    [VW_rptCuotasVencidas].[CapitalTotal] AS [CapitalTotal], 
+    [VW_rptCuotasVencidas].[InteresTotal] AS [InteresTotal], 
+    [VW_rptCuotasVencidas].[capitalAbono] AS [capitalAbono], 
+    [VW_rptCuotasVencidas].[interesAbono] AS [interesAbono], 
+    [VW_rptCuotasVencidas].[capital] AS [capital], 
+    [VW_rptCuotasVencidas].[INTERES] AS [INTERES], 
+    [VW_rptCuotasVencidas].[CUO_STATUS] AS [CUO_STATUS], 
+    [VW_rptCuotasVencidas].[FAC_GARANT] AS [FAC_GARANT], 
+    [VW_rptCuotasVencidas].[FAC_INTERE] AS [FAC_INTERE], 
+    [VW_rptCuotasVencidas].[Status] AS [Status], 
+    [VW_rptCuotasVencidas].[mora] AS [mora], 
+    [VW_rptCuotasVencidas].[CUO_TIPO] AS [CUO_TIPO], 
+    [VW_rptCuotasVencidas].[fechadt] AS [fechadt]
+    FROM [dbo].[VW_rptCuotasVencidas] AS [VW_rptCuotasVencidas]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_rptEstadoCuenta" EntityType="Self.VW_rptEstadoCuenta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptEstadoCuenta].[C__FIN] AS [C__FIN], 
+    [VW_rptEstadoCuenta].[CLIENTE] AS [CLIENTE], 
+    [VW_rptEstadoCuenta].[MONTO_FINANCIAR] AS [MONTO_FINANCIAR], 
+    [VW_rptEstadoCuenta].[BALANCE_INCIAL] AS [BALANCE_INCIAL], 
+    [VW_rptEstadoCuenta].[BALANCE_ACTUAL] AS [BALANCE_ACTUAL], 
+    [VW_rptEstadoCuenta].[BALANCE_CAPITAL] AS [BALANCE_CAPITAL], 
+    [VW_rptEstadoCuenta].[BALANCE_INTERES] AS [BALANCE_INTERES], 
+    [VW_rptEstadoCuenta].[CUOTA_TOTAL] AS [CUOTA_TOTAL], 
+    [VW_rptEstadoCuenta].[CUOTA_PENDIENTE] AS [CUOTA_PENDIENTE], 
+    [VW_rptEstadoCuenta].[ULTIMO_PAGO] AS [ULTIMO_PAGO], 
+    [VW_rptEstadoCuenta].[EMPRESA] AS [EMPRESA], 
+    [VW_rptEstadoCuenta].[Fecha] AS [Fecha]
+    FROM [dbo].[VW_rptEstadoCuenta] AS [VW_rptEstadoCuenta]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_rptFinAtrasados" EntityType="Self.VW_rptFinAtrasados" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptFinAtrasados].[C__FIN] AS [C__FIN], 
+    [VW_rptFinAtrasados].[CLIENTE] AS [CLIENTE], 
+    [VW_rptFinAtrasados].[CEDULA_CLIENTE] AS [CEDULA_CLIENTE], 
+    [VW_rptFinAtrasados].[DIRE_CLIENTE] AS [DIRE_CLIENTE], 
+    [VW_rptFinAtrasados].[TELEFONO1] AS [TELEFONO1], 
+    [VW_rptFinAtrasados].[TELEFONO2] AS [TELEFONO2], 
+    [VW_rptFinAtrasados].[ULTIMO_PAGO] AS [ULTIMO_PAGO], 
+    [VW_rptFinAtrasados].[CUOTA] AS [CUOTA], 
+    [VW_rptFinAtrasados].[CuotaTxt] AS [CuotaTxt], 
+    [VW_rptFinAtrasados].[MONTO] AS [MONTO], 
+    [VW_rptFinAtrasados].[CAPITAL] AS [CAPITAL], 
+    [VW_rptFinAtrasados].[INTERES] AS [INTERES], 
+    [VW_rptFinAtrasados].[empresa] AS [empresa], 
+    [VW_rptFinAtrasados].[FIADOR] AS [FIADOR], 
+    [VW_rptFinAtrasados].[TELEFONO_FIADOR] AS [TELEFONO_FIADOR], 
+    [VW_rptFinAtrasados].[CEDULA_FIADOR] AS [CEDULA_FIADOR], 
+    [VW_rptFinAtrasados].[PROMOTOR] AS [PROMOTOR], 
+    [VW_rptFinAtrasados].[BalanceCapitalTOTAL] AS [BalanceCapitalTOTAL], 
+    [VW_rptFinAtrasados].[BalanceInteresTOTAL] AS [BalanceInteresTOTAL], 
+    [VW_rptFinAtrasados].[balanceTOTAL] AS [balanceTOTAL], 
+    [VW_rptFinAtrasados].[MontoTotal] AS [MontoTotal], 
+    [VW_rptFinAtrasados].[FAC_GARANT] AS [FAC_GARANT], 
+    [VW_rptFinAtrasados].[FAC_INTERE] AS [FAC_INTERE], 
+    [VW_rptFinAtrasados].[CodigoCLiente] AS [CodigoCLiente], 
+    [VW_rptFinAtrasados].[fechadt] AS [fechadt], 
+    [VW_rptFinAtrasados].[CUOTA_PENDIENTE] AS [CUOTA_PENDIENTE], 
+    [VW_rptFinAtrasados].[CUOTA_TOTAL] AS [CUOTA_TOTAL], 
+    [VW_rptFinAtrasados].[mora] AS [mora], 
+    [VW_rptFinAtrasados].[forma_pago] AS [forma_pago], 
+    [VW_rptFinAtrasados].[dia] AS [dia], 
+    [VW_rptFinAtrasados].[mes] AS [mes], 
+    [VW_rptFinAtrasados].[year] AS [year], 
+    [VW_rptFinAtrasados].[fecha] AS [fecha]
+    FROM [dbo].[VW_rptFinAtrasados] AS [VW_rptFinAtrasados]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_rptFinAtrasados_details" EntityType="Self.VW_rptFinAtrasados_details" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptFinAtrasados_details].[C__FIN] AS [C__FIN], 
+    [VW_rptFinAtrasados_details].[CLIENTE] AS [CLIENTE], 
+    [VW_rptFinAtrasados_details].[CEDULA_CLIENTE] AS [CEDULA_CLIENTE], 
+    [VW_rptFinAtrasados_details].[DIRE_CLIENTE] AS [DIRE_CLIENTE], 
+    [VW_rptFinAtrasados_details].[TELEFONO1] AS [TELEFONO1], 
+    [VW_rptFinAtrasados_details].[TELEFONO2] AS [TELEFONO2], 
+    [VW_rptFinAtrasados_details].[ULTIMO_PAGO] AS [ULTIMO_PAGO], 
+    [VW_rptFinAtrasados_details].[CUOTA] AS [CUOTA], 
+    [VW_rptFinAtrasados_details].[MONTO] AS [MONTO], 
+    [VW_rptFinAtrasados_details].[CAPITAL] AS [CAPITAL], 
+    [VW_rptFinAtrasados_details].[INTERES] AS [INTERES], 
+    [VW_rptFinAtrasados_details].[empresa] AS [empresa], 
+    [VW_rptFinAtrasados_details].[CodigoCLiente] AS [CodigoCLiente], 
+    [VW_rptFinAtrasados_details].[fechadt] AS [fechadt]
+    FROM [dbo].[VW_rptFinAtrasados_details] AS [VW_rptFinAtrasados_details]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_rptRegistroNCF" EntityType="Self.VW_rptRegistroNCF" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptRegistroNCF].[ING_NUMREC] AS [ING_NUMREC], 
+    [VW_rptRegistroNCF].[ING_NUMFIN] AS [ING_NUMFIN], 
+    [VW_rptRegistroNCF].[ING_STATUS] AS [ING_STATUS], 
+    [VW_rptRegistroNCF].[ING_MONTOT] AS [ING_MONTOT], 
+    [VW_rptRegistroNCF].[ING_MONTOC] AS [ING_MONTOC], 
+    [VW_rptRegistroNCF].[ING_MONTOI] AS [ING_MONTOI], 
+    [VW_rptRegistroNCF].[ING_FECHA] AS [ING_FECHA], 
+    [VW_rptRegistroNCF].[ING_FORMPG] AS [ING_FORMPG], 
+    [VW_rptRegistroNCF].[ING_DESCRI] AS [ING_DESCRI], 
+    [VW_rptRegistroNCF].[ING_NCF] AS [ING_NCF], 
+    [VW_rptRegistroNCF].[mes] AS [mes], 
+    [VW_rptRegistroNCF].[dia] AS [dia], 
+    [VW_rptRegistroNCF].[year] AS [year], 
+    [VW_rptRegistroNCF].[mesAbr] AS [mesAbr], 
+    [VW_rptRegistroNCF].[MORA] AS [MORA], 
+    [VW_rptRegistroNCF].[Cliente] AS [Cliente], 
+    [VW_rptRegistroNCF].[ClienteId] AS [ClienteId], 
+    [VW_rptRegistroNCF].[fechadt] AS [fechadt]
+    FROM [dbo].[VW_rptRegistroNCF] AS [VW_rptRegistroNCF]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Vw_SearchClientes_Fiadores" EntityType="Self.Vw_SearchClientes_Fiadores" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vw_SearchClientes_Fiadores].[CTE_CODIGO] AS [CTE_CODIGO], 
+    [Vw_SearchClientes_Fiadores].[CTE_NOMBRE] AS [CTE_NOMBRE], 
+    [Vw_SearchClientes_Fiadores].[CTE_APELLI] AS [CTE_APELLI], 
+    [Vw_SearchClientes_Fiadores].[CTE_CEDULA] AS [CTE_CEDULA], 
+    [Vw_SearchClientes_Fiadores].[CTE_TELEFO] AS [CTE_TELEFO], 
+    [Vw_SearchClientes_Fiadores].[CTE_DIRECC] AS [CTE_DIRECC], 
+    [Vw_SearchClientes_Fiadores].[Zona] AS [Zona], 
+    [Vw_SearchClientes_Fiadores].[Tipo] AS [Tipo], 
+    [Vw_SearchClientes_Fiadores].[type] AS [type]
+    FROM [dbo].[Vw_SearchClientes_Fiadores] AS [Vw_SearchClientes_Fiadores]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CLIENTE_TIPOCTE" Association="Self.FK_CLIENTE_TIPOCTE">
+            <End Role="TIPOCTE" EntitySet="TIPOCTE" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_ZONA" Association="Self.FK_CLIENTE_ZONA">
+            <End Role="ZONA" EntitySet="ZONA" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_FORMAPG" Association="Self.FK_FACTURA_FORMAPG">
+            <End Role="FORMAPG" EntitySet="FORMAPG" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_TIPOFIN" Association="Self.FK_FACTURA_TIPOFIN">
+            <End Role="TIPOFIN" EntitySet="TIPOFIN" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_TIPOINT" Association="Self.FK_FACTURA_TIPOINT">
+            <End Role="TIPOINT" EntitySet="TIPOINT" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_CLIENTE" Association="Self.FK_FINANCY_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_FACTURA" Association="Self.FK_FINANCY_FACTURA">
+            <End Role="FACTURA" EntitySet="FACTURA" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_VENDEDOR" Association="Self.FK_FINANCY_VENDEDOR">
+            <End Role="VENDEDOR" EntitySet="VENDEDOR" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_IMBRINOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB_IMBRINOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="INGOTRO" EntityType="DB_IMBRINOModel.INGOTRO" />
+          <EntitySet Name="CLIENTE" EntityType="DB_IMBRINOModel.CLIENTE" />
+          <EntitySet Name="archivos_subir" EntityType="DB_IMBRINOModel.archivos_subir" />
+          <FunctionImport Name="ColumnsTables" ReturnType="Collection(DB_IMBRINOModel.ColumnsTables_Result)">
+          <Parameter Name="table_name" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TIPOINT" EntityType="DB_IMBRINOModel.TIPOINT" />
+          <EntitySet Name="FORMAPG" EntityType="DB_IMBRINOModel.FORMAPG" />
+          <EntitySet Name="TIPOFIN" EntityType="DB_IMBRINOModel.TIPOFIN" />
+          <EntitySet Name="FIADOR" EntityType="DB_IMBRINOModel.FIADOR" />
+          <EntitySet Name="VENDEDOR" EntityType="DB_IMBRINOModel.VENDEDOR" />
+          <EntitySet Name="FACTURA" EntityType="DB_IMBRINOModel.FACTURA" />
+          <AssociationSet Name="FK_FACTURA_FORMAPG" Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG">
+            <End Role="FORMAPG" EntitySet="FORMAPG" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_TIPOFIN" Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN">
+            <End Role="TIPOFIN" EntitySet="TIPOFIN" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACTURA_TIPOINT" Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT">
+            <End Role="TIPOINT" EntitySet="TIPOINT" />
+            <End Role="FACTURA" EntitySet="FACTURA" />
+          </AssociationSet>
+          <EntitySet Name="FINANCY" EntityType="DB_IMBRINOModel.FINANCY" />
+          <AssociationSet Name="FK_FINANCY_CLIENTE" Association="DB_IMBRINOModel.FK_FINANCY_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_FACTURA" Association="DB_IMBRINOModel.FK_FINANCY_FACTURA">
+            <End Role="FACTURA" EntitySet="FACTURA" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_FIADOR" Association="DB_IMBRINOModel.FK_FINANCY_FIADOR">
+            <End Role="FIADOR" EntitySet="FIADOR" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FINANCY_VENDEDOR" Association="DB_IMBRINOModel.FK_FINANCY_VENDEDOR">
+            <End Role="VENDEDOR" EntitySet="VENDEDOR" />
+            <End Role="FINANCY" EntitySet="FINANCY" />
+          </AssociationSet>
+          <EntitySet Name="CARTERA" EntityType="DB_IMBRINOModel.CARTERA" />
+          <EntitySet Name="ESTDCTA" EntityType="DB_IMBRINOModel.ESTDCTA" />
+          <EntitySet Name="VW_rptCuotasVencidas" EntityType="DB_IMBRINOModel.VW_rptCuotasVencidas" />
+          <EntitySet Name="VW_rptFinAtrasados" EntityType="DB_IMBRINOModel.VW_rptFinAtrasados" />
+          <EntitySet Name="VW_rptFinAtrasados_details" EntityType="DB_IMBRINOModel.VW_rptFinAtrasados_details" />
+          <EntitySet Name="VW_rptEstadoCuenta" EntityType="DB_IMBRINOModel.VW_rptEstadoCuenta" />
+          <FunctionImport Name="sp_cuotasVencidas" ReturnType="Collection(DB_IMBRINOModel.sp_cuotasVencidas_Result)">
+          <Parameter Name="Fecha_Pago" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="INGCUOTA" EntityType="DB_IMBRINOModel.INGCUOTA" />
+          <EntitySet Name="ABOCUOTA" EntityType="DB_IMBRINOModel.ABOCUOTA" />
+          <EntitySet Name="VW_rptRegistroNCF" EntityType="DB_IMBRINOModel.VW_rptRegistroNCF" />
+          <EntitySet Name="Vw_SearchClientes_Fiadores" EntityType="DB_IMBRINOModel.Vw_SearchClientes_Fiadores" />
+          <EntitySet Name="ZONA" EntityType="DB_IMBRINOModel.ZONA" />
+          <AssociationSet Name="FK_CLIENTE_ZONA" Association="DB_IMBRINOModel.FK_CLIENTE_ZONA">
+            <End Role="ZONA" EntitySet="ZONA" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <EntitySet Name="TIPOCTE" EntityType="DB_IMBRINOModel.TIPOCTE" />
+          <AssociationSet Name="FK_CLIENTE_TIPOCTE" Association="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE">
+            <End Role="TIPOCTE" EntitySet="TIPOCTE" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <EntitySet Name="CUOTA" EntityType="DB_IMBRINOModel.CUOTA" />
+        </EntityContainer>
+        <EntityType Name="INGOTRO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="Int32" />
+          <Property Name="ING_NUMFIN" Type="Int32" />
+          <Property Name="ING_CODING" Type="Int32" />
+          <Property Name="ING_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ING_MONTOT" Type="Double" />
+          <Property Name="ING_FECHA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ING_FORMPG" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ING_REGIST" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ING_DESCRI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ING_NOMBRE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ING_NCF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="CTE_CODIGO" />
+          </Key>
+          <Property Name="CTE_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="CTE_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_APELLI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_CEDULA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_TELEFO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_DIRECC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_ZONA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_TIPO" Type="Int32" />
+          <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_CLIENTE" FromRole="CLIENTE" ToRole="FINANCY" />
+          <NavigationProperty Name="ZONA" Relationship="DB_IMBRINOModel.FK_CLIENTE_ZONA" FromRole="CLIENTE" ToRole="ZONA" />
+          <NavigationProperty Name="TIPOCTE" Relationship="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE" FromRole="CLIENTE" ToRole="TIPOCTE" />
+          <Property Name="CTE_TELEFO2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="archivos_subir">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="nombreArchivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombreTabla" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="subir" Type="Boolean" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <ComplexType Name="ColumnsTables_Result">
+          <Property Type="String" Name="table_name" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="column_List" Nullable="true" />
+          <Property Type="String" Name="Insert_query" Nullable="false" />
+          <Property Type="String" Name="select_insert" Nullable="false" />
+          <Property Type="String" Name="truncate_table" Nullable="false" MaxLength="272" />
+        </ComplexType>
+        <EntityType Name="TIPOINT">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOINT" FromRole="TIPOINT" ToRole="FACTURA" />
+        </EntityType>
+        <EntityType Name="FORMAPG">
+          <Key>
+            <PropertyRef Name="FOR_CODIGO" />
+          </Key>
+          <Property Name="FOR_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="FOR_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FOR_PERIOD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FACTURA_FORMAPG" FromRole="FORMAPG" ToRole="FACTURA" />
+        </EntityType>
+        <EntityType Name="TIPOFIN">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" FromRole="TIPOFIN" ToRole="FACTURA" />
+        </EntityType>
+        <EntityType Name="FIADOR">
+          <Key>
+            <PropertyRef Name="FIA_CODIGO" />
+          </Key>
+          <Property Name="FIA_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="FIA_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FIA_CEDULA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FIA_TELEFO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FIA_DIRECC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FIA_CODCTE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_FIADOR" FromRole="FIADOR" ToRole="FINANCY" />
+        </EntityType>
+        <EntityType Name="VENDEDOR">
+          <Key>
+            <PropertyRef Name="VEN_CODIGO" />
+          </Key>
+          <Property Name="VEN_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="VEN_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" FromRole="VENDEDOR" ToRole="FINANCY" />
+        </EntityType>
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="FAC_NUMERO" />
+          </Key>
+          <Property Name="FAC_NUMERO" Type="Int32" Nullable="false" />
+          <Property Name="FAC_NUMFIN" Type="Int32" />
+          <Property Name="FAC_TIPINT" Type="Int32" />
+          <Property Name="FAC_FORMPG" Type="Int32" Nullable="true" />
+          <Property Name="FAC_TIPFIN" Type="Int32" />
+          <Property Name="FAC_MONTO" Type="Double" />
+          <Property Name="FAC_FECHA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FAC_NUMCUO" Type="Int32" />
+          <Property Name="FAC_INTERE" Type="Double" />
+          <Property Name="FAC_GARANT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FAC_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FORMAPG" Relationship="DB_IMBRINOModel.FK_FACTURA_FORMAPG" FromRole="FACTURA" ToRole="FORMAPG" />
+          <NavigationProperty Name="TIPOFIN" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" FromRole="FACTURA" ToRole="TIPOFIN" />
+          <NavigationProperty Name="TIPOINT" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOINT" FromRole="FACTURA" ToRole="TIPOINT" />
+          <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FACTURA" ToRole="FINANCY" />
+        </EntityType>
+        <Association Name="FK_FACTURA_FORMAPG">
+          <End Type="DB_IMBRINOModel.FORMAPG" Role="FORMAPG" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMAPG">
+              <PropertyRef Name="FOR_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_FORMPG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_TIPOFIN">
+          <End Type="DB_IMBRINOModel.TIPOFIN" Role="TIPOFIN" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOFIN">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_TIPFIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACTURA_TIPOINT">
+          <End Type="DB_IMBRINOModel.TIPOINT" Role="TIPOINT" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOINT">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="FACTURA">
+              <PropertyRef Name="FAC_TIPINT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FINANCY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FIN_NUMERO" Type="Int32" Nullable="false" />
+          <Property Name="FIN_NUMCTE" Type="Int32" />
+          <Property Name="FIN_NUMFAC" Type="Int32" />
+          <Property Name="FIN_NUMFIA" Type="Int32" />
+          <Property Name="FIN_NUMVEN" Type="Int32" />
+          <Property Name="FIN_STATUS" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CLIENTE" Relationship="DB_IMBRINOModel.FK_FINANCY_CLIENTE" FromRole="FINANCY" ToRole="CLIENTE" />
+          <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FINANCY" ToRole="FACTURA" />
+          <NavigationProperty Name="FIADOR" Relationship="DB_IMBRINOModel.FK_FINANCY_FIADOR" FromRole="FINANCY" ToRole="FIADOR" />
+          <NavigationProperty Name="VENDEDOR" Relationship="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" FromRole="FINANCY" ToRole="VENDEDOR" />
+        </EntityType>
+        <Association Name="FK_FINANCY_CLIENTE">
+          <End Type="DB_IMBRINOModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CTE_CODIGO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMCTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_FACTURA">
+          <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACTURA">
+              <PropertyRef Name="FAC_NUMERO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMFAC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_FIADOR">
+          <End Type="DB_IMBRINOModel.FIADOR" Role="FIADOR" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FIADOR">
+              <PropertyRef Name="FIA_CODIGO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMFIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FINANCY_VENDEDOR">
+          <End Type="DB_IMBRINOModel.VENDEDOR" Role="VENDEDOR" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDEDOR">
+              <PropertyRef Name="VEN_CODIGO" />
+            </Principal>
+            <Dependent Role="FINANCY">
+              <PropertyRef Name="FIN_NUMVEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CARTERA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CAR_MONTOC" Type="Double" />
+          <Property Name="CAR_MONTOI" Type="Double" />
+          <Property Name="CAR_OTRCAR" Type="Double" />
+          <Property Name="CAR_DEDUCC" Type="Double" />
+          <Property Name="CAR_CAPPER" Type="Double" />
+          <Property Name="CAR_INTPER" Type="Double" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ESTDCTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="EST_NUMFIN" Type="Int32" />
+          <Property Name="EST_BALINI" Type="Double" />
+          <Property Name="EST_CAPINI" Type="Double" />
+          <Property Name="EST_INTINI" Type="Double" />
+          <Property Name="EST_OTRCAR" Type="Double" />
+          <Property Name="EST_BALACT" Type="Double" />
+          <Property Name="EST_CAPPAG" Type="Double" />
+          <Property Name="EST_INTPAG" Type="Double" />
+          <Property Name="EST_CARRYP" Type="Double" />
+          <Property Name="EST_CARNRP" Type="Double" />
+          <Property Name="EST_CAPPER" Type="Double" />
+          <Property Name="EST_INTPER" Type="Double" />
+          <Property Name="EST_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="VW_rptCuotasVencidas">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="FIADOR" />
+            <PropertyRef Name="TELEFONO_FIADOR" />
+            <PropertyRef Name="Cedula_FIADOR" />
+            <PropertyRef Name="PROMOTOR" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="TELEFONO" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="DESCRIPCION" />
+            <PropertyRef Name="FechaAbono" />
+            <PropertyRef Name="NUM_CUOTA" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="CapitalTotal" />
+            <PropertyRef Name="InteresTotal" />
+            <PropertyRef Name="capitalAbono" />
+            <PropertyRef Name="interesAbono" />
+            <PropertyRef Name="capital" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="CUO_STATUS" />
+            <PropertyRef Name="FAC_GARANT" />
+            <PropertyRef Name="FAC_INTERE" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="mora" />
+            <PropertyRef Name="CUO_TIPO" />
+            <PropertyRef Name="fechadt" />
+          </Key>
+          <Property Name="C__FIN" Type="Int32" Nullable="false" />
+          <Property Name="CodigoCLiente" Type="Int32" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="CEDULA_CLIENTE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DIRE_CLIENTE" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO_FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cedula_FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PROMOTOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="CUOTA" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TELEFONO" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO2" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" Nullable="false" MaxLength="148" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAbono" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_CUOTA" Type="Int32" Nullable="false" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CapitalTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="InteresTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="capitalAbono" Type="Double" Nullable="false" />
+          <Property Name="interesAbono" Type="Double" Nullable="false" />
+          <Property Name="capital" Type="Double" Nullable="false" />
+          <Property Name="INTERES" Type="Double" Nullable="false" />
+          <Property Name="CUO_STATUS" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FAC_GARANT" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FAC_INTERE" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="mora" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CUO_TIPO" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="VW_rptFinAtrasados">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="TELEFONO1" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="CuotaTxt" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="CAPITAL" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="FIADOR" />
+            <PropertyRef Name="TELEFONO_FIADOR" />
+            <PropertyRef Name="CEDULA_FIADOR" />
+            <PropertyRef Name="PROMOTOR" />
+            <PropertyRef Name="BalanceCapitalTOTAL" />
+            <PropertyRef Name="BalanceInteresTOTAL" />
+            <PropertyRef Name="balanceTOTAL" />
+            <PropertyRef Name="MontoTotal" />
+            <PropertyRef Name="FAC_GARANT" />
+            <PropertyRef Name="FAC_INTERE" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="fechadt" />
+            <PropertyRef Name="CUOTA_PENDIENTE" />
+            <PropertyRef Name="CUOTA_TOTAL" />
+            <PropertyRef Name="mora" />
+            <PropertyRef Name="forma_pago" />
+            <PropertyRef Name="fecha" />
+          </Key>
+          <Property Name="C__FIN" Type="Int32" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="CEDULA_CLIENTE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DIRE_CLIENTE" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO1" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO2" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="ULTIMO_PAGO" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="CUOTA" Type="Int32" Nullable="false" />
+          <Property Name="CuotaTxt" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CAPITAL" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="INTERES" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO_FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CEDULA_FIADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PROMOTOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BalanceCapitalTOTAL" Type="Double" Nullable="false" />
+          <Property Name="BalanceInteresTOTAL" Type="Double" Nullable="false" />
+          <Property Name="balanceTOTAL" Type="Double" Nullable="false" />
+          <Property Name="MontoTotal" Type="Double" Nullable="false" />
+          <Property Name="FAC_GARANT" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FAC_INTERE" Type="Double" Nullable="false" />
+          <Property Name="CodigoCLiente" Type="Int32" Nullable="false" />
+          <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CUOTA_PENDIENTE" Type="Int32" Nullable="false" />
+          <Property Name="CUOTA_TOTAL" Type="Int32" Nullable="false" />
+          <Property Name="mora" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="forma_pago" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="dia" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="mes" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VW_rptFinAtrasados_details">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="CEDULA_CLIENTE" />
+            <PropertyRef Name="DIRE_CLIENTE" />
+            <PropertyRef Name="TELEFONO1" />
+            <PropertyRef Name="TELEFONO2" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="CUOTA" />
+            <PropertyRef Name="MONTO" />
+            <PropertyRef Name="CAPITAL" />
+            <PropertyRef Name="INTERES" />
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="CodigoCLiente" />
+            <PropertyRef Name="fechadt" />
+          </Key>
+          <Property Name="C__FIN" Type="Int32" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="CEDULA_CLIENTE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DIRE_CLIENTE" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO1" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO2" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="ULTIMO_PAGO" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="CUOTA" Type="Int32" Nullable="false" />
+          <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CAPITAL" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="INTERES" Type="Decimal" Nullable="false" Precision="38" Scale="2" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoCLiente" Type="Int32" Nullable="false" />
+          <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="VW_rptEstadoCuenta">
+          <Key>
+            <PropertyRef Name="C__FIN" />
+            <PropertyRef Name="CLIENTE" />
+            <PropertyRef Name="MONTO_FINANCIAR" />
+            <PropertyRef Name="BALANCE_INCIAL" />
+            <PropertyRef Name="BALANCE_ACTUAL" />
+            <PropertyRef Name="BALANCE_CAPITAL" />
+            <PropertyRef Name="BALANCE_INTERES" />
+            <PropertyRef Name="CUOTA_TOTAL" />
+            <PropertyRef Name="CUOTA_PENDIENTE" />
+            <PropertyRef Name="ULTIMO_PAGO" />
+            <PropertyRef Name="EMPRESA" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="C__FIN" Type="Int32" Nullable="false" />
+          <Property Name="CLIENTE" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="MONTO_FINANCIAR" Type="Double" Nullable="false" />
+          <Property Name="BALANCE_INCIAL" Type="Double" Nullable="false" />
+          <Property Name="BALANCE_ACTUAL" Type="Double" Nullable="false" />
+          <Property Name="BALANCE_CAPITAL" Type="Double" Nullable="false" />
+          <Property Name="BALANCE_INTERES" Type="Double" Nullable="false" />
+          <Property Name="CUOTA_TOTAL" Type="Int32" Nullable="false" />
+          <Property Name="CUOTA_PENDIENTE" Type="Int32" Nullable="false" />
+          <Property Name="ULTIMO_PAGO" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="EMPRESA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <ComplexType Name="sp_cuotasVencidas_Result">
+          <Property Type="Int32" Name="C__FIN" Nullable="false" />
+          <Property Type="Int32" Name="CodigoCLiente" Nullable="false" />
+          <Property Type="String" Name="CLIENTE" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="CEDULA_CLIENTE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DIRE_CLIENTE" Nullable="false" MaxLength="8000" />
+          <Property Type="String" Name="FIADOR" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TELEFONO_FIADOR" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Cedula_FIADOR" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="PROMOTOR" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Fecha" Nullable="false" MaxLength="8000" />
+          <Property Type="String" Name="CUOTA" Nullable="false" MaxLength="25" />
+          <Property Type="Decimal" Name="MONTO" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="TELEFONO" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="TELEFONO2" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="148" />
+          <Property Type="String" Name="FechaAbono" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="NUM_CUOTA" Nullable="false" />
+          <Property Type="String" Name="empresa" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="CapitalTotal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="InteresTotal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Double" Name="capitalAbono" Nullable="false" />
+          <Property Type="Double" Name="interesAbono" Nullable="false" />
+          <Property Type="Double" Name="capital" Nullable="false" />
+          <Property Type="Double" Name="INTERES" Nullable="false" />
+          <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="FAC_GARANT" Nullable="false" MaxLength="150" />
+          <Property Type="Double" Name="FAC_INTERE" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
+          <Property Type="Decimal" Name="mora" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="9" />
+          <Property Type="DateTime" Name="fechadt" Nullable="false" Precision="23" />
+          <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <EntityType Name="INGCUOTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="Int32" Nullable="false" />
+          <Property Name="ING_NUMFIN" Type="Int32" />
+          <Property Name="ING_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ING_MONTOT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOC" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOI" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ING_FECHA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ING_FORMPG" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ING_DESCRI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ING_NCF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ABOCUOTA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ABO_NUMFAC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ABO_NUMCUO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_NUMABO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_MONTOT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_MONTOC" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_MONTOI" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ABO_FECHA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="VW_rptRegistroNCF">
+          <Key>
+            <PropertyRef Name="ING_NUMREC" />
+            <PropertyRef Name="ING_NUMFIN" />
+            <PropertyRef Name="ING_STATUS" />
+            <PropertyRef Name="ING_MONTOT" />
+            <PropertyRef Name="ING_MONTOC" />
+            <PropertyRef Name="ING_MONTOI" />
+            <PropertyRef Name="ING_FECHA" />
+            <PropertyRef Name="ING_FORMPG" />
+            <PropertyRef Name="ING_DESCRI" />
+            <PropertyRef Name="ING_NCF" />
+            <PropertyRef Name="mes" />
+            <PropertyRef Name="dia" />
+            <PropertyRef Name="year" />
+            <PropertyRef Name="mesAbr" />
+            <PropertyRef Name="MORA" />
+            <PropertyRef Name="Cliente" />
+            <PropertyRef Name="fechadt" />
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ING_NUMREC" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
+          <Property Name="ING_STATUS" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ING_MONTOT" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOC" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ING_MONTOI" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ING_FECHA" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="ING_FORMPG" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ING_DESCRI" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ING_NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mes" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="dia" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="mesAbr" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MORA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
+          <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vw_SearchClientes_Fiadores">
+          <Key>
+            <PropertyRef Name="CTE_CODIGO" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="CTE_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="CTE_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_APELLI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_CEDULA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_TELEFO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTE_DIRECC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Zona" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZONA">
+          <Key>
+            <PropertyRef Name="ZON_CODIGO" />
+          </Key>
+          <Property Name="ZON_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ZON_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="DB_IMBRINOModel.FK_CLIENTE_ZONA" FromRole="ZONA" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_ZONA">
+          <End Type="DB_IMBRINOModel.ZONA" Role="ZONA" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZONA">
+              <PropertyRef Name="ZON_CODIGO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CTE_ZONA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TIPOCTE">
+          <Key>
+            <PropertyRef Name="TIP_CODIGO" />
+          </Key>
+          <Property Name="TIP_CODIGO" Type="Int32" Nullable="false" />
+          <Property Name="TIP_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE" FromRole="TIPOCTE" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_TIPOCTE">
+          <End Type="DB_IMBRINOModel.TIPOCTE" Role="TIPOCTE" Multiplicity="0..1" />
+          <End Type="DB_IMBRINOModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOCTE">
+              <PropertyRef Name="TIP_CODIGO" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CTE_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CUOTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CUO_NUMFAC" Type="Int32" Nullable="false" />
+          <Property Name="CUO_NUMCUO" Type="Int32" Nullable="false" />
+          <Property Name="CUO_NUMREC" Type="Int32" Nullable="false" />
+          <Property Name="CUO_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CUO_MONTOT" Type="Double" />
+          <Property Name="CUO_MONTOC" Type="Double" />
+          <Property Name="CUO_MONTOI" Type="Double" />
+          <Property Name="CUO_FECHAV" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CUO_FECHAP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CUO_TIPO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CUO_STAANT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_IMBRINOModelStoreContainer" CdmEntityContainer="DB_IMBRINOEntities">
+          <EntitySetMapping Name="INGOTRO">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.INGOTRO">
+              <MappingFragment StoreEntitySet="INGOTRO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+                <ScalarProperty Name="ING_NOMBRE" ColumnName="ING_NOMBRE" />
+                <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+                <ScalarProperty Name="ING_REGIST" ColumnName="ING_REGIST" />
+                <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+                <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+                <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+                <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+                <ScalarProperty Name="ING_CODING" ColumnName="ING_CODING" />
+                <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+                <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="CTE_TELEFO2" ColumnName="CTE_TELEFO2" />
+                <ScalarProperty Name="CTE_TIPO" ColumnName="CTE_TIPO" />
+                <ScalarProperty Name="CTE_ZONA" ColumnName="CTE_ZONA" />
+                <ScalarProperty Name="CTE_DIRECC" ColumnName="CTE_DIRECC" />
+                <ScalarProperty Name="CTE_TELEFO" ColumnName="CTE_TELEFO" />
+                <ScalarProperty Name="CTE_CEDULA" ColumnName="CTE_CEDULA" />
+                <ScalarProperty Name="CTE_APELLI" ColumnName="CTE_APELLI" />
+                <ScalarProperty Name="CTE_NOMBRE" ColumnName="CTE_NOMBRE" />
+                <ScalarProperty Name="CTE_CODIGO" ColumnName="CTE_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="archivos_subir">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.archivos_subir">
+              <MappingFragment StoreEntitySet="archivos_subir">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="subir" ColumnName="subir" />
+                <ScalarProperty Name="nombreTabla" ColumnName="nombreTabla" />
+                <ScalarProperty Name="nombreArchivo" ColumnName="nombreArchivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ColumnsTables" FunctionName="DB_IMBRINOModel.Store.ColumnsTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_IMBRINOModel.ColumnsTables_Result">
+                <ScalarProperty Name="table_name" ColumnName="table_name" />
+                <ScalarProperty Name="column_List" ColumnName="column_List" />
+                <ScalarProperty Name="Insert_query" ColumnName="Insert_query" />
+                <ScalarProperty Name="select_insert" ColumnName="select_insert" />
+                <ScalarProperty Name="truncate_table" ColumnName="truncate_table" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TIPOINT">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOINT">
+              <MappingFragment StoreEntitySet="TIPOINT">
+                <ScalarProperty Name="TIP_DESCRI" ColumnName="TIP_DESCRI" />
+                <ScalarProperty Name="TIP_CODIGO" ColumnName="TIP_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FORMAPG">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.FORMAPG">
+              <MappingFragment StoreEntitySet="FORMAPG">
+                <ScalarProperty Name="FOR_PERIOD" ColumnName="FOR_PERIOD" />
+                <ScalarProperty Name="FOR_DESCRI" ColumnName="FOR_DESCRI" />
+                <ScalarProperty Name="FOR_CODIGO" ColumnName="FOR_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOFIN">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOFIN">
+              <MappingFragment StoreEntitySet="TIPOFIN">
+                <ScalarProperty Name="TIP_DESCRI" ColumnName="TIP_DESCRI" />
+                <ScalarProperty Name="TIP_CODIGO" ColumnName="TIP_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FIADOR">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.FIADOR">
+              <MappingFragment StoreEntitySet="FIADOR">
+                <ScalarProperty Name="FIA_CODCTE" ColumnName="FIA_CODCTE" />
+                <ScalarProperty Name="FIA_DIRECC" ColumnName="FIA_DIRECC" />
+                <ScalarProperty Name="FIA_TELEFO" ColumnName="FIA_TELEFO" />
+                <ScalarProperty Name="FIA_CEDULA" ColumnName="FIA_CEDULA" />
+                <ScalarProperty Name="FIA_NOMBRE" ColumnName="FIA_NOMBRE" />
+                <ScalarProperty Name="FIA_CODIGO" ColumnName="FIA_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDEDOR">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VENDEDOR">
+              <MappingFragment StoreEntitySet="VENDEDOR">
+                <ScalarProperty Name="VEN_NOMBRE" ColumnName="VEN_NOMBRE" />
+                <ScalarProperty Name="VEN_CODIGO" ColumnName="VEN_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACTURA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.FACTURA">
+              <MappingFragment StoreEntitySet="FACTURA">
+                <ScalarProperty Name="FAC_STATUS" ColumnName="FAC_STATUS" />
+                <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
+                <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
+                <ScalarProperty Name="FAC_NUMCUO" ColumnName="FAC_NUMCUO" />
+                <ScalarProperty Name="FAC_FECHA" ColumnName="FAC_FECHA" />
+                <ScalarProperty Name="FAC_MONTO" ColumnName="FAC_MONTO" />
+                <ScalarProperty Name="FAC_TIPFIN" ColumnName="FAC_TIPFIN" />
+                <ScalarProperty Name="FAC_FORMPG" ColumnName="FAC_FORMPG" />
+                <ScalarProperty Name="FAC_TIPINT" ColumnName="FAC_TIPINT" />
+                <ScalarProperty Name="FAC_NUMFIN" ColumnName="FAC_NUMFIN" />
+                <ScalarProperty Name="FAC_NUMERO" ColumnName="FAC_NUMERO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FINANCY">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.FINANCY">
+              <MappingFragment StoreEntitySet="FINANCY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIN_STATUS" ColumnName="FIN_STATUS" />
+                <ScalarProperty Name="FIN_NUMVEN" ColumnName="FIN_NUMVEN" />
+                <ScalarProperty Name="FIN_NUMFIA" ColumnName="FIN_NUMFIA" />
+                <ScalarProperty Name="FIN_NUMFAC" ColumnName="FIN_NUMFAC" />
+                <ScalarProperty Name="FIN_NUMCTE" ColumnName="FIN_NUMCTE" />
+                <ScalarProperty Name="FIN_NUMERO" ColumnName="FIN_NUMERO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARTERA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.CARTERA">
+              <MappingFragment StoreEntitySet="CARTERA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CAR_INTPER" ColumnName="CAR_INTPER" />
+                <ScalarProperty Name="CAR_CAPPER" ColumnName="CAR_CAPPER" />
+                <ScalarProperty Name="CAR_DEDUCC" ColumnName="CAR_DEDUCC" />
+                <ScalarProperty Name="CAR_OTRCAR" ColumnName="CAR_OTRCAR" />
+                <ScalarProperty Name="CAR_MONTOI" ColumnName="CAR_MONTOI" />
+                <ScalarProperty Name="CAR_MONTOC" ColumnName="CAR_MONTOC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTDCTA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.ESTDCTA">
+              <MappingFragment StoreEntitySet="ESTDCTA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EST_STATUS" ColumnName="EST_STATUS" />
+                <ScalarProperty Name="EST_INTPER" ColumnName="EST_INTPER" />
+                <ScalarProperty Name="EST_CAPPER" ColumnName="EST_CAPPER" />
+                <ScalarProperty Name="EST_CARNRP" ColumnName="EST_CARNRP" />
+                <ScalarProperty Name="EST_CARRYP" ColumnName="EST_CARRYP" />
+                <ScalarProperty Name="EST_INTPAG" ColumnName="EST_INTPAG" />
+                <ScalarProperty Name="EST_CAPPAG" ColumnName="EST_CAPPAG" />
+                <ScalarProperty Name="EST_BALACT" ColumnName="EST_BALACT" />
+                <ScalarProperty Name="EST_OTRCAR" ColumnName="EST_OTRCAR" />
+                <ScalarProperty Name="EST_INTINI" ColumnName="EST_INTINI" />
+                <ScalarProperty Name="EST_CAPINI" ColumnName="EST_CAPINI" />
+                <ScalarProperty Name="EST_BALINI" ColumnName="EST_BALINI" />
+                <ScalarProperty Name="EST_NUMFIN" ColumnName="EST_NUMFIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptCuotasVencidas">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptCuotasVencidas">
+              <MappingFragment StoreEntitySet="VW_rptCuotasVencidas">
+                <ScalarProperty Name="fechadt" ColumnName="fechadt" />
+                <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
+                <ScalarProperty Name="mora" ColumnName="mora" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
+                <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
+                <ScalarProperty Name="CUO_STATUS" ColumnName="CUO_STATUS" />
+                <ScalarProperty Name="INTERES" ColumnName="INTERES" />
+                <ScalarProperty Name="capital" ColumnName="capital" />
+                <ScalarProperty Name="interesAbono" ColumnName="interesAbono" />
+                <ScalarProperty Name="capitalAbono" ColumnName="capitalAbono" />
+                <ScalarProperty Name="InteresTotal" ColumnName="InteresTotal" />
+                <ScalarProperty Name="CapitalTotal" ColumnName="CapitalTotal" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="NUM_CUOTA" ColumnName="NUM_CUOTA" />
+                <ScalarProperty Name="FechaAbono" ColumnName="FechaAbono" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="TELEFONO2" ColumnName="TELEFONO2" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+                <ScalarProperty Name="CUOTA" ColumnName="CUOTA" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PROMOTOR" ColumnName="PROMOTOR" />
+                <ScalarProperty Name="Cedula_FIADOR" ColumnName="Cedula_FIADOR" />
+                <ScalarProperty Name="TELEFONO_FIADOR" ColumnName="TELEFONO_FIADOR" />
+                <ScalarProperty Name="FIADOR" ColumnName="FIADOR" />
+                <ScalarProperty Name="DIRE_CLIENTE" ColumnName="DIRE_CLIENTE" />
+                <ScalarProperty Name="CEDULA_CLIENTE" ColumnName="CEDULA_CLIENTE" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="CodigoCLiente" ColumnName="CodigoCLiente" />
+                <ScalarProperty Name="C__FIN" ColumnName="C__FIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptFinAtrasados">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptFinAtrasados">
+              <MappingFragment StoreEntitySet="VW_rptFinAtrasados">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="dia" ColumnName="dia" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="forma_pago" ColumnName="forma_pago" />
+                <ScalarProperty Name="mora" ColumnName="mora" />
+                <ScalarProperty Name="CUOTA_TOTAL" ColumnName="CUOTA_TOTAL" />
+                <ScalarProperty Name="CUOTA_PENDIENTE" ColumnName="CUOTA_PENDIENTE" />
+                <ScalarProperty Name="fechadt" ColumnName="fechadt" />
+                <ScalarProperty Name="CodigoCLiente" ColumnName="CodigoCLiente" />
+                <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
+                <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
+                <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+                <ScalarProperty Name="balanceTOTAL" ColumnName="balanceTOTAL" />
+                <ScalarProperty Name="BalanceInteresTOTAL" ColumnName="BalanceInteresTOTAL" />
+                <ScalarProperty Name="BalanceCapitalTOTAL" ColumnName="BalanceCapitalTOTAL" />
+                <ScalarProperty Name="PROMOTOR" ColumnName="PROMOTOR" />
+                <ScalarProperty Name="CEDULA_FIADOR" ColumnName="CEDULA_FIADOR" />
+                <ScalarProperty Name="TELEFONO_FIADOR" ColumnName="TELEFONO_FIADOR" />
+                <ScalarProperty Name="FIADOR" ColumnName="FIADOR" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="INTERES" ColumnName="INTERES" />
+                <ScalarProperty Name="CAPITAL" ColumnName="CAPITAL" />
+                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+                <ScalarProperty Name="CuotaTxt" ColumnName="CuotaTxt" />
+                <ScalarProperty Name="CUOTA" ColumnName="CUOTA" />
+                <ScalarProperty Name="ULTIMO_PAGO" ColumnName="ULTIMO_PAGO" />
+                <ScalarProperty Name="TELEFONO2" ColumnName="TELEFONO2" />
+                <ScalarProperty Name="TELEFONO1" ColumnName="TELEFONO1" />
+                <ScalarProperty Name="DIRE_CLIENTE" ColumnName="DIRE_CLIENTE" />
+                <ScalarProperty Name="CEDULA_CLIENTE" ColumnName="CEDULA_CLIENTE" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="C__FIN" ColumnName="C__FIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptFinAtrasados_details">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptFinAtrasados_details">
+              <MappingFragment StoreEntitySet="VW_rptFinAtrasados_details">
+                <ScalarProperty Name="fechadt" ColumnName="fechadt" />
+                <ScalarProperty Name="CodigoCLiente" ColumnName="CodigoCLiente" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="INTERES" ColumnName="INTERES" />
+                <ScalarProperty Name="CAPITAL" ColumnName="CAPITAL" />
+                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+                <ScalarProperty Name="CUOTA" ColumnName="CUOTA" />
+                <ScalarProperty Name="ULTIMO_PAGO" ColumnName="ULTIMO_PAGO" />
+                <ScalarProperty Name="TELEFONO2" ColumnName="TELEFONO2" />
+                <ScalarProperty Name="TELEFONO1" ColumnName="TELEFONO1" />
+                <ScalarProperty Name="DIRE_CLIENTE" ColumnName="DIRE_CLIENTE" />
+                <ScalarProperty Name="CEDULA_CLIENTE" ColumnName="CEDULA_CLIENTE" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="C__FIN" ColumnName="C__FIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptEstadoCuenta">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptEstadoCuenta">
+              <MappingFragment StoreEntitySet="VW_rptEstadoCuenta">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+                <ScalarProperty Name="ULTIMO_PAGO" ColumnName="ULTIMO_PAGO" />
+                <ScalarProperty Name="CUOTA_PENDIENTE" ColumnName="CUOTA_PENDIENTE" />
+                <ScalarProperty Name="CUOTA_TOTAL" ColumnName="CUOTA_TOTAL" />
+                <ScalarProperty Name="BALANCE_INTERES" ColumnName="BALANCE_INTERES" />
+                <ScalarProperty Name="BALANCE_CAPITAL" ColumnName="BALANCE_CAPITAL" />
+                <ScalarProperty Name="BALANCE_ACTUAL" ColumnName="BALANCE_ACTUAL" />
+                <ScalarProperty Name="BALANCE_INCIAL" ColumnName="BALANCE_INCIAL" />
+                <ScalarProperty Name="MONTO_FINANCIAR" ColumnName="MONTO_FINANCIAR" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="C__FIN" ColumnName="C__FIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_cuotasVencidas" FunctionName="DB_IMBRINOModel.Store.sp_cuotasVencidas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_IMBRINOModel.sp_cuotasVencidas_Result">
+                <ScalarProperty Name="C__FIN" ColumnName="C__FIN" />
+                <ScalarProperty Name="CodigoCLiente" ColumnName="CodigoCLiente" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="CEDULA_CLIENTE" ColumnName="CEDULA_CLIENTE" />
+                <ScalarProperty Name="DIRE_CLIENTE" ColumnName="DIRE_CLIENTE" />
+                <ScalarProperty Name="FIADOR" ColumnName="FIADOR" />
+                <ScalarProperty Name="TELEFONO_FIADOR" ColumnName="TELEFONO_FIADOR" />
+                <ScalarProperty Name="Cedula_FIADOR" ColumnName="Cedula_FIADOR" />
+                <ScalarProperty Name="PROMOTOR" ColumnName="PROMOTOR" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CUOTA" ColumnName="CUOTA" />
+                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="TELEFONO2" ColumnName="TELEFONO2" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="FechaAbono" ColumnName="FechaAbono" />
+                <ScalarProperty Name="NUM_CUOTA" ColumnName="NUM_CUOTA" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="CapitalTotal" ColumnName="CapitalTotal" />
+                <ScalarProperty Name="InteresTotal" ColumnName="InteresTotal" />
+                <ScalarProperty Name="capitalAbono" ColumnName="capitalAbono" />
+                <ScalarProperty Name="interesAbono" ColumnName="interesAbono" />
+                <ScalarProperty Name="capital" ColumnName="capital" />
+                <ScalarProperty Name="INTERES" ColumnName="INTERES" />
+                <ScalarProperty Name="CUO_STATUS" ColumnName="CUO_STATUS" />
+                <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
+                <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="mora" ColumnName="mora" />
+                <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
+                <ScalarProperty Name="fechadt" ColumnName="fechadt" />
+                <ScalarProperty Name="fecha_Pago" ColumnName="fecha_Pago" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="INGCUOTA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.INGCUOTA">
+              <MappingFragment StoreEntitySet="INGCUOTA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+                <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+                <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+                <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+                <ScalarProperty Name="ING_MONTOI" ColumnName="ING_MONTOI" />
+                <ScalarProperty Name="ING_MONTOC" ColumnName="ING_MONTOC" />
+                <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+                <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+                <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+                <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ABOCUOTA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.ABOCUOTA">
+              <MappingFragment StoreEntitySet="ABOCUOTA">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ABO_FECHA" ColumnName="ABO_FECHA" />
+                <ScalarProperty Name="ABO_MONTOI" ColumnName="ABO_MONTOI" />
+                <ScalarProperty Name="ABO_MONTOC" ColumnName="ABO_MONTOC" />
+                <ScalarProperty Name="ABO_MONTOT" ColumnName="ABO_MONTOT" />
+                <ScalarProperty Name="ABO_NUMABO" ColumnName="ABO_NUMABO" />
+                <ScalarProperty Name="ABO_NUMCUO" ColumnName="ABO_NUMCUO" />
+                <ScalarProperty Name="ABO_NUMFAC" ColumnName="ABO_NUMFAC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptRegistroNCF">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptRegistroNCF">
+              <MappingFragment StoreEntitySet="VW_rptRegistroNCF">
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="fechadt" ColumnName="fechadt" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="MORA" ColumnName="MORA" />
+                <ScalarProperty Name="mesAbr" ColumnName="mesAbr" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="dia" ColumnName="dia" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+                <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+                <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+                <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+                <ScalarProperty Name="ING_MONTOI" ColumnName="ING_MONTOI" />
+                <ScalarProperty Name="ING_MONTOC" ColumnName="ING_MONTOC" />
+                <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+                <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+                <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+                <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vw_SearchClientes_Fiadores">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.Vw_SearchClientes_Fiadores">
+              <MappingFragment StoreEntitySet="Vw_SearchClientes_Fiadores">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Zona" ColumnName="Zona" />
+                <ScalarProperty Name="CTE_DIRECC" ColumnName="CTE_DIRECC" />
+                <ScalarProperty Name="CTE_TELEFO" ColumnName="CTE_TELEFO" />
+                <ScalarProperty Name="CTE_CEDULA" ColumnName="CTE_CEDULA" />
+                <ScalarProperty Name="CTE_APELLI" ColumnName="CTE_APELLI" />
+                <ScalarProperty Name="CTE_NOMBRE" ColumnName="CTE_NOMBRE" />
+                <ScalarProperty Name="CTE_CODIGO" ColumnName="CTE_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZONA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.ZONA">
+              <MappingFragment StoreEntitySet="ZONA">
+                <ScalarProperty Name="ZON_DESCRI" ColumnName="ZON_DESCRI" />
+                <ScalarProperty Name="ZON_CODIGO" ColumnName="ZON_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOCTE">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOCTE">
+              <MappingFragment StoreEntitySet="TIPOCTE">
+                <ScalarProperty Name="TIP_DESCRI" ColumnName="TIP_DESCRI" />
+                <ScalarProperty Name="TIP_CODIGO" ColumnName="TIP_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUOTA">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.CUOTA">
+              <MappingFragment StoreEntitySet="CUOTA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CUO_STAANT" ColumnName="CUO_STAANT" />
+                <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
+                <ScalarProperty Name="CUO_FECHAP" ColumnName="CUO_FECHAP" />
+                <ScalarProperty Name="CUO_FECHAV" ColumnName="CUO_FECHAV" />
+                <ScalarProperty Name="CUO_MONTOI" ColumnName="CUO_MONTOI" />
+                <ScalarProperty Name="CUO_MONTOC" ColumnName="CUO_MONTOC" />
+                <ScalarProperty Name="CUO_MONTOT" ColumnName="CUO_MONTOT" />
+                <ScalarProperty Name="CUO_STATUS" ColumnName="CUO_STATUS" />
+                <ScalarProperty Name="CUO_NUMREC" ColumnName="CUO_NUMREC" />
+                <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
+                <ScalarProperty Name="CUO_NUMFAC" ColumnName="CUO_NUMFAC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

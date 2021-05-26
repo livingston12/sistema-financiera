@@ -1,0 +1,53 @@
+﻿@model SistemaImbrino.Models.FIADOR
+
+
+<input type="hidden" id="FIA_CODIGO" name="FIA_CODIGO"/>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EFIA_NOMBRE">Nombre</label>
+		<div class="form-group" id="dvEFIA_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="EFIA_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
+				@Html.EditorFor(model => model.FIA_NOMBRE, new { htmlAttributes = new { @class = "form-control texto", @id = "EFIA_NOMBRE" } })
+				<span id="spanEFIA_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EFIA_CEDULA">Cedula</label>
+		<div class="form-group" id="dvEFIA_CEDULA">
+			<div class="input-group">
+				<label class="input-group-addon" for="EFIA_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.FIA_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula", @id = "EFIA_CEDULA" } })
+				<span id="spanEFIA_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EFIA_TELEFO">Telefono</label>
+		<div class="form-group" id="dvEFIA_TELEFO">
+			<div class="input-group">
+				<label class="input-group-addon" for="EFIA_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.FIA_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono", @id = "EFIA_TELEFO" } })
+				<span id="spanEFIA_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EFIA_DIRECC">Dirección</label>
+		<div class="form-group" id="dvEFIA_DIRECC">
+			<div class="input-group">
+				<label class="input-group-addon" for="EFIA_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
+				@*@Html.TextAreaFor(model => model.FIA_DIRECC, new { htmlAttributes = new { @class = "form-control", @id = "EFIA_DIRECC",rows="2" } })*@
+				<textarea id="EFIA_DIRECC" name="EFIA_DIRECC" rows="2" class="form-control"></textarea>
+				<span id="spanEFIA_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>	
+</div>
+

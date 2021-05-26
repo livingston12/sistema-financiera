@@ -1,0 +1,64 @@
+﻿@model SistemaImbrino.Models.sp_cuotasVencidas_Result
+
+@{ 
+    int? NumCuota = Model.NUM_CUOTA;
+    decimal mora = Model.mora;
+    string classCssNoMora = "";
+	string classCssSiMora = "";
+}
+<tr id="tr-@NumCuota">
+	<td class="text-center">@NumCuota</td>
+	<td>@Model.Fecha</td>
+	<td class="text-right">@Model.MONTO.NumberFormat()</td>
+	<td>
+		@{
+			string color = "";
+			if (Model.Status == "Atrasado")
+			{
+				color = "label-danger";
+			}
+			
+			else
+			{
+				color = "label-default";
+			}
+
+
+		}
+		<label class="label text-center  @color">@Model.Status</label>
+	</td>
+	<td class="text-right">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(mora)</td>
+	<td>
+		<label class="control-label not-bold " id="lbl-@NumCuota">
+			@Model.DESCRIPCION
+		</label>
+	</td>
+	<td class="text-center">
+		@Model.CUO_TIPO
+	</td>
+	<td>
+		@if (mora == 0)
+		{
+			classCssNoMora = "Sivisible";
+			classCssSiMora = "novisible";
+		}
+		else {
+			classCssSiMora = "Sivisible";
+			classCssNoMora = "novisible";
+		}
+			
+			<select class="dropdown form-control dw-cobro " disabled id="dw-@NumCuota" numberID="@ViewBag.number"  name="dw-@NumCuota" cuota="@NumCuota" style="width: 215px !important;">
+				<option value="0" selected>---Selecciona tipo cobro---</option>
+				<option value="13" class="@classCssSiMora">Saldo (incluye pago de mora)</option>
+				<option value="11" class="@classCssSiMora"> Saldo (modificar monto mora)</option>
+				<option value="15" class="@classCssSiMora">Saldo (no pago de la mora)</option>
+				<option value="01" class="@classCssSiMora divider" disabled="disabled">----------------------------------------</option>
+				<option value="16" class="@classCssSiMora">Abono (incluye pago de mora)</option>
+				<option value="12" class="@classCssSiMora">Abono (modificar monto mora)</option>
+				<option value="18" class="@classCssSiMora" >Abono (no pago de la mora)</option>
+				<option value="20" class="@classCssNoMora">Saldo cuota</option>
+				<option value="21" class="@classCssNoMora">Abono a cuota</option>
+			</select>
+
+	</td>
+</tr>

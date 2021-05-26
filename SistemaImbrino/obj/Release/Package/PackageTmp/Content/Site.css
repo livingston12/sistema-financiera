@@ -1,0 +1,164 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+a{
+	cursor:pointer;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+textarea {
+	resize: none;
+}
+
+.select-mania-item-text
+{
+	font-size: 1.2rem !important;
+}
+
+.not-bold {
+	font-weight: normal !important;
+}
+
+#Ceditar {
+	color: #f0ad4e;
+	background-color: white;
+}
+
+#Celiminar {
+	color: #d9534f;
+	background-color: white;
+}
+
+	#Celiminar:hover {
+		color: #fb5f5b;
+		background-color: white;
+	}
+#Ceditar:hover,#Celiminar:hover {
+	cursor: pointer;
+	font-size: 18px;
+}
+#Ceditar:hover {
+	color: #ffac37;
+	background-color: white;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+	max-width: 280px;
+}
+
+.marginDiv {
+    margin-top: 8px;
+}
+
+.hrnoMargin{
+    margin:0px;
+    
+}
+
+.bs-border-top-info {
+    border-color: #fc93f7;
+}
+.bs-border {    
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-top-width: 5px;
+    border-radius: 3px;
+}
+
+.text-BlueLight {
+    color: white;
+}
+
+	.text-BlueLight:hover {
+		color: #204d74;
+		background-color: #eee !important;
+	}
+
+.BgNav {
+	background-color: #f6c23e;
+	border-bottom: #c1a9a9 1px solid;
+}
+
+.bg-pink {
+	background-color: #ee6e73;
+}
+
+.btn-pink {
+	background-color: #ee6e73;
+	color:white;
+}
+	.btn-pink:hover {
+		background-color: #ff767b;
+		color: white;
+	}
+
+.bg-bluelgh {
+		background-color: #d5fff4;
+	}
+
+.bg-defaultlgh {
+	background-color: #efefef;
+}
+
+.font-sm {
+	font-size: 1.15rem;
+	
+}
+.noPdRight{
+	padding-right: 0px;
+}
+
+.noPdLeft {
+	padding-left: 0px;
+}
+
+.Sivisible {
+	display:block;
+}
+
+.novisible {
+	display:none;
+}
+
+.table-responsiveCustom{
+	overflow-x:auto;
+	overflow-y:auto;
+	height:30rem;
+}
+
+.widtTotal {
+	max-width: 3000px !important;
+}
+
+.has-incorrect {
+	border: #a94442;
+}
+
+.has-correct {
+	border: green;
+}
+@media only screen and (max-width: 768px) {
+	/* For mobile phones: */
+	[class*="col-"] {
+		padding: 2px;
+	}
+}
+
+

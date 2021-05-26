@@ -1,0 +1,726 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+	
+</head>
+<body>
+
+
+	<div class="navbar bg-pink  navbar-fixed-top">
+		<div class="container ">
+			<div class="navbar-header ">
+				<button type="button" class="navbar-toggle " data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				@Html.ActionLink(System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP"), "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-BlueLight" })
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Cobro", "Index", "CobrosHeader", null, new { @class = "text-BlueLight" })</li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a id="lifinAtrasados">Financiamientos Atrasados</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a id="liRegistroNCF">Registro NCF</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
+						</ul>
+					</li>
+					<li>@Html.ActionLink("Financiamientos", "Index", "Financiamientos", null, new { @class = "text-BlueLight" })</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maestros <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								@Html.ActionLink("Clientes", "Index", "Clientes", null, new { @class = "text-BlueLight" })
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>						
+						</ul>
+					</li>
+				</ul>
+				<a href="~/Views/Shared/_Layout.cshtml"></a>
+			</div>
+		</div>
+	</div>
+	<div class="container body-content">
+		<div class="bs-border  bs-border-top-info ">
+			@if (@ViewBag.Title != null)
+			{
+				<h3 class="text-capitalize" style="padding-bottom:20px;"><b>@ViewBag.Title</b></h3>
+			}
+			<div class="">
+				@RenderBody()
+			</div>
+		</div>
+
+		<footer></footer>
+	</div>
+
+
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/scripts")
+	@RenderSection("scripts", required: false)
+
+	@*------------- popup estado de cuenta reporte -------------*@
+	<div class="modal fade" id="estadoCuentaModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","EstadoCuenta")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<a type="button" class="close btn-cancelarCurrentCuota" href="@Url.Action("Index","Home")" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte  estado cuenta </h4>
+				</div>
+				<div class="modal-body" id="EstadoCuentaContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorte">
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Monto Financiar <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con monto financiar mayor de"></span></label>
+							<input type="number" class="form-control" placeholder="monto (>) mayor de" id="modal_montoFinanciar">
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Balance actual <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con Balance actual mayor de"></span></label>
+							<input type="number" class="form-control" placeholder="monto (>) mayor de" id="modal_montoActual">
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
+							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPago">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteEC">Generar Reporte</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*------------- popup cuotas vencidas reporte -------------*@
+	<div class="modal fade" id="cuotasVencidasModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","cuotasVencidas")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte cuotas vencidas </h4>
+				</div>
+				<div class="modal-body" id="EstadoCuentaContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteCV">
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Cliente  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cliente en especifico"></span></label>
+							<select id="dwClientes" class="form-control"></select>
+
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Clientes varias cuotas  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con mas de una cuota vencida"></span></label>
+							<input type="checkbox" id="modal_ckCuotasV" class="checkbox col-sm-6" />
+
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
+							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPagoCV">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteCV">Generar Reporte</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*------------- popup finan atrasados reporte -------------*@
+	<div class="modal fade" id="finAtrasadosModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","finAtrasados")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="myModalLabel">Reporte financiamientos atrasados </h4>
+				</div>
+				<div class="modal-body" id="EstadoCuentaContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteFA">
+						</div>
+						<div class="col-sm-6 text-left ">
+							<label>Cliente <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cliente en especifico"></span></label>
+							<select id="dwClientesFA" class="form-control"></select>
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
+							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPagoFA">
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteFA">Generar Reporte</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*------------- popup Regitros NCF reporte -------------*@
+	<div class="modal fade" id="registroNCFModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","RegistroNCF")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<a href="@Url.Action("Index","Home")" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="myModalLabel">Reporte Registro NCF </h4>
+				</div>
+				<div class="modal-body" id="registroNCFContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left">
+							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha inicio del RNC"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeRN">
+						</div>
+						<div class="col-sm-6 text-right">
+							<label>Fecha Hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha fin del RNC"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaRN">
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteRN">Generar Reporte</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*------------- popup Ingreso cuotas reporte -------------*@
+	<div class="modal fade" id="ingresoCuotasModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","IngresoCuotas")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte Ingresos por cuotas </h4>
+				</div>
+				<div class="modal-body" id="">
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha desde"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeIC">
+						</div>
+						<div class="col-sm-6 text-left ">
+							<label>Fecha hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha Hasta"></span></label>
+							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaIC">
+						</div>
+
+						
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Cliente  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cliente en especifico"></span></label>
+							<select id="dwClientesIC" class="form-control"></select>
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Financiamiento especifico  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Financiamiento en especifico"></span></label>
+							<select id="dwFinIC" class="form-control"></select>
+						</div>
+
+						<div class="col-sm-6 text-left ">
+							<label>Ordenar por  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Orden del reporte"></span></label>
+							<select id="dwOrdenIC" class="form-control">
+								<option value="Cliente">Cliente</option>
+								<option value="Recibo">Numero Recibo</option>
+								<option value="Monto">Monto</option>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteIC">Generar Reporte</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+        $(document).ready(function () {
+			$('[data-toggle="tooltip"]').tooltip();
+
+            $("#dwClientes").selectMania({
+                width: '100%',
+                size: 'medium',
+                search: true
+
+            });
+            $("#dwClientesFA").selectMania({
+                width: '100%',
+                size: 'medium',
+                search: true
+
+			});
+
+			$("#dwClientesIC").selectMania({
+				width: '100%',
+				size: 'medium',
+				search: true
+
+			});
+
+			$("#dwFinIC").selectMania({
+				width: '100%',
+				size: 'medium',
+				search: true
+
+			});
+
+
+            desabilitarCamposSegunSelect();
+
+
+             // Abrir popup Estado cuenta
+            $("#liEstadoCuenta").click(function () {
+                Show_closeModal("#estadoCuentaModal", true);
+            });
+
+             // Abrir popup cuotas vencidas
+            $("#licuotasVencidas").click(function () {
+                Show_closeModal("#cuotasVencidasModal", true);
+                var url = "@Url.Action("Getclients", "CuotasVencidas")";
+
+                 $.ajax({
+                    type: "GET",
+                    url: url,
+                     dataType: "json",
+                    success: function (_data) {
+                        llenarDrop(_data,'CV');
+                    }
+                });
+
+
+            });
+
+            // Abrir popup finacinanciamientos atrasados
+            $("#lifinAtrasados").click(function () {
+                Show_closeModal("#finAtrasadosModal", true);
+                  var url = "@Url.Action("Getclients", "FinAtrasados")";
+
+                 $.ajax({
+                    type: "GET",
+                    url: url,
+                     dataType: "json",
+                    success: function (_data) {
+                        llenarDrop(_data,'FA');
+                    }
+				});
+
+				FinIC
+			});
+
+			// Abrir popup Registro NCF
+			$("#liRegistroNCF").click(function () {
+				Show_closeModal("#registroNCFModal", true);
+			});
+
+			// Abrir popup ingreso por cuotas
+			$("#liIngresoCuotas").click(function () {
+				Show_closeModal("#ingresoCuotasModal", true);				
+                  var url = "@Url.Action("Getclients", "IngresoCuotas")";				
+                 $.ajax({
+                    type: "GET",
+                    url: url,
+                     dataType: "json",
+                    success: function (_data) {
+                        llenarDrop(_data,'IC');
+                    }
+				});
+
+				
+			});
+
+
+            // Boton de generar reporte de estado de cuenta
+			$("#btn-GenerarReporteEC").click(function () {
+				var $btn = $(this).button('loading');
+                var url = $("#estadoCuentaModal").data('url');
+                var _modal_FechaCorte = $("#modal_FechaCorte").val();
+                var _modal_montoFinanciar = $("#modal_montoFinanciar").val();
+                var _modal_montoActual = $("#modal_montoActual").val();
+                var _modal_UltimoPago = $("#modal_UltimoPago").val();
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    //contentType: "application/json",
+                    data: {
+                        fechaCorte: _modal_FechaCorte
+                        , montoFinanciar: _modal_montoFinanciar
+                        , montoActual: _modal_montoActual
+                        , ultimoPago: _modal_UltimoPago
+                    },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport", "EstadoCuenta")";
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+						$btn.button('reset');
+                    }
+                });
+            });
+
+                 // Boton de generar reporte de cuotas vencidas
+			$("#btn-GenerarReporteCV").click(function () {
+				var $btn = $(this).button('loading');
+                var url = $("#cuotasVencidasModal").data('url');
+                var _modal_FechaCorte = $("#modal_FechaCorteCV").val();
+                var _modal_Cliente = $("#dwClientes").val();
+                var _modal_CuotasV = $("#modal_ckCuotasV").prop('checked');
+                var _modal_UltimoPago = $("#modal_UltimoPagoCV").val();
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    //contentType: "application/json",
+                    data: {
+                        fechaCorte: _modal_FechaCorte
+                        , Cliente: _modal_Cliente
+                        , isMultiplecuota: _modal_CuotasV
+                        , ultimoPago: _modal_UltimoPago
+                    },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport", "CuotasVencidas")";
+
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+						
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+            });
+
+
+              // Boton de generar reporte de financiamientos atrasados
+            $("#btn-GenerarReporteFA").click(function ()
+			{
+				var $btn = $(this).button('loading');
+                var url = $("#finAtrasadosModal").data('url');
+                var _modal_FechaCorte = $("#modal_FechaCorteFA").val();
+                var _modal_Cliente = $("#dwClientesFA").val();
+                var _modal_UltimoPago = $("#modal_UltimoPagoFA").val();
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    //contentType: "application/json",
+                    data: {
+                        fechaCorte: _modal_FechaCorte
+                        , Cliente: _modal_Cliente
+                        , ultimoPago: _modal_UltimoPago
+                    },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport", "FinAtrasados")";
+
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+						
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+					
+                });
+            });
+
+
+			  // Boton de generar reporte de ingreso cuotas
+			$("#btn-GenerarReporteIC").click(function () {
+				var $btn = $(this).button('loading');
+				var url = $("#ingresoCuotasModal").data('url');
+				var _modal_Desde = $("#modal_FechaDesdeIC").val();
+				var _modal_Hasta = $("#modal_FechaHastaIC").val();
+				var _modal_cliente = $("#dwClientesIC").val();
+				var _modal_Fin = $("#dwFinIC").val();
+				var _modal_ordenPor = $("#dwOrdenIC").val();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    //contentType: "application/json",
+                    data: {
+						fechaDesde: _modal_Desde,
+						fechaHasta: _modal_Hasta,
+						Cliente: _modal_cliente,
+						finID: _modal_Fin,
+						OrdenarPor: _modal_ordenPor
+                    },
+					success: function (_data)
+					{
+						if (_data.Is_Success)
+						{
+                            var url = "@Url.Action("generateReport", "ingresoCuotas")";
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+			});
+
+			
+
+			 // Boton de generar reporte de registro NCF
+			$("#btn-GenerarReporteRN").click(function () {
+				var $btn = $(this).button('loading');
+                var url = $("#registroNCFModal").data('url');
+                var _modal_FechaDesde = $("#modal_FechaDesdeRN").val();
+				var _modal_FechaHasta = $("#modal_FechaHastaRN").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    //contentType: "application/json",
+                    data: {
+						fechaDesde: _modal_FechaDesde,
+						fechaHasta: _modal_FechaHasta
+                    },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport", "RegistroNCF")";
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+            });
+
+        });
+
+
+        // Llenar drowdown en clientes pantalla cuotas vencidas
+        function llenarDrop(data, Report) {
+
+            var IdDw = "";
+			if (Report == "CV") {
+				IdDw = "#dwClientes";
+			}
+			else if (Report == "FA") {
+				IdDw = "#dwClientesFA";
+			}
+			else if (Report == "IC") {
+				IdDw = "#dwClientesIC";
+			}
+			else if (Report == "FinIC") {
+				IdDw = "#dwFinIC";
+			}
+
+            $(IdDw).append($('<option />', {
+                text: '-- Selecciona un cliente --',
+                value: '',
+            }));
+
+            $(data).each(function (index, element) {
+                $(IdDw).append($('<option />', {
+                    text: element.value,
+                    value: element.id,
+                }));
+
+
+            });
+            $(IdDw).selectMania('update');
+
+        }
+
+        // se desabilitan los campos cuando se llena un campo
+        function desabilitarCamposSegunSelect() {
+
+			// Filtros Reporte ingreso Cuotas clientes
+			$("#dwClientesIC").change(function () {
+				var idCLiente = $(this).val();
+				var dwFinIC = $("#dwFinIC");
+				dwFinIC.empty();
+				if (idCLiente ==0 ) {
+					dwFinIC.prop("disabled", "disabled");
+					dwFinIC.selectMania('update');
+				}
+				else {
+					dwFinIC.removeAttr("disabled", "disabled");
+					   var url = "@Url.Action("GetFIns", "IngresoCuotas")";
+				$.ajax({
+					type: "GET",
+					url: url,
+					dataType: "json",
+					data: {
+						clienteID: idCLiente
+					},
+					success: function (_data) {
+						llenarDrop(_data, 'FinIC');
+					}
+				});
+					dwFinIC.selectMania('update');
+				}
+			});
+
+            // Filtros Reporte Cuotas vencidas
+            $("#dwClientes").change(function () {
+                var codigoCliente = $(this).val();
+                var chkCuotas = $("#modal_ckCuotasV");
+
+                if (codigoCliente == '') {
+                    chkCuotas.removeAttr("disabled", "disabled");
+
+                }
+                else {
+                    chkCuotas.prop("disabled", "disabled");
+                }
+            });
+
+            $("#modal_ckCuotasV").change(function () {
+                var chk = $(this).prop('checked');
+                var dwClientes = $("#dwClientes");
+                if (chk) {
+                    dwClientes.prop("disabled", "disabled");
+                    dwClientes.selectMania('update');
+                }
+                else {
+                    dwClientes.removeAttr("disabled", "disabled");
+                    dwClientes.selectMania('update');
+                }
+            });
+
+            $("#modal_FechaCorteCV").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_UltimoPagoCV");
+                if (Fecha.length == 10) {
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+            $("#modal_UltimoPagoCV").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_FechaCorteCV");
+                if (Fecha.length == 10) {
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+            // Filtros Reporte Estado cuenta
+            $("#modal_FechaCorte").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_UltimoPago");
+                if (Fecha.length == 10) {
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+            $("#modal_UltimoPago").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_FechaCorte");
+				if (Fecha.length == 10) {
+					modal_UltimoPagoCV.val("");
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+             // Filtros Reporte Financiamientos atrasados
+            $("#modal_FechaCorteFA").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_UltimoPagoFA");
+                if (Fecha.length == 10) {
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+            $("#modal_UltimoPagoFA").blur(function () {
+                var Fecha = $(this).val();
+                var modal_UltimoPagoCV = $("#modal_FechaCorteFA");
+                if (Fecha.length == 10) {
+                    modal_UltimoPagoCV.prop("disabled", "disabled");
+                } else {
+                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+                }
+            });
+
+
+        }
+	</script>
+
+
+
+</body>
+</html>

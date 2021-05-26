@@ -1,0 +1,144 @@
+﻿@model SistemaImbrino.Models.VW_rptFinAtrasados
+
+
+<div class="container-fluid panel panel-warning">
+	
+	<div class="row">
+		<div class="col-xs-12 col-md-12 bg-bluelgh">
+			<label class="col-xs-12 text-center">DATOS DEL FINANCIAMIENTO</label>
+
+		</div>
+		<div class="col-xs-6 col-md-6 text-left ">
+			<label id="lblFin" class="not-bold">
+				Finaciamiento:
+				@Html.LabelFor(model => model.C__FIN, Model.C__FIN, new { @id = "Num_Fin", @class = "control-label not-bold" })
+			</label>
+		</div>
+		<div class="col-xs-6  col-md-6 text-left">
+			<label class="not-bold col-xs-3 col-md-3 col-xs-offset-0 col-md-offset-7 text-left">
+				Monto:
+
+			</label>
+			@Html.LabelFor(model => model.MONTO, String.Format("{0:n}", Model.MontoTotal), new { @id = "monto", @class = "control-label not-bold col-xs-1 col-md-2 text-right noPdRight" })
+		</div>
+	</div>
+	<hr class="hrnoMargin" />
+
+	<div class="row">
+
+		<div class="col-xs-6 col-md-6">
+			<label id="lblFac" class="not-bold">
+				Factura:
+				@Html.LabelFor(model => model.C__FIN, Model.C__FIN, new { @id = "Num_Fac", @class = "control-label not-bold" })
+			</label>
+		</div>
+		<div class="col-xs-6 col-md-6">
+			<label class="not-bold col-xs-3 col-xs-offset-0 col-md-offset-7 text-left">
+				Fecha:
+			</label>
+			@Html.LabelFor(model => model.fecha, Model.fecha, new { @id = "fecha", @class = "control-label not-bold col-xs-2 text-right noPdRight" })
+
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-md-6">
+			<label class="not-bold">
+				Cliente:
+			</label>
+			@Html.LabelFor(model => model.CLIENTE, Model.CLIENTE, new { @id = "cliente", @class = "control-label" })
+		</div>
+
+		<div class="col-xs-12 col-md-6">
+			<label class="not-bold  col-md-3 col-xs-2 col-xs-offset-0 col-md-offset-7 text-left">% Interes:</label>
+			@Html.LabelFor(model => model.FAC_INTERE, String.Format("{0:n}", Model.FAC_INTERE) + "%", new { @id = "FAC_INTERE", @class = "control-label not-bold col-md-2 col-xs-1 text-right noPdRight" })
+		</div>
+
+		<div class="clearfix"></div>
+		<div class="col-xs-12  col-md-6 text-left">
+			<label class="control-label not-bold ">
+				Direccion:
+			</label>
+			@Html.LabelFor(model => model.DIRE_CLIENTE, Model.DIRE_CLIENTE, new { @id = "DIRE_CLIENTE", @class = "control-label not-bold" })
+
+		</div>
+		<div class="col-xs-6  col-md-6">
+			<label class="not-bold  col-xs-8 col-md-3 col-xs-offset-0  col-md-offset-7 text-left ">Forma pago:</label>
+			@Html.LabelFor(model => model.forma_pago, Model.forma_pago, new { @id = "forma_pago", @class = "control-label not-bold col-xs-1 text-right noPdRight" })
+
+
+		</div>
+
+		<div class="col-xs-6">
+			<label class="not-bold">Telefono:</label>
+			@Html.LabelFor(model => model.TELEFONO1, Model.TELEFONO1, new { @id = "tel", @class = "control-label not-bold" })
+		</div>
+		
+		<div class="col-xs-6  text-left">
+			<label class="not-bold col-xs-9  col-md-4  col-xs-offset-0 col-md-offset-7">Total cuotas:</label>
+			@Html.LabelFor(model => model.CUOTA_TOTAL, Model.CUOTA_TOTAL.ToString(), new { @id = "CUOTA_TOTAL", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
+		</div>
+
+		<div class="col-xs-6 ">
+			<label class="not-bold ">Cedula:</label>
+			@Html.LabelFor(model => model.CEDULA_CLIENTE, Model.CEDULA_CLIENTE, new { @id = "CEDULA_CLIENTE", @class = "control-label not-bold" })
+		</div>
+
+
+		<div class="col-xs-6">
+			<label id="lblCp" class="not-bold col-xs-9 col-md-4  col-xs-offset-0 col-md-offset-7 text-left">Cuotas pendientes:</label>
+			@Html.LabelFor(model => model.CUOTA_PENDIENTE, Model.CUOTA_PENDIENTE.ToString(), new { @id = "CUOTA_PENDIENTE", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
+
+
+		</div>
+		
+	</div>
+
+	<hr class="hrnoMargin" />
+	<div class="row marginDiv">
+		<div class="col-xs-12 col-md-6">
+			<label class="not-bold">Fiador:</label>
+			@Html.LabelFor(model => model.FIADOR, Model.FIADOR, new { @id = "FIADOR", @class = "control-label not-bold" })
+		</div>
+
+		<div class="col-xs-4 col-md-6">
+			<label class="not-bold col-xs-5 col-md-3  col-xs-offset-0 col-md-offset-7 text-left">
+				Balance:
+			</label>
+			@Html.LabelFor(model => model.balanceTOTAL, String.Format("{0:n}", Model.balanceTOTAL), new { @id = "balance", @class = "control-label col-xs-2 bg-defaultlgh text-right noPdRight" })
+		</div>
+		<div class="clearfix visible-xs" ></div>
+		<div class="col-xs-12 col-md-6 ">
+			<label class="not-bold ">Garantia:</label>
+			@Html.LabelFor(model => model.FAC_GARANT, Model.FAC_GARANT, new { @id = "FAC_GARANT", @class = "control-label not-bold" })
+		</div>
+		<div class="col-xs-6 ">
+			<label class="not-bold col-xs-3 col-xs-offset-0 col-md-3 col-md-offset-7  text-left">Capital:</label>
+			@Html.LabelFor(model => model.BalanceCapitalTOTAL, String.Format("{0:n}", Model.BalanceCapitalTOTAL), new { @id = "BalanceCapitalTOTAL", @class = "control-label not-bold col-xs-2 bg-defaultlgh text-right noPdRight" })
+		</div>
+		<div class="col-xs-6 ">
+			<label class="not-bold">Promotor:</label>
+			@Html.LabelFor(model => model.PROMOTOR, Model.PROMOTOR, new { @id = "PROMOTOR", @class = "control-label not-bold" })
+		</div>
+
+		<div class="col-xs-6 col-xs-pull-6 col-md-pull-0">
+			<label class="not-bold col-xs-3 col-xs-offset-0   col-md-3 col-md-offset-7 text-left">Interes:</label>
+			@Html.LabelFor(model => model.BalanceInteresTOTAL, String.Format("{0:n}", Model.BalanceInteresTOTAL), new { @id = "BalanceInteresTOTAL", @class = "control-label not-bold col-xs-2  text-right noPdRight" })
+		</div>
+
+		<div class="col-xs-8 col-md-6  bg-bluelgh">
+			<label class="not-bold">Ultima fecha pago:</label>
+			@Html.LabelFor(model => model.ULTIMO_PAGO, Model.ULTIMO_PAGO, new { @id = "ULTIMO_PAGO", @class = "control-label not-bold " })
+		</div>
+
+		<div class="col-xs-4  col-md-6 bg-bluelgh">
+			<label class="not-bold col-xs-4 col-xs-offset-0 col-md-3 col-md-offset-7 text-left">Mora:</label>
+			@Html.LabelFor(model => model.mora, String.Format("{0:n}", Model.mora) , new { @id = "mora", @class = "control-label not-bold col-xs-2 text-right noPdRight" })
+
+		</div>
+
+	</div>
+
+
+
+</div>
+
+

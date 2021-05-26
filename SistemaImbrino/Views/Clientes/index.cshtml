@@ -1,0 +1,358 @@
+﻿@model SistemaImbrino.Models.CLIENTE
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Maestro clientes";
+	ViewBag.nameView = "Cliente";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_NOMBRE">Nombre cliente</label>
+		<div class="form-group" id="dvCTE_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
+				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
+				@Html.EditorFor(model => model.CTE_NOMBRE, new { htmlAttributes = new { @class = "form-control texto" } })
+				<span id="spanCTE_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_APELLI">Apellido cliente</label>
+		<div class="form-group" id="dvCApellido">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_APELLI"><i class="glyphicon glyphicon-font"></i></label>
+				@Html.EditorFor(model => model.CTE_APELLI, new { htmlAttributes = new { @class = "form-control" } })
+				<span id="spanCNombre" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_CEDULA">Cedula cliente</label>
+		<div class="form-group" id="dvCTE_CEDULA">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.CTE_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula" } })
+				<span id="spanCTE_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_TELEFO">Telefono cliente</label>
+		<div class="form-group" id="dvCTE_TELEFO">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.CTE_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono" } })
+				<span id="spanCTE_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_DIRECC">Dirección cliente</label>
+		<div class="form-group" id="dvCTE_DIRECC">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
+				@Html.EditorFor(model => model.CTE_DIRECC, new { htmlAttributes = new { @class = "form-control" } })
+				<span id="spanCTE_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="CTE_ZONA">Zona cliente</label>
+		<div class="form-group" id="dvCTE_ZONA">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_ZONA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select class="form-control" id="CTE_ZONA" name="CTE_ZONA"></select>
+				<span id="spanCTE_ZONA" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="CTE_TIPO">Tipo cliente</label>
+		<div class="form-group" id="dvCTE_TIPO">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_TIPO"><i class="glyphicon glyphicon-object-align-left"></i></label>
+				<select class="form-control" id="CTE_TIPO" name="CTE_TIPO"></select>
+				<span id="spanCTE_TIPO" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-3">
+		<input type="submit" value="Crear" id="btn_crearCliente" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cliente" class="table table-condensed table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>Nombre completo</th>
+					<th>Cedula</th>
+					<th>Telefono</th>
+					<th>Direccion</th>
+					<th>Zona</th>
+					<th>Tipo cliente</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListCLientes != null)
+				{
+					foreach (var vw_cliente in ViewBag.ListCLientes)
+					{
+						@Html.Partial("_clientesDetalle", (SistemaImbrino.Models.CLIENTE)vw_cliente)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarCliente")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_EditarCliente">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			GetZonas();
+			GetTiposClientes();
+			$("#tbl-cliente").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearCliente").click(function (e)
+			{
+				insertarEditarCLiente("I");
+			});
+			$("#btn_EditarCliente").click(function (e) {
+				insertarEditarCLiente("U");
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarCLiente(typeAction)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearCliente")" : "@Url.Action("ActualizarCliente")";
+
+			var _CTE_CODIGO = typeAction == "I" ? "0" : $("#CTE_CODIGO").val().trim();
+
+			    var E = typeAction == "I" ? "" : "E";
+			    var _CTE_NOMBRE = $("#" + E+"CTE_NOMBRE").val().trim();
+				var _CTE_APELLI = $("#" + E +"CTE_APELLI").val().trim();
+			    var _CTE_CEDULA = $("#" + E + "CTE_CEDULA").val().trim();
+
+			if (typeAction == "I")
+			{
+				_CTE_CEDULA = _CTE_CEDULA.replaceAll("-", "");
+			}
+				
+			var _CTE_TELEFO = $("#" + E + "CTE_TELEFO").val().trim();
+			var _CTE_DIRECC = $("#" + E + "CTE_DIRECC").val().trim();
+			var _CTE_ZONA = $("#" + E + "CTE_ZONA").val();
+			var _CTE_TIPO = $("#" + E + "CTE_TIPO").val();
+
+				if (_CTE_NOMBRE == "" || _CTE_APELLI == "" ||
+					_CTE_CEDULA == "" || _CTE_TELEFO == "" ||
+					_CTE_DIRECC == "" || _CTE_ZONA == "0"
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					return;
+				}
+
+			if (_CTE_CEDULA.length != 11 && typeAction == "I")
+				{
+					MessageNotification("El formato de la cedula es incorrecto", false);
+					return;
+				}
+				//var url = "@Url.Action("CrearCliente")";
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					 CTE_CODIGO: _CTE_CODIGO
+					,CTE_NOMBRE : _CTE_NOMBRE
+					,CTE_APELLI : _CTE_APELLI
+					,CTE_CEDULA : _CTE_CEDULA
+					,CTE_TELEFO : _CTE_TELEFO
+					,CTE_DIRECC : _CTE_DIRECC
+					,CTE_ZONA : _CTE_ZONA
+					,CTE_TIPO: _CTE_TIPO
+					
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+					
+				}
+			});
+
+		}
+		function GetZonas(id = 'CTE_ZONA') {
+
+			var url = "@Url.Action("GetZonas")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "Zona cliente",true,false);
+				}
+			});
+		}
+
+		function GetTiposClientes(id = "CTE_TIPO") {
+			var url = "@Url.Action("GetTiposClientes")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					llenarDropdows(_data, id, "Tipo cliente",false,false);
+				}
+			});
+		}
+
+		function EliminarCurrentClient(id,nombre) {
+			mensajeEliminarCliente(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarCliente(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el cliente " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCliente(id);
+				});
+		}
+
+		function eliminarCliente(_id)
+		{
+			var url = "@Url.Action("EliminarCliente")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#CTE_CODIGO").val(_id);
+			//document.cookie = "CTE_CODIGO=" + id;
+
+			Show_closeModal("#modalCeditar", true);
+
+			$("#ECTE_ZONA").empty();
+			$("#ECTE_TIPO").empty();
+			GetZonas("ECTE_ZONA");
+			GetTiposClientes("ECTE_TIPO");
+
+			var url = "@Url.Action("GetCurrentCliente")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				//dataType: "json",
+				success: function (_data)
+				{
+
+					$("#ECTE_NOMBRE").val(_data.CTE_NOMBRE)
+					$("#ECTE_APELLI").val(_data.CTE_APELLI)
+					$("#ECTE_CEDULA").val(_data.CTE_CEDULA)
+					$("#ECTE_TELEFO").val(_data.CTE_TELEFO)
+					$("#ECTE_DIRECC").val(_data.CTE_DIRECC)
+					$("#ECTE_ZONA").val(_data.CTE_ZONA)
+					$("#ECTE_TIPO").val(_data.CTE_TIPO)
+					$("#CTE_CODIGO").val(_id);
+					//MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+
+
+
+
+		}
+	</script>
+}
+

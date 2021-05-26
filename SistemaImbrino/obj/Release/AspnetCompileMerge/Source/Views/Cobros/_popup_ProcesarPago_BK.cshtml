@@ -1,0 +1,70 @@
+﻿
+<input type="hidden" id="modal_descMora"/>
+<input type="hidden" id="modal_descInt" />
+<input type="hidden" id="modal_isTotal" value="false" />
+
+<div class="row panel panel-warning">
+	<div class="col-sm-6 text-left ">
+		<label class="control-label"># fin:</label>
+		<label id="modal_lblFin" class="control-label not-bold"> </label>
+	</div>
+
+	<div class="col-sm-6 text-right ">
+		<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+		<label id="modal_lblfecha" class="control-label"> </label>
+	</div>
+</div>
+<br />
+<div class="row">
+
+	<div class="col-sm-8 pull-right ">
+		<label class="control-label col-sm-8 text-center">
+			<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+			Forma pago:
+		</label>
+		<select class="dropdown form-control dw-cobro " id="modal_forma_pago" name="modal_forma_pago" style="width: 215px !important;">
+			<option value="E" selected>Efectivo</option>
+			<option value="T">Tarjeta</option>
+		</select>
+	</div>
+
+
+</div>
+
+<br />
+<br />
+
+
+@*Listado de monto*@
+<div class="col-sm-12 panel panel-warning">
+	<div class="row">
+		<div class="col-sm-6 text-left ">
+			<label class="control-label">Subtotal:</label>
+			<label id="modal_lblSubtotal" class="control-label not-bold"> </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left ">
+			<label class="control-label">Itebis:</label>
+			<label id="modal_lblItebis" class="control-label not-bold"> </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left ">
+			<label class="control-label">Descuento:</label>
+			<label id="modal_lblDescuento" class="control-label not-bold"> </label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left ">
+			<label class="control-label">Otros cargos:</label>
+			<label id="modal_lblotros_cargos" class="control-label not-bold"> </label>
+		</div>
+		<div class="col-sm-6 text-right" style="font-size: 25px;">
+			<label class="control-label">  <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Total:</label>
+			<label id="modal_lblTotal" class="control-label not-bold"> </label>
+		</div>
+	</div>
+
+
+</div>

@@ -1,0 +1,49 @@
+﻿@model SistemaImbrino.Models.sp_cuotasVencidas_Result
+
+@{
+	decimal monto = 0;
+
+	decimal Mora = 0;
+
+	if (ViewBag.tipoCobro == "Pago" || ViewBag.tipoCobro == "Saldo cuota" || ViewBag.tipoCobro == "Saldo incluye pago de mora")
+	{
+		monto = Model.MONTO;
+
+		Mora =Model.mora;
+	}
+	else if (ViewBag.tipoCobro == "Saldo NO pago de la mora" || ViewBag.tipoCobro == "Abono NO pago de la mora")
+	{
+		monto = Model.MONTO;
+
+		Mora = 0;
+	}
+	else //if (ViewBag.tipoCobro == "Abono incluye pago de mora" || ViewBag.tipoCobro == "Abono")
+	{
+		monto = 0;
+
+		Mora = Model.mora;
+	}
+
+
+
+
+
+}
+<input id="modal_numfin" type="hidden" value="@Model.C__FIN" />
+<input id="modal_numcuota" type="hidden" value="@Model.NUM_CUOTA" />
+<input id="modal_tipoCobro" type="hidden" value="@ViewBag.tipoCobro" />
+<input id="modal_index" type="hidden" value="@ViewBag.Index" />
+
+
+<div class="row">
+	<div class="col-md-4 text-left ">
+		<label>Monto</label>
+		<input type="text" max="@Model.MONTO" value="@monto" class="form-control" id="modal_monto">
+	</div>
+
+	<div class="col-md-4 text-center ">
+		<label>Mora</label>
+		<input type="text"  max="@Model.mora" value="@Mora" class="form-control" id="modal_mora">
+
+	</div>
+</div>

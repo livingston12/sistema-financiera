@@ -1,0 +1,125 @@
+﻿
+@{
+	ViewBag.Title = "Cobros disponibles";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="hero-callout">
+
+
+	
+	<div class="row">
+		<div class="col-sm-3" style="float:right;">
+			<div class="input-group input-group-lg ">
+				<span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon1" aria-hidden="true"></span>
+				<input type="search" id="txt_search" style="top:1px" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon1" onkeyup="doSearch('tbl_headerCuotas', 'txt_search');doSearch('tbl_DetalleCuotas', 'txt_search');" />
+			</div>
+		</div>		
+	</div>
+	
+	<br />
+    
+        <table id="tbl_headerCuotas" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Cliente</th>
+                    @*<th class="text-center">Finaciamientos</th>*@
+                    <th class="text-center">Balance Total</th>
+                    <th class="text-center">Capital total</th>
+                    <th class="text-center">Interes total</th>
+                    <th class="text-center">Mora total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var CuotasVen in ViewBag.listCobrosHeader)
+                {
+                    string isVisible = CuotasVen.CountT > 1 ? "1" : "0";
+
+                    <tr role="row" id="filaH-@CuotasVen.ClienteId" isVisible="1">
+                        <td align="center">
+                            @if (CuotasVen.CountT > 1)
+                            {
+                                <span class="glyphicon glyphicon-plus-sign  btn text-success" style="cursor:pointer" clienteId="@CuotasVen.ClienteId"></span>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("index", "Cobros", new { FinID = CuotasVen.FinID })" class="control-label"> @CuotasVen.FinID </a>
+                            }
+                        </td>
+
+
+                        <td>@CuotasVen.cliente</td>
+                        @*<td class="text-center">@CuotasVen.CountT</td>*@
+                        <td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.montoTotal) </td>@*@String.Format("{0:n}", CuotasVen.montoTotal)*@
+                        <td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.capitalTotal)</td>
+                        <td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.interesTotal)</td>
+                        <td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
+
+                    </tr>
+
+                    <tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
+                        <td></td>
+
+                        <td colspan="5">
+                            @Html.Action("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })
+                        </td>
+                    </tr>
+
+
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+		
+	
+
+	@section scripts {
+
+		<script type="text/javascript">
+		
+			$(document).ready(function () {
+                //$('#tbl_headerCuotas').DataTable();
+                $('#tbl_headerCuotas table').DataTable({
+                    "searching": false,
+                    "lengthChange": false,
+                    "paging": false,
+                    "ordering": true,
+                    "info": false                    
+                });
+               
+             
+				$("#tbl_headerCuotas tbody span").click(function () {
+					var cliente = $(this).attr("clienteId");
+					var fila = $("#fila-" + cliente);
+					var filaH = $("#filaH-" + cliente);
+
+					if (fila.css("display") == "none") {
+						fila.css("display", "table-row");
+						// Se elimina el signo de mas(+) y se pone el de menos(-)
+						$(this).removeClass("glyphicon-plus-sign");
+						$(this).removeClass("text-success");
+						$(this).addClass("glyphicon-minus-sign");
+						$(this).addClass("text-danger");
+						filaH.addClass("warning");
+
+					} else {
+						fila.css("display", "none");
+						// Se elimina el signo de menos(-) y se pone el de mas(+)
+						$(this).removeClass("glyphicon-minus-sign");
+						$(this).removeClass("text-danger");
+						$(this).addClass("glyphicon-plus-sign");
+						$(this).addClass("text-success");
+						filaH.removeClass("warning");
+					}
+
+				});
+			});
+		</script>
+
+	}

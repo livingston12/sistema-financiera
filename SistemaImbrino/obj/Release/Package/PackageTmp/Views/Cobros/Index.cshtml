@@ -1,0 +1,576 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Index</title>
+
+</head>
+
+
+
+@Html.Partial("_CobrosHeader", (SistemaImbrino.Models.VW_rptFinAtrasados)ViewBag.ListAtrasados)
+@*@Html.Partial("_CobrosHeader", (SistemaImbrino.Models.VW_rptCuotasVencidas)ViewBag.ListAtrasados)*@
+
+<div class="row ">
+
+	<input type="hidden" id="Fecha_pago" value="@ViewBag.FechaPago" />
+	<div class="col-sm-12 text-right ">
+		<a id="btn-HeaderCuotas" class="btn btn-warning pull-left" href="@Url.Action("Index","CobrosHeader")"><span class="glyphicon glyphicon-triangle-left"></span> Atras</a>
+		<button id="btn-limpiar" class="btn btn-danger" onclick="document.location.reload();"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
+		<button id="btn-cobroTotal_" class="btn btn-primary"><span class="glyphicon glyphicon-credit-card"></span> Saldo total</button>
+		<button id="btn-ProcesarCobro" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Procesar Cobro</button>
+	</div>
+
+</div>
+<br />
+<div class="table-responsiveCustom">
+	<table class="table table-hover table-bordered table-condensed bg-pink table-fixed" id="tbl_detalleCuotasC">
+		<thead>
+			<tr>
+				<th style="width:10px !important;">Cuota</th>
+				<th>F. Vencim</th>
+				<th>Monto</th>
+				<th>Status</th>
+				<th>Mora</th>
+				<th>Observaciones</th>
+				<th>Tipo Cuota</th>
+				<th>Tipo Pago</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var CuotasVen in ViewBag.ListCuotasVencidas)
+			{
+
+				@Html.Partial("_CobrosDetalle", (SistemaImbrino.Models.sp_cuotasVencidas_Result)CuotasVen)
+
+
+			}
+
+
+		</tbody>
+
+	</table>
+
+
+</div>
+<div class="col-xs-12 text-left label bg-pink">
+	<label id="lblTotalGeneral" style="font-size:1.5rem" class="control-label " />
+</div>
+
+
+
+
+<!--------------------------------------- Modal por cada cuota seleccionada ----------------------------------------------->
+<div class="modal fade" id="CobroModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("_popup_Cobro")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body" id="CobroContainer">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-Guardar_cuota">Aplicar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarCurrentCuota">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal para Procesar el cobro completo ----------------------------------------------->
+<div class="modal fade" id="ProcesarCobroModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("Cobrar")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					Cobrar Cuota
+				</h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_ProcesarPago")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-Cobrocompleto">Cobrar</button>
+				<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal para Procesar el cobro de todas las cuotas pendientes ----------------------------------------------->
+@*<div class="modal fade" id="CobroTotalModal" tabindex="-1" data-url='@Url.Action("Cobrar")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+						Cobrar total cuotas
+					</h4>
+				</div>
+				<div class="modal-body">
+					@Html.Partial("_popup_ProcesarPagoTotal")
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" id="btn-GuardarAllCuotas">Guardar</button>
+					<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Close</button>
+
+				</div>
+			</div>
+		</div>
+	</div>*@
+
+<div class="modal fade" id="CobroTotalModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("_popup_ProcesarPagoTotal")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabelAll"> </h4>
+			</div>
+			<div class="modal-body" id="CobroContainerAll">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-GuardarAllCuotas">Aplicar</button>
+				<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Close</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		var data = [];
+		$(document).ready(function ()
+		{
+			
+			
+
+			HabilitarPrimeraceldaTabla();
+			$("#tbl_detalleCuotasC").DataTable(
+				{
+					"searching": false,
+					"lengthChange": false,
+					"paging": false,
+					"ordering": true,
+					"info": false
+				}
+			);
+
+			$(".dw-cobro").change(function (e) {
+
+
+				var id_Cuota = $(this).attr('cuota');
+				//alert($(this).val());
+				var id_tipo = $(this).val();
+				var indice = 0;
+				if (id_tipo == "0") {
+					indice = data.length - 1;
+					var object = removeItemArray(data);
+					var index = $(object).attr("numCuota");
+					$("#lbl-" + index).text("");
+
+					$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
+
+				} else {
+					var tipo_Cobro = "";
+					if (id_tipo == "11") {
+						tipo_Cobro = "Pago";
+					} else if (id_tipo == "12") {
+						tipo_Cobro = "Abono";
+					} else if (id_tipo == "13") {
+						tipo_Cobro = "Saldo incluye pago de mora";
+					}
+					else if (id_tipo == "15") {
+						tipo_Cobro = "Saldo NO pago de la mora";
+					}
+					else if (id_tipo == "16") {
+						tipo_Cobro = "Abono incluye pago de mora";
+					}
+					else if (id_tipo == "18") {
+						tipo_Cobro = "Abono NO pago de la mora";
+					}
+					else if (id_tipo == "20") {
+						tipo_Cobro = "Saldo cuota";
+					}
+					else if (id_tipo == "21") {
+						tipo_Cobro = "Abono a cuota";
+					}
+
+
+					$("#myModalLabel").html(tipo_Cobro + " Cuota " + id_Cuota);
+					var Modal = $('#CobroModal');
+					var id_numFin = $('#Num_Fin').html();
+
+					var Fecha_pago = $("#Fecha_pago").val();
+					var url = Modal.data('url') + "?id_numFin=" + id_numFin + "&id_cuota=" + id_Cuota + "&tipo=" + tipo_Cobro + "&idIndex=" + indice + "&_Fecha_pago=" + Fecha_pago;
+
+
+					$.get(url, function (data) {
+						$('#CobroContainer').html(data);
+						Show_closeModal("#CobroModal", true);
+
+						// Desabilita las opciones que no necesitan usar el campo requerido
+						if (id_tipo == "11") // Abono
+						{
+							$("#modal_monto").attr("disabled", true);
+						}
+
+						if (id_tipo == "15" || id_tipo == "18" || id_tipo == "21" || id_tipo == "20" || id_tipo == "16") {
+							$("#modal_mora").attr("disabled", true);
+
+						}
+
+					});
+
+
+				}
+
+
+			});
+		
+
+
+			$("#btn-Guardar_cuota").click(function () {
+				var modal_monto = $("#modal_monto");
+				var modal_mora = $("#modal_mora");
+				var observacion = "";
+				var _numfin = $("#modal_numfin").val();
+				var _numcuota = $("#modal_numcuota").val();
+				var _monto = parseFloat(modal_monto.val());
+				var _mora = parseFloat(modal_mora.val());
+				var _tipoCobro = $("#modal_tipoCobro").val();
+
+				var idCuota = 0, idCuotaNext = 0;
+				var TotalMonto = parseFloat(modal_monto.attr("max"));
+
+
+				if (_monto == "0" && _mora == "0") {
+					MessageNotification("Debe introducir un monto o mora a pagar", false);
+					return;
+				} else if (_monto > TotalMonto) {
+					MessageNotification("El monto no puede exceder al monto total pendiente de pago", false);
+					return;
+				}
+				/*else if (_mora > totalMora) {
+					MessageNotification("La mora no puede acceder a la mora total pendiente de pago", false);
+					return;
+				}*/
+				else if (_monto < 1 ) {
+					MessageNotification("Los valores ingresados deben ser mayores a cero", false);
+					return;
+				}
+
+
+
+				var json = {
+					tipoCobro: _tipoCobro
+					, numCuota: _numcuota
+					, numfin: _numfin
+					, montoPagado: _monto
+					, mora: _mora
+				}
+
+
+				AddItemArray2(_numcuota, data, json);
+
+				Show_closeModal("#CobroModal", false);
+
+
+				if (_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora" || _tipoCobro == "Saldo modificar monto mora"
+					|| _tipoCobro == "Saldo NO pago de la mora" || _tipoCobro == "Saldo cuota"
+				) {
+					idCuota = parseInt(_numcuota);
+					idCuotaNext = idCuota + 1;
+					$("#dw-" + idCuota).attr("disabled", true);
+					$("#dw-" + idCuotaNext).removeAttr("disabled");
+					$("#tr-" + idCuota).addClass("bg-warning");
+				}
+
+
+
+				var observacion = GenerarObservacion(_tipoCobro, _monto,_mora);
+
+
+				$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
+				$("#lbl-" + _numcuota).html(observacion);
+				$("#lbl-" + _numcuota).addClass("text-primary");
+
+				//$("#lblTotalGeneral").text(total.toString());
+
+
+
+			});
+
+			function GenerarObservacion(_tipoCobro, _monto,_mora = 0) {
+				var observacion = "";
+				var observacion_Mora = "";
+
+				if (_mora > 0) {
+					observacion_Mora = ", MORA $" + number_format_js(_mora, 0, '.', ',');
+				}
+				if (_tipoCobro == "Saldo cuota" || (_tipoCobro == "Saldo NO pago de la mora")) {
+					observacion = "SALDO $" + number_format_js(_monto, 0, '.', ',');
+				}
+				else if
+				(_tipoCobro == "Abono a cuota" || (_tipoCobro == "Abono NO pago de la mora")) {
+					observacion = "ABONO $" + number_format_js(_monto, 0, '.', ',');
+				}
+				else if
+				(_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora") {
+					observacion = "SALDO $" + number_format_js(_monto, 0, '.', ',') + observacion_Mora;
+				}
+
+				else if
+				(_tipoCobro == "Abono" || _tipoCobro == "Abono incluye pago de mora") {
+					observacion = "ABONO $" + number_format_js(_monto, 0, '.', ',') + observacion_Mora;
+				}
+
+				return observacion;
+			}
+
+			$("#btn-ProcesarCobro").click(function () {
+				var numFin = "";
+				var Subtotal = 0;
+				var itebis = 0;
+				var otroCargos = 0;
+				var total = 0;
+
+				if (data.length > 0) {
+					data.forEach(function (index, key) {
+						//Obtener Header key
+						if (key == 0) {
+							numFin = index.numfin;
+						}
+						Subtotal += index.montoPagado;
+						otroCargos += index.mora;
+
+
+					});
+
+
+					Show_closeModal("#ProcesarCobroModal", true);
+					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos);
+				}
+
+
+			});
+
+			$("#btn-Cobrocompleto").click(function ()
+			{
+
+				var _url = $("#ProcesarCobroModal").data('url');
+				isTotal = $("#modal_isTotal").val();
+				if (isTotal == "true")
+				{
+					_url = "@Url.Action("cobroTotal")";
+                }
+
+
+				ProcesarCobros(_url, isTotal);
+			});
+
+			$("#btn-cobroTotal_").click(function () {
+
+					var tipo_Cobro = "Pago Completo";
+
+					$("#myModalLabelAll").html(tipo_Cobro);
+				var Modal = $('#CobroTotalModal');
+
+				var id_numFin = $('#Num_Fin').html();
+				var Fecha_pago = $("#Fecha_pago").val();
+				var url = Modal.data('url') + "?_FinID=" + id_numFin + "&_Fecha_pago=" + Fecha_pago;
+
+
+
+					$.get(url, function (data) {
+						$('#CobroContainerAll').html(data);
+						Show_closeModal("#CobroTotalModal", true);
+					});
+			});
+
+			$('#CobroModal').on('shown.bs.modal', function (event) {
+				var tipoPago = $("#modal_tipoCobro").val();
+				if (tipoPago == "Saldo cuota" || tipoPago == "Saldo incluye pago de mora" || tipoPago == "Saldo NO pago de la mora")
+				{
+					darClickAutomatico();
+
+				}
+
+			})
+
+			$("#btn-GuardarAllCuotas").click(function ()
+			{
+
+				var modal_montodescuentoMora = $("#modal_descuentoMora");
+				var modal_montodescuentoInt = $("#modal_descuentoInt");
+				var totalMora = parseFloat(modal_montodescuentoMora.attr("max"));
+				var TotalInteres = parseFloat(modal_montodescuentoInt.attr("max"));
+				var montoMoraDesc = parseFloat(modal_montodescuentoMora.val());
+				var montoInteresDesc = parseFloat(modal_montodescuentoInt.val());
+				var numFin = $("#modal_finID").val();
+				var MontoTotal = parseFloat($("#modal_MontoTotal").val());
+
+
+				/*if (montoInteresDesc == "0" && montoMoraDesc == "0" || montoInteresDesc == "" && montoMoraDesc == "")
+				{
+					MessageNotification("Los montos deben contener valores", false);
+					return;
+				}*/
+				if (montoInteresDesc > TotalInteres) {
+					MessageNotification("El descuento de interes no puede exceder al monto total del interes pendiente de pago", false);
+					return;
+				}
+				//if (montoMoraDesc > totalMora) {
+					//MessageNotification("El descuento de la mora no puede acceder al monto total de la mora pendiente de pago", false);
+					//return;
+				//}
+
+				var numFin = numFin, Subtotal = MontoTotal, itebis = 0, otroCargos = totalMora ;
+				Show_closeModal("#CobroTotalModal", false);
+				Show_closeModal("#ProcesarCobroModal", true);
+				LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, montoMoraDesc, montoInteresDesc,true);
+			});
+
+            $(".btn-cancelarCurrentCuota").click(function () {
+                var idDrCuota = 'dw-' + $("#modal_numcuota").val();
+                $("#"+idDrCuota).val(0);
+                $('#CobroModal').modal('hide');
+			})
+
+			$("#modal_descuentoMora").blur(function () {
+				validarNumero(this);
+			});
+
+	});
+
+		// Hacer el clik automatico en aceptar ya que el cliente no requiere modificar ningun valor
+		function darClickAutomatico()
+		{
+			$("#btn-Guardar_cuota").trigger("click");
+		}
+
+		//Borrar item de un array
+        function removeItemArray(array) {
+			var index = array.pop();
+			return index;
+			//array.splice(index, 1);
+		}
+
+
+		// LLenar datos en el popup de procesar los cobros
+		function LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, descuentoMora = 0,descuentoInteres = 0,istotal = false) {
+			let date = new Date();
+			var descuento = descuentoMora + descuentoInteres;
+            var total = (Subtotal + otroCargos + itebis) - descuento;
+            var subTotal = (Subtotal + otroCargos + itebis);
+
+			$("#modal_lblFin").html(numFin);
+			$("#modal_lblfecha").html(date.toDateString());
+            $("#modal_lblDescuento").html(number_format_js(descuento, 2, '.', ','));
+            $("#modal_lblSubtotal").html(number_format_js(Subtotal, 2, '.', ','));
+            //$("#modal_lblItebis").html(number_format_js(itebis, 2, '.', ','));
+            $("#modal_lblotros_cargos").html(number_format_js(otroCargos, 2, '.', ','));
+            $("#modal_lblTotal").html(number_format_js(total, 2, '.', ','));
+			$("#modal_descMora").val(descuentoMora);
+			$("#modal_descInt").val(descuentoInteres);
+            $("#modal_isTotal").val(istotal);
+            $("#modal_lblsub").html(number_format_js(subTotal, 2, '.', ','));
+		}
+
+		// Calcular total de cuotas
+		function calcularTotal()
+		{
+			var total = 0;
+			var Subtotal = 0;
+			var otroCargos = 0;
+			if (data.length > 0) {
+				data.forEach(function (index, key) {
+					//Obtener Header key
+					if (key == 0) {
+						numFin = index.numfin;
+					}
+					Subtotal += index.montoPagado;
+					otroCargos += index.mora;
+				});
+
+				total = (Subtotal + otroCargos );
+
+			}
+			return total;
+		}
+
+		// Cobrar Cuotas seleccionadas
+		function ProcesarCobros(url, isTotal = "false") {
+			var tipo_Pago = $("#modal_forma_pago").val();
+			var descMora = parseFloat($("#modal_descMora").val());
+            var descInt = parseFloat($("#modal_descInt").val());
+            var lblNumFin = $("#modal_lblFin").text();
+			var Fecha_pago = $("#Fecha_pago").val();
+			var modal_aumento_recibo = $("#modal_aumento_recibo").val();
+
+			if (isTotal == "true") {
+
+
+				$.ajax({
+
+					type: "POST",
+					url: url,
+					dataType: "json",
+					//contentType: "application/json",
+					data: {
+						_numFin: lblNumFin
+						, descuentoInte: descInt
+						, descuentoMora: descMora
+						, tipoPago: tipo_Pago
+						, _Fecha_pago: Fecha_pago						
+					},
+					success: function (_data) {
+                        MessageNotification(_data.Message, _data.Is_Success,true);
+
+
+					}
+				});
+			}
+			else {
+
+				var strDatos = JSON.stringify({ Cobros: data });
+
+				$.ajax({
+
+					type: "POST",
+					url: url,
+					dataType: "json",
+					//contentType: "application/json",
+					data: {
+						json: strDatos
+						, tipoPago: tipo_Pago
+						, _Fecha_pago: Fecha_pago
+						, aumentoRecibo: modal_aumento_recibo
+					},
+					success: function (_data) {
+						MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin);
+
+					}
+				});
+			}
+
+		}
+
+		function HabilitarPrimeraceldaTabla() {
+
+			$("#tbl_detalleCuotasC tbody tr").eq(0).find("select").removeAttr("disabled");
+		}
+	</script>
+}

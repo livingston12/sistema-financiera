@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e86f72cf065e48978e255f7abe38f6e9" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptEstadoCuenta" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGCUOTA" Width="1.5" PointX="7.375" PointY="1.125" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CUOTA" Width="1.5" PointX="9.625" PointY="1" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_CUOTA_INGCUOTA" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ABOCUOTA" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGOTRO" Width="1.5" PointX="9.625" PointY="6" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CLIENTE" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptCuotasVencidas" Width="1.5" PointX="4.875" PointY="0.5" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptFinAtrasados" Width="1.5" PointX="11.875" PointY="5.5" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.archivos_subir" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOINT" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FORMAPG" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOFIN" Width="1.5" PointX="0.75" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

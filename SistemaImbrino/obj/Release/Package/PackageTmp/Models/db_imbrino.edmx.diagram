@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e86f72cf065e48978e255f7abe38f6e9" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGOTRO" Width="1.5" PointX="9.625" PointY="6" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CLIENTE" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.archivos_subir" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOINT" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FORMAPG" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOFIN" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FIADOR" Width="1.5" PointX="3.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VENDEDOR" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FACTURA" Width="1.5" PointX="10" PointY="13.125" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FINANCY" Width="1.5" PointX="14.625" PointY="7.375" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_CLIENTE" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_FACTURA" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_FIADOR" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CARTERA" Width="1.5" PointX="12.375" PointY="13.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ESTDCTA" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptCuotasVencidas" Width="2.5" PointX="17.375" PointY="11.625" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptFinAtrasados" Width="2.25" PointX="14.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptFinAtrasados_details" Width="2.125" PointX="5.375" PointY="13.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptEstadoCuenta" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGCUOTA" Width="1.5" PointX="3.375" PointY="1" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ABOCUOTA" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptRegistroNCF" Width="2" PointX="1.375" PointY="14.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.Vw_SearchClientes_Fiadores" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ZONA" Width="1.5" PointX="3.125" PointY="8.375" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_CLIENTE_ZONA" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCTE" Width="1.5" PointX="6.125" PointY="5" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CUOTA" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
