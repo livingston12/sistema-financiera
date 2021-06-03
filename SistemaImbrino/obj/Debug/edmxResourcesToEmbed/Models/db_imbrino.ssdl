@@ -13,6 +13,29 @@
     <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <EntityType Name="ABOOCARG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ABO_NUMFIN" Type="varchar" MaxLength="100" />
+    <Property Name="ABO_SECCAR" Type="varchar" MaxLength="100" />
+    <Property Name="ABO_NUMABO" Type="varchar" MaxLength="100" />
+    <Property Name="ABO_CODCAR" Type="varchar" MaxLength="100" />
+    <Property Name="ABO_MONTOT" Type="varchar" MaxLength="100" />
+    <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="CAR_CODIGO" />
+      <PropertyRef Name="enable" />
+    </Key>
+    <Property Name="CAR_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CAR_DESCRI" Type="varchar" MaxLength="100" />
+    <Property Name="enable" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="CARTERA">
     <Key>
       <PropertyRef Name="ID" />
@@ -154,6 +177,27 @@
     <Property Name="ING_NOMBRE" Type="varchar" MaxLength="150" />
     <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="INGRESO">
+    <Key>
+      <PropertyRef Name="ING_CODIGO" />
+    </Key>
+    <Property Name="ING_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ING_DESCRI" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="OTROCARG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="CAR_NUMFIN" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_SECU" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_CODCAR" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_NUMREC" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_MONTOT" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_FECHAR" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_FECHAP" Type="varchar" MaxLength="100" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="TIPOCTE">
     <Key>
@@ -563,6 +607,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
   </Function>
   <EntityContainer Name="DB_IMBRINOModelStoreContainer">
     <EntitySet Name="ABOCUOTA" EntityType="Self.ABOCUOTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ABOOCARG" EntityType="Self.ABOOCARG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARTERA" EntityType="Self.CARTERA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CUOTA" EntityType="Self.CUOTA" Schema="dbo" store:Type="Tables" />
@@ -573,12 +618,21 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="FORMAPG" EntityType="Self.FORMAPG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INGCUOTA" EntityType="Self.INGCUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INGOTRO" EntityType="Self.INGOTRO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INGRESO" EntityType="Self.INGRESO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OTROCARG" EntityType="Self.OTROCARG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ZONA" EntityType="Self.ZONA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" Schema="STG" store:Type="Tables" />
+    <EntitySet Name="CARGO" EntityType="Self.CARGO" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CARGO].[CAR_CODIGO] AS [CAR_CODIGO], 
+    [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
+    [CARGO].[enable] AS [enable]
+    FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="VW_rptCuotasVencidas" EntityType="Self.VW_rptCuotasVencidas" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [VW_rptCuotasVencidas].[C__FIN] AS [C__FIN], 

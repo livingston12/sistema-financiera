@@ -18,6 +18,29 @@
           <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="ABOOCARG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ABO_NUMFIN" Type="varchar" MaxLength="100" />
+          <Property Name="ABO_SECCAR" Type="varchar" MaxLength="100" />
+          <Property Name="ABO_NUMABO" Type="varchar" MaxLength="100" />
+          <Property Name="ABO_CODCAR" Type="varchar" MaxLength="100" />
+          <Property Name="ABO_MONTOT" Type="varchar" MaxLength="100" />
+          <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="CAR_CODIGO" />
+            <PropertyRef Name="enable" />
+          </Key>
+          <Property Name="CAR_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CAR_DESCRI" Type="varchar" MaxLength="100" />
+          <Property Name="enable" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="CARTERA">
           <Key>
             <PropertyRef Name="ID" />
@@ -159,6 +182,27 @@
           <Property Name="ING_NOMBRE" Type="varchar" MaxLength="150" />
           <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INGRESO">
+          <Key>
+            <PropertyRef Name="ING_CODIGO" />
+          </Key>
+          <Property Name="ING_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ING_DESCRI" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="OTROCARG">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="CAR_NUMFIN" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_SECU" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_CODCAR" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_NUMREC" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_MONTOT" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_FECHAR" Type="varchar" MaxLength="100" />
+          <Property Name="CAR_FECHAP" Type="varchar" MaxLength="100" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPOCTE">
           <Key>
@@ -568,6 +612,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
         </Function>
         <EntityContainer Name="DB_IMBRINOModelStoreContainer">
           <EntitySet Name="ABOCUOTA" EntityType="Self.ABOCUOTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ABOOCARG" EntityType="Self.ABOOCARG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARTERA" EntityType="Self.CARTERA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUOTA" EntityType="Self.CUOTA" Schema="dbo" store:Type="Tables" />
@@ -578,12 +623,21 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySet Name="FORMAPG" EntityType="Self.FORMAPG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INGCUOTA" EntityType="Self.INGCUOTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INGOTRO" EntityType="Self.INGOTRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INGRESO" EntityType="Self.INGRESO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OTROCARG" EntityType="Self.OTROCARG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZONA" EntityType="Self.ZONA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" Schema="STG" store:Type="Tables" />
+          <EntitySet Name="CARGO" EntityType="Self.CARGO" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CARGO].[CAR_CODIGO] AS [CAR_CODIGO], 
+    [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
+    [CARGO].[enable] AS [enable]
+    FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VW_rptCuotasVencidas" EntityType="Self.VW_rptCuotasVencidas" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VW_rptCuotasVencidas].[C__FIN] AS [C__FIN], 
@@ -828,6 +882,10 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
             <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <EntitySet Name="CUOTA" EntityType="DB_IMBRINOModel.CUOTA" />
+          <EntitySet Name="INGRESO" EntityType="DB_IMBRINOModel.INGRESO" />
+          <EntitySet Name="OTROCARG" EntityType="DB_IMBRINOModel.OTROCARG" />
+          <EntitySet Name="ABOOCARG" EntityType="DB_IMBRINOModel.ABOOCARG" />
+          <EntitySet Name="CARGO" EntityType="DB_IMBRINOModel.CARGO" />
         </EntityContainer>
         <EntityType Name="INGOTRO">
           <Key>
@@ -1283,9 +1341,9 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Type="Decimal" Name="MONTO" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="TELEFONO" Nullable="false" MaxLength="14" />
           <Property Type="String" Name="TELEFONO2" Nullable="false" MaxLength="14" />
-          <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="148" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="8000" />
           <Property Type="String" Name="FechaAbono" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="NUM_CUOTA" Nullable="false" />
+          <Property Type="String" Name="NUM_CUOTA" Nullable="true" />
           <Property Type="String" Name="empresa" Nullable="false" MaxLength="100" />
           <Property Type="Decimal" Name="CapitalTotal" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="InteresTotal" Nullable="false" Precision="18" Scale="2" />
@@ -1293,14 +1351,15 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Type="Double" Name="interesAbono" Nullable="false" />
           <Property Type="Double" Name="capital" Nullable="false" />
           <Property Type="Double" Name="INTERES" Nullable="false" />
-          <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="FAC_GARANT" Nullable="false" MaxLength="150" />
           <Property Type="Double" Name="FAC_INTERE" Nullable="false" />
           <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
           <Property Type="Decimal" Name="mora" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="12" />
           <Property Type="DateTime" Name="fechadt" Nullable="false" Precision="23" />
-          <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="5" />
         </ComplexType>
         <EntityType Name="INGCUOTA">
           <Key>
@@ -1442,6 +1501,48 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="CUO_TIPO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="CUO_STAANT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="INGRESO">
+          <Key>
+            <PropertyRef Name="ING_CODIGO" />
+          </Key>
+          <Property Name="ING_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ING_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OTROCARG">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="CAR_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_SECU" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_NUMREC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_FECHAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_FECHAP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ABOOCARG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ABO_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_SECCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_NUMABO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ABO_FECHA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="CAR_CODIGO" />
+            <PropertyRef Name="enable" />
+          </Key>
+          <Property Name="CAR_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="enable" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1760,6 +1861,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
                 <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
                 <ScalarProperty Name="fechadt" ColumnName="fechadt" />
                 <ScalarProperty Name="fecha_Pago" ColumnName="fecha_Pago" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1864,6 +1966,51 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
                 <ScalarProperty Name="CUO_NUMREC" ColumnName="CUO_NUMREC" />
                 <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
                 <ScalarProperty Name="CUO_NUMFAC" ColumnName="CUO_NUMFAC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INGRESO">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.INGRESO">
+              <MappingFragment StoreEntitySet="INGRESO">
+                <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+                <ScalarProperty Name="ING_CODIGO" ColumnName="ING_CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OTROCARG">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROCARG">
+              <MappingFragment StoreEntitySet="OTROCARG">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CAR_FECHAP" ColumnName="CAR_FECHAP" />
+                <ScalarProperty Name="CAR_FECHAR" ColumnName="CAR_FECHAR" />
+                <ScalarProperty Name="CAR_MONTOT" ColumnName="CAR_MONTOT" />
+                <ScalarProperty Name="CAR_STATUS" ColumnName="CAR_STATUS" />
+                <ScalarProperty Name="CAR_NUMREC" ColumnName="CAR_NUMREC" />
+                <ScalarProperty Name="CAR_CODCAR" ColumnName="CAR_CODCAR" />
+                <ScalarProperty Name="CAR_SECU" ColumnName="CAR_SECU" />
+                <ScalarProperty Name="CAR_NUMFIN" ColumnName="CAR_NUMFIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ABOOCARG">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.ABOOCARG">
+              <MappingFragment StoreEntitySet="ABOOCARG">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ABO_FECHA" ColumnName="ABO_FECHA" />
+                <ScalarProperty Name="ABO_MONTOT" ColumnName="ABO_MONTOT" />
+                <ScalarProperty Name="ABO_CODCAR" ColumnName="ABO_CODCAR" />
+                <ScalarProperty Name="ABO_NUMABO" ColumnName="ABO_NUMABO" />
+                <ScalarProperty Name="ABO_SECCAR" ColumnName="ABO_SECCAR" />
+                <ScalarProperty Name="ABO_NUMFIN" ColumnName="ABO_NUMFIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARGO">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.CARGO">
+              <MappingFragment StoreEntitySet="CARGO">
+                <ScalarProperty Name="enable" ColumnName="enable" />
+                <ScalarProperty Name="CAR_DESCRI" ColumnName="CAR_DESCRI" />
+                <ScalarProperty Name="CAR_CODIGO" ColumnName="CAR_CODIGO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

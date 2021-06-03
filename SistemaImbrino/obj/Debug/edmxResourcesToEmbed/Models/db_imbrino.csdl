@@ -66,6 +66,10 @@
       <End Role="CLIENTE" EntitySet="CLIENTE" />
     </AssociationSet>
     <EntitySet Name="CUOTA" EntityType="DB_IMBRINOModel.CUOTA" />
+    <EntitySet Name="INGRESO" EntityType="DB_IMBRINOModel.INGRESO" />
+    <EntitySet Name="OTROCARG" EntityType="DB_IMBRINOModel.OTROCARG" />
+    <EntitySet Name="ABOOCARG" EntityType="DB_IMBRINOModel.ABOOCARG" />
+    <EntitySet Name="CARGO" EntityType="DB_IMBRINOModel.CARGO" />
   </EntityContainer>
   <EntityType Name="INGOTRO">
     <Key>
@@ -521,9 +525,9 @@
     <Property Type="Decimal" Name="MONTO" Nullable="false" Precision="18" Scale="2" />
     <Property Type="String" Name="TELEFONO" Nullable="false" MaxLength="14" />
     <Property Type="String" Name="TELEFONO2" Nullable="false" MaxLength="14" />
-    <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="148" />
+    <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="8000" />
     <Property Type="String" Name="FechaAbono" Nullable="false" MaxLength="100" />
-    <Property Type="Int32" Name="NUM_CUOTA" Nullable="false" />
+    <Property Type="String" Name="NUM_CUOTA" Nullable="true" />
     <Property Type="String" Name="empresa" Nullable="false" MaxLength="100" />
     <Property Type="Decimal" Name="CapitalTotal" Nullable="false" Precision="18" Scale="2" />
     <Property Type="Decimal" Name="InteresTotal" Nullable="false" Precision="18" Scale="2" />
@@ -531,14 +535,15 @@
     <Property Type="Double" Name="interesAbono" Nullable="false" />
     <Property Type="Double" Name="capital" Nullable="false" />
     <Property Type="Double" Name="INTERES" Nullable="false" />
-    <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="FAC_GARANT" Nullable="false" MaxLength="150" />
     <Property Type="Double" Name="FAC_INTERE" Nullable="false" />
     <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
     <Property Type="Decimal" Name="mora" Nullable="false" Precision="18" Scale="2" />
-    <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="9" />
+    <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="12" />
     <Property Type="DateTime" Name="fechadt" Nullable="false" Precision="23" />
-    <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="tipo" Nullable="false" MaxLength="5" />
   </ComplexType>
   <EntityType Name="INGCUOTA">
     <Key>
@@ -680,5 +685,47 @@
     <Property Name="CUO_TIPO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="CUO_STAANT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="INGRESO">
+    <Key>
+      <PropertyRef Name="ING_CODIGO" />
+    </Key>
+    <Property Name="ING_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ING_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OTROCARG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="CAR_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SECU" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_NUMREC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FECHAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FECHAP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="ABOOCARG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ABO_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_SECCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_NUMABO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_FECHA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="CAR_CODIGO" />
+      <PropertyRef Name="enable" />
+    </Key>
+    <Property Name="CAR_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="enable" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

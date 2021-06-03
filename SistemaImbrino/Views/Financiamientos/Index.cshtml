@@ -3,7 +3,13 @@
 	ViewBag.Title = "Generar Financiamiento";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+	<style>
+		.position-absolute{
+			position:absolute !important;
+		}
+	</style>
+</head>
 <div class="row">
 
 	<div class="col-xs-12 col-sm-6 col-lg-4 ">
@@ -11,7 +17,6 @@
 		<div class="form-group " id="dvcliente">
 			<div class="input-group">
 				<label class="input-group-addon" for="cliente"><i class="glyphicon glyphicon-user"></i></label>
-				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
 				<select class="form-control widtTotal" id="cliente"></select>
 				<span id="spancliente" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
@@ -22,7 +27,6 @@
 		<div class="form-group" id="dvFiador">
 			<div class="input-group">
 				<label class="input-group-addon" for="Fiador"><i class="glyphicon glyphicon-user"></i></label>
-				@*<input type="text" class="form-control widtTotal" placeholder="Fiador" id="Fiador">*@
 				<select class="form-control widtTotal" id="Fiador"></select>
 				<span id="spanFiador" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
@@ -33,16 +37,11 @@
 		<div class="form-group" id="dvPromotor">
 			<div class="input-group">
 				<label class="input-group-addon" for="Promotor"><i class="glyphicon glyphicon-user"></i></label>
-				@*<input type="text" class="form-control widtTotal" placeholder="Promotor" id="Promotor">*@
 				<select class="form-control widtTotal" id="Promotor"></select>
 				<span id="spanPromotor" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
 	</div>
-	@*</div>*@
-
-
-	@*<div class="row">*@
 
 	<div class="col-xs-12 col-sm-6 col-lg-4">
 		<label class="control-label" for="tipofin">TIPO FINANCIAMIENTO</label>
@@ -50,7 +49,6 @@
 			<div class="input-group">
 				<label class="input-group-addon" for="tipofin"><i class="glyphicon glyphicon-th-list"></i></label>
 				<select class="form-control widtTotal" id="tipofin"></select>
-				@*<input type="text" class="form-control widtTotal" placeholder="Tipo financiamiento" id="tipofin">*@
 				<span id="spantipofin" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -75,9 +73,6 @@
 			</div>
 		</div>
 	</div>
-	@*</div>*@
-
-	@*<div class="row">*@
 
 	<div class="col-xs-12 col-sm-6 col-lg-4">
 		<label class="control-label" for="frpago">FORMA DE PAGO</label>
@@ -85,7 +80,6 @@
 			<div class="input-group">
 				<label class="input-group-addon" for="frpago"><i class="glyphicon glyphicon-credit-card"></i></label>
 				<select class="form-control widtTotal" id="frpago"></select>
-				@*<input type="text" class="form-control widtTotal" placeholder="Forma de pago" id="frpago">*@
 				<span id="spanfrpago" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -96,7 +90,6 @@
 			<div class="input-group">
 				<label class="input-group-addon" for="tipoin"><i class="glyphicon glyphicon-th-list"></i></label>
 				<select class="form-control widtTotal" id="tipoin"></select>
-				@*<input type="text" class="form-control widtTotal" placeholder="Tipo interes" id="tipoin">*@
 				<span id="spantipoin" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -111,9 +104,6 @@
 			</div>
 		</div>
 	</div>
-	@*</div>*@
-
-	@*<div class="row">*@
 
 	<div class="col-xs-12 col-sm-6 col-lg-4">
 		<label class="control-label" for="cuno">CUOTAS NORMALES</label>
@@ -153,11 +143,7 @@
 		<label class="control-label" for="garantia">GARANTIA</label>
 		<div class="form-group" id="dvgarantia">
 			<input type="text" class="form-control widtTotal notValidate" style="max-width: 3000px !important;" placeholder="Garantia" id="garantia">
-			@*<div class="input-group">
-				@*<label class="input-group-addon" for="garantia"><i class="glyphicon glyphicon-check"></i></label>
-
-					<span id="spangarantia" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-				</div>*@
+			
 		</div>
 	</div>
 
@@ -170,7 +156,6 @@
 		<div class="form-group" id="dvobservacion">
 			<div class="input-group">
 				<label class="input-group-addon" for="observacion"><i class="glyphicon glyphicon-text-size"></i></label>
-				@*<input type="text" class="form-control widtTotal" multiple placeholder="Observacion" id="observacion">*@
 				<textarea name="Text1" class="form-control widtTotal notValidate" placeholder="Observacion" id="observacion" rows="3"></textarea>
 				<span id="spanobservacion" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 			</div>
@@ -392,7 +377,7 @@
 				, total_capital = 0
 				, total_monto = 0
 				, total_interes = 0
-				, message = "", strDatos = "";
+				, strDatos = "";
 
 			if (isCuotaAdicional) {
 				dataCuotasAdicionales = [];
@@ -474,16 +459,12 @@
 									<td class="text-center">` + number_format_js(index.interes, 2, 0) + `</td>
 									<td class="text-center">` + number_format_js(index.Balance,2,0) + `</td>
 									<td class="text-center">` + tipoCuota + `</td></tr>'`);
-							//total_balance += index.Balance;
+							
 							total_monto += index.Monto;
 							total_capital += index.capital;
 							total_interes += index.interes;
-
-
-
-
 						});
-						//total_balance = number_format_js(total_balance, 2, 0);
+						
 						total_monto = number_format_js(total_monto, 2, 0);
 						total_capital = number_format_js(total_capital, 2, 0);
 						total_interes = number_format_js(total_interes, 2, 0);
@@ -569,7 +550,6 @@
 			var date = new Date();
 			var dateToday = date.getDate() + "-" + monthName(date.getMonth() ) + "-" + date.getFullYear();
 			$(".date").val(dateToday);
-
 			$("#promotor").val("3");
 			$("#Promotor").trigger("change");
 
@@ -589,31 +569,21 @@
 				var currentMonth2 = monthNumber(currentinput2[1]);
 				var currentYear2 = currentinput2[2];
 				var currentDate2 = new Date(currentYear2, currentMonth2 - 1, currentDay2);
-
-
 			    var date = sumarDias(currentDate2, GetDayOfFormaPago($("#frpago").val()));
-
-
 				var dateReturn = date.getDate() + "-" + monthName(date.getMonth()) + "-" + date.getFullYear();
 				inputFechaVen.val(dateReturn);
-
-
-
 			});
 
 			$("#tipofin").selectMania({
 				width: '100%',
 				size: 'small',
 				search: false
-
 			});
 
 			$("#frpago").selectMania({
 				width: '100%',
 				size: 'small',
 				search: true
-
-
 			});
 
 			$("#cliente").selectMania({
@@ -671,7 +641,6 @@
 					$(".modal-title").text("Cuotas Manuales");
 				} else {
 					$("#btn-genAmortiza").attr("disabled", false);
-
 				}
 
 			});
@@ -681,16 +650,15 @@
 
 
 			$("#cuad").change(function () {
-
+				var dateA = new Date();
 				var isAdiccional = false;
 				var tipoin = $("#tipoin").val();
 
 				if (tipoin != "6") {
 
 					isAdiccional = true;
-					validarFechasAdiccionales(date, isAdiccional);
+					validarFechasAdiccionales(dateA, isAdiccional);
 				}
-
 
 				var cantidad = $(this).val();
 				$('#tbl-cuotasAdicionales > tbody').empty();
@@ -714,23 +682,19 @@
 						ValidarFechas(this, date, datepicker);
 
 					},
-
 					dateFormat: 'dd-mm-yy',
 					monthNames: nameMonthComplete(),					
-					minDate: FechaVencimiento,		
+					minDate: FechaVencimiento
 					// PARA UNA NUEVA FASE SE DESCOMENTARA
 					//beforeShowDay: (date) => habilitarFechasAdicionales(date, isAdiccional)//validarFechasAdiccionales(date, isAdiccional)
 
 				});
 
+				$(".ui-datepicker").addClass("position-absolute");
 
 				$("input").blur(function () {
-
 					validarNumero(this);
-
 				});
-
-
 			});
 
 			$("#btn-Guardar").click(function () {

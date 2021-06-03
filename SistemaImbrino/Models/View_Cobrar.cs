@@ -22,5 +22,6 @@ namespace SistemaImbrino.Models
         //public double descuentoInteres { get; set; }
         public decimal montoPagado { get; set; }
         public decimal mora { get; set; }
+        public double otroCargo { get; set; }
     }
 }

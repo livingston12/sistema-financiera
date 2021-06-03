@@ -154,16 +154,13 @@
 		var data = [];
 		$(document).ready(function ()
 		{
-			
-			
-
 			HabilitarPrimeraceldaTabla();
 			$("#tbl_detalleCuotasC").DataTable(
 				{
 					"searching": false,
 					"lengthChange": false,
 					"paging": false,
-					"ordering": true,
+					"ordering": false,
 					"info": false
 				}
 			);
@@ -198,6 +195,9 @@
 					else if (id_tipo == "16") {
 						tipo_Cobro = "Abono incluye pago de mora";
 					}
+					else if (id_tipo == "17") {
+						tipo_Cobro = "Registrar mora como cargo";
+					}
 					else if (id_tipo == "18") {
 						tipo_Cobro = "Abono NO pago de la mora";
 					}
@@ -207,7 +207,12 @@
 					else if (id_tipo == "21") {
 						tipo_Cobro = "Abono a cuota";
 					}
-
+					else if (id_tipo == "22") {
+						tipo_Cobro = "Saldo cargo adicional";
+					}
+					else if (id_tipo == "23") {
+						tipo_Cobro = "Abono cargo adicional";
+					}
 
 					$("#myModalLabel").html(tipo_Cobro + " Cuota " + id_Cuota);
 					var Modal = $('#CobroModal');
@@ -222,22 +227,22 @@
 						Show_closeModal("#CobroModal", true);
 
 						// Desabilita las opciones que no necesitan usar el campo requerido
-						if (id_tipo == "11") // Abono
+						if (id_tipo == "11" || id_tipo == "17" ) // Abono
 						{
 							$("#modal_monto").attr("disabled", true);
+						}
+						if (id_tipo == "22" || id_tipo == "23") // otros cargos
+						{
+							$("#modal_monto").attr("disabled", true);
+							$("#lblMonto").text("Mora calculada");
 						}
 
 						if (id_tipo == "15" || id_tipo == "18" || id_tipo == "21" || id_tipo == "20" || id_tipo == "16") {
 							$("#modal_mora").attr("disabled", true);
 
 						}
-
 					});
-
-
 				}
-
-
 			});
 		
 
@@ -251,82 +256,100 @@
 				var _monto = parseFloat(modal_monto.val());
 				var _mora = parseFloat(modal_mora.val());
 				var _tipoCobro = $("#modal_tipoCobro").val();
-
-				var idCuota = 0, idCuotaNext = 0;
+				var _otroCargo = 0;
+				
 				var TotalMonto = parseFloat(modal_monto.attr("max"));
 
-
-				if (_monto == "0" && _mora == "0") {
+				if (_monto == "0" && _mora == "0")
+				{
 					MessageNotification("Debe introducir un monto o mora a pagar", false);
 					return;
-				} else if (_monto > TotalMonto) {
+				} else if (_monto > TotalMonto)
+				{
 					MessageNotification("El monto no puede exceder al monto total pendiente de pago", false);
 					return;
 				}
-				/*else if (_mora > totalMora) {
-					MessageNotification("La mora no puede acceder a la mora total pendiente de pago", false);
+				else if (_mora >= TotalMonto && _tipoCobro == "Abono cargo adicional")
+				{
+					MessageNotification("El abono tiene que ser menor que la mora total pendiente de pago", false);
 					return;
-				}*/
-				else if (_monto < 1 ) {
-					MessageNotification("Los valores ingresados deben ser mayores a cero", false);
+				}
+				else if (_monto < 1 && _tipoCobro != "Registrar mora como cargo") {
+					MessageNotification("El monto ingresados deben ser mayores a cero", false);
 					return;
 				}
 
-
-
+				if (_tipoCobro == "Saldo cargo adicional" || _tipoCobro == "Abono cargo adicional")
+				{
+					_monto = 0;
+					_otroCargo = _mora;
+					_mora = 0;
+				}
+				if (_tipoCobro == "Registrar mora como cargo")
+				{
+					_otroCargo = _mora;
+					_mora = 0;
+				}
+				
 				var json = {
 					tipoCobro: _tipoCobro
 					, numCuota: _numcuota
 					, numfin: _numfin
 					, montoPagado: _monto
 					, mora: _mora
+					, otroCargo: _otroCargo
 				}
 
 
 				AddItemArray2(_numcuota, data, json);
 
-				Show_closeModal("#CobroModal", false);
-
+				Show_closeModal("#CobroModal", false);				
 
 				if (_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora" || _tipoCobro == "Saldo modificar monto mora"
-					|| _tipoCobro == "Saldo NO pago de la mora" || _tipoCobro == "Saldo cuota"
+					|| _tipoCobro == "Saldo NO pago de la mora" || _tipoCobro == "Saldo cuota" || _tipoCobro == "Saldo cargo adicional"
+					|| _tipoCobro == "Registrar mora como cargo"
 				) {
-					idCuota = parseInt(_numcuota);
-					idCuotaNext = idCuota + 1;
-					$("#dw-" + idCuota).attr("disabled", true);
-					$("#dw-" + idCuotaNext).removeAttr("disabled");
-					$("#tr-" + idCuota).addClass("bg-warning");
+					
+					var currentRow = $("#tr-" + _numcuota).closest('tr');
+					var nextRow = currentRow.next()[0];
+					var idCurrentRow = $(currentRow[0]).attr("cuota");
+					var idNextRow = $(nextRow).attr("cuota");
+					
+					$("#dw-" + idCurrentRow).attr("disabled", true);
+					$("#dw-" + idCurrentRow).addClass("bg-warning");
+					$("#dw-" + idNextRow).removeAttr("disabled");
 				}
 
-
-
-				var observacion = GenerarObservacion(_tipoCobro, _monto,_mora);
-
+				var observacion = GenerarObservacion(_tipoCobro, _monto,_mora,_otroCargo);
 
 				$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
 				$("#lbl-" + _numcuota).html(observacion);
 				$("#lbl-" + _numcuota).addClass("text-primary");
 
-				//$("#lblTotalGeneral").text(total.toString());
-
-
-
 			});
 
-			function GenerarObservacion(_tipoCobro, _monto,_mora = 0) {
+			function GenerarObservacion(_tipoCobro, _monto, _mora = 0, _otroCargo = 0) {
 				var observacion = "";
 				var observacion_Mora = "";
 
 				if (_mora > 0) {
 					observacion_Mora = ", MORA $" + number_format_js(_mora, 0, '.', ',');
 				}
-				if (_tipoCobro == "Saldo cuota" || (_tipoCobro == "Saldo NO pago de la mora")) {
+				if (_tipoCobro == "Saldo cuota" || (_tipoCobro == "Saldo NO pago de la mora") || _tipoCobro == "Registrar mora como cargo") {
 					observacion = "SALDO $" + number_format_js(_monto, 0, '.', ',');
+				}
+				else if
+				(_tipoCobro == "Saldo cargo adicional") {
+					observacion = "SALDO CARGO ADICIONAL $" + number_format_js(_otroCargo, 0, '.', ',');
 				}
 				else if
 				(_tipoCobro == "Abono a cuota" || (_tipoCobro == "Abono NO pago de la mora")) {
 					observacion = "ABONO $" + number_format_js(_monto, 0, '.', ',');
 				}
+				else if
+				(_tipoCobro == "Abono cargo adicional") {
+					observacion = "ABONO CARGO ADICIONAL $" + number_format_js(_otroCargo, 0, '.', ',');
+				}				
 				else if
 				(_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora") {
 					observacion = "SALDO $" + number_format_js(_monto, 0, '.', ',') + observacion_Mora;
@@ -345,7 +368,7 @@
 				var Subtotal = 0;
 				var itebis = 0;
 				var otroCargos = 0;
-				var total = 0;
+				var otroCargoAdicional = 0;
 
 				if (data.length > 0) {
 					data.forEach(function (index, key) {
@@ -355,13 +378,12 @@
 						}
 						Subtotal += index.montoPagado;
 						otroCargos += index.mora;
-
-
+						otroCargoAdicional += index.otroCargo;
 					});
 
 
 					Show_closeModal("#ProcesarCobroModal", true);
-					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos);
+					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, 0, 0, false, otroCargoAdicional);
 				}
 
 
@@ -402,7 +424,12 @@
 
 			$('#CobroModal').on('shown.bs.modal', function (event) {
 				var tipoPago = $("#modal_tipoCobro").val();
-				if (tipoPago == "Saldo cuota" || tipoPago == "Saldo incluye pago de mora" || tipoPago == "Saldo NO pago de la mora")
+				if (
+					tipoPago == "Saldo cuota"
+					|| tipoPago == "Saldo incluye pago de mora"
+					|| tipoPago == "Saldo NO pago de la mora"
+					|| tipoPago == "Saldo cargo adicional"
+				)
 				{
 					darClickAutomatico();
 
@@ -423,20 +450,10 @@
 				var MontoTotal = parseFloat($("#modal_MontoTotal").val());
 
 
-				/*if (montoInteresDesc == "0" && montoMoraDesc == "0" || montoInteresDesc == "" && montoMoraDesc == "")
-				{
-					MessageNotification("Los montos deben contener valores", false);
-					return;
-				}*/
 				if (montoInteresDesc > TotalInteres) {
 					MessageNotification("El descuento de interes no puede exceder al monto total del interes pendiente de pago", false);
 					return;
 				}
-				//if (montoMoraDesc > totalMora) {
-					//MessageNotification("El descuento de la mora no puede acceder al monto total de la mora pendiente de pago", false);
-					//return;
-				//}
-
 				var numFin = numFin, Subtotal = MontoTotal, itebis = 0, otroCargos = totalMora ;
 				Show_closeModal("#CobroTotalModal", false);
 				Show_closeModal("#ProcesarCobroModal", true);
@@ -470,18 +487,20 @@
 
 
 		// LLenar datos en el popup de procesar los cobros
-		function LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, descuentoMora = 0,descuentoInteres = 0,istotal = false) {
+		function LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, descuentoMora = 0,descuentoInteres = 0,istotal = false,otrosCargoAdicional = 0) {
 			let date = new Date();
 			var descuento = descuentoMora + descuentoInteres;
-            var total = (Subtotal + otroCargos + itebis) - descuento;
-            var subTotal = (Subtotal + otroCargos + itebis);
+			var sumMontos = (Subtotal + otroCargos + itebis + otrosCargoAdicional);
+			var total = sumMontos - descuento;
+			var subTotal = sumMontos;
 
 			$("#modal_lblFin").html(numFin);
 			$("#modal_lblfecha").html(date.toDateString());
             $("#modal_lblDescuento").html(number_format_js(descuento, 2, '.', ','));
             $("#modal_lblSubtotal").html(number_format_js(Subtotal, 2, '.', ','));
             //$("#modal_lblItebis").html(number_format_js(itebis, 2, '.', ','));
-            $("#modal_lblotros_cargos").html(number_format_js(otroCargos, 2, '.', ','));
+			$("#modal_lblotros_cargos").html(number_format_js(otroCargos, 2, '.', ','));
+			$("#modal_lblotros_cargosA").html(number_format_js(otrosCargoAdicional, 2, '.', ','));
             $("#modal_lblTotal").html(number_format_js(total, 2, '.', ','));
 			$("#modal_descMora").val(descuentoMora);
 			$("#modal_descInt").val(descuentoInteres);
@@ -495,6 +514,8 @@
 			var total = 0;
 			var Subtotal = 0;
 			var otroCargos = 0;
+			var otroCargosAdiccionales = 0;
+
 			if (data.length > 0) {
 				data.forEach(function (index, key) {
 					//Obtener Header key
@@ -503,9 +524,10 @@
 					}
 					Subtotal += index.montoPagado;
 					otroCargos += index.mora;
+					otroCargosAdiccionales += index.otroCargo;
 				});
 
-				total = (Subtotal + otroCargos );
+				total = (Subtotal + otroCargos + otroCargosAdiccionales);
 
 			}
 			return total;

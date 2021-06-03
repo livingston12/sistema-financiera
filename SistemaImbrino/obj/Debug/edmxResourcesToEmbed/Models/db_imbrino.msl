@@ -312,6 +312,7 @@
           <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
           <ScalarProperty Name="fechadt" ColumnName="fechadt" />
           <ScalarProperty Name="fecha_Pago" ColumnName="fecha_Pago" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -416,6 +417,51 @@
           <ScalarProperty Name="CUO_NUMREC" ColumnName="CUO_NUMREC" />
           <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
           <ScalarProperty Name="CUO_NUMFAC" ColumnName="CUO_NUMFAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INGRESO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.INGRESO">
+        <MappingFragment StoreEntitySet="INGRESO">
+          <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+          <ScalarProperty Name="ING_CODIGO" ColumnName="ING_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROCARG">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROCARG">
+        <MappingFragment StoreEntitySet="OTROCARG">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="CAR_FECHAP" ColumnName="CAR_FECHAP" />
+          <ScalarProperty Name="CAR_FECHAR" ColumnName="CAR_FECHAR" />
+          <ScalarProperty Name="CAR_MONTOT" ColumnName="CAR_MONTOT" />
+          <ScalarProperty Name="CAR_STATUS" ColumnName="CAR_STATUS" />
+          <ScalarProperty Name="CAR_NUMREC" ColumnName="CAR_NUMREC" />
+          <ScalarProperty Name="CAR_CODCAR" ColumnName="CAR_CODCAR" />
+          <ScalarProperty Name="CAR_SECU" ColumnName="CAR_SECU" />
+          <ScalarProperty Name="CAR_NUMFIN" ColumnName="CAR_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ABOOCARG">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.ABOOCARG">
+        <MappingFragment StoreEntitySet="ABOOCARG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ABO_FECHA" ColumnName="ABO_FECHA" />
+          <ScalarProperty Name="ABO_MONTOT" ColumnName="ABO_MONTOT" />
+          <ScalarProperty Name="ABO_CODCAR" ColumnName="ABO_CODCAR" />
+          <ScalarProperty Name="ABO_NUMABO" ColumnName="ABO_NUMABO" />
+          <ScalarProperty Name="ABO_SECCAR" ColumnName="ABO_SECCAR" />
+          <ScalarProperty Name="ABO_NUMFIN" ColumnName="ABO_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARGO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.CARGO">
+        <MappingFragment StoreEntitySet="CARGO">
+          <ScalarProperty Name="enable" ColumnName="enable" />
+          <ScalarProperty Name="CAR_DESCRI" ColumnName="CAR_DESCRI" />
+          <ScalarProperty Name="CAR_CODIGO" ColumnName="CAR_CODIGO" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

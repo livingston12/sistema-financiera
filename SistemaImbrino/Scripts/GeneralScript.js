@@ -1,6 +1,24 @@
 ﻿
 
+$(document).ready(function () {
+	
+	$(".select").selectMania({
+		width: '100%',
+		size: 'small',
+		search: true
 
+	});
+	$(".dataTable").DataTable();	
+	
+
+	$('.datepicker').datepicker({
+		onSelect: function (date, datepicker) {
+			ValidarFechas(this, date, datepicker);
+		},
+		dateFormat: 'dd-mm-yy',
+		monthNames: nameMonthComplete()
+	});
+});
 // insertar valor fecha
 function ValidarFechas(currentInput,date, datepicker)
 {
@@ -11,13 +29,12 @@ function ValidarFechas(currentInput,date, datepicker)
 		var currentYear = datepicker.currentYear;
 		var currentDate = currentDay + "-" + monthName(indexcurrentMonth) + "-" + currentYear;
 		$(currentInput).val(currentDate);
+		validarTexto(currentInput);
 		
 	}
 
 
 }
-
-
 
 // Llenar drowdowns	
 function llenarDropdows(data, IdObject, texto, addFirt = true,isSelectMania = true) {
@@ -31,25 +48,23 @@ function llenarDropdows(data, IdObject, texto, addFirt = true,isSelectMania = tr
 			value: 0
 		}));
 	}
-
-
 	$(data).each(function (index, element) {
 		$(IdDw).append($('<option />', {
 			text: element.value,
 			value: element.id
 		}));
-
-
 	});
 	if (isSelectMania)
 	{
 		$(IdDw).selectMania('update');
 	}
-	
-
-
-
 }
+
+// update select mania
+function updateSelectMania(id)
+{
+	$("#" + id).selectMania('update');
+} 
 
 // Validar Texto
 function validarTexto(input)
@@ -62,21 +77,19 @@ function validarTexto(input)
 	var inputLenth = texto.length;
 	var is_tel = currentinput.hasClass("telefono");
 	var is_ced = currentinput.hasClass("cedula");
+	var currentDiv = $("#dv" + currentinput.attr("id"));
+	var currentSpan = $("#span" + currentinput.attr("id"));
 
 	if (is_ced || is_tel)
 	{
-
 		texto = texto.replaceAll("-", "");
 		currentinput.val("");
-
-		var currentDiv = $("#dv" + currentinput.attr("id"));
-		var currentSpan = $("#span" + currentinput.attr("id"));
+		
 		var len = 11;		
 		len = is_tel ? 10 : len;
 		
 		if (texto.length !== len)
-		{
-			//MessageNotification("El formato de la cedula es incorrecto", false);	
+		{	
 			currentDiv.removeClass("has-success");
 			currentDiv.addClass("has-error");
 			currentSpan.removeClass("glyphicon-ok");
@@ -91,15 +104,11 @@ function validarTexto(input)
 
 		}
 		currentinput.val(texto);
-	}
-		
+	}		
 	
 	// Validar si el campo acepta texto
 	if (currentinput.hasClass("texto") && inputLenth === 0)
 		currentinput.val("");
-	
-
-
 
 	if (inputLenth === 0) {		
 		currentDiv.removeClass("has-success");
