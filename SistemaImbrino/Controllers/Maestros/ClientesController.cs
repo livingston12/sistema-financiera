@@ -52,11 +52,6 @@ namespace SistemaImbrino.Controllers.Maestros
                 };
                 return Json(message);
             }
-
-
-
-
-
             return Json(message);
         }
 
@@ -151,6 +146,7 @@ namespace SistemaImbrino.Controllers.Maestros
         {
             return PartialView();
         }
+
         public JsonResult GetCurrentCliente(int id = 0)
         {
 
@@ -168,24 +164,18 @@ namespace SistemaImbrino.Controllers.Maestros
                                             })
                                                     .FirstOrDefault();
             return Json(currentCliente);
-            //return PartialView(currentCliente);
         }
 
         public JsonResult GetZonas()
         {
-            //db = new DB_IMBRINOEntities();
             var list = _db.ZONA.Select(x => new { id = x.ZON_CODIGO, value = x.ZON_DESCRI }).ToList();
-
             return Json(list, JsonRequestBehavior.AllowGet);
-
         }
 
         public JsonResult GetTiposClientes()
         {
-            //db = new DB_IMBRINOEntities();
             var list = _db.TIPOCTE.Select(x => new { id = x.TIP_CODIGO, value = x.TIP_DESCRI }).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
-
         }
 
     }

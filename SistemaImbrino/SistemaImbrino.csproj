@@ -146,6 +146,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Automatitation.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Cargos adicionales\CargosAdicionalesController.cs" />
     <Compile Include="Controllers\Cobros\CobrosController.cs" />
     <Compile Include="Controllers\Cobros\CobrosHeaderController.cs" />
     <Compile Include="Controllers\Financiamientos\FinanciamientosController.cs" />
@@ -164,7 +165,13 @@
     <Compile Include="Models\ABOCUOTA.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ABOOCARG.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\archivos_subir.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CARGO.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CARTERA.cs">
@@ -215,7 +222,13 @@
     <Compile Include="Models\INGOTRO.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\INGRESO.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\message.cs" />
+    <Compile Include="Models\OTROCARG.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReportParams.cs" />
     <Compile Include="Models\sp_cuotasVencidas_Result.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
@@ -413,7 +426,6 @@
     <Content Include="Views\CobrosHeader\index.cshtml" />
     <Content Include="Views\CobrosHeader\_cobrosDetalleCliente.cshtml" />
     <Content Include="Views\Cobros\_popup_ProcesarPagoTotal.cshtml" />
-    <Content Include="Views\Cobros\_popup_ProcesarPago_BK.cshtml" />
     <Content Include="Views\CuotasVencidas\Index.cshtml" />
     <Content Include="Views\EstadoCuenta\index.cshtml" />
     <Content Include="Views\FinAtrasados\Index.cshtml" />
@@ -425,6 +437,9 @@
     <Content Include="Views\Fiadores\_fiadoresDetalle.cshtml" />
     <Content Include="Views\Fiadores\_popup_editar.cshtml" />
     <Content Include="Views\Fiadores\index.cshtml" />
+    <Content Include="Views\CargosAdicionales\Index.cshtml" />
+    <Content Include="Views\CargosAdicionales\_popup_editar.cshtml" />
+    <Content Include="Views\CargosAdicionales\_cargoDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

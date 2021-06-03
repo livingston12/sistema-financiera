@@ -37,6 +37,10 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCTE" Width="1.5" PointX="6.125" PointY="5" />
         <AssociationConnector Association="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.CUOTA" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGRESO" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.OTROCARG" Width="1.5" PointX="17.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ABOOCARG" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CARGO" Width="1.5" PointX="10.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

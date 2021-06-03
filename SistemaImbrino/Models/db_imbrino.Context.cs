@@ -50,6 +50,10 @@ namespace SistemaImbrino.Models
         public virtual DbSet<ZONA> ZONA { get; set; }
         public virtual DbSet<TIPOCTE> TIPOCTE { get; set; }
         public virtual DbSet<CUOTA> CUOTA { get; set; }
+        public virtual DbSet<INGRESO> INGRESO { get; set; }
+        public virtual DbSet<OTROCARG> OTROCARG { get; set; }
+        public virtual DbSet<ABOOCARG> ABOOCARG { get; set; }
+        public virtual DbSet<CARGO> CARGO { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {

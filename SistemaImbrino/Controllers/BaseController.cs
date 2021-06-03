@@ -1,6 +1,7 @@
 ﻿using SistemaImbrino.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,6 +11,8 @@ namespace SistemaImbrino.Controllers
     {
         public static DB_IMBRINOEntities db = new DB_IMBRINOEntities();
         public string MensajeErrorCath = "Error inesperado en la aplicacion Favor contactar a un soporte";
+        private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
+
 
         public enum TipoCobro
         {
@@ -53,6 +56,17 @@ namespace SistemaImbrino.Controllers
             ABONO = 12,
             PAGADO = 11
         }
+        public enum typeFecha
+        {
+            FechaR = 10,
+            FechaP = 20
+        }
+        public enum typeIngreso
+        {
+            SIN_ASIGNAR = 0,
+            CUOTA = 1,
+            OTROS_INGRESOS = 2
+        }
         public enum typeOTRO
         {
             INVERSIONES = 1,
@@ -70,8 +84,8 @@ namespace SistemaImbrino.Controllers
             PENALPOR_LLAMADA = 13,
             GASTOS_REGISTRO_HIPOTECA = 14,
             MORA = 50,
-            OTROS_INGRESOS = 51,
-            PENALIDAD_POR_CH_DEV = 52,
+            PLACA = 51,
+            SEGURO = 52,
             COMISION_CECOMSA = 53,
             INTERESES_PENDIENTES = 54,
             RECUPERACION_CREDITOS_CDC = 56
@@ -87,20 +101,19 @@ namespace SistemaImbrino.Controllers
                 case "Saldo incluye pago de mora":
                 case "Saldo NO pago de la mora":
                 case "Saldo cuota":
+                case "Saldo cargo adicional":
                     returnTipo_cobro = TipoCobro.Pago;
                     break;
                 case "Abono":
                 case "Abono incluye pago de mora":
                 case "Abono NO pago de la mora":
                 case "Abono a cuota":
+                case "Abono cargo adicional":
                     returnTipo_cobro = TipoCobro.Abono;
                     break;
-
             }
 
             return returnTipo_cobro;
-
-
         }
 
         public static List<View_cobrosHeader> CobrosHeader(string cliente = "", bool is_Procedure = false)
@@ -120,34 +133,67 @@ namespace SistemaImbrino.Controllers
             }
            ).ToList();
 
-
-            //List<View_cobrosHeader> listCobrosHeader = clientesAgrupados.Select(x => new
-            //{
-            //    interesTotal = x.Sum(x2 => x2.InteresTotal),
-            //    capitalTotal = x.Sum(x2 => x2.CapitalTotal),
-            //    montoTotal = x.Sum(x2 => x2.MONTO),
-            //    MoraTotal = x.Sum(x2 => x2.mora),
-            //    cliente = cliente == "" ? x.Max(x2 => x2.CLIENTE) : x.Max(x2 => x2.C__FIN).ToString(),
-            //    countT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count(),
-            //    ClienteId = x.Max(x2 => x2.CodigoCLiente)
-            //}
-            //).ToList().Select(lcc => new View_cobrosHeader()
-            //{
-            //    cliente = lcc.cliente,
-            //    capitalTotal = lcc.capitalTotal,
-            //    interesTotal = lcc.interesTotal,
-            //    montoTotal = lcc.montoTotal,
-            //    CountT = lcc.countT,
-            //    ClienteId = lcc.ClienteId,
-            //    moraTotal = lcc.MoraTotal,
-            //    FinID = lcc.countT > 1 ? 0 : MaxFinIdByClient(lcc.ClienteId)
-
-            //}).ToList();
-
-
             return listCobrosHeader;
         }
 
+        public static bool pagarOtroCargoAdiccional(OTROCARG otroCargo, string fechaPago, TipoCobro status, int numRef)
+        {
+            bool actualizo = false;
+            try
+            {
+                if (status == TipoCobro.Pago)
+                {
+                    otroCargo.CAR_FECHAP = fechaPago;
+                }
+                otroCargo.CAR_STATUS = ((int)status).ToString();
+                otroCargo.CAR_NUMREC = numRef.ToString();
+                db.Entry(otroCargo).State = EntityState.Modified;
+                actualizo = true;
+            }
+            catch (Exception)
+            {
+
+            }
+            return actualizo;
+
+        }
+
+        public static string MaxNumAbo(string NumFin)
+        {
+            var listAboCarg = db.ABOOCARG.Where(x => x.ABO_NUMFIN == NumFin).ToList();
+            string numAbo = string.Empty;
+            int numAboi = 0;
+            if (listAboCarg.Any())
+            {
+                numAbo = listAboCarg.Max(x => x.ABO_NUMABO);
+                int.TryParse(numAbo, out numAboi);
+                numAboi++;
+            }
+            else
+            {
+                numAboi = 1;
+            }
+            return numAboi.ToString();
+        }
+
+
+        public static string MaxCarSecun(string NumFin)
+        {
+            var listAboCarg = db.OTROCARG.Where(x => x.CAR_NUMFIN == NumFin).ToList();
+            string numSecun = string.Empty;
+            int numSecuni = 0;
+            if (listAboCarg.Any())
+            {
+                numSecun = listAboCarg.Max(x => x.CAR_SECU);
+                int.TryParse(numSecun, out numSecuni);
+                numSecuni++;
+            }
+            else
+            {
+                numSecuni = 1;
+            }
+            return numSecuni.ToString();
+        }
         private static int generateFindID(int counter, string cliente, int codCLiente)
         {
             return counter > 1 ? 0 : MaxFinIdByClient(codCLiente);
@@ -158,25 +204,19 @@ namespace SistemaImbrino.Controllers
 
             var clientesAgrupados = db.sp_cuotasVencidas(fecha_pago).Where(x => x.CLIENTE == cliente).ToList().GroupBy(x => x.C__FIN.ToString());
 
-            var listClientesCuotas = clientesAgrupados.Select(x => new
-            {
-                interesTotal = x.Sum(x2 => x2.InteresTotal)
-               ,
-                capitalTotal = x.Sum(x2 => x2.CapitalTotal)
-               ,
-                montoTotal = x.Sum(x2 => x2.MONTO)
-               ,
-                MoraTotal = x.Sum(x2 => x2.mora)
-               ,
-                cliente = cliente == "" ? x.Max(x2 => x2.CLIENTE) : x.Max(x2 => x2.C__FIN).ToString()
-               ,
-                countT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count()
-               ,
-                ClienteId = x.Max(x2 => x2.CodigoCLiente)
-
-
-            }
-                                                ).ToList();
+            var listClientesCuotas =
+                clientesAgrupados
+                    .Select(x => new
+                    {
+                        interesTotal = x.Sum(x2 => x2.InteresTotal),
+                        capitalTotal = x.Sum(x2 => x2.CapitalTotal),
+                        montoTotal = x.Sum(x2 => x2.MONTO),
+                        MoraTotal = x.Sum(x2 => x2.mora),
+                        cliente = cliente == "" ? x.Max(x2 => x2.CLIENTE) : x.Max(x2 => x2.C__FIN).ToString(),
+                        countT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count(),
+                        ClienteId = x.Max(x2 => x2.CodigoCLiente)
+                    })
+                    .ToList();
             List<View_cobrosHeader> listCobrosHeader = new List<View_cobrosHeader>();
 
             foreach (var lcc in listClientesCuotas)
@@ -234,6 +274,19 @@ namespace SistemaImbrino.Controllers
                          && !string.IsNullOrEmpty(cLIENTE.CTE_DIRECC);
 
         }
+
+        public bool validarCargo(OTROCARG Cargo)
+        {
+            double montoT = 0;
+            double.TryParse(Cargo.CAR_MONTOT.Replace(",",""), out montoT);
+            Cargo.CAR_MONTOT = montoT.ToString();
+
+            var fechaSpt = Cargo.CAR_FECHAR.Split('-');
+            bool value = (!string.IsNullOrEmpty(Cargo.CAR_CODCAR) || Cargo.CAR_CODCAR != "0") || fechaSpt.Length == 2;
+            return value && !string.IsNullOrEmpty(Cargo.CAR_FECHAR)
+                         && montoT > 0
+                         && !string.IsNullOrEmpty(Cargo.CAR_NUMFIN);
+        }
         public bool validarFiador(FIADOR FIADOR)
         {
             return !string.IsNullOrEmpty(FIADOR.FIA_NOMBRE)
@@ -243,15 +296,15 @@ namespace SistemaImbrino.Controllers
         }
         public int lastCodCliente()
         {
-            int maxVal = db.CLIENTE.Any() 
-                        ? db.CLIENTE.Max(x => x.CTE_CODIGO) 
+            int maxVal = db.CLIENTE.Any()
+                        ? db.CLIENTE.Max(x => x.CTE_CODIGO)
                         : 0;
             maxVal++;
             return maxVal;
         }
         public int lastCodFiador()
         {
-            int maxVal = db.FIADOR.Any() 
+            int maxVal = db.FIADOR.Any()
                         ? db.FIADOR.Max(x => x.FIA_CODIGO)
                         : 0;
             maxVal++;
@@ -259,8 +312,19 @@ namespace SistemaImbrino.Controllers
         }
         public static string returMonthName(int month)
         {
-            string[] str = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
-            return str[month - 1];
+            return listaMeses[month - 1];
+        }
+
+        public static int returMonthNumber(string monthName)
+        {
+            int month = Array.FindIndex(listaMeses, x => x == monthName);
+            return month + 1;
+        }
+        public static string getTipoIngreso(string ingresoId)
+        {
+            var ingresos = db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToList();
+            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
+            return ingreso;
         }
 
         public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha)
@@ -270,8 +334,6 @@ namespace SistemaImbrino.Controllers
             string status = ((int)Status.NUEVO).ToString();
             try
             {
-
-
                 List<CUOTA> ListCuotas = new List<CUOTA>();
 
                 var ListFin = financiamiento.ListFinanciamientos;
@@ -291,10 +353,7 @@ namespace SistemaImbrino.Controllers
                 double.TryParse(ListFin.Sum(x => x.capital).ToString("n2"), out capitalTotal);
                 double.TryParse(ListFin.Sum(x => x.interes).ToString("n2"), out interesTotal);
 
-
-
                 // -------------------------- Guardar en tabla Financy --------------------------
-
                 firtFina = ListFin.FirstOrDefault();
 
                 var CurrentFinancy = db.FINANCY.ToList();
@@ -304,7 +363,6 @@ namespace SistemaImbrino.Controllers
                 int.TryParse(firtFina.Fiador, out fiadorID);
                 int.TryParse(firtFina.Promotor, out promotorID);
                 int.TryParse(firtFina.Cliente, out clienteID);
-
 
                 FINANCY fINANCY = new FINANCY()
                 {
@@ -316,15 +374,11 @@ namespace SistemaImbrino.Controllers
                     FIN_STATUS = (int)Status.NUEVO
                 };
 
-
-
                 db.FINANCY.Add(fINANCY);
-
 
                 // -------------------------- Guardar en tabla  FACTURA --------------------------
 
                 double.TryParse(firtFina.PorInt.ToString(), out porInt);
-
 
                 FACTURA fACTURA = new FACTURA()
                 {
@@ -345,7 +399,6 @@ namespace SistemaImbrino.Controllers
 
                 // -------------------------- Guardar en tabla   CUOTA --------------------------
 
-
                 foreach (View_fincaciamientos item in ListFin)
                 {
                     double.TryParse(item.Monto.ToString("n2"), out monto);
@@ -365,12 +418,9 @@ namespace SistemaImbrino.Controllers
                         CUO_FECHAP = null,
                         CUO_TIPO = item.TipoCuota == "NORMAL" ? "N" : "A",
                         CUO_STAANT = null
-
-
                     };
                     ListCuotas.Add(cUOTA);
                 }
-
                 db.CUOTA.AddRange(ListCuotas);
 
                 // -------------------------- Guardar en tabla ESTCUENTA --------------------------
@@ -397,7 +447,6 @@ namespace SistemaImbrino.Controllers
 
                 cartera.CAR_MONTOC += capitalTotal;
                 cartera.CAR_MONTOI += interesTotal;
-
 
                 db.SaveChanges();
                 message.Is_Success = true;

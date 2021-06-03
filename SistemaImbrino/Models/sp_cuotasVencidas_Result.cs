@@ -29,7 +29,7 @@ namespace SistemaImbrino.Models
         public string TELEFONO2 { get; set; }
         public string DESCRIPCION { get; set; }
         public string FechaAbono { get; set; }
-        public int NUM_CUOTA { get; set; }
+        public string NUM_CUOTA { get; set; }
         public string empresa { get; set; }
         public decimal CapitalTotal { get; set; }
         public decimal InteresTotal { get; set; }
@@ -45,5 +45,6 @@ namespace SistemaImbrino.Models
         public string CUO_TIPO { get; set; }
         public System.DateTime fechadt { get; set; }
         public string fecha_Pago { get; set; }
+        public string tipo { get; set; }
     }
 }
