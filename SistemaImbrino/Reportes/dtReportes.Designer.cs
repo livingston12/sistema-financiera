@@ -32,6 +32,10 @@ namespace SistemaImbrino.Reportes {
         
         private VW_rptRegistroNCFDataTable tableVW_rptRegistroNCF;
         
+        private vw_ConsultaFinDataTable tablevw_ConsultaFin;
+        
+        private vw_ConsultaFinDetalleDataTable tablevw_ConsultaFinDetalle;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -71,6 +75,12 @@ namespace SistemaImbrino.Reportes {
                 }
                 if ((ds.Tables["VW_rptRegistroNCF"] != null)) {
                     base.Tables.Add(new VW_rptRegistroNCFDataTable(ds.Tables["VW_rptRegistroNCF"]));
+                }
+                if ((ds.Tables["vw_ConsultaFin"] != null)) {
+                    base.Tables.Add(new vw_ConsultaFinDataTable(ds.Tables["vw_ConsultaFin"]));
+                }
+                if ((ds.Tables["vw_ConsultaFinDetalle"] != null)) {
+                    base.Tables.Add(new vw_ConsultaFinDetalleDataTable(ds.Tables["vw_ConsultaFinDetalle"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -127,6 +137,26 @@ namespace SistemaImbrino.Reportes {
         public VW_rptRegistroNCFDataTable VW_rptRegistroNCF {
             get {
                 return this.tableVW_rptRegistroNCF;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public vw_ConsultaFinDataTable vw_ConsultaFin {
+            get {
+                return this.tablevw_ConsultaFin;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public vw_ConsultaFinDetalleDataTable vw_ConsultaFinDetalle {
+            get {
+                return this.tablevw_ConsultaFinDetalle;
             }
         }
         
@@ -209,6 +239,12 @@ namespace SistemaImbrino.Reportes {
                 if ((ds.Tables["VW_rptRegistroNCF"] != null)) {
                     base.Tables.Add(new VW_rptRegistroNCFDataTable(ds.Tables["VW_rptRegistroNCF"]));
                 }
+                if ((ds.Tables["vw_ConsultaFin"] != null)) {
+                    base.Tables.Add(new vw_ConsultaFinDataTable(ds.Tables["vw_ConsultaFin"]));
+                }
+                if ((ds.Tables["vw_ConsultaFinDetalle"] != null)) {
+                    base.Tables.Add(new vw_ConsultaFinDetalleDataTable(ds.Tables["vw_ConsultaFinDetalle"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -266,6 +302,18 @@ namespace SistemaImbrino.Reportes {
                     this.tableVW_rptRegistroNCF.InitVars();
                 }
             }
+            this.tablevw_ConsultaFin = ((vw_ConsultaFinDataTable)(base.Tables["vw_ConsultaFin"]));
+            if ((initTable == true)) {
+                if ((this.tablevw_ConsultaFin != null)) {
+                    this.tablevw_ConsultaFin.InitVars();
+                }
+            }
+            this.tablevw_ConsultaFinDetalle = ((vw_ConsultaFinDetalleDataTable)(base.Tables["vw_ConsultaFinDetalle"]));
+            if ((initTable == true)) {
+                if ((this.tablevw_ConsultaFinDetalle != null)) {
+                    this.tablevw_ConsultaFinDetalle.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -284,6 +332,10 @@ namespace SistemaImbrino.Reportes {
             base.Tables.Add(this.tableVW_rptFinAtrasados);
             this.tableVW_rptRegistroNCF = new VW_rptRegistroNCFDataTable();
             base.Tables.Add(this.tableVW_rptRegistroNCF);
+            this.tablevw_ConsultaFin = new vw_ConsultaFinDataTable();
+            base.Tables.Add(this.tablevw_ConsultaFin);
+            this.tablevw_ConsultaFinDetalle = new vw_ConsultaFinDetalleDataTable();
+            base.Tables.Add(this.tablevw_ConsultaFinDetalle);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -307,6 +359,18 @@ namespace SistemaImbrino.Reportes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializeVW_rptRegistroNCF() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializevw_ConsultaFin() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializevw_ConsultaFinDetalle() {
             return false;
         }
         
@@ -376,6 +440,12 @@ namespace SistemaImbrino.Reportes {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void VW_rptRegistroNCFRowChangeEventHandler(object sender, VW_rptRegistroNCFRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void vw_ConsultaFinRowChangeEventHandler(object sender, vw_ConsultaFinRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void vw_ConsultaFinDetalleRowChangeEventHandler(object sender, vw_ConsultaFinDetalleRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -2533,6 +2603,812 @@ namespace SistemaImbrino.Reportes {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class vw_ConsultaFinDataTable : global::System.Data.TypedTableBase<vw_ConsultaFinRow> {
+            
+            private global::System.Data.DataColumn columnFAC_NUMFIN;
+            
+            private global::System.Data.DataColumn columnCUO_STATUS;
+            
+            private global::System.Data.DataColumn columnCUO_MONTOT;
+            
+            private global::System.Data.DataColumn columnCUO_MONTOI;
+            
+            private global::System.Data.DataColumn columnCUO_MONTOC;
+            
+            private global::System.Data.DataColumn columnFAC_FECHA;
+            
+            private global::System.Data.DataColumn columnCUO_NUMCUO;
+            
+            private global::System.Data.DataColumn columnBalanceTotal;
+            
+            private global::System.Data.DataColumn columncliente;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDataTable() {
+                this.TableName = "vw_ConsultaFin";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal vw_ConsultaFinDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected vw_ConsultaFinDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FAC_NUMFINColumn {
+                get {
+                    return this.columnFAC_NUMFIN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUO_STATUSColumn {
+                get {
+                    return this.columnCUO_STATUS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUO_MONTOTColumn {
+                get {
+                    return this.columnCUO_MONTOT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUO_MONTOIColumn {
+                get {
+                    return this.columnCUO_MONTOI;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUO_MONTOCColumn {
+                get {
+                    return this.columnCUO_MONTOC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FAC_FECHAColumn {
+                get {
+                    return this.columnFAC_FECHA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUO_NUMCUOColumn {
+                get {
+                    return this.columnCUO_NUMCUO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn BalanceTotalColumn {
+                get {
+                    return this.columnBalanceTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn clienteColumn {
+                get {
+                    return this.columncliente;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinRow this[int index] {
+                get {
+                    return ((vw_ConsultaFinRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinRowChangeEventHandler vw_ConsultaFinRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinRowChangeEventHandler vw_ConsultaFinRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinRowChangeEventHandler vw_ConsultaFinRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinRowChangeEventHandler vw_ConsultaFinRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Addvw_ConsultaFinRow(vw_ConsultaFinRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinRow Addvw_ConsultaFinRow(int FAC_NUMFIN, string CUO_STATUS, double CUO_MONTOT, decimal CUO_MONTOI, decimal CUO_MONTOC, string FAC_FECHA, int CUO_NUMCUO, decimal BalanceTotal, string cliente) {
+                vw_ConsultaFinRow rowvw_ConsultaFinRow = ((vw_ConsultaFinRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        FAC_NUMFIN,
+                        CUO_STATUS,
+                        CUO_MONTOT,
+                        CUO_MONTOI,
+                        CUO_MONTOC,
+                        FAC_FECHA,
+                        CUO_NUMCUO,
+                        BalanceTotal,
+                        cliente};
+                rowvw_ConsultaFinRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowvw_ConsultaFinRow);
+                return rowvw_ConsultaFinRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                vw_ConsultaFinDataTable cln = ((vw_ConsultaFinDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new vw_ConsultaFinDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnFAC_NUMFIN = base.Columns["FAC_NUMFIN"];
+                this.columnCUO_STATUS = base.Columns["CUO_STATUS"];
+                this.columnCUO_MONTOT = base.Columns["CUO_MONTOT"];
+                this.columnCUO_MONTOI = base.Columns["CUO_MONTOI"];
+                this.columnCUO_MONTOC = base.Columns["CUO_MONTOC"];
+                this.columnFAC_FECHA = base.Columns["FAC_FECHA"];
+                this.columnCUO_NUMCUO = base.Columns["CUO_NUMCUO"];
+                this.columnBalanceTotal = base.Columns["BalanceTotal"];
+                this.columncliente = base.Columns["cliente"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnFAC_NUMFIN = new global::System.Data.DataColumn("FAC_NUMFIN", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFAC_NUMFIN);
+                this.columnCUO_STATUS = new global::System.Data.DataColumn("CUO_STATUS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUO_STATUS);
+                this.columnCUO_MONTOT = new global::System.Data.DataColumn("CUO_MONTOT", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUO_MONTOT);
+                this.columnCUO_MONTOI = new global::System.Data.DataColumn("CUO_MONTOI", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUO_MONTOI);
+                this.columnCUO_MONTOC = new global::System.Data.DataColumn("CUO_MONTOC", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUO_MONTOC);
+                this.columnFAC_FECHA = new global::System.Data.DataColumn("FAC_FECHA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFAC_FECHA);
+                this.columnCUO_NUMCUO = new global::System.Data.DataColumn("CUO_NUMCUO", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUO_NUMCUO);
+                this.columnBalanceTotal = new global::System.Data.DataColumn("BalanceTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalanceTotal);
+                this.columncliente = new global::System.Data.DataColumn("cliente", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncliente);
+                this.columnFAC_NUMFIN.AllowDBNull = false;
+                this.columnCUO_STATUS.AllowDBNull = false;
+                this.columnCUO_STATUS.MaxLength = 5;
+                this.columnCUO_MONTOT.ReadOnly = true;
+                this.columnCUO_MONTOI.ReadOnly = true;
+                this.columnCUO_MONTOC.ReadOnly = true;
+                this.columnFAC_FECHA.ReadOnly = true;
+                this.columnFAC_FECHA.MaxLength = 29;
+                this.columnCUO_NUMCUO.ReadOnly = true;
+                this.columnBalanceTotal.ReadOnly = true;
+                this.columncliente.ReadOnly = true;
+                this.columncliente.MaxLength = 201;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinRow Newvw_ConsultaFinRow() {
+                return ((vw_ConsultaFinRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new vw_ConsultaFinRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(vw_ConsultaFinRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.vw_ConsultaFinRowChanged != null)) {
+                    this.vw_ConsultaFinRowChanged(this, new vw_ConsultaFinRowChangeEvent(((vw_ConsultaFinRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.vw_ConsultaFinRowChanging != null)) {
+                    this.vw_ConsultaFinRowChanging(this, new vw_ConsultaFinRowChangeEvent(((vw_ConsultaFinRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.vw_ConsultaFinRowDeleted != null)) {
+                    this.vw_ConsultaFinRowDeleted(this, new vw_ConsultaFinRowChangeEvent(((vw_ConsultaFinRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.vw_ConsultaFinRowDeleting != null)) {
+                    this.vw_ConsultaFinRowDeleting(this, new vw_ConsultaFinRowChangeEvent(((vw_ConsultaFinRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Removevw_ConsultaFinRow(vw_ConsultaFinRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                dtReportes ds = new dtReportes();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "vw_ConsultaFinDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class vw_ConsultaFinDetalleDataTable : global::System.Data.TypedTableBase<vw_ConsultaFinDetalleRow> {
+            
+            private global::System.Data.DataColumn columnING_NUMREC;
+            
+            private global::System.Data.DataColumn columnING_NUMFIN;
+            
+            private global::System.Data.DataColumn columnING_STATUS;
+            
+            private global::System.Data.DataColumn columnING_MONTOT;
+            
+            private global::System.Data.DataColumn columnING_MONTOC;
+            
+            private global::System.Data.DataColumn columnING_MONTOI;
+            
+            private global::System.Data.DataColumn columnING_MONTOCAR;
+            
+            private global::System.Data.DataColumn columnING_FECHA;
+            
+            private global::System.Data.DataColumn columnING_FORMPG;
+            
+            private global::System.Data.DataColumn columnING_DESCRI;
+            
+            private global::System.Data.DataColumn columnING_NCF;
+            
+            private global::System.Data.DataColumn columntipo;
+            
+            private global::System.Data.DataColumn columncliente;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleDataTable() {
+                this.TableName = "vw_ConsultaFinDetalle";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal vw_ConsultaFinDetalleDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected vw_ConsultaFinDetalleDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_NUMRECColumn {
+                get {
+                    return this.columnING_NUMREC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_NUMFINColumn {
+                get {
+                    return this.columnING_NUMFIN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_STATUSColumn {
+                get {
+                    return this.columnING_STATUS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_MONTOTColumn {
+                get {
+                    return this.columnING_MONTOT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_MONTOCColumn {
+                get {
+                    return this.columnING_MONTOC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_MONTOIColumn {
+                get {
+                    return this.columnING_MONTOI;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_MONTOCARColumn {
+                get {
+                    return this.columnING_MONTOCAR;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_FECHAColumn {
+                get {
+                    return this.columnING_FECHA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_FORMPGColumn {
+                get {
+                    return this.columnING_FORMPG;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_DESCRIColumn {
+                get {
+                    return this.columnING_DESCRI;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ING_NCFColumn {
+                get {
+                    return this.columnING_NCF;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn tipoColumn {
+                get {
+                    return this.columntipo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn clienteColumn {
+                get {
+                    return this.columncliente;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleRow this[int index] {
+                get {
+                    return ((vw_ConsultaFinDetalleRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinDetalleRowChangeEventHandler vw_ConsultaFinDetalleRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinDetalleRowChangeEventHandler vw_ConsultaFinDetalleRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinDetalleRowChangeEventHandler vw_ConsultaFinDetalleRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event vw_ConsultaFinDetalleRowChangeEventHandler vw_ConsultaFinDetalleRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Addvw_ConsultaFinDetalleRow(vw_ConsultaFinDetalleRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleRow Addvw_ConsultaFinDetalleRow(int ING_NUMREC, int ING_NUMFIN, string ING_STATUS, decimal ING_MONTOT, decimal ING_MONTOC, decimal ING_MONTOI, double ING_MONTOCAR, string ING_FECHA, string ING_FORMPG, string ING_DESCRI, string ING_NCF, string tipo, string cliente) {
+                vw_ConsultaFinDetalleRow rowvw_ConsultaFinDetalleRow = ((vw_ConsultaFinDetalleRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        ING_NUMREC,
+                        ING_NUMFIN,
+                        ING_STATUS,
+                        ING_MONTOT,
+                        ING_MONTOC,
+                        ING_MONTOI,
+                        ING_MONTOCAR,
+                        ING_FECHA,
+                        ING_FORMPG,
+                        ING_DESCRI,
+                        ING_NCF,
+                        tipo,
+                        cliente};
+                rowvw_ConsultaFinDetalleRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowvw_ConsultaFinDetalleRow);
+                return rowvw_ConsultaFinDetalleRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                vw_ConsultaFinDetalleDataTable cln = ((vw_ConsultaFinDetalleDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new vw_ConsultaFinDetalleDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnING_NUMREC = base.Columns["ING_NUMREC"];
+                this.columnING_NUMFIN = base.Columns["ING_NUMFIN"];
+                this.columnING_STATUS = base.Columns["ING_STATUS"];
+                this.columnING_MONTOT = base.Columns["ING_MONTOT"];
+                this.columnING_MONTOC = base.Columns["ING_MONTOC"];
+                this.columnING_MONTOI = base.Columns["ING_MONTOI"];
+                this.columnING_MONTOCAR = base.Columns["ING_MONTOCAR"];
+                this.columnING_FECHA = base.Columns["ING_FECHA"];
+                this.columnING_FORMPG = base.Columns["ING_FORMPG"];
+                this.columnING_DESCRI = base.Columns["ING_DESCRI"];
+                this.columnING_NCF = base.Columns["ING_NCF"];
+                this.columntipo = base.Columns["tipo"];
+                this.columncliente = base.Columns["cliente"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnING_NUMREC = new global::System.Data.DataColumn("ING_NUMREC", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_NUMREC);
+                this.columnING_NUMFIN = new global::System.Data.DataColumn("ING_NUMFIN", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_NUMFIN);
+                this.columnING_STATUS = new global::System.Data.DataColumn("ING_STATUS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_STATUS);
+                this.columnING_MONTOT = new global::System.Data.DataColumn("ING_MONTOT", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_MONTOT);
+                this.columnING_MONTOC = new global::System.Data.DataColumn("ING_MONTOC", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_MONTOC);
+                this.columnING_MONTOI = new global::System.Data.DataColumn("ING_MONTOI", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_MONTOI);
+                this.columnING_MONTOCAR = new global::System.Data.DataColumn("ING_MONTOCAR", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_MONTOCAR);
+                this.columnING_FECHA = new global::System.Data.DataColumn("ING_FECHA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_FECHA);
+                this.columnING_FORMPG = new global::System.Data.DataColumn("ING_FORMPG", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_FORMPG);
+                this.columnING_DESCRI = new global::System.Data.DataColumn("ING_DESCRI", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_DESCRI);
+                this.columnING_NCF = new global::System.Data.DataColumn("ING_NCF", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnING_NCF);
+                this.columntipo = new global::System.Data.DataColumn("tipo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntipo);
+                this.columncliente = new global::System.Data.DataColumn("cliente", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncliente);
+                this.columnING_NUMREC.AllowDBNull = false;
+                this.columnING_NUMFIN.AllowDBNull = false;
+                this.columnING_STATUS.AllowDBNull = false;
+                this.columnING_STATUS.MaxLength = 100;
+                this.columnING_MONTOT.AllowDBNull = false;
+                this.columnING_MONTOC.AllowDBNull = false;
+                this.columnING_MONTOI.AllowDBNull = false;
+                this.columnING_MONTOCAR.AllowDBNull = false;
+                this.columnING_FECHA.AllowDBNull = false;
+                this.columnING_FECHA.MaxLength = 29;
+                this.columnING_FORMPG.AllowDBNull = false;
+                this.columnING_FORMPG.MaxLength = 10;
+                this.columnING_DESCRI.AllowDBNull = false;
+                this.columnING_DESCRI.MaxLength = 2147483647;
+                this.columnING_NCF.AllowDBNull = false;
+                this.columnING_NCF.MaxLength = 100;
+                this.columntipo.AllowDBNull = false;
+                this.columntipo.MaxLength = 10;
+                this.columncliente.AllowDBNull = false;
+                this.columncliente.MaxLength = 201;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleRow Newvw_ConsultaFinDetalleRow() {
+                return ((vw_ConsultaFinDetalleRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new vw_ConsultaFinDetalleRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(vw_ConsultaFinDetalleRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.vw_ConsultaFinDetalleRowChanged != null)) {
+                    this.vw_ConsultaFinDetalleRowChanged(this, new vw_ConsultaFinDetalleRowChangeEvent(((vw_ConsultaFinDetalleRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.vw_ConsultaFinDetalleRowChanging != null)) {
+                    this.vw_ConsultaFinDetalleRowChanging(this, new vw_ConsultaFinDetalleRowChangeEvent(((vw_ConsultaFinDetalleRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.vw_ConsultaFinDetalleRowDeleted != null)) {
+                    this.vw_ConsultaFinDetalleRowDeleted(this, new vw_ConsultaFinDetalleRowChangeEvent(((vw_ConsultaFinDetalleRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.vw_ConsultaFinDetalleRowDeleting != null)) {
+                    this.vw_ConsultaFinDetalleRowDeleting(this, new vw_ConsultaFinDetalleRowChangeEvent(((vw_ConsultaFinDetalleRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Removevw_ConsultaFinDetalleRow(vw_ConsultaFinDetalleRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                dtReportes ds = new dtReportes();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "vw_ConsultaFinDetalleDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class VW_rptEstadoCuentaRow : global::System.Data.DataRow {
@@ -4473,6 +5349,397 @@ namespace SistemaImbrino.Reportes {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class vw_ConsultaFinRow : global::System.Data.DataRow {
+            
+            private vw_ConsultaFinDataTable tablevw_ConsultaFin;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal vw_ConsultaFinRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablevw_ConsultaFin = ((vw_ConsultaFinDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int FAC_NUMFIN {
+                get {
+                    return ((int)(this[this.tablevw_ConsultaFin.FAC_NUMFINColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.FAC_NUMFINColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string CUO_STATUS {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFin.CUO_STATUSColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.CUO_STATUSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public double CUO_MONTOT {
+                get {
+                    try {
+                        return ((double)(this[this.tablevw_ConsultaFin.CUO_MONTOTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUO_MONTOT\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.CUO_MONTOTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal CUO_MONTOI {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablevw_ConsultaFin.CUO_MONTOIColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUO_MONTOI\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.CUO_MONTOIColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal CUO_MONTOC {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablevw_ConsultaFin.CUO_MONTOCColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUO_MONTOC\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.CUO_MONTOCColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string FAC_FECHA {
+                get {
+                    try {
+                        return ((string)(this[this.tablevw_ConsultaFin.FAC_FECHAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FAC_FECHA\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.FAC_FECHAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int CUO_NUMCUO {
+                get {
+                    try {
+                        return ((int)(this[this.tablevw_ConsultaFin.CUO_NUMCUOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUO_NUMCUO\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.CUO_NUMCUOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal BalanceTotal {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablevw_ConsultaFin.BalanceTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'BalanceTotal\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.BalanceTotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string cliente {
+                get {
+                    try {
+                        return ((string)(this[this.tablevw_ConsultaFin.clienteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cliente\' in table \'vw_ConsultaFin\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevw_ConsultaFin.clienteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCUO_MONTOTNull() {
+                return this.IsNull(this.tablevw_ConsultaFin.CUO_MONTOTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCUO_MONTOTNull() {
+                this[this.tablevw_ConsultaFin.CUO_MONTOTColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCUO_MONTOINull() {
+                return this.IsNull(this.tablevw_ConsultaFin.CUO_MONTOIColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCUO_MONTOINull() {
+                this[this.tablevw_ConsultaFin.CUO_MONTOIColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCUO_MONTOCNull() {
+                return this.IsNull(this.tablevw_ConsultaFin.CUO_MONTOCColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCUO_MONTOCNull() {
+                this[this.tablevw_ConsultaFin.CUO_MONTOCColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFAC_FECHANull() {
+                return this.IsNull(this.tablevw_ConsultaFin.FAC_FECHAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFAC_FECHANull() {
+                this[this.tablevw_ConsultaFin.FAC_FECHAColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCUO_NUMCUONull() {
+                return this.IsNull(this.tablevw_ConsultaFin.CUO_NUMCUOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCUO_NUMCUONull() {
+                this[this.tablevw_ConsultaFin.CUO_NUMCUOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsBalanceTotalNull() {
+                return this.IsNull(this.tablevw_ConsultaFin.BalanceTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetBalanceTotalNull() {
+                this[this.tablevw_ConsultaFin.BalanceTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsclienteNull() {
+                return this.IsNull(this.tablevw_ConsultaFin.clienteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetclienteNull() {
+                this[this.tablevw_ConsultaFin.clienteColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class vw_ConsultaFinDetalleRow : global::System.Data.DataRow {
+            
+            private vw_ConsultaFinDetalleDataTable tablevw_ConsultaFinDetalle;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal vw_ConsultaFinDetalleRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablevw_ConsultaFinDetalle = ((vw_ConsultaFinDetalleDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int ING_NUMREC {
+                get {
+                    return ((int)(this[this.tablevw_ConsultaFinDetalle.ING_NUMRECColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_NUMRECColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int ING_NUMFIN {
+                get {
+                    return ((int)(this[this.tablevw_ConsultaFinDetalle.ING_NUMFINColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_NUMFINColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ING_STATUS {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.ING_STATUSColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_STATUSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal ING_MONTOT {
+                get {
+                    return ((decimal)(this[this.tablevw_ConsultaFinDetalle.ING_MONTOTColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_MONTOTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal ING_MONTOC {
+                get {
+                    return ((decimal)(this[this.tablevw_ConsultaFinDetalle.ING_MONTOCColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_MONTOCColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal ING_MONTOI {
+                get {
+                    return ((decimal)(this[this.tablevw_ConsultaFinDetalle.ING_MONTOIColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_MONTOIColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public double ING_MONTOCAR {
+                get {
+                    return ((double)(this[this.tablevw_ConsultaFinDetalle.ING_MONTOCARColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_MONTOCARColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ING_FECHA {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.ING_FECHAColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_FECHAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ING_FORMPG {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.ING_FORMPGColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_FORMPGColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ING_DESCRI {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.ING_DESCRIColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_DESCRIColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ING_NCF {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.ING_NCFColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.ING_NCFColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string tipo {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.tipoColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.tipoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string cliente {
+                get {
+                    return ((string)(this[this.tablevw_ConsultaFinDetalle.clienteColumn]));
+                }
+                set {
+                    this[this.tablevw_ConsultaFinDetalle.clienteColumn] = value;
+                }
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -4594,6 +5861,74 @@ namespace SistemaImbrino.Reportes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public VW_rptRegistroNCFRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class vw_ConsultaFinRowChangeEvent : global::System.EventArgs {
+            
+            private vw_ConsultaFinRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinRowChangeEvent(vw_ConsultaFinRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class vw_ConsultaFinDetalleRowChangeEvent : global::System.EventArgs {
+            
+            private vw_ConsultaFinDetalleRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleRowChangeEvent(vw_ConsultaFinDetalleRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public vw_ConsultaFinDetalleRow Row {
                 get {
                     return this.eventRow;
                 }

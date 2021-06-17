@@ -1,0 +1,214 @@
+﻿
+@{
+	ViewBag.Title = "Comportamiento de financiamiento";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="hero-callout">
+	<input type="hidden" id="finID" value="@ViewBag.finID" />
+	<div class="table-responsive">
+		<div class="col-xs-12 col-md-12 text-right" style="padding-left: 0px !important;padding-right: 0px !important;">
+			<p class="text-left col-md-8 control-label" style="font-size:15px; margin-left:0px; padding-left:0px;">FINANCIAMIENTO:  <b style="font-size:20px;">@ViewBag.finID</b> <br /> CLIENTE: <b style="font-size:20px;">@ViewBag.Cliente</b></p>
+			<button id="btn-imprimir" class="btn bg-pink" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+			<a id="btn-atras" class="btn bg-pinkLite" href="@Url.Action("Index","FinanciamientosHeader")"><span class="glyphicon glyphicon-triangle-left"></span> Atras</a>
+		</div>
+
+		<br />
+		<br />
+		<table id="tbl_detallefin" class="table  table-hover dataTable" style="width:100%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center">Fecha</th>
+					<th class="text-left">Movimiento</th>
+					<th class="text-right">Capital</th>
+					<th class="text-right">Interes</th>
+					<th class="text-right">Otros</th>
+					<th class="text-right">Balance</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot class="" style="background-color:#d0cece">
+				<tr>
+					<th align="right"></th>
+					<th class="text-left">Total</th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
+					<th class="text-right" align="right"></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+
+		let totalBalance = 0;
+		$(document).ready(function () {
+
+			llenarTblFinDetalle()
+
+			function llenarTblFinDetalle()
+			{
+				var finId = $("#finID").val();
+				var url = "@Url.Action("getCurrentFindDetalle")";
+
+				var table = $("#tbl_detallefin").DataTable({
+					destroy: true,
+					paging: false,
+					info: false,
+					searching: false,
+					ordering: false,
+					ajax: {
+						"url": url,
+						"type": "POST",
+						data: { id: finId },
+						dataType: "json",
+						dataSrc: ""
+					},
+					columns: [
+						{
+							"data": "Fecha",
+							className: "dt-body-center",
+							width: 10
+						},
+						{
+							"data": "Descripcion",
+							width: 400
+						},
+						{ "data": "detail.Capital",
+							render: function (data)
+							{
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right",
+							width: 20
+
+						},
+						{ "data": "detail.Interes",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right",
+							width: 20
+						},
+						{ "data": "detail.Monto",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right",
+							width: 20
+						},
+						{
+							"data": "BalanceGeneral",
+							render: function (data) {
+								return number_format_js(data, 2, 0)
+							},
+							className: "dt-body-right",
+							width: 20
+
+						}
+
+					],
+					lengthChange: false,
+					footerCallback: function (row, data, start, end, display) {
+						var api = this.api(), data;
+
+						// Remove the formatting to get integer data for summation
+						var intVal = function (i) {
+							return typeof i === 'string' ?
+								i.replace(/[\$,]/g, '') * 1 :
+								typeof i === 'number' ?
+									i : 0;
+						};
+
+						// --------------- Capital
+						pageTotal = api
+							.column(2, { page: 'current' })
+							.data()
+							.reduce(function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0);
+						// Update footer
+						$(api.column(2).footer()).html(
+							number_format_js(pageTotal, 2, 0)
+						);
+
+						// --------------- Interes
+						pageTotal = api
+							.column(3, { page: 'current' })
+							.data()
+							.reduce(function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0);
+						// Update footer
+						$(api.column(3).footer()).html(
+							number_format_js(pageTotal, 2, 0)
+						);
+
+						// --------------- otros
+						pageTotal = api
+							.column(4, { page: 'current' })
+							.data()
+							.reduce(function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0);
+						// Update footer
+						$(api.column(4).footer()).html(
+							number_format_js(pageTotal, 2, 0)
+						);
+
+
+					},
+					rowCallback: function (row, data)
+					{
+						if (data.detail.Tipo === "desembolso") {
+							$("#cliente").val(data.Cliente);
+							$('td:eq(2)', row).html("");
+							$('td:eq(3)', row).html("");
+							$('td:eq(4)', row).html("");
+							totalBalance = data.BalanceGeneral;
+							//$('td:eq(5)', row).html(data.detail.Balance);
+						}
+						totalBalance -= data.detail.Capital;
+						$('td:eq(5)', row).html("<b>"+number_format_js(totalBalance, 2, 0)+"</b>");
+					}
+
+				});
+				$("th").removeClass("sorting_asc");
+
+			}
+
+			  $("#btn-imprimir").click(function ()
+			{
+				var $btn = $(this).button('loading');
+				var url = "@Url.Action("PrintReport")";
+				  var _finID = $("#finID").val();
+				  console.log(_finID);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { FindID: _finID },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+
+                });
+
+			});
+		});
+	</script>
+
+}

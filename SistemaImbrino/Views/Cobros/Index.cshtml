@@ -14,7 +14,7 @@
 
 
 @Html.Partial("_CobrosHeader", (SistemaImbrino.Models.VW_rptFinAtrasados)ViewBag.ListAtrasados)
-@*@Html.Partial("_CobrosHeader", (SistemaImbrino.Models.VW_rptCuotasVencidas)ViewBag.ListAtrasados)*@
+
 
 <div class="row ">
 
@@ -29,8 +29,8 @@
 </div>
 <br />
 <div class="table-responsiveCustom">
-	<table class="table table-hover table-bordered table-condensed bg-pink table-fixed" id="tbl_detalleCuotasC">
-		<thead>
+	<table class="table table-hover table-bordered table-condensed  table-fixed" id="tbl_detalleCuotasC">
+		<thead class="bg-pink">
 			<tr>
 				<th style="width:10px !important;">Cuota</th>
 				<th>F. Vencim</th>
@@ -108,29 +108,6 @@
 	</div>
 </div>
 
-<!--------------------------------------- Modal para Procesar el cobro de todas las cuotas pendientes ----------------------------------------------->
-@*<div class="modal fade" id="CobroTotalModal" tabindex="-1" data-url='@Url.Action("Cobrar")' role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-warning">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">
-						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-						Cobrar total cuotas
-					</h4>
-				</div>
-				<div class="modal-body">
-					@Html.Partial("_popup_ProcesarPagoTotal")
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" id="btn-GuardarAllCuotas">Guardar</button>
-					<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Close</button>
-
-				</div>
-			</div>
-		</div>
-	</div>*@
-
 <div class="modal fade" id="CobroTotalModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("_popup_ProcesarPagoTotal")' role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -167,9 +144,7 @@
 
 			$(".dw-cobro").change(function (e) {
 
-
 				var id_Cuota = $(this).attr('cuota');
-				//alert($(this).val());
 				var id_tipo = $(this).val();
 				var indice = 0;
 				if (id_tipo == "0") {

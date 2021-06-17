@@ -12,7 +12,7 @@ namespace SistemaImbrino.Controllers
         public static DB_IMBRINOEntities db = new DB_IMBRINOEntities();
         public string MensajeErrorCath = "Error inesperado en la aplicacion Favor contactar a un soporte";
         private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
-
+        public static string formatoFecha = "MM/dd/yyyy";
 
         public enum TipoCobro
         {
@@ -239,14 +239,14 @@ namespace SistemaImbrino.Controllers
         }
 
 
-        private static IEnumerable<IGrouping<string, VW_rptCuotasVencidas>> ClientesAgrupados(string cliente = "", bool is_detail = false)
+        private static IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> ClientesAgrupados(string cliente = "", bool is_detail = false)
         {
-            IEnumerable<IGrouping<string, VW_rptCuotasVencidas>> clientesAgrupados = null;
+            IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> clientesAgrupados = null;
 
             if (cliente == "" && is_detail == false)
-                clientesAgrupados = db.VW_rptCuotasVencidas.ToList().GroupBy(x => x.CLIENTE);
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).ToList().GroupBy(x => x.CLIENTE);
             else
-                clientesAgrupados = db.VW_rptCuotasVencidas.Where(x => x.CLIENTE == cliente).ToList().GroupBy(x => x.C__FIN.ToString());
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).Where(x => x.CLIENTE == cliente).ToList().GroupBy(x => x.C__FIN.ToString());
             return clientesAgrupados;
         }
 
@@ -307,7 +307,7 @@ namespace SistemaImbrino.Controllers
             int maxVal = db.FIADOR.Any()
                         ? db.FIADOR.Max(x => x.FIA_CODIGO)
                         : 0;
-            maxVal++;
+            maxVal = maxVal + 1;
             return maxVal;
         }
         public static string returMonthName(int month)

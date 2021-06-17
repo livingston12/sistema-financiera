@@ -1,0 +1,346 @@
+﻿@model SistemaImbrino.Models.OTROCARG
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Creditos bancarios";
+	ViewBag.nameView = "credito bancario";
+}
+
+<head>
+	<style>
+		.datepickerFormat {
+			z-index: 1500 !important;
+			position: absolute !important;
+		}
+	</style>
+</head>
+<div class="row">
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BANCO">Banco</label>
+		<div class="form-group" id="dvBANCO">
+			<div class="input-group">
+				<label class="input-group-addon" for="BANCO">NF</label>
+				<select id="BANCO" class="form-control select widtTotal"></select>
+				<span id="spanBANCO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CUENTA_BANCARIA">Cuenta bancaria</label>
+		<div class="form-group" id="dvCUENTA_BANCARIA">
+			<div class="input-group">
+				<label class="input-group-addon" for="CUENTA_BANCARIA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select id="CUENTA_BANCARIA" class="form-control select widtTotal"></select>
+				<span id="spanCUENTA_BANCARIA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="NUMERO_CHEQUE">Numero cheque</label>
+		<div class="form-group" id="dvNUMERO_CHEQUE">
+			<div class="input-group">
+				<label class="input-group-addon" for="NUMERO_CHEQUE"><i class="glyphicon glyphicon-usd"></i></label>
+				@Html.EditorFor(model => model.NUMERO_CHEQUE, new { htmlAttributes = new { @class = "form-control number numberDecimal" } })
+				<span id="spanNUMERO_CHEQUE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="TIPO_CREDITO">Tipo credito</label>
+		<div class="form-group" id="dvTIPO_CREDITO">
+			<div class="input-group">
+				<label class="input-group-addon" for="TIPO_CREDITO"><i class="glyphicon glyphicon-calendar"></i></label>
+				<select id="TIPO_CREDITO" class="form-control select widtTotal"></select>
+				<span id="spanTIPO_CREDITO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="TIPO_SALIDA">Tipo salida</label>
+		<div class="form-group" id="dvTIPO_SALIDA">
+			<div class="input-group">
+				<label class="input-group-addon" for="TIPO_SALIDA"><i class="glyphicon glyphicon-usd"></i></label>
+				<select id="TIPO_SALIDA" class="form-control select widtTotal"></select>
+				<span id="spanTIPO_SALIDA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="MONTO">Monto</label>
+		<div class="form-group" id="dvMONTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="MONTO"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="MONTO">
+				<span id="spanMONTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="FECHA">Fecha</label>
+		<div class="form-group" id="dvFECHA">
+			<div class="input-group">
+				<label class="input-group-addon" for="FECHA"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="FECHA">
+				<span id="spanFECHA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BENEFICIARIO">Beneficiario</label>
+		<div class="form-group" id="dvBENEFICIARIO">
+			<div class="input-group">
+				<label class="input-group-addon" for="BENEFICIARIO"><i class="glyphicon glyphicon-calendar"></i></label>
+				<select id="BENEFICIARIO" class="form-control select widtTotal"></select>
+				<span id="spanBENEFICIARIO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CONCEPTO">Concepto</label>
+		<div class="form-group" id="dvCONCEPTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="CONCEPTO"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="CONCEPTO">
+				<span id="spanCONCEPTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-3">
+		<input type="submit" value="Crear" id="btn_crearCargo" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cargo" class="table table-condensed table-hover table-bordered dataTable">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>BANCO</th>
+					<th>CUENTA BANCARIA</th>
+					<th>NUMERO CHEQUE</th>
+					<th>TIPO CREDITO</th>
+					<th>TIPO SALIDA</th>
+					<th>MONTO</th>
+					<th>FECHA</th>
+					<th>BENEFICIARIO</th>
+					<th>CONCEPTO</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListCargos != null)
+				{
+					foreach (var vw_cargo in ViewBag.ListCreditosBancarios)
+					{
+						@Html.Partial("_creditosDetalle", (SistemaImbrino.Models.OTROSCR)vw_cargo)
+					}
+				}
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarCliente")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_EditarCargo">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			GetTiposCargo();
+
+
+			$("input").blur(function () {
+				validarTexto(this);
+				validarNumero(this);
+			});
+
+			$("#btn_crearCargo").click(function (e)
+			{
+				insertarEditarCargo("I");
+			});
+			$("#btn_EditarCargo").click(function (e) {
+				insertarEditarCargo("U");
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarCargo(typeAction)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearCargo")" : "@Url.Action("ActualizarCargo")";
+
+			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _CAR_NUMFIN = $("#" + E + "CAR_NUMFIN").val().trim();
+			var _CAR_CODCAR = $("#" + E + "CAR_CODCAR").val().trim();
+			var _CAR_MONTOT = $("#" + E + "CAR_MONTOT").val().trim();
+			var _CAR_FECHAR = $("#" + E + "CAR_FECHAR").val().trim();
+
+
+			if (_CAR_NUMFIN == "" || _CAR_MONTOT == "" ||
+				_CAR_MONTOT == "0" || _CAR_FECHAR == "" ||
+				_CAR_CODCAR == "0"
+				)
+			{
+				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+				return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					 id: _id
+					, CAR_NUMFIN: _CAR_NUMFIN
+					, CAR_CODCAR: _CAR_CODCAR
+					, CAR_MONTOT: _CAR_MONTOT
+					, CAR_FECHAR: _CAR_FECHAR
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+
+		}
+		function GetTiposCargo(id = 'CAR_CODCAR')
+		{
+			var url = "@Url.Action("GetTiposCargo")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "tipo de cargo",true,true);
+				}
+			});
+		}
+
+		function EliminarCurrentCargo(id,nombre) {
+			mensajeEliminarCargo(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarCargo(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el cargo " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCargo(id);
+				});
+		}
+
+		function eliminarCargo(_id)
+		{
+			var url = "@Url.Action("EliminarCargo")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#id").val(_id);
+			Show_closeModal("#modalCeditar", true);
+			$("#ECAR_CODCAR").val("0");
+			updateSelectMania("ECAR_CODCAR");
+			$("#ECAR_NUMFIN").empty();
+			$("#ECAR_SECU").empty();
+			$("#ECAR_MONTOT").empty();
+			$("#ECAR_FECHAR").empty();
+
+			GetTiposCargo("ECAR_CODCAR");
+
+			var url = "@Url.Action("GetCurrentCargo")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#ECAR_CODCAR").val(_data.CAR_CODCAR);
+					$("#ECAR_NUMFIN").val(_data.CAR_NUMFIN);
+					$("#ECAR_SECU").val(_data.CAR_SECU);
+					$("#ECAR_MONTOT").val(_data.CAR_MONTOT);
+					$("#ECAR_FECHAR").val(_data.CAR_FECHAR);
+					$("#id").val(_id);
+					updateSelectMania("ECAR_CODCAR");
+				}
+			});
+			formartFecharToDatePicker();
+		}
+
+		function formartFecharToDatePicker() {
+			$('.ui-datepicker').addClass("datepickerFormat");
+		}
+	</script>
+
+}
+

@@ -41,6 +41,11 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.OTROCARG" Width="1.5" PointX="17.375" PointY="4.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.ABOOCARG" Width="1.5" PointX="18.375" PointY="0.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.CARGO" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_ConsultaFinDetalle" Width="1.5" PointX="6.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_ConsultaFin" Width="1.5" PointX="8.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.OTROSCR" Width="1.5" PointX="10.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCR1" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCR2" Width="1.5" PointX="11.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

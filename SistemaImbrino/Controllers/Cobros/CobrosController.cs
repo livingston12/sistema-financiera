@@ -189,7 +189,7 @@ namespace SistemaImbrino.Controllers
                     string strmontoCargo = cobro.otroCargo.ToString();
                     string numCuota = getCuotaAdiccional(cobro.numCuota);
 
-                    fecha = Fecha_pago.ToString("dd/MM/yyyy");
+                    fecha = Fecha_pago.ToString(formatoFecha);
                     OTROCARG otroCarg = db.OTROCARG.Where(x => x.CAR_NUMFIN == cobro.numfin.ToString() && x.CAR_SECU == numCuota).FirstOrDefault();
                     var ingreso = getTipoIngreso(otroCarg.CAR_CODCAR);
 
@@ -264,7 +264,7 @@ namespace SistemaImbrino.Controllers
                 , montoPagado = cobro.montoPagado;
 
             string tipoCobro = ReturnTipoCobro(cobro.tipoCobro).ToString()
-            , fecha = Fecha_pago.ToString("dd/MM/yyyy")
+            , fecha = Fecha_pago.ToString(formatoFecha)
             , formaPago = tipoPago
             , descri = ""
             , TotalCuota = ""
@@ -430,7 +430,7 @@ namespace SistemaImbrino.Controllers
                     montoTotalMora += cobro.mora;
                     double.TryParse(montoTotalMora.ToString(), out mora);
                     if (ListINGOtros.Any() == false)
-                        addNewIngOtro(Fecha_pago.ToString("dd/M/yyyy"), formaPago, descriMora, mora, ncf, numfin, ListCuotaVen.FirstOrDefault().CLIENTE, NUMREC, _status);
+                        addNewIngOtro(Fecha_pago.ToString(formatoFecha), formaPago, descriMora, mora, ncf, numfin, ListCuotaVen.FirstOrDefault().CLIENTE, NUMREC, _status);
 
                     ListINGOtros.FirstOrDefault().ING_DESCRI = descritxtMora;
                     ListINGOtros.FirstOrDefault().ING_MONTOT = mora;
@@ -451,14 +451,14 @@ namespace SistemaImbrino.Controllers
                     ING_MONTOT = decimal.Parse(MontoTotal),
                     ING_NCF = ncf,
                     ING_STATUS = _status,
-                    ING_FECHA = Fecha_pago.ToString("dd/M/yyyy")
+                    ING_FECHA = Fecha_pago.ToString(formatoFecha)
                 };
                 ListiNGCUOTAs.Add(iNGCUOTA);
 
                 if (cobro.mora > 0)
                 {
                     double.TryParse(cobro.mora.ToString(), out mora);
-                    addNewIngOtro(Fecha_pago.ToString("dd/M/yyyy"), formaPago, descriMora, mora, ncf, numfin, ListCuotaVen.FirstOrDefault().CLIENTE, NUMREC, _status);
+                    addNewIngOtro(Fecha_pago.ToString(formatoFecha), formaPago, descriMora, mora, ncf, numfin, ListCuotaVen.FirstOrDefault().CLIENTE, NUMREC, _status);
                 }
 
             }
@@ -467,7 +467,7 @@ namespace SistemaImbrino.Controllers
             cuota.CUO_STAANT = cuota.CUO_STATUS;
             cuota.CUO_STATUS = id_tipoCobro;
             cuota.CUO_NUMREC = NUMREC;
-            cuota.CUO_FECHAP = Fecha_pago.ToString("M/dd/yyyy");
+            cuota.CUO_FECHAP = Fecha_pago.ToString(formatoFecha);
 
             db.Entry(cuota).State = EntityState.Modified;
             return true;
@@ -494,7 +494,7 @@ namespace SistemaImbrino.Controllers
 
         private void addNewAboCargo(OTROCARG otroCargo, string abono, DateTime fechaPago)
         {
-            string fecha = fechaPago.ToString("MM/dd/yyyy");
+            string fecha = fechaPago.ToString(formatoFecha);
             ABOOCARG aboCarg = new ABOOCARG()
             {
                 ABO_NUMFIN = otroCargo.CAR_NUMFIN,
@@ -516,7 +516,7 @@ namespace SistemaImbrino.Controllers
             {
                 CAR_NUMFIN = finID,
                 CAR_CODCAR = ((int)typeOTRO.MORA).ToString(),
-                CAR_FECHAR = FechaPago.ToString("MM/dd/yyyy"),
+                CAR_FECHAR = FechaPago.ToString(formatoFecha),
                 CAR_MONTOT = Cobro.otroCargo.ToString(),
                 CAR_NUMREC = null,
                 CAR_STATUS = ((int)Status.NUEVO).ToString(),
