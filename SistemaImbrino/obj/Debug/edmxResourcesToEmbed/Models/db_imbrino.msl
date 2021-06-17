@@ -465,5 +465,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vw_ConsultaFinDetalle">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_ConsultaFinDetalle">
+        <MappingFragment StoreEntitySet="vw_ConsultaFinDetalle">
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+          <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+          <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+          <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+          <ScalarProperty Name="ING_MONTOCAR" ColumnName="ING_MONTOCAR" />
+          <ScalarProperty Name="ING_MONTOI" ColumnName="ING_MONTOI" />
+          <ScalarProperty Name="ING_MONTOC" ColumnName="ING_MONTOC" />
+          <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+          <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+          <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+          <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ConsultaFin">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_ConsultaFin">
+        <MappingFragment StoreEntitySet="vw_ConsultaFin">
+          <ScalarProperty Name="FAC_FECHA" ColumnName="FAC_FECHA" />
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+          <ScalarProperty Name="BalanceTotal" ColumnName="BalanceTotal" />
+          <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
+          <ScalarProperty Name="CUO_MONTOC" ColumnName="CUO_MONTOC" />
+          <ScalarProperty Name="CUO_MONTOI" ColumnName="CUO_MONTOI" />
+          <ScalarProperty Name="CUO_MONTOT" ColumnName="CUO_MONTOT" />
+          <ScalarProperty Name="CUO_STATUS" ColumnName="CUO_STATUS" />
+          <ScalarProperty Name="FAC_NUMFIN" ColumnName="FAC_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

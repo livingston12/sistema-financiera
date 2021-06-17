@@ -1,0 +1,55 @@
+﻿@model SistemaImbrino.Models.OTROCARG
+@using SistemaImbrino.Controllers.Cargos_adicionales;
+@using SistemaImbrino.Controllers;
+
+@{ 
+	string color = string.Empty
+		, estatus = string.Empty
+		, ingreso = string.Empty;
+	decimal monto = 0;
+	decimal.TryParse(Model.CAR_MONTOT, out monto);
+}
+
+<tr class="text-center">
+
+	<td>
+		@Model.CAR_NUMFIN
+	</td>
+	<td>@Model.CAR_SECU</td>
+	<td>@Model.CAR_NUMREC</td>
+	<td>
+		@{
+			ingreso = CargosAdicionalesController.getTipoIngreso(Model.CAR_CODCAR);
+
+		}
+		<label class="label text-center label-default">@ingreso</label>
+	</td>
+	<td>
+		@{
+			color = "";
+			estatus = CargosAdicionalesController.getStatus(Model.CAR_STATUS);
+			if (estatus == BaseController.Status.NUEVO.ToString())
+			{
+				color = "label-default";
+			}
+			else if (estatus == BaseController.Status.ABONO.ToString())
+			{
+				color = "label-warning";
+			}
+			else{
+				color = "label-success";
+			}
+
+		}
+		<label class="label text-center  @color">@estatus</label>
+	</td>
+	<td>@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(monto)</td>
+	<td>@CargosAdicionalesController.getFecha(BaseController.typeFecha.FechaR,Model.CAR_FECHAR)</td>
+	<td>@CargosAdicionalesController.getFecha(BaseController.typeFecha.FechaP, Model.CAR_FECHAP)</td>
+
+	<td class="col-lg-1 text-center">
+		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.id)" id="Ceditar" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentCargo(@Model.id,'#@Model.CAR_SECU en el #Fin @Model.CAR_NUMFIN')" id="Celiminar" aria-hidden="true"></span>
+	</td>
+
+</tr>

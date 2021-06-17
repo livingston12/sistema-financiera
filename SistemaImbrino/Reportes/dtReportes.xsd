@@ -347,6 +347,100 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="vw_ConsultaFin" msprop:Generator_TableClassName="vw_ConsultaFinDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFin" msprop:Generator_RowChangedName="vw_ConsultaFinRowChanged" msprop:Generator_TablePropName="vw_ConsultaFin" msprop:Generator_RowDeletingName="vw_ConsultaFinRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinRowDeleted" msprop:Generator_RowClassName="vw_ConsultaFinRow" msprop:Generator_UserTableName="vw_ConsultaFin" msprop:Generator_RowEvArgName="vw_ConsultaFinRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FAC_NUMFIN" msprop:Generator_ColumnVarNameInTable="columnFAC_NUMFIN" msprop:Generator_ColumnPropNameInRow="FAC_NUMFIN" msprop:Generator_ColumnPropNameInTable="FAC_NUMFINColumn" msprop:Generator_UserColumnName="FAC_NUMFIN" type="xs:int" />
+              <xs:element name="CUO_STATUS" msprop:Generator_ColumnVarNameInTable="columnCUO_STATUS" msprop:Generator_ColumnPropNameInRow="CUO_STATUS" msprop:Generator_ColumnPropNameInTable="CUO_STATUSColumn" msprop:Generator_UserColumnName="CUO_STATUS">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CUO_MONTOT" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCUO_MONTOT" msprop:Generator_ColumnPropNameInRow="CUO_MONTOT" msprop:Generator_ColumnPropNameInTable="CUO_MONTOTColumn" msprop:Generator_UserColumnName="CUO_MONTOT" type="xs:double" minOccurs="0" />
+              <xs:element name="CUO_MONTOI" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCUO_MONTOI" msprop:Generator_ColumnPropNameInRow="CUO_MONTOI" msprop:Generator_ColumnPropNameInTable="CUO_MONTOIColumn" msprop:Generator_UserColumnName="CUO_MONTOI" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CUO_MONTOC" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCUO_MONTOC" msprop:Generator_ColumnPropNameInRow="CUO_MONTOC" msprop:Generator_ColumnPropNameInTable="CUO_MONTOCColumn" msprop:Generator_UserColumnName="CUO_MONTOC" type="xs:decimal" minOccurs="0" />
+              <xs:element name="FAC_FECHA" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFAC_FECHA" msprop:Generator_ColumnPropNameInRow="FAC_FECHA" msprop:Generator_ColumnPropNameInTable="FAC_FECHAColumn" msprop:Generator_UserColumnName="FAC_FECHA" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="29" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CUO_NUMCUO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCUO_NUMCUO" msprop:Generator_ColumnPropNameInRow="CUO_NUMCUO" msprop:Generator_ColumnPropNameInTable="CUO_NUMCUOColumn" msprop:Generator_UserColumnName="CUO_NUMCUO" type="xs:int" minOccurs="0" />
+              <xs:element name="BalanceTotal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBalanceTotal" msprop:Generator_ColumnPropNameInRow="BalanceTotal" msprop:Generator_ColumnPropNameInTable="BalanceTotalColumn" msprop:Generator_UserColumnName="BalanceTotal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cliente" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columncliente" msprop:Generator_ColumnPropNameInRow="cliente" msprop:Generator_ColumnPropNameInTable="clienteColumn" msprop:Generator_UserColumnName="cliente" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="201" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vw_ConsultaFinDetalle" msprop:Generator_TableClassName="vw_ConsultaFinDetalleDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFinDetalle" msprop:Generator_TablePropName="vw_ConsultaFinDetalle" msprop:Generator_RowDeletingName="vw_ConsultaFinDetalleRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinDetalleRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinDetalleRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinDetalleRowDeleted" msprop:Generator_UserTableName="vw_ConsultaFinDetalle" msprop:Generator_RowChangedName="vw_ConsultaFinDetalleRowChanged" msprop:Generator_RowEvArgName="vw_ConsultaFinDetalleRowChangeEvent" msprop:Generator_RowClassName="vw_ConsultaFinDetalleRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ING_NUMREC" msprop:Generator_ColumnVarNameInTable="columnING_NUMREC" msprop:Generator_ColumnPropNameInRow="ING_NUMREC" msprop:Generator_ColumnPropNameInTable="ING_NUMRECColumn" msprop:Generator_UserColumnName="ING_NUMREC" type="xs:int" />
+              <xs:element name="ING_NUMFIN" msprop:Generator_ColumnVarNameInTable="columnING_NUMFIN" msprop:Generator_ColumnPropNameInRow="ING_NUMFIN" msprop:Generator_ColumnPropNameInTable="ING_NUMFINColumn" msprop:Generator_UserColumnName="ING_NUMFIN" type="xs:int" />
+              <xs:element name="ING_STATUS" msprop:Generator_ColumnVarNameInTable="columnING_STATUS" msprop:Generator_ColumnPropNameInRow="ING_STATUS" msprop:Generator_ColumnPropNameInTable="ING_STATUSColumn" msprop:Generator_UserColumnName="ING_STATUS">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ING_MONTOT" msprop:Generator_ColumnVarNameInTable="columnING_MONTOT" msprop:Generator_ColumnPropNameInRow="ING_MONTOT" msprop:Generator_ColumnPropNameInTable="ING_MONTOTColumn" msprop:Generator_UserColumnName="ING_MONTOT" type="xs:decimal" />
+              <xs:element name="ING_MONTOC" msprop:Generator_ColumnVarNameInTable="columnING_MONTOC" msprop:Generator_ColumnPropNameInRow="ING_MONTOC" msprop:Generator_ColumnPropNameInTable="ING_MONTOCColumn" msprop:Generator_UserColumnName="ING_MONTOC" type="xs:decimal" />
+              <xs:element name="ING_MONTOI" msprop:Generator_ColumnVarNameInTable="columnING_MONTOI" msprop:Generator_ColumnPropNameInRow="ING_MONTOI" msprop:Generator_ColumnPropNameInTable="ING_MONTOIColumn" msprop:Generator_UserColumnName="ING_MONTOI" type="xs:decimal" />
+              <xs:element name="ING_MONTOCAR" msprop:Generator_ColumnVarNameInTable="columnING_MONTOCAR" msprop:Generator_ColumnPropNameInRow="ING_MONTOCAR" msprop:Generator_ColumnPropNameInTable="ING_MONTOCARColumn" msprop:Generator_UserColumnName="ING_MONTOCAR" type="xs:double" />
+              <xs:element name="ING_FECHA" msprop:Generator_ColumnVarNameInTable="columnING_FECHA" msprop:Generator_ColumnPropNameInRow="ING_FECHA" msprop:Generator_ColumnPropNameInTable="ING_FECHAColumn" msprop:Generator_UserColumnName="ING_FECHA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="29" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ING_FORMPG" msprop:Generator_ColumnVarNameInTable="columnING_FORMPG" msprop:Generator_ColumnPropNameInRow="ING_FORMPG" msprop:Generator_ColumnPropNameInTable="ING_FORMPGColumn" msprop:Generator_UserColumnName="ING_FORMPG">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ING_DESCRI" msprop:Generator_ColumnVarNameInTable="columnING_DESCRI" msprop:Generator_ColumnPropNameInRow="ING_DESCRI" msprop:Generator_ColumnPropNameInTable="ING_DESCRIColumn" msprop:Generator_UserColumnName="ING_DESCRI">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ING_NCF" msprop:Generator_ColumnVarNameInTable="columnING_NCF" msprop:Generator_ColumnPropNameInRow="ING_NCF" msprop:Generator_ColumnPropNameInTable="ING_NCFColumn" msprop:Generator_UserColumnName="ING_NCF">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="tipo" msprop:Generator_ColumnVarNameInTable="columntipo" msprop:Generator_ColumnPropNameInRow="tipo" msprop:Generator_ColumnPropNameInTable="tipoColumn" msprop:Generator_UserColumnName="tipo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="cliente" msprop:Generator_ColumnVarNameInTable="columncliente" msprop:Generator_ColumnPropNameInRow="cliente" msprop:Generator_ColumnPropNameInTable="clienteColumn" msprop:Generator_UserColumnName="cliente">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="201" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">

@@ -1,0 +1,223 @@
+﻿@*@model IEnumerable<SistemaImbrino.Models.View_consultaFinanciamientos>*@
+
+@{
+	ViewBag.Title = "Consulta de financiamientos";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	
+}
+<style>
+	.NoVisible{
+		visibility: hidden;
+	}
+</style>
+
+<div class="hero-callout">
+	<div class="row">
+
+		<div class="col-xs-12 col-md-1 pull-left text-center">
+			<p class="control-label text-defaultColor" style="font-size:23px;">FILTRO</p>
+		</div>
+		<div class="col-xs-12 col-md-2 pull-left">
+			<button class="btn btn-defaultColor btn-block" id="btn-nuevo">Nuevo</button>
+		</div>
+
+		<div class="col-xs-12 col-md-2">
+			<button class="btn bg-pink btn-block" id="btn-activo" disabled>Activo</button>
+		</div>
+		<div class="col-xs-12 col-md-2">
+			<button id="btn-historico" class="btn btn-defaultColor btn-block">Historico</button>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="input-group input-group ">
+				<span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon1" aria-hidden="true"></span>
+				<input type="text" id="txt_search" value="" style="top:1px" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon1"  />
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-2 ">
+			<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+		</div>
+	</div>
+
+	<br />
+	<div class="table-responsive">
+		<table id="tbl_headerfin" class="table table-condensed table-hover table-bordered dataTable" style="width:100%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center th-pd-no-right"># FIN</th>
+					<th class="text-left th-pd-no-left">Cliente</th>
+					<th class="text-right th-pd-right">Monto</th>
+					<th class="text-center">Fecha</th>
+					<th class="text-center">Cuotas</th>
+					<th class="text-right th-pd-right">Balance</th>
+					<th class="text-right th-pd-right">Capital</th>
+					<th class="text-right th-pd-right">Interes</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+
+		</table>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		var json =
+			[
+				{
+					btn: "btn-nuevo",
+					name: "NUEVO",
+					descripcion: "nuevo"
+				},
+				{
+					btn: "btn-activo",
+					name: "NUEVO_CERRADO",
+					descripcion: "activo"
+				},
+				{
+					btn: "btn-historico",
+					name: "PAGADO",
+					descripcion: "Historico"
+				},
+			]
+
+		$(document).ready(function () {
+
+			llenarTblFin("btn-activo");
+			$(".dataTables_filter").addClass("NoVisible");
+			function searchValue() {
+				var myValue = $('#txt_search').val();
+				$("input[type=search]").val(myValue);
+				$("input[type=search]").keyup();	
+				$("tr").addClass("finded");				
+			}
+
+			function llenarTblFin(currentBtn) {
+				var currentJson = json.find(x => x.btn == currentBtn);
+				if (!currentJson) {
+					return;
+				}
+				var url = "@Url.Action("getCurrentStatus")";
+				var table = $("#tbl_headerfin").DataTable({
+					destroy: true,
+					paging: true,
+					pageLength: 25,
+					searching: true,
+					ajax: {
+						"url": url,
+						"type": "POST",
+						data: { NameStatus: currentJson.name },
+						dataType: "json",
+						dataSrc: "",
+						async: true
+					},
+					columns: [
+						{
+							"data": "FinID"
+							, className: "dt-body-center"
+						},
+						{
+							"data": "Cliente",
+							className: "dt-body-justify"
+						},
+						{
+							"data": "detail.Monto",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right"
+						},
+						{
+							"data": "Fecha",
+							className: "dt-body-center"
+						},
+						{
+							"data": "detail.Cuotas",
+							render: function (data) {
+								return data;
+							},
+							orderable: false,
+							className: "dt-body-center"
+						},
+						{
+							"data": "detail.Balance",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right"
+						},
+						{
+							"data": "detail.Capital",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right"
+						},
+						{
+							"data": "detail.Interes",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							className: "dt-body-right"
+						}
+					],
+					lengthChange: true,
+					rowCallback: function (row, data) {
+
+						var html = `<a class="control-label" href="@Url.Action("Index","FinanciamientosDetalle")/index/` + data.FinID + `">` + data.FinID + `</a>`;
+						$('td:eq(0)', row).html(html);
+					}
+				});
+
+			}
+			$("#txt_search").keyup(function () {
+				searchValue();
+			});
+			$(".btn-block").click(function ()
+			{
+				var currentBtn = $(this).attr("id");
+				var currentJson = json.find(x => x.btn == currentBtn);
+				if (!currentJson)
+				{
+					return;
+				}
+				$(".btn-block").removeAttr("disabled");
+				$("#" + currentBtn).attr("disabled", "disabled");
+				$(".btn-block").addClass("btn-defaultColor");
+				$("#" + currentBtn).removeClass("btn-defaultColor");
+				$("#" + currentBtn).addClass("bg-pink");
+
+				llenarTblFin(currentBtn);
+				$("th").removeClass("sorting");
+			});
+
+
+            $("#btn-imprimir").click(function ()
+			{
+				var $btn = $(this).button('loading');
+				var url = "@Url.Action("PrintReport")";
+				data = $("#tbl_headerfin").DataTable().rows({ filter: 'applied' }).data().toArray();
+				var json = JSON.stringify(data);				
+				
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { data: json },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+
+                });
+            });
+		});
+	</script>
+
+}

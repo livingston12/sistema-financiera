@@ -45,9 +45,9 @@
 						<ul class="dropdown-menu">
 							<li>
 								@Html.ActionLink("Clientes", "Index", "Clientes", null, new { @class = "text-BlueLight" })
-						</li>
-						<li role="separator" class="divider"></li>
-						<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>						
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
 						</ul>
 					</li>
 				</ul>
@@ -55,11 +55,21 @@
 			</div>
 		</div>
 	</div>
+	@*<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			<!-- Sidebar Menu -->
+			@Html.Partial("_MenuShared")
+			<!-- /.sidebar-menu -->
+		</section>
+		<!-- /.sidebar -->
+	</aside>*@
 	<div class="container body-content">
-		<div class="bs-border  bs-border-top-info ">
+		<div class="bs-border  bs-border-top-info " style="padding-top:0px;">
 			@if (@ViewBag.Title != null)
 			{
-				<h3 class="text-capitalize" style="padding-bottom:20px;"><b>@ViewBag.Title</b></h3>
+				<h3 class="" style=" "><b>@ViewBag.Title</b></h3>
+				<hr class="hrnoMargin" style="padding-bottom:20px;" />
 			}
 			<div class="">
 				@RenderBody()
@@ -249,7 +259,7 @@
 							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaIC">
 						</div>
 
-						
+
 					</div>
 					<div class="row">
 						<div class="col-sm-6 text-left ">
@@ -363,8 +373,8 @@
 
 			// Abrir popup ingreso por cuotas
 			$("#liIngresoCuotas").click(function () {
-				Show_closeModal("#ingresoCuotasModal", true);				
-                  var url = "@Url.Action("Getclients", "IngresoCuotas")";				
+				Show_closeModal("#ingresoCuotasModal", true);
+                  var url = "@Url.Action("Getclients", "IngresoCuotas")";
                  $.ajax({
                     type: "GET",
                     url: url,
@@ -374,7 +384,7 @@
                     }
 				});
 
-				
+
 			});
 
 
@@ -440,7 +450,7 @@
                         } else {
                             MessageNotification(_data.Message, _data.Is_Success, false)
                         }
-						
+
 					},
 					complete: function () {
 						$btn.button('reset');
@@ -478,12 +488,12 @@
                         } else {
                             MessageNotification(_data.Message, _data.Is_Success, false)
                         }
-						
+
 					},
 					complete: function () {
 						$btn.button('reset');
 					}
-					
+
                 });
             });
 
@@ -526,7 +536,7 @@
                 });
 			});
 
-			
+
 
 			 // Boton de generar reporte de registro NCF
 			$("#btn-GenerarReporteRN").click(function () {

@@ -1,7 +1,6 @@
 ﻿
 
-$(document).ready(function () {
-	
+$(document).ready(function () {	
 	$(".select").selectMania({
 		width: '100%',
 		size: 'small',
@@ -229,9 +228,9 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
 		swal.fire({
 			position: 'center',
 			icon: typeError,
-			title: messsage,
+			html: messsage,
 			showCancelButton: false,
-			confirmButtonColor: '#f0ad4e',
+			confirmButtonColor: '#0293b2',
 			confirmButtonText: 'OK'
 		}).then((result) => {
 			if (result.isConfirmed) {
@@ -240,7 +239,6 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
 					if (goinTo === "")
 						document.location.reload();
 					else
-						//window.history.back();
 						window.location.href = goinTo;
 				}				
 					
@@ -253,7 +251,7 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
         Swal.fire({
             position: 'center',
             icon: typeError,
-            title: messsage,
+			html: messsage,
             showConfirmButton: isButton,
             timer: 8000
         });
@@ -284,10 +282,12 @@ function doSearch(tableId, searchID) {
             if (found2 && i % 2 === 0 || isVisible === '0') {
                 tableReg.rows[i].style.display = 'none';
             } else {
-                tableReg.rows[i].style.display = 'table-row';
+				tableReg.rows[i].style.display = 'table-row';
+				tableReg.rows[i].classList.add("finded");
             }
         } else {
-            tableReg.rows[i].style.display = 'none';
+			tableReg.rows[i].style.display = 'none';
+			tableReg.rows[i].classList.remove("finded");
         }
     }
 }

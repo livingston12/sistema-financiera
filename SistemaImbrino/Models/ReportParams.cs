@@ -1,18 +1,13 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
-using SistemaImbrino.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Web.Mvc;
-using System.Net;
-using static SistemaImbrino.Models.Parameters;
-using System.Web;
-using System.Data.Entity;
-using System.Configuration;
-using System.Data;
 using System.Reflection;
+using System.Web;
+using System.Web.Mvc;
 
 namespace SistemaImbrino.Models
 {
@@ -36,17 +31,19 @@ namespace SistemaImbrino.Models
         public object ParameterValue { get; set; }
         public static readonly string rutaReporte = "~/Reportes";
 
-      
+
         public enum ReportName
         {
             EstadoCuenta = 1,
             CuotasVencidas = 2,
             Financiamientos_atrasados = 3,
             RegistroNCF = 4,
-            IngresoCuotas = 5
+            IngresoCuotas = 5,
+            FinHeader = 6,
+            FinDetalle = 7
         }
 
-        
+
         static string CurrentCriterio = "";
 
         public static DataTable CreateDataTable<T>(IEnumerable<T> list)
@@ -82,9 +79,10 @@ namespace SistemaImbrino.Models
 
             string urlReporte = intialPath; //Server.MapPath(string.Format("/Reportes/{0}.rpt", _ReportName.ToString()));
             List<Parameters> parameters = new List<Parameters>();
-            string criterios = "";
-            string txt_ReportName = "";
-          
+            string criterios = string.Empty;
+            string txt_ReportName = string.Empty;
+            string data = string.Empty;
+
 
             switch (_ReportName)
             {
@@ -95,8 +93,8 @@ namespace SistemaImbrino.Models
 
 
                     urlReporte = Path.Combine(urlReporte, txt_ReportName + ".rpt"); //string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
-                    _listEC = criteriosEstadoCuenta(Listcriterios, ref criterios,ref _iqEC);
-                    _listEC = _listEC.OrderBy(x => x.CLIENTE).ThenBy(x=>x.Fecha).ToList();
+                    _listEC = criteriosEstadoCuenta(Listcriterios, ref criterios, ref _iqEC);
+                    _listEC = _listEC.OrderBy(x => x.CLIENTE).ThenBy(x => x.Fecha).ToList();
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
@@ -105,12 +103,7 @@ namespace SistemaImbrino.Models
                         new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
                     });
                     CrReport.Load(urlReporte);
-                    //configureCrystalReports(CrReport, db.Database.Connection.Database, db.Database.Connection.DataSource);                    
-                    //var dataTable = CreateDataTable<VW_rptEstadoCuenta>(_listEC);
-                   
                     CrReport.SetDataSource(_listEC);
-
-                    //GuardarReporteEstadoCuenta(urlReporte, CrReport, parameters,criterios);
                     break;
                 case ReportName.CuotasVencidas:
                     txt_ReportName = ReportName.CuotasVencidas.ToString();
@@ -120,7 +113,7 @@ namespace SistemaImbrino.Models
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listCV = criteriosCuotasVencidas(Listcriterios, ref criterios, ref _iqCV);
-                    _listCV = _listCV.OrderBy(x => x.CLIENTE).ThenBy(x=>x.fechadt).ToList();
+                    _listCV = _listCV.OrderBy(x => x.CLIENTE).ThenBy(x => x.fechadt).ToList();
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
@@ -131,7 +124,6 @@ namespace SistemaImbrino.Models
 
                     });
                     CrReport.Load(urlReporte);
-                    //configureCrystalReports(CrReport, db.Database.Connection.Database, db.Database.Connection.DataSource);
                     CrReport.SetDataSource(_listCV);
 
 
@@ -142,8 +134,8 @@ namespace SistemaImbrino.Models
                     IQueryable<VW_rptFinAtrasados_details> _iqFA = db.VW_rptFinAtrasados_details;
                     List<VW_rptFinAtrasados_details> _listFA = new List<VW_rptFinAtrasados_details>();
                     urlReporte = string.Format("{0}/{1}.rpt", urlReporte, txt_ReportName);
-                    _listFA = criteriosFin_atrasados(Listcriterios, ref criterios,ref _iqFA);
-                    _listFA = _listFA.OrderBy(x => x.CLIENTE).ThenBy(x=>x.fechadt).ToList();
+                    _listFA = criteriosFin_atrasados(Listcriterios, ref criterios, ref _iqFA);
+                    _listFA = _listFA.OrderBy(x => x.CLIENTE).ThenBy(x => x.fechadt).ToList();
 
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
@@ -155,7 +147,6 @@ namespace SistemaImbrino.Models
 
                     });
                     CrReport.Load(urlReporte);
-                    //configureCrystalReports(CrReport, db.Database.Connection.Database, db.Database.Connection.DataSource);
                     CrReport.SetDataSource(_listFA);
                     break;
                 case ReportName.RegistroNCF:
@@ -166,7 +157,7 @@ namespace SistemaImbrino.Models
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listRN = criteriosRegistroNCF(Listcriterios, ref criterios, ref _iqRN);
-                    _listRN = _listRN.OrderBy(x=> x.ING_NCF).ThenBy(x=>x.fechadt).ToList();
+                    _listRN = _listRN.OrderBy(x => x.ING_NCF).ThenBy(x => x.fechadt).ToList();
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
@@ -177,7 +168,6 @@ namespace SistemaImbrino.Models
 
                     });
                     CrReport.Load(urlReporte);
-                    //configureCrystalReports(CrReport, db.Database.Connection.Database, db.Database.Connection.DataSource);
                     CrReport.SetDataSource(_listRN);
                     break;
 
@@ -197,31 +187,76 @@ namespace SistemaImbrino.Models
                             break;
                         case "Recibo":
                             _listIC = _listIC.OrderBy(x => x.ING_NUMREC).ToList();
-                            //_listIC = _listIC.OrderBy(x => x.ING_NUMREC).ThenBy(x => x.fechadt).ToList();
                             break;
                         case "Monto":
                             _listIC = _listIC.OrderByDescending(x => x.ING_MONTOT).ToList();
                             break;
                     }
-                    
+
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
                         new Parameters() { ParameterName = "NombreReporte", ParameterValue ="REPORTE INGRESOS POR CUOTAS" },
                         new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
                         new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
+                    });
+
+                    CrReport.Load(urlReporte);
+                    CrReport.SetDataSource(_listIC);
+                    break;
+                case ReportName.FinHeader:
+                    txt_ReportName = ReportName.FinHeader.ToString();
+                    data = Listcriterios.FirstOrDefault().ParameterValue.ToString();
+                    List<vw_ConsultaFin> _listFH = new List<vw_ConsultaFin>();
+                    var consulta = Newtonsoft.Json.JsonConvert.DeserializeObject<List<View_consultaFinanciamientos>>(data);
+                    _listFH = consulta
+                                .Select(x => new vw_ConsultaFin
+                                {
+                                    FAC_NUMFIN = x.FinID,
+                                    cliente = x.Cliente,
+                                    BalanceTotal = x.detail.Balance,
+                                    CUO_MONTOC = x.detail.Capital,
+                                    CUO_MONTOI = x.detail.Interes,
+                                    CUO_MONTOT = x.detail.Monto,
+                                    CUO_NUMCUO = x.detail.Cuotas,
+                                    FAC_FECHA = x.Fecha,
+                                    CUO_STATUS = string.Empty
+                                })
+                                .ToList();
+                    urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+
+                    //Parametros del reporte
+                    parameters.AddRange(new List<Parameters>
+                    {
+                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="REPORTE FINANCIAMIENTOS" },
+                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
+                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
+                    });
+
+                    CrReport.Load(urlReporte);
+                    CrReport.SetDataSource(_listFH);
+                    break;
+                case ReportName.FinDetalle:
+                    txt_ReportName = ReportName.FinDetalle.ToString();
+
+                    IQueryable<vw_ConsultaFinDetalle> _iqFD = db.vw_ConsultaFinDetalle;
+                    List<vw_ConsultaFinDetalle> _listFD = new List<vw_ConsultaFinDetalle>();
+
+                    urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+                    _listFD = criteriosFinDetalle(Listcriterios, ref criterios, ref _iqFD);
+                    //Parametros del reporte
+                    parameters.AddRange(new List<Parameters>
+                    {
+                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="ARCHIVO PARA REGISTRO DE NCF" },
+                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
+                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
 
 
                     });
-                   
                     CrReport.Load(urlReporte);
-                    //CrReport = configureCrystalReports(CrReport, db.Database.Connection.Database, db.Database.Connection.DataSource);
-                    CrReport.SetDataSource(_listIC);
+                    CrReport.SetDataSource(_listFD);
                     break;
             }
-
-         
-
 
             foreach (var prt in parameters)
             {
@@ -234,11 +269,9 @@ namespace SistemaImbrino.Models
 
             guardarPDF(CrReport, txt_ReportName, intialPath);
 
-
-
         }
 
-        public static ReportDocument configureCrystalReports(ReportDocument cryRpt, string DatabaseName, string servername )
+        public static ReportDocument configureCrystalReports(ReportDocument cryRpt, string DatabaseName, string servername)
         {
             ConnectionInfo myConnectionInfo = new ConnectionInfo();
             TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
@@ -249,7 +282,7 @@ namespace SistemaImbrino.Models
             {
 
 
-                string Password = "",  UserID = "";
+                string Password = "", UserID = "";
                 try
                 {
                     Password = System.Configuration.ConfigurationManager.AppSettings["Password"].ToString();
@@ -258,10 +291,10 @@ namespace SistemaImbrino.Models
                 }
                 catch (Exception)
                 {
-                   
+
                 }
-               
-                
+
+
                 myConnectionInfo.ServerName = servername;
                 myConnectionInfo.DatabaseName = DatabaseName;
                 myConnectionInfo.UserID = UserID;
@@ -271,21 +304,21 @@ namespace SistemaImbrino.Models
                 CrTables = cryRpt.Database.Tables;
                 foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
                 {
-                crtableLogoninfo = CrTable.LogOnInfo;
-                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
-                CrTable.ApplyLogOnInfo(crtableLogoninfo);
+                    crtableLogoninfo = CrTable.LogOnInfo;
+                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
 
 
             }
             catch (Exception ex)
             {
-               
+
             }
             return cryRpt;
         }
 
-      
+
 
 
 
@@ -306,7 +339,7 @@ namespace SistemaImbrino.Models
         private static void guardarPDF(ReportDocument CrReport, string _reportName, string initialPah)
         {
             string path = string.Format("{0}\\{1}.pdf", initialPah, _reportName);
-           
+
             // Si la carpeta no existe se crea
             if (!Directory.Exists(initialPah))
                 Directory.CreateDirectory(initialPah);
@@ -315,16 +348,16 @@ namespace SistemaImbrino.Models
             if (File.Exists(path))
                 File.Delete(path);
 
-            CrReport.ExportToDisk(ExportFormatType.PortableDocFormat,path);
-            
+            CrReport.ExportToDisk(ExportFormatType.PortableDocFormat, path);
+
         }
-        
+
         private static List<VW_rptEstadoCuenta> criteriosEstadoCuenta(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptEstadoCuenta> list)
         {
-           
+
             double MONTO_FINANCIAR = 0, BALANCE_ACTUAL = 0;
 
-             List<string> _listCriterio = new List<string>();
+            List<string> _listCriterio = new List<string>();
             DateTime fecha;
 
             foreach (var cri in listcriterios)
@@ -334,7 +367,7 @@ namespace SistemaImbrino.Models
                     case "fechaCorte":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
                         {
-                             DateTime.TryParse(cri.ParameterValue.ToString(), out fecha);
+                            DateTime.TryParse(cri.ParameterValue.ToString(), out fecha);
                             list = list.Where(x => x.Fecha < fecha);
                             //list = list.FindAll(e => e.ULTIMO_PAGO < cri.ParameterValue.ToString());
                             CurrentCriterio = string.Format("Fecha corte {0}", cri.ParameterValue);
@@ -344,9 +377,9 @@ namespace SistemaImbrino.Models
                     case "montoFinanciar":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
                         {
-                            
+
                             double.TryParse(cri.ParameterValue.ToString(), out MONTO_FINANCIAR);
-                            list = list.Where(e => e.MONTO_FINANCIAR > MONTO_FINANCIAR);                           
+                            list = list.Where(e => e.MONTO_FINANCIAR > MONTO_FINANCIAR);
                             CurrentCriterio = string.Format("Clientes con monto a financiar mayor de {0}", String.Format("{0:n}", cri.ParameterValue));
                             _listCriterio.Add(CurrentCriterio);
                         }
@@ -354,7 +387,7 @@ namespace SistemaImbrino.Models
                     case "montoActual":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
                         {
-                            
+
                             double.TryParse(cri.ParameterValue.ToString(), out BALANCE_ACTUAL);
                             list = list.Where(e => e.BALANCE_ACTUAL > BALANCE_ACTUAL);
                             CurrentCriterio = string.Format("Clientes con con balance actual mayor de {0}", String.Format("{0:n}", cri.ParameterValue));
@@ -366,7 +399,7 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out fecha);
                             list = list.Where(x => x.Fecha > fecha);
-                            CurrentCriterio = string.Format("Clientes con fecha de ultimo pago mayor de {0}",  cri.ParameterValue);
+                            CurrentCriterio = string.Format("Clientes con fecha de ultimo pago mayor de {0}", cri.ParameterValue);
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
@@ -382,10 +415,10 @@ namespace SistemaImbrino.Models
 
         private static List<VW_rptCuotasVencidas> criteriosCuotasVencidas(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptCuotasVencidas> list)
         {
-         
+
             int cuotaVencida = 0;
             DateTime fecha;
-             List<string> _listCriterio = new List<string>();
+            List<string> _listCriterio = new List<string>();
             foreach (var cri in listcriterios)
             {
                 switch (cri.ParameterName)
@@ -411,7 +444,7 @@ namespace SistemaImbrino.Models
                     case "clienteCuotaV":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false && cri.ParameterValue.ToString() == "true")
                         {
-                            int.TryParse(cri.ParameterValue.ToString(),out cuotaVencida);
+                            int.TryParse(cri.ParameterValue.ToString(), out cuotaVencida);
                             list = clientesVariascuotas(list);
                             CurrentCriterio = "Clientes con más de una cuota vencida";
                             _listCriterio.Add(CurrentCriterio);
@@ -434,11 +467,11 @@ namespace SistemaImbrino.Models
             criterios = "- " + string.Join("\n- ", _listCriterio.ToArray());
             return list.ToList();
 
-        }       
+        }
 
         private static List<VW_rptFinAtrasados_details> criteriosFin_atrasados(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptFinAtrasados_details> list)
         {
-           
+
             DateTime fecha;
             List<string> _listCriterio = new List<string>();
             foreach (var cri in listcriterios)
@@ -462,7 +495,7 @@ namespace SistemaImbrino.Models
                             CurrentCriterio = "Un cliente en específico";
                             _listCriterio.Add(CurrentCriterio);
                         }
-                        break;                    
+                        break;
                     case "ultimoPago":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
                         {
@@ -484,9 +517,9 @@ namespace SistemaImbrino.Models
         private static List<VW_rptRegistroNCF> criteriosRegistroNCF(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptRegistroNCF> list)
         {
 
-           
+
             List<string> _listCriterio = new List<string>();
-            
+
             foreach (var cri in listcriterios)
             {
                 switch (cri.ParameterName)
@@ -508,7 +541,7 @@ namespace SistemaImbrino.Models
                             CurrentCriterio = string.Format("Fecha hasta {0}", cri.ParameterValue);
                             _listCriterio.Add(CurrentCriterio);
                         }
-                        break;                 
+                        break;
 
                 }
 
@@ -521,9 +554,9 @@ namespace SistemaImbrino.Models
 
         private static List<VW_rptRegistroNCF> criteriosIngresoCuotas(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptRegistroNCF> list)
         {
-            DateTime fechaDesde,fechaHasta;
+            DateTime fechaDesde, fechaHasta;
             List<string> _listCriterio = new List<string>();
-            int idCliente = 0,idFin = 0;
+            int idCliente = 0, idFin = 0;
             foreach (var cri in listcriterios)
             {
                 switch (cri.ParameterName)
@@ -580,11 +613,36 @@ namespace SistemaImbrino.Models
             return list.ToList();
 
         }
+
+        private static List<vw_ConsultaFinDetalle> criteriosFinDetalle(List<Parameters> listcriterios, ref string criterios, ref IQueryable<vw_ConsultaFinDetalle> list)
+        {
+            List<string> _listCriterio = new List<string>();
+            foreach (var cri in listcriterios)
+            {
+                switch (cri.ParameterName)
+                {
+                    case "FindID":
+                        if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
+                        {
+                            int.TryParse(cri.ParameterValue.ToString(), out int numFin);
+                            list = list.Where(x => x.ING_NUMFIN == numFin);
+                            CurrentCriterio = string.Format("Un financiamiento en específico");
+                            _listCriterio.Add(CurrentCriterio);
+                        }
+                        break;
+                }
+
+            }
+
+            criterios = "- " + string.Join("\n- ", _listCriterio.ToArray());
+            return list.ToList();
+        }
         private static IQueryable<VW_rptCuotasVencidas> clientesVariascuotas(IQueryable<VW_rptCuotasVencidas> list)
         {
             List<VW_rptCuotasVencidas> listaCUotas = new List<VW_rptCuotasVencidas>();
 
-            var listClientesMasUna = list.GroupBy(x => x.CLIENTE).Where(x => x.Count() > 1).Select(x => new {
+            var listClientesMasUna = list.GroupBy(x => x.CLIENTE).Where(x => x.Count() > 1).Select(x => new
+            {
                 cliente = x.GroupBy(x2 => x2.CodigoCLiente)
 
             }).ToList();
@@ -611,7 +669,7 @@ namespace SistemaImbrino.Models
 
             var fsResult = new FileStreamResult(fileStream, "application/pdf");
             fileStream.Flush();
-            
+
 
             return fsResult;
         }

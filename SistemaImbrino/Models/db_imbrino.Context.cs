@@ -54,6 +54,11 @@ namespace SistemaImbrino.Models
         public virtual DbSet<OTROCARG> OTROCARG { get; set; }
         public virtual DbSet<ABOOCARG> ABOOCARG { get; set; }
         public virtual DbSet<CARGO> CARGO { get; set; }
+        public virtual DbSet<vw_ConsultaFinDetalle> vw_ConsultaFinDetalle { get; set; }
+        public virtual DbSet<vw_ConsultaFin> vw_ConsultaFin { get; set; }
+        public virtual DbSet<OTROSCR> OTROSCR { get; set; }
+        public virtual DbSet<TIPOCR1> TIPOCR1 { get; set; }
+        public virtual DbSet<TIPOCR2> TIPOCR2 { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {
