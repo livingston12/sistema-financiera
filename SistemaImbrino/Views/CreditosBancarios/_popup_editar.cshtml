@@ -1,0 +1,114 @@
+﻿@model SistemaImbrino.Models.OTROSCR
+
+
+
+<input type="hidden" id="id" name="id" />
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="ETIPO_CREDITO">Tipo credito</label>
+		<div class="form-group" id="dvETIPO_CREDITO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ETIPO_CREDITO"><i class="glyphicon glyphicon-credit-card"></i></label>
+				<select id="ETIPO_CREDITO" class="form-control select widtTotal"></select>
+				<span id="spanETIPO_CREDITO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="EBANCO">Banco</label>
+		<div class="form-group" id="dvEBANCO">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBANCO"><i class="glyphicon glyphicon-home"></i></label>
+				<select id="EBANCO" class="form-control select widtTotal"></select>
+				<span id="spanEBANCO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="ECUENTA_BANCARIA">Cuenta bancaria</label>
+		<div class="form-group" id="dvECUENTA_BANCARIA">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECUENTA_BANCARIA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select id="ECUENTA_BANCARIA" class="form-control select widtTotal"></select>
+				<span id="spanECUENTA_BANCARIA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	
+</div>
+
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="ENUMERO_CHEQUE" id="Elbl_NUMERO_CHEQUE">Numero cheque</label>
+		<div class="form-group" id="dvENUMERO_CHEQUE">
+			<div class="input-group">
+				<label class="input-group-addon" for="ENUMERO_CHEQUE"><i class="glyphicon glyphicon-folder-open"></i></label>
+				@Html.EditorFor(model => model.NUMERO_CHEQUE, new { htmlAttributes = new { @class = "form-control texto", @id = "ENUMERO_CHEQUE" } })
+				<span id="spanENUMERO_CHEQUE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="ETIPO_SALIDA">Tipo salida</label>
+		<div class="form-group" id="dvETIPO_SALIDA">
+			<div class="input-group">
+				<label class="input-group-addon" for="ETIPO_SALIDA"><i class="glyphicon glyphicon-share-alt"></i></label>
+				<select id="ETIPO_SALIDA" class="form-control select widtTotal"></select>
+				<span id="spanETIPO_SALIDA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="EMONTO">Monto</label>
+		<div class="form-group" id="dvEMONTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="EMONTO"><i class="glyphicon glyphicon-usd"></i></label>
+				@Html.EditorFor(model => model.MONTO, new { htmlAttributes = new { @class = "form-control number numberDecimal", @id = "EMONTO" } })
+				<span id="spanEMONTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="EFECHA">Fecha</label>
+		<div class="form-group" id="dvEFECHA">
+			<div class="input-group">
+				<label class="input-group-addon" for="EFECHA"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="EFECHA">
+				<span id="spanEFECHA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="EBENEFICIARIO" id="Elbl_BENEFICIARIO">Beneficiario</label>
+		<div class="form-group" id="dvEBENEFICIARIO">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBENEFICIARIO"><i class="glyphicon glyphicon-user"></i></label>
+				<input type="text" class="form-control texto" id="EBENEFICIARIO">
+				<span id="spanEBENEFICIARIO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4 ">
+		<label class="control-label" for="ECONCEPTO">Concepto</label>
+		<div class="form-group" id="dvECONCEPTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECONCEPTO"><i class="glyphicon glyphicon-pencil"></i></label>
+				<textarea rows="3" id="ECONCEPTO" class="form-control texto"></textarea>
+				<span id="spanECONCEPTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+

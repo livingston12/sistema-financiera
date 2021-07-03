@@ -1,0 +1,509 @@
+﻿
+@{
+	ViewBag.Title = "Debitos bancarios";
+	ViewBag.nameView = "credito bancario";
+}
+
+<div class="row">
+
+	<div class="col-xs-12 col-md-1 pull-left text-center">
+		<p class="control-label text-defaultColor" style="font-size:23px;">FILTRO</p>
+	</div>
+
+	<div class="col-xs-12 col-md-1">
+		<button class="btn btn-block bg-pink" id="btn-todos" disabled>
+			Todos
+		</button>
+	</div>
+
+	@foreach (var filter in ViewBag.listFilters)
+	{
+		string listClasesAdd = string.Empty;
+		string Descripcion = filter.DESCRIPCION;
+		Descripcion = Descripcion.ToLower();
+
+		switch ((int)filter.ID)
+		{
+			case 1:
+				listClasesAdd = "col-md-2 pull-left";
+				break;
+			case 2:
+			case 3:
+				listClasesAdd = "col-md-2";
+				break;
+		}
+
+		<div class="col-xs-12 @listClasesAdd">
+			<button class="btn btn-defaultColor btn-block" id="btn-@Descripcion" style="text-transform:capitalize">
+				@Descripcion
+			</button>
+		</div>
+	}
+	<div class="col-xs-6 col-md-2">
+		<div class="input-group input-group ">
+			<span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon1" aria-hidden="true"></span>
+			<input type="text" id="txt_search" value="" style="top:1px" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon1" />
+		</div>
+	</div>
+	<div class="col-xs-6 col-md-2 ">
+		<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-6 col-md-2 pull-right">
+		<input type="submit" value="Crear nuevo" id="btn_crearDebitoBancario" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-debitoBancario" class="table table-condensed table-hover table-bordered dataTable" style="width: 98%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center">ID</th>
+					<th class="text-left th-pd-no-left">BANCO</th>
+					<th class="text-left th-pd-no-left">CUENTA BANCARIA</th>
+					<th class="text-left th-pd-no-left">TIPO DEBITO</th>
+					<th class="text-left th-pd-no-left">TIPO ENTRADA</th>
+					<th class="text-right th-pd-right">MONTO</th>
+					<th class="text-center ">FECHA</th>
+					<th class="text-left th-pd-no-left">CONCEPTO</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal create debito bancario ----------------------------------------------->
+<div class="modal fade" id="modalCreate" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("CrearDebitoBancario")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Crear @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_create")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_crear">Crear</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarDebitoBancario")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_Editar">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+
+	<script type="text/javascript">
+		var json =
+			[
+				{
+					btn: "btn-todos"
+				},
+				{
+					btn: "btn-desposito"
+				},
+				{
+					btn: "btn-tranferencia"
+				},
+				{
+					btn: "btn-otro"
+				}
+			]
+		$(document).ready(function () {
+			
+			llenarTblDebitoBancario("btn-todos");
+			GetTipoEntrada();
+			GetTipoDebito();
+
+			$("input").blur(function () {
+				validarTexto(this);
+				validarNumero(this);
+			});
+
+			function searchValue() {
+				var myValue = $('#txt_search').val();
+				$("input[type=search]").val(myValue);
+				$("input[type=search]").keyup();
+				$("tr").addClass("finded");
+			}
+
+			$("#txt_search").keyup(function () {
+				searchValue();
+			});
+
+			$(".btn-block").click(function () {
+				var currentBtn = $(this).attr("id");
+				var currentJson = json.find(x => x.btn == currentBtn);
+				if (!currentJson) {
+					return;
+				}
+				$(".btn-block").removeAttr("disabled");
+				$("#" + currentBtn).attr("disabled", "disabled");
+				$(".btn-block").addClass("btn-defaultColor");
+				$("#" + currentBtn).removeClass("btn-defaultColor");
+				$("#" + currentBtn).addClass("bg-pink");
+
+				
+				llenarTblDebitoBancario(currentBtn);
+				$("th").removeClass("sorting");
+			});
+
+			
+
+			$("#BANCO,#EBANCO").change(function ()
+			{
+				var id = $(this).val();
+				var currentAttrId = $(this).attr("id");
+
+				if (currentAttrId === "BANCO")
+				{
+					GetCuentasBancarias("CUENTA_BANCARIA", id);
+				} else
+				{
+					GetCuentasBancarias("ECUENTA_BANCARIA", id);
+				}			
+			});
+
+			$("#btn_crearDebitoBancario").click(function () {
+				Show_closeModal("#modalCreate", true);
+				GetBancos();				
+				GetTipoSalida();
+			});
+
+			$("#btn_crear").click(function (e)
+			{
+				insertarEditarDebito("I");
+			});
+			$("#btn_Editar").click(function (e) {
+				insertarEditarDebito("U");
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+				Show_closeModal("#modalCreate", false);
+			});
+		});
+
+		function llenarTblDebitoBancario(btnId)
+		{
+
+			var url = "@Url.Action("getCurrentDebitoBancario")";
+
+			var table = $("#tbl-debitoBancario").DataTable({
+					destroy: true,
+					paging: true,
+					info: false,
+					searching: true,
+					ordering: true,
+					ajax: {
+						url: url,
+						type: "POST",
+						data: { btnId: btnId },
+						dataType: "json",
+						dataSrc: ""
+					},
+					columns: [
+						{
+							data: "ID",
+							className: "dt-body-left"
+						},
+						{
+							data: "BANCO"
+						},
+						{
+							data: "CUENTA_BANCARIA",
+							className: "dt-body-left"
+						},
+						{
+							data: "TIPO_DEBITO",
+							className: "dt-body-left"
+						},
+						{
+							data: "TIPO_ENTRADA",
+							className: "dt-body-left"
+						},						
+						{
+							data: "MONTO",
+							className: "dt-body-right",
+							render: function (data)
+							{
+								return number_format_js(data, 2, 0);
+							},
+						},
+						{
+							data: "FECHA",
+							className: "dt-body-center"
+						},
+						{
+							data: "CONCEPTO",
+							className: "dt-body-left"
+						},
+						{
+							data: "CONCEPTO",
+							className: "dt-body-center"
+						}
+
+					],
+				lengthChange: true,
+				rowCallback: function (row, data)
+				{						
+						var id = data.ID;
+						var html = `
+							<span class="glyphicon glyphicon-edit" onclick="editar_Popup(`+ id +`)" id="Ceditar" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentDebito(`+id+`,'de la cuenta `+ data.CUENTA_BANCARIA	+`')" id="Celiminar" aria-hidden="true"></span>
+							`;						
+					$('td:eq(8)', row).html(html).addClass("wth-action");
+					}
+
+				});
+				$("th").removeClass("sorting_asc");
+			$(".dataTables_filter").addClass("NoVisible");
+			formartFecharToDatePicker();
+		}
+
+		function insertarEditarDebito(typeAction) {
+			url = typeAction == "I" ? "@Url.Action("CrearDebitoBancario")" : "@Url.Action("ActualizarDebitoBancario")";
+
+			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _BANCO = $("#" + E + "BANCO").val();
+			var _CUENTA_BANCARIA = $("#" + E + "CUENTA_BANCARIA").val();
+			var _TIPO_ENTRADA = $("#" + E + "TIPO_ENTRADA").val();
+			var _TIPO_DEBITO = $("#" + E + "TIPO_DEBITO").val();
+			var _MONTO = $("#" + E + "MONTO").val().replace(",","").trim();
+			var _FECHA = $("#" + E + "FECHA").val().trim();
+			var _CONCEPTO = $("#" + E + "CONCEPTO").val().trim();
+
+
+			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
+				_TIPO_ENTRADA == "0" || _MONTO == "" ||
+				_MONTO == "0" || _FECHA == "" ||			
+				_CONCEPTO == "" || _TIPO_DEBITO == "0" 
+				)
+			{
+				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+				return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					  id: _id
+					, BANCO: _BANCO
+					, CUENTA_BANCARIA: _CUENTA_BANCARIA
+					, TIPO_ENTRADA: _TIPO_ENTRADA
+					, TIPO_DEBITO: _TIPO_DEBITO
+					, MONTO: _MONTO
+					, FECHA: _FECHA
+					, CONCEPTO: _CONCEPTO
+				},
+				dataType: "JSON",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+
+		}
+
+		
+		function GetBancos(id = 'BANCO')
+		{
+			var url = "@Url.Action("GetBancos")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+				},
+				dataType: "JSON",
+				success: function (_data) {
+					llenarDropdows(_data, id, "banco",true,true);
+				}
+			});
+		}
+
+		function GetCuentasBancarias(id = 'CUENTA_BANCARIA',valor)
+		{
+			var url = "@Url.Action("GetCuentasBancarias")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				async: false,
+				data: {
+					id: valor
+				},
+				dataType: "JSON",
+				success: function (_data) {
+					llenarDropdows(_data, id, "cuenta de banco",true,true);
+				}
+			});
+		}
+
+		function GetTipoEntrada(id = 'TIPO_ENTRADA')
+		{
+			var url = "@Url.Action("GetTipoEntrada")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data:
+				{
+				},
+				dataType: "JSON",
+				success: function (_data) {
+					llenarDropdows(_data, id, "tipo de entrada",true,true);
+				}
+			});
+		}
+
+		function GetTipoDebito(id = 'TIPO_DEBITO')
+		{
+			var url = "@Url.Action("GetTipoDebito")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data:
+				{
+				},
+				dataType: "JSON",
+				success: function (_data) {
+					llenarDropdows(_data, id, "tipo de debito",true,true);
+				}
+			});
+		}
+
+		function EliminarCurrentDebito(id, nombre)
+		{
+			mensajeEliminarDebito(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarDebito(id, nombre)
+		{
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el debito bancario " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) =>
+			{
+				if (result.isConfirmed)
+					eliminarDebitoBancario(id);
+			});
+		}
+
+		function eliminarDebitoBancario(_id)
+		{
+			var url = "@Url.Action("EliminarDebitoBancario")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					id: _id
+				},
+				dataType: "JSON",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#id").val(_id);
+			Show_closeModal("#modalCeditar", true);
+
+			$("#EMONTO").empty();
+			$("#EFECHA").empty();
+			$("#ECONCEPTO").empty();
+
+			GetBancos("EBANCO");
+			GetTipoEntrada("ETIPO_ENTRADA");
+			GetCuentasBancarias("ECUENTA_BANCARIA");
+			GetTipoDebito("ETIPO_DEBITO");			
+
+			var url = "@Url.Action("GetDebitoBancarioDetail")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "JSON",
+				data:
+				{
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#EBANCO").val(_data.ID_BANCO);
+					updateSelectMania("EBANCO");
+					$("#EBANCO").trigger("change");
+					$("#ENUMERO_CHEQUE").val(_data.NUMERO_CHEQUE);					
+					$("#ETIPO_ENTRADA").val(_data.ID_TIPO_ENTRADA);	
+					$("#ETIPO_DEBITO").val(_data.ID_TIPO_DEBITO);	
+					$("#EMONTO").val(_data.MONTO);
+					$("#EFECHA").val(_data.FECHA);
+					$("#ECONCEPTO").val(_data.CONCEPTO);
+					$("#id").val(_id);
+					$("#ECUENTA_BANCARIA").val(_data.ID_CUENTA_BANCARIA);
+					
+					updateSelectMania("ECUENTA_BANCARIA");
+					updateSelectMania("ETIPO_ENTRADA");
+					updateSelectMania("ETIPO_DEBITO");
+				},
+				complete: function (_data)
+				{
+					
+				}
+			});
+			formartFecharToDatePicker();
+		}
+
+		function formartFecharToDatePicker() {
+			$('.ui-datepicker').addClass("datepickerFormat");
+		}
+	</script>
+
+}
+

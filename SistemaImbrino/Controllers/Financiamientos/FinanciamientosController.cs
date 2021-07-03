@@ -18,6 +18,7 @@ namespace SistemaImbrino.Controllers
         private decimal montoTotalPrestamo { get; set; }
         private decimal Balance_actual { get; set; }
         private bool isRecalculate { get; set; }
+        
         // GET: Financiamientos
         public ActionResult Index()
         {
@@ -27,6 +28,55 @@ namespace SistemaImbrino.Controllers
             ViewBag.FINACIAMIENTOLast = ListFac.Any() ? db.FACTURA.Max(x => x.FAC_NUMERO) + 1 : 1;
             return View();
         }
+
+        public JsonResult activarPrestamo(string json,string jsonCheque, DateTime fecha, string clienteID, string fiadorID, string promotorID)
+        {
+            message ResultMessage = new message();
+            
+            try
+            {
+                View_ListFincaciamientos ListFinanciamiento = new View_ListFincaciamientos();
+                ListFinanciamiento = JsonConvert.DeserializeObject<View_ListFincaciamientos>(json);
+                OTROSCR otroCR = new OTROSCR();
+                otroCR = JsonConvert.DeserializeObject<OTROSCR>(jsonCheque);
+
+                foreach (var item in ListFinanciamiento.ListFinanciamientos)
+                {
+                    item.Cliente = clienteID;
+                    item.Fiador = fiadorID;
+                    item.Promotor = promotorID;
+                }
+
+                // validar si el financiamiento se puede generar
+                if (ListFinanciamiento.ListFinanciamientos.Count() == 0)
+                {
+                    ResultMessage = new message()
+                    {
+                        Message = "Datos incorrectos favor crear amortizacion antes de enviar los datos",
+                        Is_Success = false
+                    };
+                }
+                else
+                {
+                    ResultMessage = FinanciamientoIsvalid(ListFinanciamiento.ListFinanciamientos.FirstOrDefault(), false);
+                }
+
+                if (ResultMessage.Is_Success == false)
+                    return Json(ResultMessage);
+
+                ResultMessage = GuardarPrestamo(ListFinanciamiento, fecha, otroCR);
+            }
+            catch (Exception)
+            {
+                ResultMessage.Is_Success = false;
+                ResultMessage.Message = "Error inesperado: No se puede convertir el objeto";
+            }
+
+
+            return Json(ResultMessage);
+        }
+
+
         public JsonResult CalcularAmortizacion(string json)
         {
             View_ListFincaciamientos lstFina = new View_ListFincaciamientos();
@@ -649,8 +699,8 @@ namespace SistemaImbrino.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
 
-        }
-
+        }        
+       
         public JsonResult GetFiadores()
         {
             db = new DB_IMBRINOEntities();
@@ -665,44 +715,5 @@ namespace SistemaImbrino.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
 
         }
-
-        public JsonResult activarPrestamo(string json, DateTime fecha, string clienteID, string fiadorID, string promotorID)
-        {
-
-            message ResultMessage = new message();
-            try
-            {
-                View_ListFincaciamientos ListFinanciamiento = new View_ListFincaciamientos();
-
-
-                ListFinanciamiento = JsonConvert.DeserializeObject<View_ListFincaciamientos>(json);
-
-                foreach (var item in ListFinanciamiento.ListFinanciamientos)
-                {
-                    item.Cliente = clienteID;
-                    item.Fiador = fiadorID;
-                    item.Promotor = promotorID;
-                }
-
-
-                // validar si el financiamiento se puede generar
-                ResultMessage = FinanciamientoIsvalid(ListFinanciamiento.ListFinanciamientos.FirstOrDefault(), false);
-
-                if (ResultMessage.Is_Success == false)
-                    return Json(ResultMessage);
-
-
-                ResultMessage = GuardarPrestamo(ListFinanciamiento, fecha);
-            }
-            catch (Exception)
-            {
-                ResultMessage.Is_Success = false;
-                ResultMessage.Message = "Error inesperado: No se puede convertir el objeto";
-            }
-
-
-            return Json(ResultMessage);
-        }
-
     }
 }

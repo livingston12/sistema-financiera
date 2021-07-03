@@ -5,13 +5,12 @@
 }
 <head>
 	<style>
-		.position-absolute{
-			position:absolute !important;
+		.position-absolute {
+			position: absolute !important;
 		}
 	</style>
 </head>
 <div class="row">
-
 	<div class="col-xs-12 col-sm-6 col-lg-4 ">
 		<label class="control-label" for="cliente">CLIENTE</label>
 		<div class="form-group " id="dvcliente">
@@ -73,7 +72,7 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="clearfix visible-lg"></div>
 	<div class="col-xs-12 col-sm-6 col-lg-4">
 		<label class="control-label" for="frpago">FORMA DE PAGO</label>
 		<div class="form-group" id="dvfrpago">
@@ -104,7 +103,7 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="clearfix visible-lg"></div>
 	<div class="col-xs-12 col-sm-6 col-lg-4">
 		<label class="control-label" for="cuno">CUOTAS NORMALES</label>
 		<div class="form-group" id="dvcuno">
@@ -143,7 +142,7 @@
 		<label class="control-label" for="garantia">GARANTIA</label>
 		<div class="form-group" id="dvgarantia">
 			<input type="text" class="form-control widtTotal notValidate" style="max-width: 3000px !important;" placeholder="Garantia" id="garantia">
-			
+
 		</div>
 	</div>
 
@@ -166,114 +165,138 @@
 
 <div class="row">
 	<div class="col-xs-12 col-md-3">
-		<button class="btn btn-pink btn-block" id="btn-genAmortiza">Generar tabla de amortización</button>
+		<button class="btn btn-defaultColor btn-block" id="btn-genAmortiza">Generar tabla de amortización</button>
 	</div>
 
 	<div class="col-xs-12 col-md-3 pull-right">
-		<button class="btn btn-success btn-block" id="btn-activarPrestamo">Activar préstamo</button>
+		<button class="btn btn-success btn-block" id="btn-activarPrestamo" disabled>Activar préstamo</button>
 	</div>
 	<div class="col-xs-12 col-md-2 pull-right">
 		<button id="btn-limpiar" class="btn btn-warning btn-block" onclick="document.location.reload();"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
 	</div>
 </div>
-	<br />
-	<div class="row" style="background-color:#fff7e1;">
-		<div class="col-xs-6 col-md-6">
-			<label class="control-label">TABLA DE AMORTIZACION</label>
-		</div>
-
-		<div class="col-xs-6 col-md-6  text-right">
-			<label class="control-label">FINACIAMIENTO @ViewBag.FINACIAMIENTOLast</label>
-		</div>
+<br />
+<div class="row btn-defaultColor" style="padding-top:5px;">
+	<div class="col-xs-6 col-md-6">
+		<label class="control-label">TABLA DE AMORTIZACION</label>
 	</div>
 
-	<div class="row" style="background-color:#fff7e1;">
-		<div class="table-responsive">
-			<table class="table table-condensed  table-hover" id="tbl-fin">
-				<thead>
-					<tr>
-						<th class="text-center">Cuota</th>
-						<th class="text-center">Fecha</th>
-						<th class="text-center">Monto</th>
-						<th class="text-center">Capital</th>
-						<th class="text-center">Interes</th>
-						<th class="text-center">Balance</th>
-						<th class="text-center">Tipo de cuota</th>
-					</tr>
-				</thead>
-				<tbody style="background-color:white;">
-					<tr>
-						<td class="text-right"></td>
-						<td class="text-right"></td>
-						<td class="text-right"></td>
-						<td class="text-right"></td>
-						<td class="text-right"></td>
-						<td class="text-center"><b id="total-balance"></b></td>
-						<td class="text-right"></td>
-					</tr>
+	<div class="col-xs-6 col-md-6  text-right">
+		<label class="control-label">FINACIAMIENTO @ViewBag.FINACIAMIENTOLast</label>
+	</div>
+</div>
+
+<div class="row btn-defaultColorLite">
+	<div class="table-responsive">
+		<table class="table table-condensed  table-hover" id="tbl-fin">
+			<thead>
+				<tr>
+					<th class="text-center">CUOTA</th>
+					<th class="text-center">FECHA</th>
+					<th class="text-center">MONTO</th>
+					<th class="text-center">CAPITAL</th>
+					<th class="text-center">INTERES</th>
+					<th class="text-center">BALANCE</th>
+					<th class="text-center">TIPO CUOTA</th>
+				</tr>
+			</thead>
+			<tbody style="background-color:white;">
+				<tr>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-right"></td>
+					<td class="text-center"><b id="total-balance"></b></td>
+					<td class="text-right"></td>
+				</tr>
 
 
-				</tbody>
-				<tfoot>
-					<tr>
+			</tbody>
+			<tfoot>
+				<tr>
 
-						<td class="text-center"></td>
-						<td class="text-center"><label id="lbl-total"></label></td>
-						<td class="text-center"><b id="total-monto"></b></td>
-						<td class="text-center"><b id="total-capital"></b></td>
-						<td class="text-center"><b id="total-interes"></b></td>
-						<td class="text-center"><b></b></td>
-						<td class="text-center"></td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-
+					<td class="text-center"></td>
+					<td class="text-center"><label id="lbl-total"></label></td>
+					<td class="text-center"><b id="total-monto"></b></td>
+					<td class="text-center"><b id="total-capital"></b></td>
+					<td class="text-center"><b id="total-interes"></b></td>
+					<td class="text-center"><b></b></td>
+					<td class="text-center"></td>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 
+</div>
 
-	<!--------------------------------------- Modal para ingresar cuotas adiccionales ----------------------------------------------->
-	<div class="modal fade" id="cuoataADModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
 
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-warning">
-					<button type="button" class="close btn-cerrar btn-cerrarPopup" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Cuotas adiccionales</h4>
+<!--------------------------------------- Modal para ingresar cuotas adiccionales ----------------------------------------------->
+<div class="modal fade" id="cuoataADModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close btn-cerrar btn-cerrarPopup" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Cuotas adiccionales</h4>
+			</div>
+			<div class="modal-body" id="CuContainer">
+				<div class="table-responsive">
+					<table class="table table-condensed" id="tbl-cuotasAdicionales">
+						<thead>
+							<tr>
+								<th class="text-center">
+									Fecha
+								</th>
+
+								<th class="text-center">Capital</th>
+								<th class="text-center">Interes</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
 				</div>
-				<div class="modal-body" id="CuContainer">
-					<div class="table-responsive">
-						<table class="table table-condensed" id="tbl-cuotasAdicionales">
-							<thead>
-								<tr>
-									<th class="text-center">
-										Fecha
-									</th>
 
-									<th class="text-center">Capital</th>
-									<th class="text-center">Interes</th>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-Guardar">Aplicar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopup">Cancelar</button>
 
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" id="btn-Guardar">Aplicar</button>
-					<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopup">Cancelar</button>
-
-				</div>
 			</div>
 		</div>
 	</div>
-	@section scripts {
+</div>
+
+<!--------------------------------------- Modal para CHEQUES ----------------------------------------------->
+<div class="modal fade" id="ChequeModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close btn-cerrar btn-cerrarPopupC" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Crear cheque</h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_create", "CreditosBancarios")
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-crearCheque">Crear</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopupC">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
 
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 	var dataCuotasAdicionales = [];
 	var ListDataFinan = [];
 	var dates_allowed = [];
+	var OtrosCargos = [];
 
 	async function MensajecantidadCuota() {
 			const { value: cantidad } = await Swal.fire({
@@ -294,8 +317,54 @@
 			}
 		}
 
+		async function  mensajeMethodCreate() {
+			Swal.fire({
+				title: 'Selecciona metodo de pago',
+				input: 'select',
+				inputOptions: {
+					'Tipo metodo': {
+						CHEQUE: "CHEQUE",
+						TRANSFERENCIA: "TRANSFERENCIA"
+					},
+				},
+				inputPlaceholder: 'Selecciona un metodo',
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return new Promise((resolve) => {
+						if (value !== "") {
+							resolve()
+						} else {
+							resolve('Necesita seleccionar un metodo de pago')
+						}
+					})
+				}
+			}).then(function (data) {
+				if (data.value !== "" && data.isConfirmed) {
+					var idTipoCredito = data.value === "CHEQUE" ? 1 : 2;
+					Show_closeModal("#ChequeModal", true);
+					GetBancos("BANCO","@Url.Action("getBancos","CreditosBancarios")");
+					GetTipoCredito("TIPO_CREDITO", "@Url.Action("getTipoCredito", "CreditosBancarios")");
+					GetTipoSalida("TIPO_SALIDA", "@Url.Action("getTipoSalida", "CreditosBancarios")");
+					$("#FECHA").attr("disabled", true);
+					$("#TIPO_CREDITO").attr("disabled", true);
+					$("#TIPO_CREDITO").addClass("disabled");
+					$("#TIPO_CREDITO").val(idTipoCredito);
+					$("#TIPO_CREDITO").trigger("change");
+					$("#BENEFICIARIO").attr("disabled", true);
+					$("#MONTO").attr("disabled", true);
+					$("#TIPO_SALIDA").attr("disabled", true);
+					$("#BENEFICIARIO").val($('#cliente').selectMania('get')[0].text);
+					$("#MONTO").val($("#Monto").val());
+					$("#TIPO_SALIDA").val(1);
+					updateSelectMania("TIPO_SALIDA");
+					
+				}
+			});
+
+
+		}
 	function  mensajeCuotas()
-		{
+	{
 			swal.fire({
 				position: 'center',
 				icon: "warning",
@@ -309,12 +378,48 @@
 					MensajecantidadCuota();
 				 else
 					generarAmortizacion();
-
-
 			});
 		}
 
-	function ActivarPrestamo() {
+	function insertarCargo()
+	{
+		var _BANCO = $("#BANCO").val().trim();
+		var _CUENTA_BANCARIA = $("#CUENTA_BANCARIA").val();
+		var _NUMERO_CHEQUE = $("#NUMERO_CHEQUE").val().trim();
+		var _TIPO_CREDITO = $("#TIPO_CREDITO").val();
+		var _TIPO_SALIDA = $("#TIPO_SALIDA").val();
+		var _MONTO = $("#MONTO").val().replace(",","").trim();
+		var _FECHA = $("#FECHA").val().trim();
+		var _BENEFICIARIO = $("#BENEFICIARIO").val().trim();
+		var _CONCEPTO = $("#CONCEPTO").val().trim();
+
+		if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
+			_TIPO_CREDITO == "0" || _TIPO_SALIDA == "0" ||
+			_MONTO == "" || _MONTO == "0" ||
+			_FECHA == ""  || _CONCEPTO == ""
+			)
+		{
+			MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+			return;
+		}
+		OtrosCargos = [];
+		OtrosCargos =
+		{
+			BANCO: _BANCO
+			, CUENTA_BANCARIA: _CUENTA_BANCARIA
+			, NUMERO_CHEQUE: _NUMERO_CHEQUE
+			, TIPO_CREDITO: _TIPO_CREDITO
+			, TIPO_SALIDA: _TIPO_SALIDA
+			, MONTO: _MONTO
+			, FECHA: _FECHA
+			, BENEFICIARIO: _BENEFICIARIO
+			, CONCEPTO: _CONCEPTO
+		}
+	}
+
+	function ActivarPrestamo()
+	{
+		insertarCargo();	
 		var currentinput = $("#Fecha").val().split("-");
 		var currentDay = currentinput[0];
 		var currentMonth = monthNumber(currentinput[1]);
@@ -324,13 +429,13 @@
 		var fiador = $("#Fiador").val();
 		var promotor = $("#Promotor").val();
 
-		console.log($("#cliente").val());
 		var url = "@Url.Action("activarPrestamo", "Financiamientos")";
 		$.ajax({
 			type: "POST",
 			url: url,
 			data: {
 				json: JSON.stringify({ ListFinanciamientos: ListDataFinan })
+				, jsonCheque: JSON.stringify(OtrosCargos)
 				, fecha: currentDate.toISOString()
 				, clienteID: cliente
 				, fiadorID: fiador
@@ -339,16 +444,14 @@
 			dataType: "json",
 			success: function (_data) {
 				MessageNotification(_data.Message, _data.Is_Success, _data.Is_Success);
-
 			}
 		});
 	}
 
-		function generarAmortizacion(isCuotaAdicional = false) {
-			//$('#tbl-fin > tbody .tr').empty();
-
-				var monto = $("#Monto").val();
-				var currentinput = $("#feven").val().split("-");
+		function generarAmortizacion(isCuotaAdicional = false)
+		{
+			var monto = $("#Monto").val();
+			var currentinput = $("#feven").val().split("-");
 			var currentDay = currentinput[0];
 			var currentMonth = monthNumber(currentinput[1]);
 			var currentYear = currentinput[2];
@@ -373,7 +476,6 @@
 				, _CuotasAdiccionales = $("#cuad").val()
 				, _Garantia = $("#garantia").val()
 				, _Observacion = $("#observacion").val()
-				//, total_balance = 0
 				, total_capital = 0
 				, total_monto = 0
 				, total_interes = 0
@@ -401,18 +503,14 @@
 						FechaVencimiento: currentDate2,
 						TipoCuota: tipo_cuota,
 						TipoInteres: _TipoInteres
-
 					}
 
-
 					AddItemArray2(index + 1, dataCuotasAdicionales, json);
-
 				});
 
 			} else {
 				$("#cuad").val("0");
 			}
-
 
 				strDatos = JSON.stringify({
 					numCuota: 0, Cliente: _Cliente
@@ -459,12 +557,12 @@
 									<td class="text-center">` + number_format_js(index.interes, 2, 0) + `</td>
 									<td class="text-center">` + number_format_js(index.Balance,2,0) + `</td>
 									<td class="text-center">` + tipoCuota + `</td></tr>'`);
-							
+
 							total_monto += index.Monto;
 							total_capital += index.capital;
 							total_interes += index.interes;
 						});
-						
+
 						total_monto = number_format_js(total_monto, 2, 0);
 						total_capital = number_format_js(total_capital, 2, 0);
 						total_interes = number_format_js(total_interes, 2, 0);
@@ -512,20 +610,18 @@
 		}
 
 		// Validar solo las fechas necesarias en un datePicker
-		function validarFechasAdiccionales(date,is_adiccional = true) {
-
-
-
-			if (dates_allowed.length == 0) {
-
+		function validarFechasAdiccionales(date, is_adiccional = true)
+		{
+			if (dates_allowed.length == 0)
+			{
 				var url = "@Url.Action("FechasCuotas", "Financiamientos")";
 				var cuotasNormales = $("#cuno").val();
 				var currentinput2 = $("#feven").val().split("-");
 				var formaPago = $("#frpago").val();
-			var currentDay2 = currentinput2[0];
-			var currentMonth2 = monthNumber(currentinput2[1]);
-			var currentYear2 = currentinput2[2];
-			var currentDate2 = new Date(currentYear2, currentMonth2 - 1, currentDay2);
+				var currentDay2 = currentinput2[0];
+				var currentMonth2 = monthNumber(currentinput2[1]);
+				var currentYear2 = currentinput2[2];
+				var currentDate2 = new Date(currentYear2, currentMonth2 - 1, currentDay2);
 
 			$.ajax({
 				type: "GET",
@@ -543,7 +639,6 @@
 			});
 
 			}
-
 		}
 
 		$(document).ready(function () {
@@ -605,24 +700,65 @@
 			});
 
 			$("#tbl-fin").DataTable(
-				{
+			{
 					"searching": false,
 					"lengthChange": false,
 					"paging": false,
 					"ordering": false,
 					"info": false
-				}
+			}
 			);
 
-			$("#btn-activarPrestamo").click(function () {
+			$("#btn-activarPrestamo").click(function ()
+			{
+				mensajeMethodCreate();
+				$(".swal2-select").addClass("form-control");
+			});
+
+			$("#btn-crearCheque").click(function ()
+			{
 				ActivarPrestamo();
 			});
 
-			$(".btn-cerrarPopup").click(function () {
+			$("#BANCO").change(function () {
+				var id = $(this).val();
+				GetCuentasBancarias("CUENTA_BANCARIA", id,"@Url.Action("GetCuentasBancarias", "CreditosBancarios")");
+			});
+
+
+			$("#TIPO_CREDITO").change(function () {
+
+				var id = $(this).val();
+				$("#NUMERO_CHEQUE").attr("disabled", "disabled");
+
+				if (id == 2)
+				{
+					$("#BENEFICIARIO").removeAttr("disabled");
+					$("#lbl_NUMERO_CHEQUE").text("");
+					$("#NUMERO_CHEQUE").val("");
+					$("#lbl_BENEFICIARIO").text("Beneficiario");
+				}
+				else
+				{
+					$("#lbl_NUMERO_CHEQUE").text("Numero cheque");
+					$("#lbl_BENEFICIARIO").text("Beneficiario");
+
+					$("#BENEFICIARIO").removeAttr("disabled");
+					$("#NUMERO_CHEQUE").removeAttr("disabled");
+				}
+
+				updateSelectMania("TIPO_CREDITO");
+			});
+
+			$(".btn-cerrarPopup").click(function ()
+			{
 				$("#cuad").val(0);
 				$("#cuad").trigger("change");
 				Show_closeModal('#cuoataADModal', false);
-
+			})
+			$(".btn-cerrarPopupC").click(function ()
+			{
+				Show_closeModal('#ChequeModal', false);
 			})
 
 			$("#tipoin").change(function ()
@@ -671,7 +807,7 @@
 									</tr>'`);
 				}
 				// Anteriormente Estaba con fechaven PARA UNA NUEVA FASE SE IMPLEMENTARA
-				var currentinput2 = $("#Fecha").val().split("-"); 
+				var currentinput2 = $("#Fecha").val().split("-");
 				var currentDay2 = currentinput2[0];
 				var currentMonth2 = monthNumber(currentinput2[1]);
 				var currentYear2 = currentinput2[2];
@@ -683,7 +819,7 @@
 
 					},
 					dateFormat: 'dd-mm-yy',
-					monthNames: nameMonthComplete(),					
+					monthNames: nameMonthComplete(),
 					minDate: FechaVencimiento
 					// PARA UNA NUEVA FASE SE DESCOMENTARA
 					//beforeShowDay: (date) => habilitarFechasAdicionales(date, isAdiccional)//validarFechasAdiccionales(date, isAdiccional)
@@ -716,8 +852,7 @@
 					{
 						error = true;
 						message = "Debe rellenar todos los campos";
-						//MessageNotification("Debe rellenar todos los campos", false);
-						//return;
+
 					} else if (string_capital + string_interes == 0)
 					{
 						error = true;
@@ -730,7 +865,6 @@
 					MessageNotification(message, false);
 					return;
 				}
-
 
 				if (total != monto_totalFinanciar && tipoin == "6") // Solo Manual
 				{
@@ -793,7 +927,7 @@
 				mensajeCuotas();
 				$(".swal2-cancel").text("NO");
 				$(".swal2-cancel").focus();
-
+				$("#btn-activarPrestamo").removeAttr("disabled");
 			});
 
 			$('#Fecha,#feven').datepicker({
@@ -803,12 +937,7 @@
 				},
 				dateFormat: 'dd-mm-yy',
 				monthNames: nameMonthComplete()
-
-
-
 			});
-
-
 
 			$("select").blur(function () {
 				var currentinput = $(this);
@@ -827,6 +956,7 @@
 				}
 
 			});
+
 			$("input").blur(function () {
 
 				validarNumero(this);
@@ -842,76 +972,64 @@
 					enterAsTab();
 					event.preventDefault();
 					return false;
-
 				}
 			});
 
-
-
-
-
-			function iniciollenarDrops() {
-
-				//$("#tipofin").trigger("change");
+			function iniciollenarDrops()
+			{
 
 				$("#cuad").val("0");
 
 				// Llenar Tipo interes
-
-					  var url = "@Url.Action("GetTypeINT", "Financiamientos")";
+				var url = "@Url.Action("GetTypeINT", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
 					dataType: "json",
-					success: function (_data) {
-
+					success: function (_data)
+					{
 						llenarDropdows(_data, 'tipoin', "Tipo interes");
-
-
 					}
 				});
 
 				// Llenar Tipo Financiamiento
-
-					 url = "@Url.Action("GetTypeFin", "Financiamientos")";
+				url = "@Url.Action("GetTypeFin", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
 					dataType: "json",
-					success: function (_data) {
+					success: function (_data)
+					{
 						llenarDropdows(_data, 'tipofin', "Tipo financiamiento",false);
-
 					}
 				});
 
 				// Llenar Tipo Forma de pago
-
-					url = "@Url.Action("GetFormaPago", "Financiamientos")";
+				url = "@Url.Action("GetFormaPago", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
 					dataType: "json",
-					success: function (_data) {
+					success: function (_data)
+					{
 						llenarDropdows(_data, 'frpago', "Tipo forma pago");
-
 					}
 				});
 
 				// Llenar Clientes
-
-					url = "@Url.Action("GetCLientes", "Financiamientos")";
+				url = "@Url.Action("GetCLientes", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
 					dataType: "json",
-					success: function (_data) {
+					success: function (_data)
+					{
 						llenarDropdows(_data, 'cliente',"cliente");
 					}
 				});
 
 				// Llenar fiadores
-
-					url = "@Url.Action("GetFiadores", "Financiamientos")";
+				url = "@Url.Action("GetFiadores", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
@@ -922,8 +1040,7 @@
 				});
 
 				// Llenar promotores
-
-					url = "@Url.Action("GetPromotores", "Financiamientos")";
+				url = "@Url.Action("GetPromotores", "Financiamientos")";
 				$.ajax({
 					type: "GET",
 					url: url,
@@ -938,5 +1055,5 @@
 		});
 
 
-		</script>
-	}
+	</script>
+}

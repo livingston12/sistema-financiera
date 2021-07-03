@@ -257,8 +257,12 @@ E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\An
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\System.Diagnostics.DiagnosticSource.xml
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csprojAssemblyReference.cache
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csproj.CoreCompileInputs.cache
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csproj.CopyComplete
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.dll
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.pdb
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csprojAssemblyReference.cache
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinDetalle.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinHeader.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinDetalle.cs
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinHeader.cs
