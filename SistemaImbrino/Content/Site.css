@@ -196,9 +196,16 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 	padding-right:12px !important;
 }
 .th-pd-no-left{
-	padding-left: 0px !important;
+	padding-left: 8px !important;
 }
 .th-pd-no-right {
 	padding-right: 0px !important;
 }
 
+.NoVisible {
+	visibility: hidden;
+}
+
+.wth-action{
+	width: 40px;
+}

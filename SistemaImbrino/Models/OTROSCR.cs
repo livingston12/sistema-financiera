@@ -22,7 +22,9 @@ namespace SistemaImbrino.Models
         public int TIPO_SALIDA { get; set; }
         public decimal MONTO { get; set; }
         public Nullable<System.DateTime> FECHA { get; set; }
-        public int BENEFICIARIO { get; set; }
+        public int CLIENTE { get; set; }
         public string CONCEPTO { get; set; }
+        public string BENEFICIARIO { get; set; }
+        public bool Activo { get; set; }
     }
 }

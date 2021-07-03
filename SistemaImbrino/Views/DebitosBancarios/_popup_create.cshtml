@@ -1,0 +1,96 @@
+﻿@model SistemaImbrino.Models.OTROSCR
+
+
+
+<head>
+	<style>
+		.datepickerFormat {
+			z-index: 1500 !important;
+			position: absolute !important;
+		}
+	</style>
+</head>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="TIPO_DEBITO">Tipo entrada</label>
+		<div class="form-group" id="dvTIPO_DEBITO">
+			<div class="input-group">
+				<label class="input-group-addon" for="TIPO_DEBITO"><i class="glyphicon glyphicon-credit-card"></i></label>
+				<select id="TIPO_DEBITO" class="form-control select"></select>
+				<span id="spanTIPO_DEBITO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BANCO">Banco</label>
+		<div class="form-group" id="dvBANCO">
+			<div class="input-group">
+				<label class="input-group-addon" for="BANCO"><i class="glyphicon glyphicon-home"></i></label>
+				<select id="BANCO" class="form-control select widtTotal"></select>
+				<span id="spanBANCO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CUENTA_BANCARIA">Cuenta bancaria</label>
+		<div class="form-group" id="dvCUENTA_BANCARIA">
+			<div class="input-group">
+				<label class="input-group-addon" for="CUENTA_BANCARIA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select id="CUENTA_BANCARIA" class="form-control select widtTotal"></select>
+				<span id="spanCUENTA_BANCARIA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="TIPO_ENTRADA">Tipo debito</label>
+		<div class="form-group" id="dvTIPO_ENTRADA">
+			<div class="input-group">
+				<label class="input-group-addon" for="TIPO_ENTRADA"><i class="glyphicon glyphicon-credit-card"></i></label>
+				<select id="TIPO_ENTRADA" class="form-control select"></select>
+				<span id="spanTIPO_ENTRADA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="MONTO">Monto</label>
+		<div class="form-group" id="dvMONTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="MONTO"><i class="glyphicon glyphicon-usd"></i></label>
+				@Html.EditorFor(model => model.MONTO, new { htmlAttributes = new { @class = "form-control number numberDecimal" } })
+				<span id="spanMONTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="FECHA">Fecha</label>
+		<div class="form-group" id="dvFECHA">
+			<div class="input-group">
+				<label class="input-group-addon" for="FECHA"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="FECHA">
+				<span id="spanFECHA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CONCEPTO">Concepto</label>
+		<div class="form-group" id="dvCONCEPTO">
+			<div class="input-group">
+				<label class="input-group-addon" for="CONCEPTO"><i class="glyphicon glyphicon-pencil"></i></label>
+				<textarea rows="3" id="CONCEPTO" class="form-control texto"></textarea>
+				<span id="spanCONCEPTO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>

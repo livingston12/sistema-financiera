@@ -175,6 +175,9 @@
     <Compile Include="Models\archivos_subir.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BANCO.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CARGO.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
@@ -185,6 +188,9 @@
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ColumnsTables_Result.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CTABANCO.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CUOTA.cs">
@@ -236,6 +242,9 @@
     <Compile Include="Models\OTROSCR.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OTROSDB.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReportParams.cs" />
     <Compile Include="Models\sp_cuotasVencidas_Result.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
@@ -247,6 +256,12 @@
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPOCTE.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TIPODB1.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TIPODB2.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPOFIN.cs">
@@ -262,6 +277,8 @@
     <Compile Include="Models\View_Cobrar.cs" />
     <Compile Include="Models\View_cobrosHeader.cs" />
     <Compile Include="Models\View_consultaFinanciamientos.cs" />
+    <Compile Include="Models\View_ListCreditosBancarios.cs" />
+    <Compile Include="Models\View_ListDebitosBancarios.cs" />
     <Compile Include="Models\View_ListFincaciamientos.cs" />
     <Compile Include="Models\View_fincaciamientos.cs" />
     <Compile Include="Models\vw_ConsultaFin.cs">
@@ -485,13 +502,16 @@
     <Content Include="Views\FinanciamientosDetalle\FinanciamientosDetalle.cshtml" />
     <Content Include="Views\Shared\_MenuShared.cshtml" />
     <Content Include="Views\CreditosBancarios\Index.cshtml" />
-    <Content Include="Views\DebitosBancarios\Index.cshtml" />
-    <Content Include="Views\CreditosBancarios\_creditoDetalle.cshtml" />
     <Content Include="Views\CreditosBancarios\_popup_editar.cshtml" />
+    <Content Include="Views\CreditosBancarios\_popup_create.cshtml" />
+    <Content Include="Views\DebitosBancarios\_popup_create.cshtml" />
+    <Content Include="Views\DebitosBancarios\_popup_editar.cshtml" />
+    <Content Include="Views\DebitosBancarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CierreCaja\" />
     <Folder Include="Views\IngresoCuotas\" />
   </ItemGroup>
   <ItemGroup>

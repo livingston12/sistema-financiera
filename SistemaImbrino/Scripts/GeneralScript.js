@@ -429,4 +429,65 @@ function enterAsTab() {
 	else { return keyPressed; }
 }
 
+ function GetBancos(id = 'BANCO', url = "")
+{	
+	$.ajax({
+		type: "GET",
+		url: url,
+		data: {
+
+		},
+		async: false,
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "banco", true, true);
+		}
+	});
+}
+
+function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "")
+{
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data: {
+			id: valor
+		},
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "cuenta de banco", true, true);
+		}
+	});
+}
+
+async function GetTipoCredito(id = 'TIPO_CREDITO', url = "") {
+	await $.ajax({
+		type: "GET",
+		url: url,
+		data: {
+
+		},
+		async: false,
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de credito", true, true);
+		}
+	});
+}
+async function GetTipoSalida(id = 'TIPO_SALIDA', url = "") {
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data: {
+
+		},
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de salida", true, true);
+		}
+	});
+}	
+
 

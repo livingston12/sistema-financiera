@@ -25,6 +25,18 @@
     <Property Name="ABO_FECHA" Type="varchar" MaxLength="100" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <EntityType Name="BANCO">
+    <Key>
+      <PropertyRef Name="BCO_CODIGO" />
+    </Key>
+    <Property Name="BCO_CODIGO" Type="int" Nullable="false" />
+    <Property Name="BCO_NOMBRE" Type="varchar" MaxLength="100" />
+    <Property Name="BCO_ABREVI" Type="varchar" MaxLength="100" />
+    <Property Name="BCO_SUCURS" Type="varchar" MaxLength="100" />
+    <Property Name="BCO_TELEF1" Type="varchar" MaxLength="100" />
+    <Property Name="BCO_TELEF2" Type="varchar" MaxLength="100" />
+    <Property Name="BCO_TELEF3" Type="varchar" MaxLength="100" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="CARGO">
@@ -61,6 +73,16 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="CTE_ZONA" Type="varchar" MaxLength="100" />
     <Property Name="CTE_TIPO" Type="int" />
     <Property Name="CTE_TELEFO2" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="CTABANCO">
+    <Key>
+      <PropertyRef Name="CTA_CODIGO" />
+    </Key>
+    <Property Name="CTA_CODIGO" Type="int" Nullable="false" />
+    <Property Name="CTA_BANCO" Type="varchar" MaxLength="100" />
+    <Property Name="CTA_NUMERO" Type="varchar" MaxLength="100" />
+    <Property Name="CTA_BALFEC" Type="varchar" MaxLength="100" />
+    <Property Name="CTA_BALCOR" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="CUOTA">
     <Key>
@@ -199,12 +221,71 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="CAR_FECHAP" Type="varchar" MaxLength="100" />
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <EntityType Name="OTROSCR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BANCO" Type="int" Nullable="false" />
+    <Property Name="CUENTA_BANCARIA" Type="int" Nullable="false" />
+    <Property Name="NUMERO_CHEQUE" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="TIPO_CREDITO" Type="int" Nullable="false" />
+    <Property Name="TIPO_SALIDA" Type="int" Nullable="false" />
+    <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="BENEFICIARIO" Type="varchar" MaxLength="150" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OTROSDB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BANCO" Type="int" Nullable="false" />
+    <Property Name="CUENTA_BANCARIA" Type="int" Nullable="false" />
+    <Property Name="TIPO_ENTRADA" Type="int" Nullable="false" />
+    <Property Name="TIPO_DEBITO" Type="int" Nullable="false" />
+    <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" />
+    <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPOCR1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TIPOCR2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="TIPOCTE">
     <Key>
       <PropertyRef Name="TIP_CODIGO" />
     </Key>
     <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
     <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TIPODB1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="TIPODB2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="TIPOFIN">
     <Key>
@@ -646,8 +727,10 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
   <EntityContainer Name="DB_IMBRINOModelStoreContainer">
     <EntitySet Name="ABOCUOTA" EntityType="Self.ABOCUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ABOOCARG" EntityType="Self.ABOOCARG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BANCO" EntityType="Self.BANCO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARTERA" EntityType="Self.CARTERA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CTABANCO" EntityType="Self.CTABANCO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CUOTA" EntityType="Self.CUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ESTDCTA" EntityType="Self.ESTDCTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FACTURA" EntityType="Self.FACTURA" Schema="dbo" store:Type="Tables" />
@@ -658,7 +741,13 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="INGOTRO" EntityType="Self.INGOTRO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INGRESO" EntityType="Self.INGRESO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROCARG" EntityType="Self.OTROCARG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OTROSCR" EntityType="Self.OTROSCR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OTROSDB" EntityType="Self.OTROSDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPOCR1" EntityType="Self.TIPOCR1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPOCR2" EntityType="Self.TIPOCR2" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPODB1" EntityType="Self.TIPODB1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPODB2" EntityType="Self.TIPODB2" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
