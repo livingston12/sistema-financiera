@@ -25,6 +25,32 @@
 				<ul class="nav navbar-nav">
 					<li>@Html.ActionLink("Cobro", "Index", "CobrosHeader", null, new { @class = "text-BlueLight" })</li>
 
+
+
+					<li>@Html.ActionLink("Financiamientos", "Index", "FinanciamientosHeader", null, new { @class = "text-BlueLight" })</li>
+					<li>@Html.ActionLink("Cargos adicionales", "Index", "CargosAdicionales", null, new { @class = "text-BlueLight" })</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maestros <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								@Html.ActionLink("Clientes", "Index", "Clientes", null, new { @class = "text-BlueLight" })
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuentas bancarias <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								@Html.ActionLink("Creditos bancarios", "Index", "CreditosBancarios", null, new { @class = "text-BlueLight" })
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>@Html.ActionLink("Debitos bancarios", "Index", "DebitosBancarios", null, new { @class = "text-BlueLight" })</li>
+							<li role="separator" class="divider"></li>
+							<li>@Html.ActionLink("Conciliacion", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
+						</ul>
+					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -39,19 +65,11 @@
 							<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
 						</ul>
 					</li>
-					<li>@Html.ActionLink("Financiamientos", "Index", "Financiamientos", null, new { @class = "text-BlueLight" })</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maestros <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								@Html.ActionLink("Clientes", "Index", "Clientes", null, new { @class = "text-BlueLight" })
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
-						</ul>
-					</li>
+
 				</ul>
 				<a href="~/Views/Shared/_Layout.cshtml"></a>
+
+				
 			</div>
 		</div>
 	</div>

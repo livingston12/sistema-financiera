@@ -499,5 +499,94 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TIPOCR1">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOCR1">
+        <MappingFragment StoreEntitySet="TIPOCR1">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPOCR2">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOCR2">
+        <MappingFragment StoreEntitySet="TIPOCR2">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANCO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.BANCO">
+        <MappingFragment StoreEntitySet="BANCO">
+          <ScalarProperty Name="BCO_TELEF3" ColumnName="BCO_TELEF3" />
+          <ScalarProperty Name="BCO_TELEF2" ColumnName="BCO_TELEF2" />
+          <ScalarProperty Name="BCO_TELEF1" ColumnName="BCO_TELEF1" />
+          <ScalarProperty Name="BCO_SUCURS" ColumnName="BCO_SUCURS" />
+          <ScalarProperty Name="BCO_ABREVI" ColumnName="BCO_ABREVI" />
+          <ScalarProperty Name="BCO_NOMBRE" ColumnName="BCO_NOMBRE" />
+          <ScalarProperty Name="BCO_CODIGO" ColumnName="BCO_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CTABANCO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.CTABANCO">
+        <MappingFragment StoreEntitySet="CTABANCO">
+          <ScalarProperty Name="CTA_BALCOR" ColumnName="CTA_BALCOR" />
+          <ScalarProperty Name="CTA_BALFEC" ColumnName="CTA_BALFEC" />
+          <ScalarProperty Name="CTA_NUMERO" ColumnName="CTA_NUMERO" />
+          <ScalarProperty Name="CTA_BANCO" ColumnName="CTA_BANCO" />
+          <ScalarProperty Name="CTA_CODIGO" ColumnName="CTA_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROSCR">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSCR">
+        <MappingFragment StoreEntitySet="OTROSCR">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="TIPO_SALIDA" ColumnName="TIPO_SALIDA" />
+          <ScalarProperty Name="TIPO_CREDITO" ColumnName="TIPO_CREDITO" />
+          <ScalarProperty Name="NUMERO_CHEQUE" ColumnName="NUMERO_CHEQUE" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPODB1">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPODB1">
+        <MappingFragment StoreEntitySet="TIPODB1">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPODB2">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPODB2">
+        <MappingFragment StoreEntitySet="TIPODB2">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROSDB">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSDB">
+        <MappingFragment StoreEntitySet="OTROSDB">
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="TIPO_DEBITO" ColumnName="TIPO_DEBITO" />
+          <ScalarProperty Name="TIPO_ENTRADA" ColumnName="TIPO_ENTRADA" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

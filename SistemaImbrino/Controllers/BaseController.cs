@@ -315,6 +315,29 @@ namespace SistemaImbrino.Controllers
             return listaMeses[month - 1];
         }
 
+        public static string returDateFormat(DateTime? date)
+        {
+            bool exist = date.HasValue;
+            string currentDate = string.Empty;
+            if (exist)
+            {
+                currentDate = $"{date.Value.Day}/{returMonthName(date.Value.Month)}/{date.Value.Year}";
+            }
+            return currentDate;
+        }
+
+        public static  DateTime? returDateFormat(string date)
+        {
+            DateTime? dateRetur = null;
+            var DateByPart = date.Split('-');
+            date = $"{returMonthNumber(DateByPart[1])}/{DateByPart[0]}/{DateByPart[2]}";
+            if (DateTime.TryParse(date,out DateTime currentDate))
+            {
+                dateRetur = currentDate;
+            }
+            return dateRetur;
+        }
+
         public static int returMonthNumber(string monthName)
         {
             int month = Array.FindIndex(listaMeses, x => x == monthName);
@@ -324,10 +347,60 @@ namespace SistemaImbrino.Controllers
         {
             var ingresos = db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToList();
             string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
-            return ingreso;
+            return ingreso.Trim();
         }
 
-        public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha)
+        public static string getBanco(int id)
+        {
+            var list = db.BANCO.Where(x => x.BCO_CODIGO == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().BCO_NOMBRE : string.Empty;
+            return value.Trim();
+        }        
+
+        public static string getTipoSalida(int id)
+        {
+            var list = db.TIPOCR2.Where(x => x.ID == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
+            return value.Trim();
+        }
+
+        public static string getTipoCredito(int id)
+        {
+            var list = db.TIPOCR1.Where(x => x.ID == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
+            return value.Trim();
+        }
+        public static string getTipoEntrada(int id)
+        {
+            var list = db.TIPODB2.Where(x => x.ID == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
+            return value.Trim();
+        }
+        public static string getTipoDebito(int id)
+        {
+            var list = db.TIPODB1.Where(x => x.ID == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
+            return value.Trim();
+        }
+
+        public static string getCliente(int id)
+        {
+            var list = db.CLIENTE.Where(x => x.CTE_CODIGO == id).ToList();
+            string value = list.Any() ? 
+                            $"{list.FirstOrDefault().CTE_NOMBRE} {list.FirstOrDefault().CTE_APELLI}" 
+                            : string.Empty;
+            return value.Trim();
+        }
+
+        public static string getCuentaBancaria(int id)
+        {
+            var list = db.CTABANCO.Where(x => x.CTA_CODIGO == id).ToList();
+            string value = list.Any() ? list.FirstOrDefault().CTA_NUMERO : string.Empty;
+            return value.Trim();
+        }
+
+
+        public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha,OTROSCR OtroCargo)
         {
             message message = new message();
             var tran = db.Database.BeginTransaction();
@@ -447,6 +520,7 @@ namespace SistemaImbrino.Controllers
 
                 cartera.CAR_MONTOC += capitalTotal;
                 cartera.CAR_MONTOI += interesTotal;
+                GuardarCargo(OtroCargo, financiamiento.ListFinanciamientos.FirstOrDefault());
 
                 db.SaveChanges();
                 message.Is_Success = true;
@@ -460,6 +534,27 @@ namespace SistemaImbrino.Controllers
                 message.Message = "Error inesperado : No se puede activar el prestamo";
             }
             return message;
+        }
+
+        private static bool GuardarCargo(OTROSCR otroCargo, View_fincaciamientos fincaciamientos)
+        {
+            bool insertado = false;
+            try
+            {
+                otroCargo.BENEFICIARIO = fincaciamientos.Cliente;
+                otroCargo.TIPO_SALIDA = 1;
+                otroCargo.MONTO = fincaciamientos.Monto;
+                otroCargo.FECHA = returDateFormat(fincaciamientos.Fecha);
+                otroCargo.Activo = true;
+                db.OTROSCR.Add(otroCargo);
+                insertado = true;
+            }
+            catch (Exception)
+            {
+                insertado = false;
+            }
+           
+            return insertado;
         }
     }
 }
