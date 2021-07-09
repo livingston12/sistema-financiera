@@ -13,9 +13,11 @@
 			<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
 			Forma pago:
 		</label>
-		<select class="dropdown form-control dw-cobro " id="modal_forma_pago" name="modal_forma_pago" style="width: 215px !important;">
-			<option value="E" selected>Efectivo</option>
-			<option value="T">Tarjeta</option>
+		<select class="dropdown form-control" id="modal_forma_pago" name="modal_forma_pago" style="width: 215px !important;">
+			<option value="" selected>Selecciona forma pago</option>
+			<option value="E">Efectivo</option>
+			<option value="D">Deposito</option>
+			<option value="T">Tranferencia</option>
 			<option value="C">Cheque</option>
 		</select>
 	</div>
@@ -71,19 +73,4 @@
 
 
 
-@*<script language="javascript">
-
-	$(document).ready(function () {
-		$(document).on('focus', "input[type='text']", function () {
-			console.log("entro")
-		});
-		//	console.log("entro");
-		//	$("input").blur(function ()
-		//	{
-		//		console.log("entro");
-		//		//validarNumero(this);
-		//});
-	});
-
-</script>*@
 

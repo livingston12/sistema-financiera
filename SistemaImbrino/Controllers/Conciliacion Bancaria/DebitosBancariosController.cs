@@ -245,12 +245,12 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
 
         public JsonResult GetTipoEntrada()
         {
-            var list = _db.TIPODB2.Select(x => new { id = x.ID, value = x.DESCRIPCION }).ToList();
+            var list = _db.TIPODB1.Select(x => new { id = x.ID, value = x.DESCRIPCION }).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetTipoDebito()
         {
-            var list = _db.TIPODB1.Select(x => new { id = x.ID, value = x.DESCRIPCION }).ToList();
+            var list = _db.TIPODB2.Select(x => new { id = x.ID, value = x.DESCRIPCION }).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

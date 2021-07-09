@@ -109,7 +109,7 @@ namespace SistemaImbrino.Controllers
         {
             return View();
         }
-        public JsonResult Cobrar(string json, string tipoPago, string _Fecha_pago = null, int aumentoRecibo = 0)
+        public JsonResult Cobrar(string json, string tipoPago, string _Fecha_pago = null, int aumentoRecibo = 0, string JsonDeposito = "")
         {
             ReturnFechapago(_Fecha_pago);
             if (db.Database.Connection.State == System.Data.ConnectionState.Open)
@@ -121,35 +121,61 @@ namespace SistemaImbrino.Controllers
             {
 
                 View_Cobrar _View_Cobrar = JsonConvert.DeserializeObject<View_Cobrar>(json);
+                OTROSDB ViewDeposito = JsonConvert.DeserializeObject<OTROSDB>(JsonDeposito);
 
                 decimal descuento = 0; int num = 0;
-                foreach (var item in _View_Cobrar.Cobros)
+                Messajson = validarMetodoPago(tipoPago, ViewDeposito);
+                error = !Messajson.Is_Success;
+
+                if (Messajson.Is_Success)
                 {
-                    if (item.tipoCobro == "Registrar mora como cargo")
+                    foreach (var item in _View_Cobrar.Cobros)
                     {
-                        addNewOtroCarg(item, Fecha_pago);
-                    }
-                    if (!int.TryParse(item.numCuota, out int cuota))
-                    {
-                        if (aplicarCargosAdiccionales(item, tipoPago, Fecha_pago))
+                        if (item.tipoCobro == "Registrar mora como cargo")
                         {
-                            error = true;
-                            break;
+                            addNewOtroCarg(item, Fecha_pago);
+                        }
+                        if (!int.TryParse(item.numCuota, out int cuota))
+                        {
+                            if (aplicarCargosAdiccionales(item, tipoPago, Fecha_pago))
+                            {
+                                error = true;
+                                Messajson = new message()
+                                {
+                                    Is_Success = false,
+                                    Message = "Error al procesar Cargo adicional"
+                                };
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (RealizarCobro(item, tipoPago, ref descuento, ref descuento, ref num, aumentoRecibo: aumentoRecibo) == false)
+                            {
+                                error = true;
+                                Messajson = new message()
+                                {
+                                    Is_Success = false,
+                                    Message = "Error al procesar Cobro"
+                                };
+                                break;
+                            }
                         }
                     }
-                    else
-                    {
-                        if (RealizarCobro(item, tipoPago, ref descuento, ref descuento, ref num, aumentoRecibo: aumentoRecibo) == false)
-                        {
-                            error = true;
-                            break;
-                        }
-                    }
+
                 }
 
                 if (error == false)
                 {
-                    GuardarCuota();
+                    if (tipoPago == "D" || tipoPago == "T")
+                    {
+                        int numFin = _View_Cobrar.Cobros.FirstOrDefault().numfin;
+                        int numRec = 0;
+                        string ncf = string.Empty;
+
+                        MaxiNGCUOTARef(ref numRec, ref ncf);
+                        GuardarCuota(ViewDeposito, numFin, numRec);
+                    }
                     tran.Commit();
                     Messajson.Message = "Se completo el pago correctamente";
                     Messajson.Is_Success = true;
@@ -169,6 +195,8 @@ namespace SistemaImbrino.Controllers
 
             return Json(Messajson);
         }
+
+       
 
         private bool aplicarCargosAdiccionales(cl_cobro cobro, string tipoPago, DateTime Fecha_pago)
         {
@@ -228,6 +256,7 @@ namespace SistemaImbrino.Controllers
 
             return validar;
         }
+
         private string getCuotaAdiccional(string numCuota)
         {
             string cuota = string.Empty;
@@ -244,13 +273,21 @@ namespace SistemaImbrino.Controllers
 
             return cuota;
         }
-        private void GuardarCuota()
+
+        private void GuardarCuota(OTROSDB viewDeposito =null ,int numFin =0 ,int numRec = 0)
         {
             db.ABOCUOTA.AddRange(ListaBOCUOTA);
             db.INGCUOTA.AddRange(ListiNGCUOTAs);
             db.ABOOCARG.AddRange(ListAboCarg);
             db.INGOTRO.AddRange(ListINGOtros);
             db.OTROCARG.AddRange(ListOtroCarg);
+            if (viewDeposito != null)
+            {
+                viewDeposito.ACTIVO = true;
+                viewDeposito.NUM_FIN = numFin;
+                viewDeposito.NUM_REC = numRec;
+                db.OTROSDB.Add(viewDeposito);
+            }
             db.SaveChanges();
         }
 
@@ -473,6 +510,51 @@ namespace SistemaImbrino.Controllers
             return true;
         }
 
+        public JsonResult cobroTotal(string _numFin, decimal descuentoInte, decimal descuentoMora, string tipoPago, string _Fecha_pago = null)
+        {
+            message Messajson = new message();
+            ReturnFechapago(_Fecha_pago);
+            var tran = db.Database.BeginTransaction();
+
+            try
+            {
+
+                int intFinID = int.Parse(_numFin);
+                List<sp_cuotasVencidas_Result> cuotasVenDesc = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == intFinID).OrderByDescending(x => x.NUM_CUOTA).ToList();
+
+                cl_cobro cobro = new cl_cobro();
+                int totalCuotasPagar = cuotasVenDesc.Count;
+
+                foreach (var cu in cuotasVenDesc)
+                {
+
+                    cobro = new cl_cobro()
+                    {
+                        numfin = intFinID,
+                        numCuota = cu.NUM_CUOTA.ToString(),
+                        tipoCobro = TipoCobro.Pago.ToString(),
+                        mora = cu.mora,
+                        montoPagado = decimal.Parse((cu.capital + cu.INTERES).ToString())
+                    };
+
+                    RealizarCobro(cobro, tipoPago, ref descuentoMora, ref descuentoInte, ref totalCuotasPagar, false);
+                }
+
+                GuardarCuota();
+                tran.Commit();
+                Messajson.Message = "Se completo el pago correctamente";
+                Messajson.Is_Success = true;
+            }
+            catch (Exception e)
+            {
+                Messajson.Message = "Ocurrio un problema con el pago: " + e.Message;
+                Messajson.Is_Success = false;
+                tran.Rollback();
+            }
+
+            return Json(Messajson);
+        }
+
         private void addNewIngOtro(string fechaPago, string formaPago, string descriMora, double mora, string ncf, int numfin, string cLIENTE, int nUMREC, string status, int IdIngreso = 50)
         {
             INGOTRO iNGOTRO = new INGOTRO()
@@ -527,51 +609,7 @@ namespace SistemaImbrino.Controllers
             ListOtroCarg.Add(iNGOTRO);
         }
 
-        public JsonResult cobroTotal(string _numFin, decimal descuentoInte, decimal descuentoMora, string tipoPago, string _Fecha_pago = null)
-        {
-            message Messajson = new message();
-            ReturnFechapago(_Fecha_pago);
-            var tran = db.Database.BeginTransaction();
-
-            try
-            {
-
-                int intFinID = int.Parse(_numFin);
-                List<sp_cuotasVencidas_Result> cuotasVenDesc = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == intFinID).OrderByDescending(x => x.NUM_CUOTA).ToList();
-
-                cl_cobro cobro = new cl_cobro();
-                int totalCuotasPagar = cuotasVenDesc.Count;
-
-                foreach (var cu in cuotasVenDesc)
-                {
-
-                    cobro = new cl_cobro()
-                    {
-                        numfin = intFinID,
-                        numCuota = cu.NUM_CUOTA.ToString(),
-                        tipoCobro = TipoCobro.Pago.ToString(),
-                        mora = cu.mora,
-                        montoPagado = decimal.Parse((cu.capital + cu.INTERES).ToString())
-                    };
-
-                    RealizarCobro(cobro, tipoPago, ref descuentoMora, ref descuentoInte, ref totalCuotasPagar, false);
-                }
-
-                GuardarCuota();
-                tran.Commit();
-                Messajson.Message = "Se completo el pago correctamente";
-                Messajson.Is_Success = true;
-            }
-            catch (Exception e)
-            {
-                Messajson.Message = "Ocurrio un problema con el pago: " + e.Message;
-                Messajson.Is_Success = false;
-                tran.Rollback();
-            }
-
-            return Json(Messajson);
-        }
-
+    
         private void MaxABOCUOTA(string numCuota, int numfin, ref int Id_Abono)
         {
 

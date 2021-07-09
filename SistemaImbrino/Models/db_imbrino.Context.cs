@@ -64,6 +64,7 @@ namespace SistemaImbrino.Models
         public virtual DbSet<TIPODB1> TIPODB1 { get; set; }
         public virtual DbSet<TIPODB2> TIPODB2 { get; set; }
         public virtual DbSet<OTROSDB> OTROSDB { get; set; }
+        public virtual DbSet<vw_CierreCaja> vw_CierreCaja { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {

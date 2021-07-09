@@ -12,19 +12,18 @@ namespace SistemaImbrino.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OTROSDB
+    public partial class vw_CierreCaja
     {
+        public string Cliente { get; set; }
+        public string Recibo { get; set; }
+        public string Descripcion { get; set; }
+        public Nullable<decimal> MontoTotal { get; set; }
+        public decimal MontoCapital { get; set; }
+        public decimal MontoInteres { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
+        public string FechaTexto { get; set; }
+        public string Tipo { get; set; }
+        public string TextoTipo { get; set; }
         public int ID { get; set; }
-        public int BANCO { get; set; }
-        public int CUENTA_BANCARIA { get; set; }
-        public int TIPO_ENTRADA { get; set; }
-        public int TIPO_DEBITO { get; set; }
-        public decimal MONTO { get; set; }
-        public Nullable<System.DateTime> FECHA { get; set; }
-        public string CONCEPTO { get; set; }
-        public bool ACTIVO { get; set; }
-        public Nullable<int> STATUS { get; set; }
-        public Nullable<int> NUM_FIN { get; set; }
-        public Nullable<int> NUM_REC { get; set; }
     }
 }
