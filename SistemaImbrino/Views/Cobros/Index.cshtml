@@ -100,7 +100,7 @@
 				@Html.Partial("_popup_ProcesarPago")
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn-Cobrocompleto">Cobrar</button>
+				<button type="button" class="btn btn-success pull-left" disabled id="btn-Cobrocompleto">Cobrar</button>
 				<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
 
 			</div>
@@ -126,9 +126,30 @@
 	</div>
 </div>
 
+<!--------------------------------------- Modal para generar depositos y tranferancias ----------------------------------------------->
+<div class="modal fade" id="DepositoModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close btn-cerrar btn-cerrarPopupD" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Crear deposito y tranferancia</h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_create", "DebitosBancarios")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-crearDeposito">Cobrar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopupD">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 @section scripts {
 	<script type="text/javascript">
 		var data = [];
+		var OtrosDepositos = [];
 		$(document).ready(function ()
 		{
 			HabilitarPrimeraceldaTabla();
@@ -141,6 +162,39 @@
 					"info": false
 				}
 			);
+		
+			$(".btn-cerrarPopupD").click(function () {
+				Show_closeModal("#DepositoModal", false);
+				$("#modal_forma_pago").val("");
+				$("#modal_forma_pago").trigger("change");
+			})
+
+			$("#btn-crearDeposito").click(function () {
+				var _url = $("#ProcesarCobroModal").data('url');				
+				ProcesarCobros(_url);
+			})
+			$("#modal_forma_pago").change(function ()
+			{
+				$("#btn-Cobrocompleto").attr("disabled",true);
+				var value = $(this).val();
+				if (value === "")
+				{
+
+				}
+				else if (value === "D" || value === "T")
+				{
+					mensajeMethodCreate(value);
+				}
+				else
+				{
+					$("#btn-Cobrocompleto").removeAttr("disabled");
+				}
+			});
+			$("#BANCO").change(function ()
+			{
+				var valor = $(this).val();
+				GetCuentasBancarias("CUENTA_BANCARIA", valor, "@Url.Action("GetCuentasBancarias", "DebitosBancarios")");
+			});
 
 			$(".dw-cobro").change(function (e) {
 
@@ -212,15 +266,13 @@
 							$("#lblMonto").text("Mora calculada");
 						}
 
-						if (id_tipo == "15" || id_tipo == "18" || id_tipo == "21" || id_tipo == "20" || id_tipo == "16") {
+						if (id_tipo == "15" || id_tipo == "18" || id_tipo == "21" || id_tipo == "20" || id_tipo == "16")
+						{
 							$("#modal_mora").attr("disabled", true);
-
 						}
 					});
 				}
 			});
-		
-
 
 			$("#btn-Guardar_cuota").click(function () {
 				var modal_monto = $("#modal_monto");
@@ -232,7 +284,7 @@
 				var _mora = parseFloat(modal_mora.val());
 				var _tipoCobro = $("#modal_tipoCobro").val();
 				var _otroCargo = 0;
-				
+
 				var TotalMonto = parseFloat(modal_monto.attr("max"));
 
 				if (_monto == "0" && _mora == "0")
@@ -265,7 +317,7 @@
 					_otroCargo = _mora;
 					_mora = 0;
 				}
-				
+
 				var json = {
 					tipoCobro: _tipoCobro
 					, numCuota: _numcuota
@@ -278,18 +330,18 @@
 
 				AddItemArray2(_numcuota, data, json);
 
-				Show_closeModal("#CobroModal", false);				
+				Show_closeModal("#CobroModal", false);
 
 				if (_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora" || _tipoCobro == "Saldo modificar monto mora"
 					|| _tipoCobro == "Saldo NO pago de la mora" || _tipoCobro == "Saldo cuota" || _tipoCobro == "Saldo cargo adicional"
 					|| _tipoCobro == "Registrar mora como cargo"
 				) {
-					
+
 					var currentRow = $("#tr-" + _numcuota).closest('tr');
 					var nextRow = currentRow.next()[0];
 					var idCurrentRow = $(currentRow[0]).attr("cuota");
 					var idNextRow = $(nextRow).attr("cuota");
-					
+
 					$("#dw-" + idCurrentRow).attr("disabled", true);
 					$("#dw-" + idCurrentRow).addClass("bg-warning");
 					$("#dw-" + idNextRow).removeAttr("disabled");
@@ -324,7 +376,7 @@
 				else if
 				(_tipoCobro == "Abono cargo adicional") {
 					observacion = "ABONO CARGO ADICIONAL $" + number_format_js(_otroCargo, 0, '.', ',');
-				}				
+				}
 				else if
 				(_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora") {
 					observacion = "SALDO $" + number_format_js(_monto, 0, '.', ',') + observacion_Mora;
@@ -360,41 +412,33 @@
 					Show_closeModal("#ProcesarCobroModal", true);
 					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, 0, 0, false, otroCargoAdicional);
 				}
-
-
 			});
 
 			$("#btn-Cobrocompleto").click(function ()
 			{
-
 				var _url = $("#ProcesarCobroModal").data('url');
 				isTotal = $("#modal_isTotal").val();
 				if (isTotal == "true")
 				{
 					_url = "@Url.Action("cobroTotal")";
                 }
-
-
 				ProcesarCobros(_url, isTotal);
 			});
 
-			$("#btn-cobroTotal_").click(function () {
-
-					var tipo_Cobro = "Pago Completo";
-
-					$("#myModalLabelAll").html(tipo_Cobro);
+			$("#btn-cobroTotal_").click(function ()
+			{
+				var tipo_Cobro = "Pago Completo";
+				$("#myModalLabelAll").html(tipo_Cobro);
 				var Modal = $('#CobroTotalModal');
 
 				var id_numFin = $('#Num_Fin').html();
 				var Fecha_pago = $("#Fecha_pago").val();
 				var url = Modal.data('url') + "?_FinID=" + id_numFin + "&_Fecha_pago=" + Fecha_pago;
-
-
-
-					$.get(url, function (data) {
-						$('#CobroContainerAll').html(data);
-						Show_closeModal("#CobroTotalModal", true);
-					});
+				
+				$.get(url, function (data) {
+					$('#CobroContainerAll').html(data);
+					Show_closeModal("#CobroTotalModal", true);
+				});
 			});
 
 			$('#CobroModal').on('shown.bs.modal', function (event) {
@@ -407,14 +451,11 @@
 				)
 				{
 					darClickAutomatico();
-
 				}
-
 			})
 
 			$("#btn-GuardarAllCuotas").click(function ()
 			{
-
 				var modal_montodescuentoMora = $("#modal_descuentoMora");
 				var modal_montodescuentoInt = $("#modal_descuentoInt");
 				var totalMora = parseFloat(modal_montodescuentoMora.attr("max"));
@@ -423,7 +464,6 @@
 				var montoInteresDesc = parseFloat(modal_montodescuentoInt.val());
 				var numFin = $("#modal_finID").val();
 				var MontoTotal = parseFloat($("#modal_MontoTotal").val());
-
 
 				if (montoInteresDesc > TotalInteres) {
 					MessageNotification("El descuento de interes no puede exceder al monto total del interes pendiente de pago", false);
@@ -444,7 +484,6 @@
 			$("#modal_descuentoMora").blur(function () {
 				validarNumero(this);
 			});
-
 	});
 
 		// Hacer el clik automatico en aceptar ya que el cliente no requiere modificar ningun valor
@@ -456,11 +495,32 @@
 		//Borrar item de un array
         function removeItemArray(array) {
 			var index = array.pop();
-			return index;
-			//array.splice(index, 1);
+			return index;			
 		}
 
+		function mensajeMethodCreate(idTipoDebito)
+		{
+			var idTipoDebito = idTipoDebito === "D" ? 1 : 2;
+			Show_closeModal("#DepositoModal", true);
+			GetBancos("BANCO","@Url.Action("getBancos","DebitosBancarios")");
+			GetTipoDebito("TIPO_DEBITO", "@Url.Action("GetTipoDebito", "DebitosBancarios")");
+			GetTipoEntrada("TIPO_ENTRADA", "@Url.Action("GetTipoEntrada", "DebitosBancarios")");
 
+			$("#FECHA").attr("disabled", true);
+			$("#FECHA").val($("#Fecha_pago").val());
+			$("#TIPO_ENTRADA").attr("disabled", true);
+			$("#TIPO_ENTRADA").addClass("disabled");
+			$("#TIPO_ENTRADA").val(idTipoDebito);
+			
+			$("#MONTO").attr("disabled", true);			
+			$("#MONTO").val(calcularTotal());
+			$("#TIPO_DEBITO").attr("disabled", true);
+			$("#TIPO_DEBITO").val(1);
+
+			updateSelectMania("TIPO_DEBITO");
+			updateSelectMania("TIPO_ENTRADA");
+			
+		}
 		// LLenar datos en el popup de procesar los cobros
 		function LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, descuentoMora = 0,descuentoInteres = 0,istotal = false,otrosCargoAdicional = 0) {
 			let date = new Date();
@@ -473,7 +533,6 @@
 			$("#modal_lblfecha").html(date.toDateString());
             $("#modal_lblDescuento").html(number_format_js(descuento, 2, '.', ','));
             $("#modal_lblSubtotal").html(number_format_js(Subtotal, 2, '.', ','));
-            //$("#modal_lblItebis").html(number_format_js(itebis, 2, '.', ','));
 			$("#modal_lblotros_cargos").html(number_format_js(otroCargos, 2, '.', ','));
 			$("#modal_lblotros_cargosA").html(number_format_js(otrosCargoAdicional, 2, '.', ','));
             $("#modal_lblTotal").html(number_format_js(total, 2, '.', ','));
@@ -509,7 +568,9 @@
 		}
 
 		// Cobrar Cuotas seleccionadas
-		function ProcesarCobros(url, isTotal = "false") {
+		function ProcesarCobros(url, isTotal = "false")
+		{
+			insertarDeposito();
 			var tipo_Pago = $("#modal_forma_pago").val();
 			var descMora = parseFloat($("#modal_descMora").val());
             var descInt = parseFloat($("#modal_descInt").val());
@@ -517,52 +578,81 @@
 			var Fecha_pago = $("#Fecha_pago").val();
 			var modal_aumento_recibo = $("#modal_aumento_recibo").val();
 
-			if (isTotal == "true") {
-
-
+			if (isTotal == "true")
+			{
 				$.ajax({
 
 					type: "POST",
 					url: url,
 					dataType: "json",
-					//contentType: "application/json",
 					data: {
 						_numFin: lblNumFin
 						, descuentoInte: descInt
 						, descuentoMora: descMora
 						, tipoPago: tipo_Pago
-						, _Fecha_pago: Fecha_pago						
+						, _Fecha_pago: Fecha_pago
 					},
 					success: function (_data) {
                         MessageNotification(_data.Message, _data.Is_Success,true);
-
-
 					}
 				});
 			}
-			else {
-
+			else
+			{
 				var strDatos = JSON.stringify({ Cobros: data });
 
 				$.ajax({
-
 					type: "POST",
 					url: url,
-					dataType: "json",
-					//contentType: "application/json",
+					dataType: "json",					
 					data: {
 						json: strDatos
 						, tipoPago: tipo_Pago
 						, _Fecha_pago: Fecha_pago
 						, aumentoRecibo: modal_aumento_recibo
+						, jsonDeposito: JSON.stringify(OtrosDepositos)
 					},
-					success: function (_data) {
+					success: function (_data)
+					{
 						MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin);
-
 					}
 				});
 			}
+		}
 
+		
+		function insertarDeposito()
+		{			
+			var _BANCO = $("#BANCO").val();
+			var _CUENTA_BANCARIA = $("#CUENTA_BANCARIA").val();
+			var _TIPO_ENTRADA = $("#TIPO_ENTRADA").val();
+			var _TIPO_DEBITO = $("#TIPO_DEBITO").val();
+			var _MONTO = $("#MONTO").val().replace(",","").trim();
+			var _FECHA = $("#FECHA").val().trim();
+			var _CONCEPTO = $("#CONCEPTO").val().trim();
+
+
+			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
+				_TIPO_ENTRADA == "0" || _MONTO == "" ||
+				_MONTO == "0" || _FECHA == "" ||			
+				_CONCEPTO == "" || _TIPO_DEBITO == "0" 
+				)
+			{
+				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+				return;
+			}
+
+			OtrosDepositos = [];
+			OtrosDepositos =
+				{
+					 BANCO: _BANCO
+					, CUENTA_BANCARIA: _CUENTA_BANCARIA
+					, TIPO_ENTRADA: _TIPO_ENTRADA
+					, TIPO_DEBITO: _TIPO_DEBITO
+					, MONTO: _MONTO
+					, FECHA: _FECHA
+					, CONCEPTO: _CONCEPTO
+				}
 		}
 
 		function HabilitarPrimeraceldaTabla() {

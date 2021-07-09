@@ -139,6 +139,13 @@ textarea {
 	font-size: 1.15rem;
 }
 
+.noPdTop {
+	padding-top: 0px !important;
+}
+.noPdBottom {
+	padding-bottom: 0px !important;
+}
+
 .noPdRight {
 	padding-right: 0px;
 }
@@ -208,4 +215,14 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 
 .wth-action{
 	width: 40px;
+}
+
+.borderless td, .borderless th {
+	border: none !important;
+}
+
+.top-border {
+	border-top: solid 1px;
+	margin: 0 0 2px !important;
+	
 }

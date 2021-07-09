@@ -30,13 +30,13 @@
 	else //if (ViewBag.tipoCobro == "Abono incluye pago de mora" || ViewBag.tipoCobro == "Abono")
 	{
 		monto = 0;
+		Mora = 0;
 
-		Mora = Model.mora;
+		if (Model != null)
+		{
+			Mora = Model.mora;
+		}
 	}
-
-
-
-
 
 }
 <input id="modal_numfin" type="hidden" value="@Model.C__FIN" />

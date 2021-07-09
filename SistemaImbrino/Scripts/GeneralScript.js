@@ -429,8 +429,8 @@ function enterAsTab() {
 	else { return keyPressed; }
 }
 
- function GetBancos(id = 'BANCO', url = "")
-{	
+
+function GetBancos(id = 'BANCO', url = "") {
 	$.ajax({
 		type: "GET",
 		url: url,
@@ -445,8 +445,7 @@ function enterAsTab() {
 	});
 }
 
-function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "")
-{
+function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "") {
 	$.ajax({
 		type: "GET",
 		url: url,
@@ -460,6 +459,8 @@ function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "")
 		}
 	});
 }
+
+// Creditos bancarios
 
 async function GetTipoCredito(id = 'TIPO_CREDITO', url = "") {
 	await $.ajax({
@@ -489,5 +490,36 @@ async function GetTipoSalida(id = 'TIPO_SALIDA', url = "") {
 		}
 	});
 }	
+// Debitos bancarios
 
+function GetTipoEntrada(id = 'TIPO_SALIDA', url = "")
+{
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data:
+		{
+		},
+		dataType: "JSON",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de entrada", true, true);
+		}
+	});
+}
 
+function GetTipoDebito(id = 'TIPO_SALIDA', url = "")
+{	
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data:
+		{
+		},
+		dataType: "JSON",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de debito", true, true);
+		}
+	});
+}

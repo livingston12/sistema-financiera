@@ -14,6 +14,7 @@ namespace SistemaImbrino.Controllers
         private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
         public static string formatoFecha = "MM/dd/yyyy";
 
+      
         public enum TipoCobro
         {
             Pago = 11
@@ -278,7 +279,7 @@ namespace SistemaImbrino.Controllers
         public bool validarCargo(OTROCARG Cargo)
         {
             double montoT = 0;
-            double.TryParse(Cargo.CAR_MONTOT.Replace(",",""), out montoT);
+            double.TryParse(Cargo.CAR_MONTOT.Replace(",", ""), out montoT);
             Cargo.CAR_MONTOT = montoT.ToString();
 
             var fechaSpt = Cargo.CAR_FECHAR.Split('-');
@@ -326,12 +327,12 @@ namespace SistemaImbrino.Controllers
             return currentDate;
         }
 
-        public static  DateTime? returDateFormat(string date)
+        public static DateTime? returDateFormat(string date)
         {
             DateTime? dateRetur = null;
             var DateByPart = date.Split('-');
             date = $"{returMonthNumber(DateByPart[1])}/{DateByPart[0]}/{DateByPart[2]}";
-            if (DateTime.TryParse(date,out DateTime currentDate))
+            if (DateTime.TryParse(date, out DateTime currentDate))
             {
                 dateRetur = currentDate;
             }
@@ -345,8 +346,8 @@ namespace SistemaImbrino.Controllers
         }
         public static string getTipoIngreso(string ingresoId)
         {
-            var ingresos = db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToList();
-            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
+            var ingresos = db.INGRESO.Where(x => x.ING_CODIGO == ingresoId).ToList();
+            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().ING_DESCRI : string.Empty;
             return ingreso.Trim();
         }
 
@@ -355,7 +356,7 @@ namespace SistemaImbrino.Controllers
             var list = db.BANCO.Where(x => x.BCO_CODIGO == id).ToList();
             string value = list.Any() ? list.FirstOrDefault().BCO_NOMBRE : string.Empty;
             return value.Trim();
-        }        
+        }
 
         public static string getTipoSalida(int id)
         {
@@ -372,13 +373,13 @@ namespace SistemaImbrino.Controllers
         }
         public static string getTipoEntrada(int id)
         {
-            var list = db.TIPODB2.Where(x => x.ID == id).ToList();
+            var list = db.TIPODB1.Where(x => x.ID == id).ToList();
             string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
             return value.Trim();
         }
         public static string getTipoDebito(int id)
         {
-            var list = db.TIPODB1.Where(x => x.ID == id).ToList();
+            var list = db.TIPODB2.Where(x => x.ID == id).ToList();
             string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
             return value.Trim();
         }
@@ -386,8 +387,8 @@ namespace SistemaImbrino.Controllers
         public static string getCliente(int id)
         {
             var list = db.CLIENTE.Where(x => x.CTE_CODIGO == id).ToList();
-            string value = list.Any() ? 
-                            $"{list.FirstOrDefault().CTE_NOMBRE} {list.FirstOrDefault().CTE_APELLI}" 
+            string value = list.Any() ?
+                            $"{list.FirstOrDefault().CTE_NOMBRE} {list.FirstOrDefault().CTE_APELLI}"
                             : string.Empty;
             return value.Trim();
         }
@@ -400,7 +401,7 @@ namespace SistemaImbrino.Controllers
         }
 
 
-        public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha,OTROSCR OtroCargo)
+        public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha, OTROSCR OtroCargo)
         {
             message message = new message();
             var tran = db.Database.BeginTransaction();
@@ -553,8 +554,175 @@ namespace SistemaImbrino.Controllers
             {
                 insertado = false;
             }
-           
+
             return insertado;
+        }
+
+        public View_CierreCajaGeneral GetListCierreCaja(DateTime? cierreFecha = null)
+        {
+            List<String> ListOtrosIngresosNetos = new List<string>()
+            {
+                "OTROS_EC","OTROS_DT"
+            };
+
+            List<String> ListTotalIngresado = new List<string>()
+            {
+                "CUOTAS_EC","CUOTAS_DT"
+            };
+
+            var CajaGeneral = new View_CierreCajaGeneral()
+            {
+                Detalle = db.vw_CierreCaja
+                        .GroupBy(x => new
+                        {
+                            x.ID,
+                            x.Tipo,
+                            x.TextoTipo
+                        })
+                        .Select(x => new View_CierreCaja
+                        {
+                            ID = x.Key.ID,
+                            Tipo = x.Key.Tipo,
+                            TipoTexto = x.Key.TextoTipo,
+                            TotalTipo = x.Where(z => z.Tipo == x.Key.Tipo)
+                                                        .Sum(z => z.MontoTotal),
+                            TotalTipoAnterior = db.vw_CierreCaja.Where(z => z.ID == x.Key.ID - 1)
+                                                        .Sum(z => z.MontoTotal),
+                            Detalle = x.Where(z => z.Tipo == x.Key.Tipo)
+                                                    .Select(z => new View_CierreCajaDetalle
+                                                    {
+                                                        Recibo = z.Recibo,
+                                                        Cliente = z.Cliente,
+                                                        Descripcion = z.Descripcion,
+                                                        MontoCapital = z.MontoCapital,
+                                                        MontoInteres = z.MontoInteres,
+                                                        MontoTotal = z.MontoTotal,
+                                                        Fecha = z.Fecha,
+                                                        FechaTexto = z.FechaTexto
+                                                    }),
+                        })
+                        .OrderBy(z => z.ID),
+                Resumen = db.vw_CierreCaja
+                        .GroupBy(x => new
+                        {
+                            x.ID,
+                            x.Tipo,
+                            x.TextoTipo
+                        })
+                        .Select(x => new View_CierreCajaResumen()
+                        {
+                            TotalCapital = db.vw_CierreCaja.Where(z => ListTotalIngresado
+                                                .Contains(z.Tipo))
+                                            .Sum(z => z.MontoCapital),
+                            TotalInteres = db.vw_CierreCaja.Where(z => ListTotalIngresado
+                                                .Contains(z.Tipo))
+                                            .Sum(z => z.MontoInteres),
+                            IngresosNoNetos = db.vw_CierreCaja.Where(z => z.Tipo == "INGRESOS_NN")
+                                            .Sum(z => z.MontoTotal),
+                            OtrosIngresosNetos =
+                                    db.vw_CierreCaja.Where(z => ListOtrosIngresosNetos
+                                                .Contains(z.Tipo))
+                                        .Sum(z => z.MontoTotal),
+                            DepositoTranferencia = db.vw_CierreCaja.Where(z => z.Tipo == "SALIDAS")
+                                            .Sum(z => z.MontoTotal),
+                        })
+                        .FirstOrDefault()
+            };
+            return CajaGeneral;
+        }
+
+        public message validarMetodoPago(string tipoPago, OTROSDB Deposito)
+        {
+            message message = new message();
+            List<string> menssageErrors = new List<string>();
+
+            switch (tipoPago)
+            {
+                case "E":
+                    if (Deposito != null)
+                    {
+                        menssageErrors
+                            .Add("El tipo de pago <b>efectivo</b> no necesita informacion de deposito");
+                    }
+                    break;
+                case "D":
+                    if (Deposito == null)
+                    {
+                        menssageErrors
+                            .Add("El tipo de pago <b>deposito</b> necesita informacion de deposito");
+                    }
+                    else if(Deposito.TIPO_ENTRADA != 1)
+                    {
+                        menssageErrors
+                             .Add("El tipo de entrada tiene que ser <b>DEPOSITO</b>");
+                    }
+                    break;
+                case "T":
+                    if (Deposito == null)
+                    {
+                        menssageErrors
+                            .Add("El tipo de pago <b>Tarjeta</b> necesita informacion de deposito");
+                    }
+                    else if (Deposito.TIPO_ENTRADA != 2)
+                    {
+                        menssageErrors
+                             .Add("El tipo de entrada tiene que ser <b>TRANFERENCIA</b>");
+                    }
+                    break;
+                case "C":
+                    if (Deposito != null)
+                    {
+                        menssageErrors
+                            .Add("El tipo de pago <b>cheque</b> no necesita informacion de deposito");
+                    }
+                    break;
+                default:
+                    menssageErrors
+                            .Add("Se requiere un metodo de pago");
+                    break;
+            }
+
+            validarDeposito(Deposito, menssageErrors);
+
+            message.Message = string.Join("<br>", menssageErrors);
+            message.Is_Success = !menssageErrors.Any();
+           
+            return message;
+        }
+
+        private void validarDeposito(OTROSDB deposito, List<string> menssageErrors)
+        {
+            if (string.IsNullOrEmpty(getBanco(deposito.BANCO)))
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.BANCO)}</b> no puede ser vacio");
+            }
+            if (string.IsNullOrEmpty(getCuentaBancaria(deposito.CUENTA_BANCARIA)))
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.CUENTA_BANCARIA).Replace("_"," ")}</b> no puede ser vacio");
+            }
+            if (string.IsNullOrEmpty(getTipoDebito(deposito.TIPO_DEBITO)))
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.TIPO_DEBITO).Replace("_", " ")}</b> no puede ser vacio");
+            }
+
+            if (string.IsNullOrEmpty(getTipoEntrada(deposito.TIPO_ENTRADA)))
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.TIPO_ENTRADA).Replace("_", " ")}</b> no puede ser vacio");
+            }
+            if (deposito.MONTO < 1)
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.MONTO)}</b> tiene que ser mayor que cero");
+            }
+            if (deposito.FECHA == null)
+            {
+                menssageErrors
+                    .Add($"El campo <b>{nameof(deposito.FECHA)}</b> tiene un formato incorrecto");
+            }
         }
     }
 }

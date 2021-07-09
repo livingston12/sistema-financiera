@@ -576,6 +576,9 @@
     <EntitySetMapping Name="OTROSDB">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSDB">
         <MappingFragment StoreEntitySet="OTROSDB">
+          <ScalarProperty Name="NUM_REC" ColumnName="NUM_REC" />
+          <ScalarProperty Name="NUM_FIN" ColumnName="NUM_FIN" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
           <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
           <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
           <ScalarProperty Name="FECHA" ColumnName="FECHA" />
@@ -585,6 +588,23 @@
           <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
           <ScalarProperty Name="BANCO" ColumnName="BANCO" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_CierreCaja">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_CierreCaja">
+        <MappingFragment StoreEntitySet="vw_CierreCaja">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TextoTipo" ColumnName="TextoTipo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="FechaTexto" ColumnName="FechaTexto" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="MontoInteres" ColumnName="MontoInteres" />
+          <ScalarProperty Name="MontoCapital" ColumnName="MontoCapital" />
+          <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Recibo" ColumnName="Recibo" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
