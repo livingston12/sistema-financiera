@@ -15,7 +15,6 @@ namespace SistemaImbrino.Controllers.Reportes
 
         public JsonResult Getclients()
         {
-
             var listClients = db.VW_rptRegistroNCF.Select(x => new { id = x.ClienteId, value = x.Cliente }).Distinct().OrderBy(x => x.value).ToList();
             return Json(listClients, JsonRequestBehavior.AllowGet);
         }
@@ -37,8 +36,6 @@ namespace SistemaImbrino.Controllers.Reportes
 
             try
             {
-                
-              
                 if (mensajeReturn.Is_Success)
                 {              
 
@@ -81,8 +78,6 @@ namespace SistemaImbrino.Controllers.Reportes
                 return Content("Error inesperado en el reporte: " + e.Message);
 
             }
-
-            //return File(ruta, "application/pdf", "EstadoCuenta");
         }
     }
 }

@@ -251,6 +251,9 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="FECHA" Type="datetime" />
     <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="STATUS" Type="int" />
+    <Property Name="NUM_FIN" Type="int" />
+    <Property Name="NUM_REC" Type="int" />
   </EntityType>
   <EntityType Name="TIPOCR1">
     <Key>
@@ -323,6 +326,30 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="nombreTabla" Type="varchar" MaxLength="100" />
     <Property Name="subir" Type="bit" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CierreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_CierreCaja">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Cliente" />
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="MontoInteres" />
+      <PropertyRef Name="FechaTexto" />
+      <PropertyRef Name="Tipo" />
+      <PropertyRef Name="TextoTipo" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
+    <Property Name="Recibo" Type="varchar" MaxLength="100" />
+    <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+    <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" />
+    <Property Name="FechaTexto" Type="varchar" MaxLength="29" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="TextoTipo" Type="varchar" MaxLength="35" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -759,6 +786,21 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
     [CARGO].[enable] AS [enable]
     FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_CierreCaja" EntityType="Self.vw_CierreCaja" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_CierreCaja].[ID] AS [ID], 
+    [vw_CierreCaja].[Cliente] AS [Cliente], 
+    [vw_CierreCaja].[Recibo] AS [Recibo], 
+    [vw_CierreCaja].[Descripcion] AS [Descripcion], 
+    [vw_CierreCaja].[MontoTotal] AS [MontoTotal], 
+    [vw_CierreCaja].[MontoCapital] AS [MontoCapital], 
+    [vw_CierreCaja].[MontoInteres] AS [MontoInteres], 
+    [vw_CierreCaja].[Fecha] AS [Fecha], 
+    [vw_CierreCaja].[FechaTexto] AS [FechaTexto], 
+    [vw_CierreCaja].[Tipo] AS [Tipo], 
+    [vw_CierreCaja].[TextoTipo] AS [TextoTipo]
+    FROM [dbo].[vw_CierreCaja] AS [vw_CierreCaja]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_ConsultaFin" EntityType="Self.vw_ConsultaFin" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

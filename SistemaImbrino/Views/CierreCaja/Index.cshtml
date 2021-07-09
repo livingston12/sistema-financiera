@@ -1,0 +1,97 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Cierre caja";
+	ViewBag.nameView = "Cierre caja";
+}
+
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cierreCja" class="table table-condensed borderless">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th>CLIENTE</th>
+					<th>RECIBO</th>
+					<th>DESCRIPCION</th>
+					<th class="text-right th-pd-right">DEBITO</th>
+					<th class="text-right th-pd-right">CREDITO</th>
+					<th class="text-right th-pd-right">BALANCE</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListCierreCaja.Detalle != null)
+				{
+					decimal? balance = 0;
+					bool isCredito = false;
+					decimal? debito = 0;
+					decimal? credito = 0;
+
+					foreach (var vw_cierreCaja in (ViewBag.ListCierreCaja.Detalle as IEnumerable<SistemaImbrino.Models.View_CierreCaja>))
+					{
+						isCredito = vw_cierreCaja.Tipo == "SALIDAS";
+
+						<tr>
+							<td colspan="6"><b>@vw_cierreCaja.TipoTexto</b></td>
+						</tr>
+						foreach (var cierreCaja in vw_cierreCaja.Detalle)
+						{
+							debito = !isCredito ? cierreCaja.MontoTotal : 0;
+							credito = isCredito ? cierreCaja.MontoTotal : 0;
+							balance = (balance + debito) - credito;
+
+							<tr>
+								<td class="noPdTop noPdBottom">@cierreCaja.Cliente</td>
+								<td class="noPdTop noPdBottom">@cierreCaja.Recibo</td>
+								<td class="noPdTop noPdBottom">@cierreCaja.Descripcion</td>
+								<td class="text-right th-pd-right noPdTop noPdBottom">
+									@{
+										if (debito > 0)
+										{
+											@String.Format("{0:n}", debito)
+										}
+										else
+										{
+											<label class="noPdTop">-</label>
+										}
+									}
+								</td>
+								<td class="text-right th-pd-right noPdTop noPdBottom">
+									@{
+										if (credito > 0)
+										{
+											@String.Format("{0:n}", credito)
+										}
+										else
+										{
+											<label class="noPdTop noPdBottom">-</label>
+										}
+									}
+								</td>
+								<td class="text-right th-pd-right noPdTop noPdBottom">@String.Format("{0:n}", balance)</td>
+							</tr>
+
+						}
+						<tr>
+							<td colspan="3"></td>
+							<td colspan="1" class="text-right th-pd-right"><p class="top-border"> </p><p class="top-border"> </p> <b>@String.Format("{0:n}", vw_cierreCaja.TotalTipo)</b> </td>
+							<td colspan="2"></td>
+						</tr>
+					}
+
+				}
+
+			</tbody>
+		</table>
+	</div>
+	@Html.Partial("_cierreCajaResumen", (SistemaImbrino.Models.View_CierreCajaResumen)ViewBag.ListCierreCaja.Resumen)
+
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			//$("#tbl-cierreCja").DataTable();
+		});
+
+	</script>
+}

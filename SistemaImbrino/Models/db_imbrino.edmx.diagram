@@ -51,6 +51,7 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPODB1" Width="1.5" PointX="19.375" PointY="8.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPODB2" Width="1.5" PointX="19.375" PointY="19.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.OTROSDB" Width="1.5" PointX="20.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_CierreCaja" Width="1.5" PointX="0.75" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

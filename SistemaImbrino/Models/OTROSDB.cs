@@ -23,5 +23,8 @@ namespace SistemaImbrino.Models
         public Nullable<System.DateTime> FECHA { get; set; }
         public string CONCEPTO { get; set; }
         public bool ACTIVO { get; set; }
+        public Nullable<int> STATUS { get; set; }
+        public Nullable<int> NUM_FIN { get; set; }
+        public Nullable<int> NUM_REC { get; set; }
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="Controllers\Automatitation.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Cargos adicionales\CargosAdicionalesController.cs" />
+    <Compile Include="Controllers\Cierre Caja\CierreCajaController.cs" />
     <Compile Include="Controllers\Cobros\CobrosController.cs" />
     <Compile Include="Controllers\Cobros\CobrosHeaderController.cs" />
     <Compile Include="Controllers\Conciliacion Bancaria\CreditosBancariosController.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="Models\VENDEDOR.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_CierreCaja.cs" />
     <Compile Include="Models\View_cliente.cs" />
     <Compile Include="Models\View_Cobrar.cs" />
     <Compile Include="Models\View_cobrosHeader.cs" />
@@ -281,6 +283,9 @@
     <Compile Include="Models\View_ListDebitosBancarios.cs" />
     <Compile Include="Models\View_ListFincaciamientos.cs" />
     <Compile Include="Models\View_fincaciamientos.cs" />
+    <Compile Include="Models\vw_CierreCaja.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ConsultaFin.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
@@ -507,11 +512,12 @@
     <Content Include="Views\DebitosBancarios\_popup_create.cshtml" />
     <Content Include="Views\DebitosBancarios\_popup_editar.cshtml" />
     <Content Include="Views\DebitosBancarios\Index.cshtml" />
+    <Content Include="Views\CierreCaja\Index.cshtml" />
+    <Content Include="Views\CierreCaja\_cierreCajaResumen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\CierreCaja\" />
     <Folder Include="Views\IngresoCuotas\" />
   </ItemGroup>
   <ItemGroup>
