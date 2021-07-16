@@ -1,0 +1,153 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "cuadre caja";
+	ViewBag.nameView = "cuadre caja";
+}
+
+<div class="row">
+	<div class="col-xs-12 col-md-offset-10 col-md-2">
+		<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+	</div>
+	<div class="col-xs-12 col-md-12 ">
+		<div class="table-responsive">
+			<table id="tbl-cuadreCja" class="table table-condensed borderless">
+				<thead class="btn-defaultColorLite">
+					<tr>
+						<th>CLIENTE</th>
+						<th>RECIBO</th>
+						<th>DESCRIPCION</th>
+						<th class="text-right th-pd-right">DEBITO</th>
+						<th class="text-right th-pd-right">CREDITO</th>
+						<th class="text-right th-pd-right">BALANCE</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (ViewBag.ListCuadreCaja.Detalle != null)
+					{
+						decimal? balance = 0;
+						bool isCredito = false;
+						decimal? debito = 0;
+						decimal? credito = 0;
+
+						foreach (var vw_cuadreCaja in (ViewBag.ListCuadreCaja.Detalle as IEnumerable<SistemaImbrino.Models.View_CuadreCaja>))
+						{
+							isCredito = vw_cuadreCaja.Tipo == "SALIDAS";
+
+							<tr>
+								<td colspan="6"><b>@vw_cuadreCaja.TipoTexto</b></td>
+							</tr>
+							foreach (var cuadreCaja in vw_cuadreCaja.Detalle)
+							{
+								debito = !isCredito ? cuadreCaja.MontoTotal : 0;
+								credito = isCredito ? cuadreCaja.MontoTotal : 0;
+								balance = (balance + debito) - credito;
+
+								<tr>
+									<td class="noPdTop noPdBottom">@cuadreCaja.Cliente</td>
+									<td class="noPdTop noPdBottom">@cuadreCaja.Recibo</td>
+									<td class="noPdTop noPdBottom">@cuadreCaja.Descripcion</td>
+									<td class="text-right th-pd-right noPdTop noPdBottom">
+										@{
+											if (debito > 0)
+											{
+												@String.Format("{0:n}", debito)
+											}
+											else
+											{
+												<label class="noPdTop">-</label>
+											}
+										}
+									</td>
+									<td class="text-right th-pd-right noPdTop noPdBottom">
+										@{
+											if (credito > 0)
+											{
+												@String.Format("{0:n}", credito)
+											}
+											else
+											{
+												<label class="noPdTop noPdBottom">-</label>
+											}
+										}
+									</td>
+									<td class="text-right th-pd-right noPdTop noPdBottom">@String.Format("{0:n}", balance)</td>
+								</tr>
+
+							}
+							<tr>
+								<td colspan="3"></td>
+								<td colspan="1" class="text-right th-pd-right"><p class="top-border"> </p><p class="top-border"> </p> <b>@String.Format("{0:n}", vw_cuadreCaja.TotalTipo)</b> </td>
+								<td colspan="2"></td>
+							</tr>
+						}
+
+					}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+		@Html.Partial("_cuadreCajaResumen", (SistemaImbrino.Models.View_CuadreCajaResumen)ViewBag.ListCuadreCaja.Resumen)
+
+	</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#btn-imprimir").click(function () {
+				valuesFecha(this);
+			});
+		});
+
+		async function valuesFecha(currentBtn) {
+			const { value: formValues } = await Swal.fire({
+				title: 'Seleciona el rango de fechas',
+				html:
+					'<div class="row"> <div class="col-xs-6">' +
+					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
+					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
+				focusConfirm: false,
+				preConfirm: () => {
+					return {
+						FechaDesde: document.getElementById('fechaDesde').value,
+						FechaHasta: document.getElementById('fechaHasta').value
+					}
+				},
+				width: 600,
+				confirmButtonText: "Generar reporte",
+				confirmButtonColor: "#0293b2"
+			});
+
+			if (formValues)
+			{
+				var jsonFechas = JSON.stringify(formValues);
+				ImprimirReporte(jsonFechas, currentBtn);
+			}
+		}
+
+		function ImprimirReporte(jsonFechas, currentBtn)
+		{
+			var url = "@Url.Action("PrintReport")";
+			var $btn = $(currentBtn).button('loading');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { json: jsonFechas},
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+		}
+	</script>
+}

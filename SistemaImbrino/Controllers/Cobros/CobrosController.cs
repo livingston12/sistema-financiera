@@ -121,10 +121,18 @@ namespace SistemaImbrino.Controllers
             {
 
                 View_Cobrar _View_Cobrar = JsonConvert.DeserializeObject<View_Cobrar>(json);
-                OTROSDB ViewDeposito = JsonConvert.DeserializeObject<OTROSDB>(JsonDeposito);
+                OTROSDB ViewDeposito = new OTROSDB();
 
+                if (tipoPago != "E" && tipoPago != "C")
+                {
+                   ViewDeposito = JsonConvert.DeserializeObject<OTROSDB>(JsonDeposito);
+                   Messajson = validarMetodoPago(tipoPago, ViewDeposito);
+                }
+                else
+                {
+                    Messajson.Is_Success = true;
+                }
                 decimal descuento = 0; int num = 0;
-                Messajson = validarMetodoPago(tipoPago, ViewDeposito);
                 error = !Messajson.Is_Success;
 
                 if (Messajson.Is_Success)
@@ -176,6 +184,7 @@ namespace SistemaImbrino.Controllers
                         MaxiNGCUOTARef(ref numRec, ref ncf);
                         GuardarCuota(ViewDeposito, numFin, numRec);
                     }
+                    GuardarCuota();
                     tran.Commit();
                     Messajson.Message = "Se completo el pago correctamente";
                     Messajson.Is_Success = true;
@@ -488,7 +497,8 @@ namespace SistemaImbrino.Controllers
                     ING_MONTOT = decimal.Parse(MontoTotal),
                     ING_NCF = ncf,
                     ING_STATUS = _status,
-                    ING_FECHA = Fecha_pago.ToString(formatoFecha)
+                    ING_FECHA = Fecha_pago.ToString(formatoFecha),
+                    isCuadrada = false
                 };
                 ListiNGCUOTAs.Add(iNGCUOTA);
 
@@ -497,7 +507,6 @@ namespace SistemaImbrino.Controllers
                     double.TryParse(cobro.mora.ToString(), out mora);
                     addNewIngOtro(Fecha_pago.ToString(formatoFecha), formaPago, descriMora, mora, ncf, numfin, ListCuotaVen.FirstOrDefault().CLIENTE, NUMREC, _status);
                 }
-
             }
 
             //Actualizar estatus de la cuota             

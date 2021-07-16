@@ -319,6 +319,7 @@
     <EntitySetMapping Name="INGCUOTA">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.INGCUOTA">
         <MappingFragment StoreEntitySet="INGCUOTA">
+          <ScalarProperty Name="isCuadrada" ColumnName="isCuadrada" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
           <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
@@ -350,6 +351,7 @@
     <EntitySetMapping Name="VW_rptRegistroNCF">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptRegistroNCF">
         <MappingFragment StoreEntitySet="VW_rptRegistroNCF">
+          <ScalarProperty Name="isCuadrada" ColumnName="isCuadrada" />
           <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
           <ScalarProperty Name="fechadt" ColumnName="fechadt" />
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
@@ -591,10 +593,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vw_CierreCaja">
-      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_CierreCaja">
-        <MappingFragment StoreEntitySet="vw_CierreCaja">
+    <EntitySetMapping Name="VW_rptCreditosBancarios">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptCreditosBancarios">
+        <MappingFragment StoreEntitySet="VW_rptCreditosBancarios">
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="CHEQUE" ColumnName="CHEQUE" />
+          <ScalarProperty Name="SALIDA" ColumnName="SALIDA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="FECHAtxt" ColumnName="FECHAtxt" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_rptDebitosBancarios">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptDebitosBancarios">
+        <MappingFragment StoreEntitySet="VW_rptDebitosBancarios">
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="ENTRADA" ColumnName="ENTRADA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="FECHAtxt" ColumnName="FECHAtxt" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_CuadreCaja">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_CuadreCaja">
+        <MappingFragment StoreEntitySet="vw_CuadreCaja">
           <ScalarProperty Name="TextoTipo" ColumnName="TextoTipo" />
           <ScalarProperty Name="Tipo" ColumnName="Tipo" />
           <ScalarProperty Name="FechaTexto" ColumnName="FechaTexto" />
@@ -605,6 +639,7 @@
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Recibo" ColumnName="Recibo" />
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

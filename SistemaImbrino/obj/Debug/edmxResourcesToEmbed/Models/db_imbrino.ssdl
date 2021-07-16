@@ -182,6 +182,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="ING_DESCRI" Type="varchar(max)" />
     <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="isCuadrada" Type="bit" />
   </EntityType>
   <EntityType Name="INGOTRO">
     <Key>
@@ -328,30 +329,6 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CierreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vw_CierreCaja">
-    <Key>
-      <PropertyRef Name="ID" />
-      <PropertyRef Name="Cliente" />
-      <PropertyRef Name="Descripcion" />
-      <PropertyRef Name="MontoInteres" />
-      <PropertyRef Name="FechaTexto" />
-      <PropertyRef Name="Tipo" />
-      <PropertyRef Name="TextoTipo" />
-    </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
-    <Property Name="Recibo" Type="varchar" MaxLength="100" />
-    <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
-    <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="Fecha" Type="datetime" />
-    <Property Name="FechaTexto" Type="varchar" MaxLength="29" Nullable="false" />
-    <Property Name="Tipo" Type="varchar" MaxLength="9" Nullable="false" />
-    <Property Name="TextoTipo" Type="varchar" MaxLength="35" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_ConsultaFin">
     <Key>
@@ -388,6 +365,52 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not hav
     <Property Name="ING_NCF" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="tipo" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="cliente" Type="varchar" MaxLength="201" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_CuadreCaja">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Cliente" />
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="MontoCapital" />
+      <PropertyRef Name="MontoInteres" />
+      <PropertyRef Name="FechaTexto" />
+      <PropertyRef Name="Tipo" />
+      <PropertyRef Name="TextoTipo" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
+    <Property Name="Recibo" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+    <Property Name="MontoTotal" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="FechaTexto" Type="varchar" MaxLength="29" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="TextoTipo" Type="varchar" MaxLength="35" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCreditosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VW_rptCreditosBancarios">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ACTIVO" />
+      <PropertyRef Name="CHEQUE" />
+      <PropertyRef Name="MONTO" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="BENEFICIARIO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" Nullable="false" />
+    <Property Name="FECHAtxt" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TIPO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SALIDA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CHEQUE" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="BANCO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -456,6 +479,32 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
     <Property Name="mora" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="CUO_TIPO" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="fechadt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptDebitosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VW_rptDebitosBancarios">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ACTIVO" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="FECHA" />
+      <PropertyRef Name="FECHAtxt" />
+      <PropertyRef Name="TIPO" />
+      <PropertyRef Name="ENTRADA" />
+      <PropertyRef Name="MONTO" />
+      <PropertyRef Name="BANCO" />
+      <PropertyRef Name="CUENTA" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ACTIVO" Type="bit" Nullable="false" />
+    <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" Nullable="false" />
+    <Property Name="FECHAtxt" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TIPO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ENTRADA" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="BANCO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptEstadoCuenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -631,6 +680,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
     <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
     <Property Name="ClienteId" Type="int" Nullable="false" />
     <Property Name="fechadt" Type="date" Nullable="false" />
+    <Property Name="isCuadrada" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -787,21 +837,6 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [CARGO].[enable] AS [enable]
     FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vw_CierreCaja" EntityType="Self.vw_CierreCaja" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [vw_CierreCaja].[ID] AS [ID], 
-    [vw_CierreCaja].[Cliente] AS [Cliente], 
-    [vw_CierreCaja].[Recibo] AS [Recibo], 
-    [vw_CierreCaja].[Descripcion] AS [Descripcion], 
-    [vw_CierreCaja].[MontoTotal] AS [MontoTotal], 
-    [vw_CierreCaja].[MontoCapital] AS [MontoCapital], 
-    [vw_CierreCaja].[MontoInteres] AS [MontoInteres], 
-    [vw_CierreCaja].[Fecha] AS [Fecha], 
-    [vw_CierreCaja].[FechaTexto] AS [FechaTexto], 
-    [vw_CierreCaja].[Tipo] AS [Tipo], 
-    [vw_CierreCaja].[TextoTipo] AS [TextoTipo]
-    FROM [dbo].[vw_CierreCaja] AS [vw_CierreCaja]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="vw_ConsultaFin" EntityType="Self.vw_ConsultaFin" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_ConsultaFin].[FAC_NUMFIN] AS [FAC_NUMFIN], 
@@ -831,6 +866,36 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [vw_ConsultaFinDetalle].[tipo] AS [tipo], 
     [vw_ConsultaFinDetalle].[cliente] AS [cliente]
     FROM [dbo].[vw_ConsultaFinDetalle] AS [vw_ConsultaFinDetalle]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_CuadreCaja" EntityType="Self.vw_CuadreCaja" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_CuadreCaja].[ID] AS [ID], 
+    [vw_CuadreCaja].[Cliente] AS [Cliente], 
+    [vw_CuadreCaja].[Recibo] AS [Recibo], 
+    [vw_CuadreCaja].[Descripcion] AS [Descripcion], 
+    [vw_CuadreCaja].[MontoTotal] AS [MontoTotal], 
+    [vw_CuadreCaja].[MontoCapital] AS [MontoCapital], 
+    [vw_CuadreCaja].[MontoInteres] AS [MontoInteres], 
+    [vw_CuadreCaja].[Fecha] AS [Fecha], 
+    [vw_CuadreCaja].[FechaTexto] AS [FechaTexto], 
+    [vw_CuadreCaja].[Tipo] AS [Tipo], 
+    [vw_CuadreCaja].[TextoTipo] AS [TextoTipo]
+    FROM [dbo].[vw_CuadreCaja] AS [vw_CuadreCaja]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_rptCreditosBancarios" EntityType="Self.VW_rptCreditosBancarios" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_rptCreditosBancarios].[ID] AS [ID], 
+    [VW_rptCreditosBancarios].[ACTIVO] AS [ACTIVO], 
+    [VW_rptCreditosBancarios].[BENEFICIARIO] AS [BENEFICIARIO], 
+    [VW_rptCreditosBancarios].[FECHA] AS [FECHA], 
+    [VW_rptCreditosBancarios].[FECHAtxt] AS [FECHAtxt], 
+    [VW_rptCreditosBancarios].[TIPO] AS [TIPO], 
+    [VW_rptCreditosBancarios].[SALIDA] AS [SALIDA], 
+    [VW_rptCreditosBancarios].[CHEQUE] AS [CHEQUE], 
+    [VW_rptCreditosBancarios].[MONTO] AS [MONTO], 
+    [VW_rptCreditosBancarios].[BANCO] AS [BANCO], 
+    [VW_rptCreditosBancarios].[CUENTA] AS [CUENTA]
+    FROM [dbo].[VW_rptCreditosBancarios] AS [VW_rptCreditosBancarios]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptCuotasVencidas" EntityType="Self.VW_rptCuotasVencidas" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -866,6 +931,20 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptCuotasVencidas].[CUO_TIPO] AS [CUO_TIPO], 
     [VW_rptCuotasVencidas].[fechadt] AS [fechadt]
     FROM [dbo].[VW_rptCuotasVencidas] AS [VW_rptCuotasVencidas]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_rptDebitosBancarios" EntityType="Self.VW_rptDebitosBancarios" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_rptDebitosBancarios].[ID] AS [ID], 
+    [VW_rptDebitosBancarios].[ACTIVO] AS [ACTIVO], 
+    [VW_rptDebitosBancarios].[CONCEPTO] AS [CONCEPTO], 
+    [VW_rptDebitosBancarios].[FECHA] AS [FECHA], 
+    [VW_rptDebitosBancarios].[FECHAtxt] AS [FECHAtxt], 
+    [VW_rptDebitosBancarios].[TIPO] AS [TIPO], 
+    [VW_rptDebitosBancarios].[ENTRADA] AS [ENTRADA], 
+    [VW_rptDebitosBancarios].[MONTO] AS [MONTO], 
+    [VW_rptDebitosBancarios].[BANCO] AS [BANCO], 
+    [VW_rptDebitosBancarios].[CUENTA] AS [CUENTA]
+    FROM [dbo].[VW_rptDebitosBancarios] AS [VW_rptDebitosBancarios]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptEstadoCuenta" EntityType="Self.VW_rptEstadoCuenta" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -957,7 +1036,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptRegistroNCF].[MORA] AS [MORA], 
     [VW_rptRegistroNCF].[Cliente] AS [Cliente], 
     [VW_rptRegistroNCF].[ClienteId] AS [ClienteId], 
-    [VW_rptRegistroNCF].[fechadt] AS [fechadt]
+    [VW_rptRegistroNCF].[fechadt] AS [fechadt], 
+    [VW_rptRegistroNCF].[isCuadrada] AS [isCuadrada]
     FROM [dbo].[VW_rptRegistroNCF] AS [VW_rptRegistroNCF]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="Vw_SearchClientes_Fiadores" EntityType="Self.Vw_SearchClientes_Fiadores" store:Type="Views" store:Schema="dbo">
