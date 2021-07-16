@@ -48,7 +48,15 @@
 							<li role="separator" class="divider"></li>
 							<li>@Html.ActionLink("Debitos bancarios", "Index", "DebitosBancarios", null, new { @class = "text-BlueLight" })</li>
 							<li role="separator" class="divider"></li>
-							<li>@Html.ActionLink("Conciliacion", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
+							<li>@Html.ActionLink("Conciliacion bancaria", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Caja <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								@Html.ActionLink("Cuadre de caja", "Index", "cuadreCaja", null, new { @class = "text-BlueLight" })
+							</li>							
 						</ul>
 					</li>
 					<li class="dropdown">

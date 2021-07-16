@@ -558,7 +558,7 @@ namespace SistemaImbrino.Controllers
             return insertado;
         }
 
-        public View_CierreCajaGeneral GetListCierreCaja(DateTime? cierreFecha = null)
+        public View_CuadreCajaGeneral GetListCuadreCaja(DateTime? cierreFecha = null)
         {
             List<String> ListOtrosIngresosNetos = new List<string>()
             {
@@ -570,26 +570,26 @@ namespace SistemaImbrino.Controllers
                 "CUOTAS_EC","CUOTAS_DT"
             };
 
-            var CajaGeneral = new View_CierreCajaGeneral()
+            var CajaGeneral = new View_CuadreCajaGeneral()
             {
-                Detalle = db.vw_CierreCaja
+                Detalle = db.vw_CuadreCaja
                         .GroupBy(x => new
                         {
                             x.ID,
                             x.Tipo,
                             x.TextoTipo
                         })
-                        .Select(x => new View_CierreCaja
+                        .Select(x => new View_CuadreCaja
                         {
                             ID = x.Key.ID,
                             Tipo = x.Key.Tipo,
                             TipoTexto = x.Key.TextoTipo,
                             TotalTipo = x.Where(z => z.Tipo == x.Key.Tipo)
                                                         .Sum(z => z.MontoTotal),
-                            TotalTipoAnterior = db.vw_CierreCaja.Where(z => z.ID == x.Key.ID - 1)
+                            TotalTipoAnterior = db.vw_CuadreCaja.Where(z => z.ID == x.Key.ID - 1)
                                                         .Sum(z => z.MontoTotal),
                             Detalle = x.Where(z => z.Tipo == x.Key.Tipo)
-                                                    .Select(z => new View_CierreCajaDetalle
+                                                    .Select(z => new View_CuadreCajaDetalle
                                                     {
                                                         Recibo = z.Recibo,
                                                         Cliente = z.Cliente,
@@ -602,28 +602,28 @@ namespace SistemaImbrino.Controllers
                                                     }),
                         })
                         .OrderBy(z => z.ID),
-                Resumen = db.vw_CierreCaja
+                Resumen = db.vw_CuadreCaja
                         .GroupBy(x => new
                         {
                             x.ID,
                             x.Tipo,
                             x.TextoTipo
                         })
-                        .Select(x => new View_CierreCajaResumen()
+                        .Select(x => new View_CuadreCajaResumen()
                         {
-                            TotalCapital = db.vw_CierreCaja.Where(z => ListTotalIngresado
+                            TotalCapital = db.vw_CuadreCaja.Where(z => ListTotalIngresado
                                                 .Contains(z.Tipo))
                                             .Sum(z => z.MontoCapital),
-                            TotalInteres = db.vw_CierreCaja.Where(z => ListTotalIngresado
+                            TotalInteres = db.vw_CuadreCaja.Where(z => ListTotalIngresado
                                                 .Contains(z.Tipo))
                                             .Sum(z => z.MontoInteres),
-                            IngresosNoNetos = db.vw_CierreCaja.Where(z => z.Tipo == "INGRESOS_NN")
+                            IngresosNoNetos = db.vw_CuadreCaja.Where(z => z.Tipo == "INGRESOS_NN")
                                             .Sum(z => z.MontoTotal),
                             OtrosIngresosNetos =
-                                    db.vw_CierreCaja.Where(z => ListOtrosIngresosNetos
+                                    db.vw_CuadreCaja.Where(z => ListOtrosIngresosNetos
                                                 .Contains(z.Tipo))
                                         .Sum(z => z.MontoTotal),
-                            DepositoTranferencia = db.vw_CierreCaja.Where(z => z.Tipo == "SALIDAS")
+                            DepositoTranferencia = db.vw_CuadreCaja.Where(z => z.Tipo == "SALIDAS")
                                             .Sum(z => z.MontoTotal),
                         })
                         .FirstOrDefault()

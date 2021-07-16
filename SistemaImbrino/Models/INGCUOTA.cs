@@ -25,5 +25,6 @@ namespace SistemaImbrino.Models
         public string ING_DESCRI { get; set; }
         public string ING_NCF { get; set; }
         public int ID { get; set; }
+        public Nullable<bool> isCuadrada { get; set; }
     }
 }

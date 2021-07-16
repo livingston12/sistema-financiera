@@ -12,18 +12,17 @@ namespace SistemaImbrino.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_CierreCaja
+    public partial class VW_rptDebitosBancarios
     {
-        public string Cliente { get; set; }
-        public string Recibo { get; set; }
-        public string Descripcion { get; set; }
-        public Nullable<decimal> MontoTotal { get; set; }
-        public decimal MontoCapital { get; set; }
-        public decimal MontoInteres { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
-        public string FechaTexto { get; set; }
-        public string Tipo { get; set; }
-        public string TextoTipo { get; set; }
         public int ID { get; set; }
+        public bool ACTIVO { get; set; }
+        public string CONCEPTO { get; set; }
+        public System.DateTime FECHA { get; set; }
+        public string FECHAtxt { get; set; }
+        public string TIPO { get; set; }
+        public string ENTRADA { get; set; }
+        public decimal MONTO { get; set; }
+        public string BANCO { get; set; }
+        public string CUENTA { get; set; }
     }
 }
