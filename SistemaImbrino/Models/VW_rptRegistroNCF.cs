@@ -32,5 +32,6 @@ namespace SistemaImbrino.Models
         public string Cliente { get; set; }
         public System.DateTime fechadt { get; set; }
         public int ClienteId { get; set; }
+        public Nullable<bool> isCuadrada { get; set; }
     }
 }

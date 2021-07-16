@@ -16,14 +16,14 @@ namespace SistemaImbrino.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Financiamientos_atrasados___anterior : ReportClass {
+    public class CuadreCaja : ReportClass {
         
-        public Financiamientos_atrasados___anterior() {
+        public CuadreCaja() {
         }
         
         public override string ResourceName {
             get {
-                return "Financiamientos_atrasados - anterior.rpt";
+                return "CuadreCaja.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace SistemaImbrino.Reportes {
         
         public override string FullResourceName {
             get {
-                return "SistemaImbrino.Reportes.Financiamientos_atrasados - anterior.rpt";
+                return "SistemaImbrino.Reportes.CuadreCaja.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace SistemaImbrino.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace SistemaImbrino.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,9 +82,33 @@ namespace SistemaImbrino.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
             get {
                 return this.ReportDefinition.Sections[4];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection3 {
+            get {
+                return this.ReportDefinition.Sections[5];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+            get {
+                return this.ReportDefinition.Sections[6];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+            get {
+                return this.ReportDefinition.Sections[7];
             }
         }
         
@@ -98,7 +122,7 @@ namespace SistemaImbrino.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Criterios {
+        public CrystalDecisions.Shared.IParameterField Parameter_UserName {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }
@@ -106,17 +130,33 @@ namespace SistemaImbrino.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_UserName {
+        public CrystalDecisions.Shared.IParameterField Parameter_Deposito {
             get {
                 return this.DataDefinition.ParameterFields[2];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_IngresosNoNetos {
+            get {
+                return this.DataDefinition.ParameterFields[3];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_OtrosIngresosNetos {
+            get {
+                return this.DataDefinition.ParameterFields[4];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedFinanciamientos_atrasados___anterior : Component, ICachedReport {
+    public class CachedCuadreCaja : Component, ICachedReport {
         
-        public CachedFinanciamientos_atrasados___anterior() {
+        public CachedCuadreCaja() {
         }
         
         [Browsable(false)]
@@ -153,7 +193,7 @@ namespace SistemaImbrino.Reportes {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Financiamientos_atrasados___anterior rpt = new Financiamientos_atrasados___anterior();
+            CuadreCaja rpt = new CuadreCaja();
             rpt.Site = this.Site;
             return rpt;
         }

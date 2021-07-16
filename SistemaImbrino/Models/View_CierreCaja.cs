@@ -5,22 +5,22 @@ using System.Web;
 
 namespace SistemaImbrino.Models
 {
-    public class View_CierreCajaGeneral
+    public class View_CuadreCajaGeneral
     {
-        public IEnumerable<View_CierreCaja> Detalle { get; set; }
-        public View_CierreCajaResumen Resumen { get; set; }
+        public IEnumerable<View_CuadreCaja> Detalle { get; set; }
+        public View_CuadreCajaResumen Resumen { get; set; }
     }
-    public class View_CierreCaja
+    public class View_CuadreCaja
     {
         public int ID { get; set; }
         public string Tipo { get; set; }
         public string TipoTexto { get; set; }
-        public IEnumerable<View_CierreCajaDetalle> Detalle  { get; set; }
+        public IEnumerable<View_CuadreCajaDetalle> Detalle  { get; set; }
         public decimal? TotalTipo { get; set; }
         public decimal? TotalTipoAnterior { get; set; }
     }
 
-    public class View_CierreCajaDetalle
+    public class View_CuadreCajaDetalle
     {
         public string Cliente { get; set; }
         public string Recibo { get; set; }
@@ -32,7 +32,7 @@ namespace SistemaImbrino.Models
         public string FechaTexto { get; set; }
     }
 
-    public class View_CierreCajaResumen
+    public class View_CuadreCajaResumen
     {
         private decimal? _TotalCapital;
 

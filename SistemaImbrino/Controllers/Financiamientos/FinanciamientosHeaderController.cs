@@ -15,8 +15,6 @@ namespace SistemaImbrino.Controllers.Financiamientos
 
         public ActionResult Index()
         {
-            //var listaFinanciamientos = getconsultaFinanciamientos();
-            //ViewBag.ListConsultaFin = listaFinanciamientos;
             return View("ConsultaFinanciamientos");
         }
 

@@ -147,7 +147,7 @@
     <Compile Include="Controllers\Automatitation.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Cargos adicionales\CargosAdicionalesController.cs" />
-    <Compile Include="Controllers\Cierre Caja\CierreCajaController.cs" />
+    <Compile Include="Controllers\Cuadre caja\CuadreCajaController.cs" />
     <Compile Include="Controllers\Cobros\CobrosController.cs" />
     <Compile Include="Controllers\Cobros\CobrosHeaderController.cs" />
     <Compile Include="Controllers\Conciliacion Bancaria\CreditosBancariosController.cs" />
@@ -283,16 +283,22 @@
     <Compile Include="Models\View_ListDebitosBancarios.cs" />
     <Compile Include="Models\View_ListFincaciamientos.cs" />
     <Compile Include="Models\View_fincaciamientos.cs" />
-    <Compile Include="Models\vw_CierreCaja.cs">
-      <DependentUpon>db_imbrino.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\vw_ConsultaFin.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_ConsultaFinDetalle.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_CuadreCaja.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VW_rptCreditosBancarios.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VW_rptCuotasVencidas.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VW_rptDebitosBancarios.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VW_rptEstadoCuenta.cs">
@@ -314,6 +320,20 @@
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\CreditosBancarios.cs">
+      <DependentUpon>CreditosBancarios.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reportes\DebitosBancarios.cs">
+      <DependentUpon>DebitosBancarios.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reportes\dtReportes.cs">
       <DependentUpon>dtReportes.xsd</DependentUpon>
     </Compile>
@@ -336,6 +356,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reportes\HeaderReportes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeaderReportes.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\IngresoCuotas.cs">
       <DependentUpon>IngresoCuotas.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -348,6 +374,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReciboDePago.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuadreCaja.cs">
+      <DependentUpon>CuadreCaja.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reportes\RegistroNCF.cs">
       <DependentUpon>RegistroNCF.rpt</DependentUpon>
@@ -362,12 +395,6 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Reportes\Financiamientos_atrasados - anterior.cs">
-      <DependentUpon>Financiamientos_atrasados - anterior.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reportes\CuotasVencidas.cs">
       <DependentUpon>CuotasVencidas.rpt</DependentUpon>
@@ -512,8 +539,8 @@
     <Content Include="Views\DebitosBancarios\_popup_create.cshtml" />
     <Content Include="Views\DebitosBancarios\_popup_editar.cshtml" />
     <Content Include="Views\DebitosBancarios\Index.cshtml" />
-    <Content Include="Views\CierreCaja\Index.cshtml" />
-    <Content Include="Views\CierreCaja\_cierreCajaResumen.cshtml" />
+    <Content Include="Views\CuadreCaja\Index.cshtml" />
+    <Content Include="Views\CuadreCaja\_cuadreCajaResumen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -534,6 +561,16 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\CreditosBancarios.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CreditosBancarios.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\DebitosBancarios.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>DebitosBancarios.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\FinDetalle.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FinDetalle.cs</LastGenOutput>
@@ -544,6 +581,10 @@
       <LastGenOutput>FinHeader.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\HeaderReportes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>HeaderReportes.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\IngresoCuotas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>IngresoCuotas.cs</LastGenOutput>
@@ -552,6 +593,11 @@
     <EmbeddedResource Include="Reportes\ReciboDePago.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReciboDePago.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuadreCaja.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CuadreCaja.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RegistroNCF.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -562,10 +608,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Financiamientos_atrasados.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Financiamientos_atrasados - anterior.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Financiamientos_atrasados - anterior.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuotasVencidas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -12,13 +12,13 @@ namespace SistemaImbrino.Models
             get { return BaseController.getBanco(ID_BANCO); }
         }
         public int ID_CUENTA_BANCARIA { get; set; }
-      
+
         public string CUENTA_BANCARIA
         {
             get { return BaseController.getCuentaBancaria(ID_CUENTA_BANCARIA); }
         }
         public string NUMERO_CHEQUE { get; set; }
-        public int ID_TIPO_CREDITO { get; set; }      
+        public int ID_TIPO_CREDITO { get; set; }
         public string TIPO_CREDITO
         {
             get { return BaseController.getTipoCredito(ID_TIPO_CREDITO); }
@@ -38,5 +38,43 @@ namespace SistemaImbrino.Models
         public string CONCEPTO { get; set; }
         public string BENEFICIARIO { get; set; }
         public bool Activo { get; set; }
+    }
+
+    public class View_fechas
+    {
+        public string FechaDesde { get; set; }
+        public string FechaHasta { get; set; }
+
+        public DateTime? FechaDesdeDt
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(FechaDesde);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DateTime? FechaHastaDt
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(FechaHasta);
+                }
+                catch (Exception)
+                {
+                    return DateTime.Now;
+                }
+            }
+        }
+
+
     }
 }
