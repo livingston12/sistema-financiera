@@ -627,7 +627,7 @@
     <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
     <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="ClienteId" Type="Int32" Nullable="false" />
-    <Property Name="isCuadrada" Type="Boolean" />
+    <Property Name="isCuadrada" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Vw_SearchClientes_Fiadores">
     <Key>
@@ -745,8 +745,7 @@
   </EntityType>
   <EntityType Name="vw_ConsultaFinDetalle">
     <Key>
-      <PropertyRef Name="tipo" />
-      <PropertyRef Name="cliente" />
+      <PropertyRef Name="ING_NUMREC" />
     </Key>
     <Property Name="ING_NUMREC" Type="Int32" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
