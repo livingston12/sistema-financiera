@@ -361,6 +361,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a pri
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ConsultaFinDetalle">
           <Key>
+            <PropertyRef Name="ING_NUMREC" />
             
             
             
@@ -372,8 +373,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not hav
             
             
             
-            <PropertyRef Name="tipo" />
-            <PropertyRef Name="cliente" />
+            
           </Key>
           <Property Name="ING_NUMREC" Type="int" Nullable="false" />
           <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
@@ -694,6 +694,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
             <PropertyRef Name="Cliente" />
             <PropertyRef Name="ClienteId" />
             <PropertyRef Name="fechadt" />
+            
           </Key>
           <Property Name="ING_NUMREC" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
@@ -713,7 +714,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
           <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
           <Property Name="ClienteId" Type="int" Nullable="false" />
           <Property Name="fechadt" Type="date" Nullable="false" />
-          <Property Name="isCuadrada" Type="bit" />
+          <Property Name="isCuadrada" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1750,7 +1751,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
           <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ClienteId" Type="Int32" Nullable="false" />
-          <Property Name="isCuadrada" Type="Boolean" />
+          <Property Name="isCuadrada" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Vw_SearchClientes_Fiadores">
           <Key>
@@ -1868,8 +1869,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
         </EntityType>
         <EntityType Name="vw_ConsultaFinDetalle">
           <Key>
-            <PropertyRef Name="tipo" />
-            <PropertyRef Name="cliente" />
+            <PropertyRef Name="ING_NUMREC" />
           </Key>
           <Property Name="ING_NUMREC" Type="Int32" Nullable="false" />
           <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
