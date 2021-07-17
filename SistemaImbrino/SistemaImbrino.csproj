@@ -342,6 +342,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dtReportes.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\FechaHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FechaHeader.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\FinDetalle.cs">
       <DependentUpon>FinDetalle.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -570,6 +576,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>DebitosBancarios.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FechaHeader.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>FechaHeader.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\FinDetalle.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

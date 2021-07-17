@@ -639,7 +639,7 @@ namespace SistemaImbrino.Models
                         {
                             int.TryParse(cri.ParameterValue.ToString(), out int numFin);
                             list = list.Where(x => x.ING_NUMFIN == numFin);
-                            CurrentCriterio = string.Format("Un financiamiento en específico");
+                            CurrentCriterio = string.Format($"Un financiamiento en específico ({numFin})");
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
