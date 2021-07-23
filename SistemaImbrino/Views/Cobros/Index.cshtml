@@ -513,7 +513,7 @@
 			$("#TIPO_ENTRADA").val(idTipoDebito);
 			
 			$("#MONTO").attr("disabled", true);			
-			$("#MONTO").val(calcularTotal());
+			$("#MONTO").val(calcularTotal(true));
 			$("#TIPO_DEBITO").attr("disabled", true);
 			$("#TIPO_DEBITO").val(1);
 
@@ -543,7 +543,7 @@
 		}
 
 		// Calcular total de cuotas
-		function calcularTotal()
+		function calcularTotal(notCargos = false)
 		{
 			var total = 0;
 			var Subtotal = 0;
@@ -561,7 +561,10 @@
 					otroCargosAdiccionales += index.otroCargo;
 				});
 
-				total = (Subtotal + otroCargos + otroCargosAdiccionales);
+				total = (Subtotal + otroCargos);
+				if (!notCargos) {
+					total += otroCargosAdiccionales;
+				}
 
 			}
 			return total;

@@ -285,17 +285,21 @@ namespace SistemaImbrino.Controllers
 
         private void GuardarCuota(OTROSDB viewDeposito =null ,int numFin =0 ,int numRec = 0)
         {
-            db.ABOCUOTA.AddRange(ListaBOCUOTA);
-            db.INGCUOTA.AddRange(ListiNGCUOTAs);
-            db.ABOOCARG.AddRange(ListAboCarg);
-            db.INGOTRO.AddRange(ListINGOtros);
-            db.OTROCARG.AddRange(ListOtroCarg);
+           
             if (viewDeposito != null)
             {
                 viewDeposito.ACTIVO = true;
                 viewDeposito.NUM_FIN = numFin;
                 viewDeposito.NUM_REC = numRec;
                 db.OTROSDB.Add(viewDeposito);
+            }
+            else
+            {
+                db.ABOCUOTA.AddRange(ListaBOCUOTA);
+                db.INGCUOTA.AddRange(ListiNGCUOTAs);
+                db.ABOOCARG.AddRange(ListAboCarg);
+                db.INGOTRO.AddRange(ListINGOtros);
+                db.OTROCARG.AddRange(ListOtroCarg);
             }
             db.SaveChanges();
         }

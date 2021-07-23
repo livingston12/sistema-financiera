@@ -560,6 +560,7 @@ namespace SistemaImbrino.Controllers
 
         public View_CuadreCajaGeneral GetListCuadreCaja(DateTime? cierreFecha = null)
         {
+            db = new DB_IMBRINOEntities();
             List<String> ListOtrosIngresosNetos = new List<string>()
             {
                 "OTROS_EC","OTROS_DT"
