@@ -409,7 +409,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a prim
           <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
           <Property Name="Recibo" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
-          <Property Name="MontoTotal" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
@@ -671,6 +671,30 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does no
           <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CodigoCLiente" Type="int" Nullable="false" />
           <Property Name="fechadt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptReciboIngreso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_rptReciboIngreso">
+          <Key>
+            <PropertyRef Name="Recibo" />
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="DireccionEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="RncEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="Recibo" Type="int" Nullable="false" />
+          <Property Name="CONCEPTO" Type="varchar(max)" />
+          <Property Name="NCF" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contrato" Type="int" Nullable="false" />
+          <Property Name="Cliente" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FormaPago" Type="varchar" MaxLength="13" />
+          <Property Name="BalancePendiente" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1051,6 +1075,22 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptFinAtrasados_details].[fechadt] AS [fechadt]
     FROM [dbo].[VW_rptFinAtrasados_details] AS [VW_rptFinAtrasados_details]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VW_rptReciboIngreso" EntityType="Self.VW_rptReciboIngreso" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_rptReciboIngreso].[NombreEmpresa] AS [NombreEmpresa], 
+    [VW_rptReciboIngreso].[DireccionEmpresa] AS [DireccionEmpresa], 
+    [VW_rptReciboIngreso].[RncEmpresa] AS [RncEmpresa], 
+    [VW_rptReciboIngreso].[TelefonoEmpresa] AS [TelefonoEmpresa], 
+    [VW_rptReciboIngreso].[Recibo] AS [Recibo], 
+    [VW_rptReciboIngreso].[CONCEPTO] AS [CONCEPTO], 
+    [VW_rptReciboIngreso].[NCF] AS [NCF], 
+    [VW_rptReciboIngreso].[Contrato] AS [Contrato], 
+    [VW_rptReciboIngreso].[Cliente] AS [Cliente], 
+    [VW_rptReciboIngreso].[Monto] AS [Monto], 
+    [VW_rptReciboIngreso].[FormaPago] AS [FormaPago], 
+    [VW_rptReciboIngreso].[BalancePendiente] AS [BalancePendiente]
+    FROM [dbo].[VW_rptReciboIngreso] AS [VW_rptReciboIngreso]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VW_rptRegistroNCF" EntityType="Self.VW_rptRegistroNCF" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VW_rptRegistroNCF].[ING_NUMREC] AS [ING_NUMREC], 
@@ -1207,6 +1247,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySet Name="VW_rptCreditosBancarios" EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" />
           <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
           <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
+          <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
         </EntityContainer>
         <EntityType Name="INGOTRO">
           <Key>
@@ -2042,13 +2083,30 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
           <Property Name="Recibo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="MontoTotal" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="MontoTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MontoCapital" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="MontoInteres" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Fecha" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="FechaTexto" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
           <Property Name="Tipo" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="TextoTipo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VW_rptReciboIngreso">
+          <Key>
+            <PropertyRef Name="Recibo" />
+          </Key>
+          <Property Name="NombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RncEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TelefonoEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Recibo" Type="Int32" Nullable="false" />
+          <Property Name="CONCEPTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Contrato" Type="Int32" Nullable="false" />
+          <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="BalancePendiente" Type="Decimal" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2695,6 +2753,24 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
                 <ScalarProperty Name="Recibo" ColumnName="Recibo" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_rptReciboIngreso">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptReciboIngreso">
+              <MappingFragment StoreEntitySet="VW_rptReciboIngreso">
+                <ScalarProperty Name="BalancePendiente" ColumnName="BalancePendiente" />
+                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="NCF" ColumnName="NCF" />
+                <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+                <ScalarProperty Name="Recibo" ColumnName="Recibo" />
+                <ScalarProperty Name="TelefonoEmpresa" ColumnName="TelefonoEmpresa" />
+                <ScalarProperty Name="RncEmpresa" ColumnName="RncEmpresa" />
+                <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -43,7 +43,8 @@ namespace SistemaImbrino.Models
             FinDetalle = 7,
             CreditosBancarios = 8,
             DebitosBancarios = 9,
-            CuadreCaja = 10
+            CuadreCaja = 10,
+            ReciboIngreso = 11
         }
 
 
@@ -315,6 +316,18 @@ namespace SistemaImbrino.Models
                     });
                     CrReport.Load(urlReporte);
                     CrReport.SetDataSource(_listCC);
+                    break;
+                case ReportName.ReciboIngreso:
+                    txt_ReportName = _ReportName.ToString();
+
+                    IQueryable<VW_rptReciboIngreso> _iqRI = db.VW_rptReciboIngreso;
+                    List<VW_rptReciboIngreso> _listRI = new List<VW_rptReciboIngreso>();
+
+                    urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+                    _listRI = criteriosReciboIngreso(Listcriterios, ref criterios, ref _iqRI);
+                  
+                    CrReport.Load(urlReporte);
+                    CrReport.SetDataSource(_listRI);
                     break;
             }
 
@@ -772,6 +785,27 @@ namespace SistemaImbrino.Models
             }
 
             criterios = string.Join(" al ", _listCriterio.ToArray());
+            return list.ToList();
+        }
+
+        private static List<VW_rptReciboIngreso> criteriosReciboIngreso(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptReciboIngreso> list)
+        {
+            List<string> _listCriterio = new List<string>();
+
+            foreach (var cri in listcriterios)
+            {
+                switch (cri.ParameterName)
+                {
+                    case "ReciboID":
+                        if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
+                        {
+                            int.TryParse(cri.ParameterValue.ToString(), out int recibo);
+                            list = list.Where(x => x.Recibo == recibo);
+                        }
+                        break;
+                }
+            }
+
             return list.ToList();
         }
 

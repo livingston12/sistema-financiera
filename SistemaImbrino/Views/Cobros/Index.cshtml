@@ -77,7 +77,7 @@
 			<div class="modal-body" id="CobroContainer">
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn-Guardar_cuota">Aplicar</button>
+				<button type="button" class="btn btn-success pull-left" id="btn-Guardar_cuota" data-loading-text="cargando...">Aplicar</button>
 				<button type="button" class="btn btn-danger pull-right btn-cancelarCurrentCuota">Cancelar</button>
 
 			</div>
@@ -100,7 +100,7 @@
 				@Html.Partial("_popup_ProcesarPago")
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" disabled id="btn-Cobrocompleto">Cobrar</button>
+				<button type="button" class="btn btn-success pull-left" disabled id="btn-Cobrocompleto" data-loading-text="cargando...">Cobrar</button>
 				<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
 
 			</div>
@@ -118,7 +118,7 @@
 			<div class="modal-body" id="CobroContainerAll">
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn-GuardarAllCuotas">Aplicar</button>
+				<button type="button" class="btn btn-success pull-left" id="btn-GuardarAllCuotas" data-loading-text="cargando...">Aplicar</button>
 				<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Close</button>
 
 			</div>
@@ -139,7 +139,7 @@
 				@Html.Action("_popup_create", "DebitosBancarios")
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn-crearDeposito">Cobrar</button>
+				<button type="button" class="btn btn-success pull-left" id="btn-crearDeposito" data-loading-text="cargando...">Cobrar</button>
 				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopupD">Cancelar</button>
 			</div>
 		</div>
@@ -171,7 +171,7 @@
 
 			$("#btn-crearDeposito").click(function () {
 				var _url = $("#ProcesarCobroModal").data('url');				
-				ProcesarCobros(_url);
+				ProcesarCobros(_url,false,this);
 			})
 			$("#modal_forma_pago").change(function ()
 			{
@@ -422,7 +422,7 @@
 				{
 					_url = "@Url.Action("cobroTotal")";
                 }
-				ProcesarCobros(_url, isTotal);
+				ProcesarCobros(_url, isTotal,this);
 			});
 
 			$("#btn-cobroTotal_").click(function ()
@@ -513,7 +513,7 @@
 			$("#TIPO_ENTRADA").val(idTipoDebito);
 			
 			$("#MONTO").attr("disabled", true);			
-			$("#MONTO").val(calcularTotal(true));
+			$("#MONTO").val(calcularTotal());
 			$("#TIPO_DEBITO").attr("disabled", true);
 			$("#TIPO_DEBITO").val(1);
 
@@ -571,9 +571,9 @@
 		}
 
 		// Cobrar Cuotas seleccionadas
-		function ProcesarCobros(url, isTotal = "false")
+		function ProcesarCobros(url, isTotal = "false",btn)
 		{
-			insertarDeposito();
+			
 			var tipo_Pago = $("#modal_forma_pago").val();
 			var descMora = parseFloat($("#modal_descMora").val());
             var descInt = parseFloat($("#modal_descInt").val());
@@ -581,6 +581,9 @@
 			var Fecha_pago = $("#Fecha_pago").val();
 			var modal_aumento_recibo = $("#modal_aumento_recibo").val();
 
+			if (tipo_Pago === "D" || tipo_Pago === "T" ) {
+				insertarDeposito();
+			}
 			if (isTotal == "true")
 			{
 				$.ajax({
@@ -595,8 +598,8 @@
 						, tipoPago: tipo_Pago
 						, _Fecha_pago: Fecha_pago
 					},
-					success: function (_data) {
-                        MessageNotification(_data.Message, _data.Is_Success,true);
+					success: function (_data) {						
+						MessageNotificationImprimir(_data, btn, lblNumFin);
 					}
 				});
 			}
@@ -617,13 +620,29 @@
 					},
 					success: function (_data)
 					{
-						MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin);
+						MessageNotificationImprimir(_data, btn, lblNumFin);
+						//MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin);
 					}
 				});
 			}
 		}
 
-		
+		function MessageNotificationImprimir(_data, btn, lblNumFin) {
+			Swal.fire({
+				title: 'Deseas imprimir el recibo de ingreso?',
+				showDenyButton: true,
+				showCancelButton: true,
+				confirmButtonText: `SI`,
+				denyButtonText: `NO`,
+			}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+				if (result.isConfirmed) {
+					ImprimirReporte(_data.NumRecibo, btn,lblNumFin);
+				} else if (result.isDenied) {
+					MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin);
+				}
+			});
+		}
 		function insertarDeposito()
 		{			
 			var _BANCO = $("#BANCO").val();
@@ -661,6 +680,32 @@
 		function HabilitarPrimeraceldaTabla() {
 
 			$("#tbl_detalleCuotasC tbody tr").eq(0).find("select").removeAttr("disabled");
+		}
+
+		function ImprimirReporte(ReciboID, currentBtn, lblNumFin ="")
+		{
+				var url = "@Url.Action("PrintReport")";
+			var $btn = $(currentBtn).button('loading');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { ReciboID: ReciboID},
+                    success: function (_data) {
+						if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+							window.open(url, "_new");
+							window.location.href = "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + lblNumFin;
+
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						//$btn.button('reset');
+					}	
+                });
 		}
 	</script>
 }

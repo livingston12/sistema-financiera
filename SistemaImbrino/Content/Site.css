@@ -224,5 +224,13 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 .top-border {
 	border-top: solid 1px;
 	margin: 0 0 2px !important;
-	
 }
+.firtTitle 
+{
+	background-color: #03b7de;
+}
+.secondTitle 
+{	
+	background-color: #e3e6e6;
+}
+
