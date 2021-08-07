@@ -60,18 +60,17 @@
 					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
 
 				</tr>
+				if (isVisible == "1")
+				{
+					<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
+						<td></td>
 
-				<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
-					<td></td>
-
-					<td colspan="5">
-						@*@Html.Partial("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })*@
-						@Html.Partial("_CobrosDetalleCliente", (SistemaImbrino.Models.View_cobrosHeader)CuotasVen)
-					</td>
-				</tr>
-
-
-
+						<td colspan="5">
+							@*@Html.Partial("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })*@
+							@Html.Partial("_CobrosDetalleCliente", (SistemaImbrino.Models.View_cobrosHeader)CuotasVen)
+						</td>
+					</tr>
+				}
 
 			}
 		</tbody>

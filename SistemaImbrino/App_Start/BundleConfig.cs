@@ -43,6 +43,7 @@ namespace SistemaImbrino
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css",
+                      "~/Content/SideBar.css",
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-theme.min.css",
                       "~/Content/Datatables.css",

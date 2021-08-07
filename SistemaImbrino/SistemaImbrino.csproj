@@ -156,6 +156,7 @@
     <Compile Include="Controllers\Financiamientos\FinanciamientosDetalleController.cs" />
     <Compile Include="Controllers\Financiamientos\FinanciamientosHeaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\Maestros\ClientesController.cs" />
     <Compile Include="Controllers\Maestros\FiadoresController.cs" />
     <Compile Include="Controllers\Reportes\CuotasVencidasController.cs" />
@@ -310,6 +311,9 @@
     <Compile Include="Models\VW_rptFinAtrasados_details.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VW_rptReciboIngreso.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VW_rptRegistroNCF.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
@@ -347,6 +351,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FechaHeader.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReciboIngreso.cs">
+      <DependentUpon>ReciboIngreso.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reportes\FinDetalle.cs">
       <DependentUpon>FinDetalle.rpt</DependentUpon>
@@ -437,6 +448,7 @@
     <Content Include="Content\select-mania-theme-orange.css" />
     <Content Include="Content\select-mania.min.css" />
     <Content Include="Content\DataTables.bootstrap.min.css" />
+    <Content Include="Content\SideBar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -547,6 +559,7 @@
     <Content Include="Views\DebitosBancarios\Index.cshtml" />
     <Content Include="Views\CuadreCaja\Index.cshtml" />
     <Content Include="Views\CuadreCaja\_cuadreCajaResumen.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -580,6 +593,11 @@
     <EmbeddedResource Include="Reportes\FechaHeader.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FechaHeader.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReciboIngreso.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReciboIngreso.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\FinDetalle.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

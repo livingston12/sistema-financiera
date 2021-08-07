@@ -67,6 +67,7 @@ namespace SistemaImbrino.Models
         public virtual DbSet<VW_rptCreditosBancarios> VW_rptCreditosBancarios { get; set; }
         public virtual DbSet<VW_rptDebitosBancarios> VW_rptDebitosBancarios { get; set; }
         public virtual DbSet<vw_CuadreCaja> vw_CuadreCaja { get; set; }
+        public virtual DbSet<VW_rptReciboIngreso> VW_rptReciboIngreso { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {

@@ -243,7 +243,7 @@ namespace SistemaImbrino.Controllers
         private static IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> ClientesAgrupados(string cliente = "", bool is_detail = false)
         {
             IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> clientesAgrupados = null;
-
+            db = new DB_IMBRINOEntities();
             if (cliente == "" && is_detail == false)
                 clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).ToList().GroupBy(x => x.CLIENTE);
             else

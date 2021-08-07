@@ -14,7 +14,7 @@
   <xs:element name="dtReportes" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dtReportes" msprop:Generator_UserDSName="dtReportes">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="VW_rptEstadoCuenta" msprop:Generator_TableClassName="VW_rptEstadoCuentaDataTable" msprop:Generator_TableVarName="tableVW_rptEstadoCuenta" msprop:Generator_RowChangedName="VW_rptEstadoCuentaRowChanged" msprop:Generator_TablePropName="VW_rptEstadoCuenta" msprop:Generator_RowDeletingName="VW_rptEstadoCuentaRowDeleting" msprop:Generator_RowChangingName="VW_rptEstadoCuentaRowChanging" msprop:Generator_RowEvHandlerName="VW_rptEstadoCuentaRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptEstadoCuentaRowDeleted" msprop:Generator_RowClassName="VW_rptEstadoCuentaRow" msprop:Generator_UserTableName="VW_rptEstadoCuenta" msprop:Generator_RowEvArgName="VW_rptEstadoCuentaRowChangeEvent">
+        <xs:element name="VW_rptEstadoCuenta" msprop:Generator_TableClassName="VW_rptEstadoCuentaDataTable" msprop:Generator_TableVarName="tableVW_rptEstadoCuenta" msprop:Generator_TablePropName="VW_rptEstadoCuenta" msprop:Generator_RowDeletingName="VW_rptEstadoCuentaRowDeleting" msprop:Generator_RowChangingName="VW_rptEstadoCuentaRowChanging" msprop:Generator_RowEvHandlerName="VW_rptEstadoCuentaRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptEstadoCuentaRowDeleted" msprop:Generator_UserTableName="VW_rptEstadoCuenta" msprop:Generator_RowChangedName="VW_rptEstadoCuentaRowChanged" msprop:Generator_RowEvArgName="VW_rptEstadoCuentaRowChangeEvent" msprop:Generator_RowClassName="VW_rptEstadoCuentaRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="C__FIN" msprop:Generator_ColumnVarNameInTable="columnC__FIN" msprop:Generator_ColumnPropNameInRow="C__FIN" msprop:Generator_ColumnPropNameInTable="C__FINColumn" msprop:Generator_UserColumnName="C__FIN" type="xs:int" />
@@ -50,7 +50,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="VW_rptCuotasVencidas" msprop:Generator_TableClassName="VW_rptCuotasVencidasDataTable" msprop:Generator_TableVarName="tableVW_rptCuotasVencidas" msprop:Generator_RowChangedName="VW_rptCuotasVencidasRowChanged" msprop:Generator_TablePropName="VW_rptCuotasVencidas" msprop:Generator_RowDeletingName="VW_rptCuotasVencidasRowDeleting" msprop:Generator_RowChangingName="VW_rptCuotasVencidasRowChanging" msprop:Generator_RowEvHandlerName="VW_rptCuotasVencidasRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptCuotasVencidasRowDeleted" msprop:Generator_RowClassName="VW_rptCuotasVencidasRow" msprop:Generator_UserTableName="VW_rptCuotasVencidas" msprop:Generator_RowEvArgName="VW_rptCuotasVencidasRowChangeEvent">
+        <xs:element name="VW_rptCuotasVencidas" msprop:Generator_TableClassName="VW_rptCuotasVencidasDataTable" msprop:Generator_TableVarName="tableVW_rptCuotasVencidas" msprop:Generator_TablePropName="VW_rptCuotasVencidas" msprop:Generator_RowDeletingName="VW_rptCuotasVencidasRowDeleting" msprop:Generator_RowChangingName="VW_rptCuotasVencidasRowChanging" msprop:Generator_RowEvHandlerName="VW_rptCuotasVencidasRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptCuotasVencidasRowDeleted" msprop:Generator_UserTableName="VW_rptCuotasVencidas" msprop:Generator_RowChangedName="VW_rptCuotasVencidasRowChanged" msprop:Generator_RowEvArgName="VW_rptCuotasVencidasRowChangeEvent" msprop:Generator_RowClassName="VW_rptCuotasVencidasRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="C__FIN" msprop:Generator_ColumnVarNameInTable="columnC__FIN" msprop:Generator_ColumnPropNameInRow="C__FIN" msprop:Generator_ColumnPropNameInTable="C__FINColumn" msprop:Generator_UserColumnName="C__FIN" type="xs:int" />
@@ -195,7 +195,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="VW_rptFinAtrasados" msprop:Generator_TableClassName="VW_rptFinAtrasadosDataTable" msprop:Generator_TableVarName="tableVW_rptFinAtrasados" msprop:Generator_RowChangedName="VW_rptFinAtrasadosRowChanged" msprop:Generator_TablePropName="VW_rptFinAtrasados" msprop:Generator_RowDeletingName="VW_rptFinAtrasadosRowDeleting" msprop:Generator_RowChangingName="VW_rptFinAtrasadosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptFinAtrasadosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptFinAtrasadosRowDeleted" msprop:Generator_RowClassName="VW_rptFinAtrasadosRow" msprop:Generator_UserTableName="VW_rptFinAtrasados" msprop:Generator_RowEvArgName="VW_rptFinAtrasadosRowChangeEvent">
+        <xs:element name="VW_rptFinAtrasados" msprop:Generator_TableClassName="VW_rptFinAtrasadosDataTable" msprop:Generator_TableVarName="tableVW_rptFinAtrasados" msprop:Generator_TablePropName="VW_rptFinAtrasados" msprop:Generator_RowDeletingName="VW_rptFinAtrasadosRowDeleting" msprop:Generator_RowChangingName="VW_rptFinAtrasadosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptFinAtrasadosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptFinAtrasadosRowDeleted" msprop:Generator_UserTableName="VW_rptFinAtrasados" msprop:Generator_RowChangedName="VW_rptFinAtrasadosRowChanged" msprop:Generator_RowEvArgName="VW_rptFinAtrasadosRowChangeEvent" msprop:Generator_RowClassName="VW_rptFinAtrasadosRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="C__FIN" msprop:Generator_ColumnVarNameInTable="columnC__FIN" msprop:Generator_ColumnPropNameInRow="C__FIN" msprop:Generator_ColumnPropNameInTable="C__FINColumn" msprop:Generator_UserColumnName="C__FIN" type="xs:int" />
@@ -257,7 +257,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="VW_rptRegistroNCF" msprop:Generator_TableClassName="VW_rptRegistroNCFDataTable" msprop:Generator_TableVarName="tableVW_rptRegistroNCF" msprop:Generator_RowChangedName="VW_rptRegistroNCFRowChanged" msprop:Generator_TablePropName="VW_rptRegistroNCF" msprop:Generator_RowDeletingName="VW_rptRegistroNCFRowDeleting" msprop:Generator_RowChangingName="VW_rptRegistroNCFRowChanging" msprop:Generator_RowEvHandlerName="VW_rptRegistroNCFRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptRegistroNCFRowDeleted" msprop:Generator_RowClassName="VW_rptRegistroNCFRow" msprop:Generator_UserTableName="VW_rptRegistroNCF" msprop:Generator_RowEvArgName="VW_rptRegistroNCFRowChangeEvent">
+        <xs:element name="VW_rptRegistroNCF" msprop:Generator_TableClassName="VW_rptRegistroNCFDataTable" msprop:Generator_TableVarName="tableVW_rptRegistroNCF" msprop:Generator_TablePropName="VW_rptRegistroNCF" msprop:Generator_RowDeletingName="VW_rptRegistroNCFRowDeleting" msprop:Generator_RowChangingName="VW_rptRegistroNCFRowChanging" msprop:Generator_RowEvHandlerName="VW_rptRegistroNCFRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptRegistroNCFRowDeleted" msprop:Generator_UserTableName="VW_rptRegistroNCF" msprop:Generator_RowChangedName="VW_rptRegistroNCFRowChanged" msprop:Generator_RowEvArgName="VW_rptRegistroNCFRowChangeEvent" msprop:Generator_RowClassName="VW_rptRegistroNCFRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ING_NUMREC" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnING_NUMREC" msprop:Generator_ColumnPropNameInRow="ING_NUMREC" msprop:Generator_ColumnPropNameInTable="ING_NUMRECColumn" msprop:Generator_UserColumnName="ING_NUMREC" minOccurs="0">
@@ -347,7 +347,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="vw_ConsultaFin" msprop:Generator_TableClassName="vw_ConsultaFinDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFin" msprop:Generator_RowChangedName="vw_ConsultaFinRowChanged" msprop:Generator_TablePropName="vw_ConsultaFin" msprop:Generator_RowDeletingName="vw_ConsultaFinRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinRowDeleted" msprop:Generator_RowClassName="vw_ConsultaFinRow" msprop:Generator_UserTableName="vw_ConsultaFin" msprop:Generator_RowEvArgName="vw_ConsultaFinRowChangeEvent">
+        <xs:element name="vw_ConsultaFin" msprop:Generator_TableClassName="vw_ConsultaFinDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFin" msprop:Generator_TablePropName="vw_ConsultaFin" msprop:Generator_RowDeletingName="vw_ConsultaFinRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinRowDeleted" msprop:Generator_UserTableName="vw_ConsultaFin" msprop:Generator_RowChangedName="vw_ConsultaFinRowChanged" msprop:Generator_RowEvArgName="vw_ConsultaFinRowChangeEvent" msprop:Generator_RowClassName="vw_ConsultaFinRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="FAC_NUMFIN" msprop:Generator_ColumnVarNameInTable="columnFAC_NUMFIN" msprop:Generator_ColumnPropNameInRow="FAC_NUMFIN" msprop:Generator_ColumnPropNameInTable="FAC_NUMFINColumn" msprop:Generator_UserColumnName="FAC_NUMFIN" type="xs:int" />
@@ -380,7 +380,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="vw_ConsultaFinDetalle" msprop:Generator_TableClassName="vw_ConsultaFinDetalleDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFinDetalle" msprop:Generator_TablePropName="vw_ConsultaFinDetalle" msprop:Generator_RowDeletingName="vw_ConsultaFinDetalleRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinDetalleRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinDetalleRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinDetalleRowDeleted" msprop:Generator_UserTableName="vw_ConsultaFinDetalle" msprop:Generator_RowChangedName="vw_ConsultaFinDetalleRowChanged" msprop:Generator_RowEvArgName="vw_ConsultaFinDetalleRowChangeEvent" msprop:Generator_RowClassName="vw_ConsultaFinDetalleRow">
+        <xs:element name="vw_ConsultaFinDetalle" msprop:Generator_TableClassName="vw_ConsultaFinDetalleDataTable" msprop:Generator_TableVarName="tablevw_ConsultaFinDetalle" msprop:Generator_RowChangedName="vw_ConsultaFinDetalleRowChanged" msprop:Generator_TablePropName="vw_ConsultaFinDetalle" msprop:Generator_RowDeletingName="vw_ConsultaFinDetalleRowDeleting" msprop:Generator_RowChangingName="vw_ConsultaFinDetalleRowChanging" msprop:Generator_RowEvHandlerName="vw_ConsultaFinDetalleRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_ConsultaFinDetalleRowDeleted" msprop:Generator_RowClassName="vw_ConsultaFinDetalleRow" msprop:Generator_UserTableName="vw_ConsultaFinDetalle" msprop:Generator_RowEvArgName="vw_ConsultaFinDetalleRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ING_NUMREC" msprop:Generator_ColumnVarNameInTable="columnING_NUMREC" msprop:Generator_ColumnPropNameInRow="ING_NUMREC" msprop:Generator_ColumnPropNameInTable="ING_NUMRECColumn" msprop:Generator_UserColumnName="ING_NUMREC" type="xs:int" />
@@ -441,7 +441,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="VW_rptCreditosBancarios" msprop:Generator_TableClassName="VW_rptCreditosBancariosDataTable" msprop:Generator_TableVarName="tableVW_rptCreditosBancarios" msprop:Generator_RowChangedName="VW_rptCreditosBancariosRowChanged" msprop:Generator_TablePropName="VW_rptCreditosBancarios" msprop:Generator_RowDeletingName="VW_rptCreditosBancariosRowDeleting" msprop:Generator_RowChangingName="VW_rptCreditosBancariosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptCreditosBancariosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptCreditosBancariosRowDeleted" msprop:Generator_RowClassName="VW_rptCreditosBancariosRow" msprop:Generator_UserTableName="VW_rptCreditosBancarios" msprop:Generator_RowEvArgName="VW_rptCreditosBancariosRowChangeEvent">
+        <xs:element name="VW_rptCreditosBancarios" msprop:Generator_TableClassName="VW_rptCreditosBancariosDataTable" msprop:Generator_TableVarName="tableVW_rptCreditosBancarios" msprop:Generator_TablePropName="VW_rptCreditosBancarios" msprop:Generator_RowDeletingName="VW_rptCreditosBancariosRowDeleting" msprop:Generator_RowChangingName="VW_rptCreditosBancariosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptCreditosBancariosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptCreditosBancariosRowDeleted" msprop:Generator_UserTableName="VW_rptCreditosBancarios" msprop:Generator_RowChangedName="VW_rptCreditosBancariosRowChanged" msprop:Generator_RowEvArgName="VW_rptCreditosBancariosRowChangeEvent" msprop:Generator_RowClassName="VW_rptCreditosBancariosRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -494,7 +494,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="VW_rptDebitosBancarios" msprop:Generator_TableClassName="VW_rptDebitosBancariosDataTable" msprop:Generator_TableVarName="tableVW_rptDebitosBancarios" msprop:Generator_RowChangedName="VW_rptDebitosBancariosRowChanged" msprop:Generator_TablePropName="VW_rptDebitosBancarios" msprop:Generator_RowDeletingName="VW_rptDebitosBancariosRowDeleting" msprop:Generator_RowChangingName="VW_rptDebitosBancariosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptDebitosBancariosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptDebitosBancariosRowDeleted" msprop:Generator_RowClassName="VW_rptDebitosBancariosRow" msprop:Generator_UserTableName="VW_rptDebitosBancarios" msprop:Generator_RowEvArgName="VW_rptDebitosBancariosRowChangeEvent">
+        <xs:element name="VW_rptDebitosBancarios" msprop:Generator_TableClassName="VW_rptDebitosBancariosDataTable" msprop:Generator_TableVarName="tableVW_rptDebitosBancarios" msprop:Generator_TablePropName="VW_rptDebitosBancarios" msprop:Generator_RowDeletingName="VW_rptDebitosBancariosRowDeleting" msprop:Generator_RowChangingName="VW_rptDebitosBancariosRowChanging" msprop:Generator_RowEvHandlerName="VW_rptDebitosBancariosRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptDebitosBancariosRowDeleted" msprop:Generator_UserTableName="VW_rptDebitosBancarios" msprop:Generator_RowChangedName="VW_rptDebitosBancariosRowChanged" msprop:Generator_RowEvArgName="VW_rptDebitosBancariosRowChangeEvent" msprop:Generator_RowClassName="VW_rptDebitosBancariosRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -546,7 +546,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="vw_CuadreCaja" msprop:Generator_TableClassName="vw_CuadreCajaDataTable" msprop:Generator_TableVarName="tablevw_CuadreCaja" msprop:Generator_TablePropName="vw_CuadreCaja" msprop:Generator_RowDeletingName="vw_CuadreCajaRowDeleting" msprop:Generator_RowChangingName="vw_CuadreCajaRowChanging" msprop:Generator_RowEvHandlerName="vw_CuadreCajaRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_CuadreCajaRowDeleted" msprop:Generator_UserTableName="vw_CuadreCaja" msprop:Generator_RowChangedName="vw_CuadreCajaRowChanged" msprop:Generator_RowEvArgName="vw_CuadreCajaRowChangeEvent" msprop:Generator_RowClassName="vw_CuadreCajaRow">
+        <xs:element name="vw_CuadreCaja" msprop:Generator_TableClassName="vw_CuadreCajaDataTable" msprop:Generator_TableVarName="tablevw_CuadreCaja" msprop:Generator_RowChangedName="vw_CuadreCajaRowChanged" msprop:Generator_TablePropName="vw_CuadreCaja" msprop:Generator_RowDeletingName="vw_CuadreCajaRowDeleting" msprop:Generator_RowChangingName="vw_CuadreCajaRowChanging" msprop:Generator_RowEvHandlerName="vw_CuadreCajaRowChangeEventHandler" msprop:Generator_RowDeletedName="vw_CuadreCajaRowDeleted" msprop:Generator_RowClassName="vw_CuadreCajaRow" msprop:Generator_UserTableName="vw_CuadreCaja" msprop:Generator_RowEvArgName="vw_CuadreCajaRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -596,6 +596,72 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="VW_rptReciboIngreso" msprop:Generator_TableClassName="VW_rptReciboIngresoDataTable" msprop:Generator_TableVarName="tableVW_rptReciboIngreso" msprop:Generator_TablePropName="VW_rptReciboIngreso" msprop:Generator_RowDeletingName="VW_rptReciboIngresoRowDeleting" msprop:Generator_RowChangingName="VW_rptReciboIngresoRowChanging" msprop:Generator_RowEvHandlerName="VW_rptReciboIngresoRowChangeEventHandler" msprop:Generator_RowDeletedName="VW_rptReciboIngresoRowDeleted" msprop:Generator_UserTableName="VW_rptReciboIngreso" msprop:Generator_RowChangedName="VW_rptReciboIngresoRowChanged" msprop:Generator_RowEvArgName="VW_rptReciboIngresoRowChangeEvent" msprop:Generator_RowClassName="VW_rptReciboIngresoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NombreEmpresa" msprop:Generator_ColumnVarNameInTable="columnNombreEmpresa" msprop:Generator_ColumnPropNameInRow="NombreEmpresa" msprop:Generator_ColumnPropNameInTable="NombreEmpresaColumn" msprop:Generator_UserColumnName="NombreEmpresa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DireccionEmpresa" msprop:Generator_ColumnVarNameInTable="columnDireccionEmpresa" msprop:Generator_ColumnPropNameInRow="DireccionEmpresa" msprop:Generator_ColumnPropNameInTable="DireccionEmpresaColumn" msprop:Generator_UserColumnName="DireccionEmpresa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RncEmpresa" msprop:Generator_ColumnVarNameInTable="columnRncEmpresa" msprop:Generator_ColumnPropNameInRow="RncEmpresa" msprop:Generator_ColumnPropNameInTable="RncEmpresaColumn" msprop:Generator_UserColumnName="RncEmpresa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TelefonoEmpresa" msprop:Generator_ColumnVarNameInTable="columnTelefonoEmpresa" msprop:Generator_ColumnPropNameInRow="TelefonoEmpresa" msprop:Generator_ColumnPropNameInTable="TelefonoEmpresaColumn" msprop:Generator_UserColumnName="TelefonoEmpresa" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Recibo" msprop:Generator_ColumnVarNameInTable="columnRecibo" msprop:Generator_ColumnPropNameInRow="Recibo" msprop:Generator_ColumnPropNameInTable="ReciboColumn" msprop:Generator_UserColumnName="Recibo" type="xs:int" />
+              <xs:element name="CONCEPTO" msprop:Generator_ColumnVarNameInTable="columnCONCEPTO" msprop:Generator_ColumnPropNameInRow="CONCEPTO" msprop:Generator_ColumnPropNameInTable="CONCEPTOColumn" msprop:Generator_UserColumnName="CONCEPTO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NCF" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNCF" msprop:Generator_ColumnPropNameInRow="NCF" msprop:Generator_ColumnPropNameInTable="NCFColumn" msprop:Generator_UserColumnName="NCF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Contrato" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnContrato" msprop:Generator_ColumnPropNameInRow="Contrato" msprop:Generator_ColumnPropNameInTable="ContratoColumn" msprop:Generator_UserColumnName="Contrato" type="xs:int" minOccurs="0" />
+              <xs:element name="Cliente" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCliente" msprop:Generator_ColumnPropNameInRow="Cliente" msprop:Generator_ColumnPropNameInTable="ClienteColumn" msprop:Generator_UserColumnName="Cliente" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="201" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Monto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMonto" msprop:Generator_ColumnPropNameInRow="Monto" msprop:Generator_ColumnPropNameInTable="MontoColumn" msprop:Generator_UserColumnName="Monto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="FormaPago" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFormaPago" msprop:Generator_ColumnPropNameInRow="FormaPago" msprop:Generator_ColumnPropNameInTable="FormaPagoColumn" msprop:Generator_UserColumnName="FormaPago" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="13" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BalancePendiente" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBalancePendiente" msprop:Generator_ColumnPropNameInRow="BalancePendiente" msprop:Generator_ColumnPropNameInTable="BalancePendienteColumn" msprop:Generator_UserColumnName="BalancePendiente" type="xs:double" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

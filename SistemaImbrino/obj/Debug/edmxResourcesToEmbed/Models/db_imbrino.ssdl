@@ -382,7 +382,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a prim
     <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
     <Property Name="Recibo" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
-    <Property Name="MontoTotal" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Fecha" Type="datetime" Nullable="false" />
@@ -637,6 +637,25 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does no
     <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CodigoCLiente" Type="int" Nullable="false" />
     <Property Name="fechadt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptReciboIngreso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VW_rptReciboIngreso">
+    <Key>
+      <PropertyRef Name="Recibo" />
+    </Key>
+    <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" />
+    <Property Name="DireccionEmpresa" Type="varchar" MaxLength="100" />
+    <Property Name="RncEmpresa" Type="varchar" MaxLength="100" />
+    <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="100" />
+    <Property Name="Recibo" Type="int" Nullable="false" />
+    <Property Name="CONCEPTO" Type="varchar(max)" />
+    <Property Name="NCF" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Contrato" Type="int" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="201" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="FormaPago" Type="varchar" MaxLength="13" />
+    <Property Name="BalancePendiente" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1015,6 +1034,22 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptFinAtrasados_details].[CodigoCLiente] AS [CodigoCLiente], 
     [VW_rptFinAtrasados_details].[fechadt] AS [fechadt]
     FROM [dbo].[VW_rptFinAtrasados_details] AS [VW_rptFinAtrasados_details]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_rptReciboIngreso" EntityType="Self.VW_rptReciboIngreso" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_rptReciboIngreso].[NombreEmpresa] AS [NombreEmpresa], 
+    [VW_rptReciboIngreso].[DireccionEmpresa] AS [DireccionEmpresa], 
+    [VW_rptReciboIngreso].[RncEmpresa] AS [RncEmpresa], 
+    [VW_rptReciboIngreso].[TelefonoEmpresa] AS [TelefonoEmpresa], 
+    [VW_rptReciboIngreso].[Recibo] AS [Recibo], 
+    [VW_rptReciboIngreso].[CONCEPTO] AS [CONCEPTO], 
+    [VW_rptReciboIngreso].[NCF] AS [NCF], 
+    [VW_rptReciboIngreso].[Contrato] AS [Contrato], 
+    [VW_rptReciboIngreso].[Cliente] AS [Cliente], 
+    [VW_rptReciboIngreso].[Monto] AS [Monto], 
+    [VW_rptReciboIngreso].[FormaPago] AS [FormaPago], 
+    [VW_rptReciboIngreso].[BalancePendiente] AS [BalancePendiente]
+    FROM [dbo].[VW_rptReciboIngreso] AS [VW_rptReciboIngreso]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptRegistroNCF" EntityType="Self.VW_rptRegistroNCF" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
