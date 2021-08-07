@@ -83,6 +83,7 @@
     <EntitySet Name="VW_rptCreditosBancarios" EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" />
     <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
     <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
+    <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
   </EntityContainer>
   <EntityType Name="INGOTRO">
     <Key>
@@ -918,12 +919,29 @@
     <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
     <Property Name="Recibo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="MontoTotal" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="MontoTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="MontoCapital" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="MontoInteres" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="Fecha" Type="DateTime" Precision="3" Nullable="false" />
     <Property Name="FechaTexto" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
     <Property Name="Tipo" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
     <Property Name="TextoTipo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VW_rptReciboIngreso">
+    <Key>
+      <PropertyRef Name="Recibo" />
+    </Key>
+    <Property Name="NombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DireccionEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RncEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TelefonoEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Recibo" Type="Int32" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Contrato" Type="Int32" Nullable="false" />
+    <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+    <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" />
   </EntityType>
 </Schema>

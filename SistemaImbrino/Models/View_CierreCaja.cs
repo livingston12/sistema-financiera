@@ -13,6 +13,7 @@ namespace SistemaImbrino.Models
     public class View_CuadreCaja
     {
         public int ID { get; set; }
+        public int KeyID { get; set; }
         public string Tipo { get; set; }
         public string TipoTexto { get; set; }
         public IEnumerable<View_CuadreCajaDetalle> Detalle  { get; set; }

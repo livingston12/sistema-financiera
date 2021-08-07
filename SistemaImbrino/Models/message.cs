@@ -9,6 +9,7 @@ namespace SistemaImbrino.Models
     {
         public string Message { get; set; }
         public bool Is_Success { get; set; }
+        public int NumRecibo { get; set; }
 
         public static message messageErrors(string monto,string mora, string _TotalMonto,string _totalMora,string numCuota) {
             message message = new message();

@@ -272,3 +272,5 @@ E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Re
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\DebitosBancarios.cs
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CuadreCaja.rpt
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CuadreCaja.cs
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ReciboIngreso.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ReciboIngreso.cs

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using static SistemaImbrino.Models.Parameters;
+using System.Runtime.CompilerServices;
 
 namespace SistemaImbrino.Controllers
 {
@@ -39,6 +41,7 @@ namespace SistemaImbrino.Controllers
         // GET: Cobros
         public ActionResult Index(string FinID = "", string _Fecha_pago = null)
         {
+            _db = new DB_IMBRINOEntities();
             ReturnFechapago(_Fecha_pago);
 
             _FinID = FinID;
@@ -48,13 +51,13 @@ namespace SistemaImbrino.Controllers
             int.TryParse(FinID, out FinIDint);
             getTotalCuotas(FinIDint);
 
-            VW_rptFinAtrasados listAtrasados = db.VW_rptFinAtrasados.Where(x => x.C__FIN == FinIDint).FirstOrDefault();
+            VW_rptFinAtrasados listAtrasados = _db.VW_rptFinAtrasados.Where(x => x.C__FIN == FinIDint).FirstOrDefault();
             if (FinID == "" || listAtrasados == null)
                 return RedirectToAction("Index", "CobrosHeader");
             ViewBag.ListAtrasados = listAtrasados;
 
-            List<sp_cuotasVencidas_Result> ListCuotasVencidas = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.tipo == strOtro).OrderBy(x => x.fechadt).ToList();
-            ListCuotasVencidas.AddRange(db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.tipo != strOtro).OrderBy(x => x.fechadt).ThenBy(x => x.NUM_CUOTA).ToList());
+            List<sp_cuotasVencidas_Result> ListCuotasVencidas = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.tipo == strOtro).OrderBy(x => x.fechadt).ToList();
+            ListCuotasVencidas.AddRange(_db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.tipo != strOtro).OrderBy(x => x.fechadt).ThenBy(x => x.NUM_CUOTA).ToList());
 
             ViewBag.Mora = String.Format("{0:n}", ListCuotasVencidas.Sum(x => x.mora));
             ViewBag.ListCuotasVencidas = ListCuotasVencidas;
@@ -65,8 +68,8 @@ namespace SistemaImbrino.Controllers
         public void getTotalCuotas(int numFin)
         {
             string fecha_pagado = string.Empty;
-            ViewBag.CUOTA_PENDIENTE = db.CUOTA.Where(x => x.CUO_NUMFAC == numFin && x.CUO_FECHAP == fecha_pagado).Count();
-            ViewBag.CUOTA_TOTAL = db.CUOTA.Where(x => x.CUO_NUMFAC == numFin).Count();
+            ViewBag.CUOTA_PENDIENTE = _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin && x.CUO_FECHAP == fecha_pagado).Count();
+            ViewBag.CUOTA_TOTAL = _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin).Count();
         }
 
         public ActionResult _CobrosHeader()
@@ -91,7 +94,7 @@ namespace SistemaImbrino.Controllers
             int.TryParse(id_numFin, out FinIDint);
             ViewBag.tipoCobro = tipo;
             ViewBag.Index = idIndex;
-            var model = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.NUM_CUOTA == id_cuota).FirstOrDefault();
+            var model = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint && x.NUM_CUOTA == id_cuota).FirstOrDefault();
             return PartialView(model);
         }
 
@@ -99,7 +102,7 @@ namespace SistemaImbrino.Controllers
         {
             ReturnFechapago(_Fecha_pago);
             int.TryParse(_FinID, out FinIDint);
-            var cliente = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint).FirstOrDefault().CLIENTE;
+            var cliente = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == FinIDint).FirstOrDefault().CLIENTE;
             View_cobrosHeader model = CobrosHeader_SP(cliente, fecha_pago: Fecha_pago).Where(x => x.cliente == _FinID).FirstOrDefault();
             return PartialView(model);
         }
@@ -112,20 +115,31 @@ namespace SistemaImbrino.Controllers
         public JsonResult Cobrar(string json, string tipoPago, string _Fecha_pago = null, int aumentoRecibo = 0, string JsonDeposito = "")
         {
             ReturnFechapago(_Fecha_pago);
-            if (db.Database.Connection.State == System.Data.ConnectionState.Open)
-                db.Database.Connection.Close();
+            if (_db.Database.Connection.State == System.Data.ConnectionState.Open)
+                _db.Database.Connection.Close();
 
-            var tran = db.Database.BeginTransaction();
+            var tran = _db.Database.BeginTransaction();
             bool error = false;
             try
             {
 
                 View_Cobrar _View_Cobrar = JsonConvert.DeserializeObject<View_Cobrar>(json);
                 OTROSDB ViewDeposito = new OTROSDB();
+                int numRecibo = 0;
 
                 if (tipoPago != "E" && tipoPago != "C")
                 {
-                   ViewDeposito = JsonConvert.DeserializeObject<OTROSDB>(JsonDeposito);
+                    try
+                    {
+                        ViewDeposito = JsonConvert.DeserializeObject<OTROSDB>(JsonDeposito);
+                    }
+                    catch (Exception)
+                    {
+                        Messajson.Message = "Ocurrio un problema con el pago: Favor rellenar los campos requeridos";
+                        Messajson.Is_Success = false;
+                        tran.Rollback();
+                        return Json(Messajson);
+                    }
                    Messajson = validarMetodoPago(tipoPago, ViewDeposito);
                 }
                 else
@@ -145,7 +159,7 @@ namespace SistemaImbrino.Controllers
                         }
                         if (!int.TryParse(item.numCuota, out int cuota))
                         {
-                            if (aplicarCargosAdiccionales(item, tipoPago, Fecha_pago))
+                            if (aplicarCargosAdiccionales(item, tipoPago, Fecha_pago,ref numRecibo))
                             {
                                 error = true;
                                 Messajson = new message()
@@ -158,7 +172,7 @@ namespace SistemaImbrino.Controllers
                         }
                         else
                         {
-                            if (RealizarCobro(item, tipoPago, ref descuento, ref descuento, ref num, aumentoRecibo: aumentoRecibo) == false)
+                            if (RealizarCobro(item, tipoPago, ref descuento, ref descuento, ref num,ref numRecibo, aumentoRecibo: aumentoRecibo) == false)
                             {
                                 error = true;
                                 Messajson = new message()
@@ -183,9 +197,11 @@ namespace SistemaImbrino.Controllers
 
                         MaxiNGCUOTARef(ref numRec, ref ncf);
                         GuardarCuota(ViewDeposito, numFin, numRec);
+                        numRecibo = numRec;
                     }
                     GuardarCuota();
                     tran.Commit();
+                    Messajson.NumRecibo = numRecibo;
                     Messajson.Message = "Se completo el pago correctamente";
                     Messajson.Is_Success = true;
                 }
@@ -201,15 +217,14 @@ namespace SistemaImbrino.Controllers
                 tran.Rollback();
             }
 
-
             return Json(Messajson);
         }
 
        
 
-        private bool aplicarCargosAdiccionales(cl_cobro cobro, string tipoPago, DateTime Fecha_pago)
+        private bool aplicarCargosAdiccionales(cl_cobro cobro, string tipoPago, DateTime Fecha_pago,ref int numRecibo)
         {
-            List<sp_cuotasVencidas_Result> ListCuotaVen = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == cobro.numfin && x.NUM_CUOTA == cobro.numCuota).ToList();
+            List<sp_cuotasVencidas_Result> ListCuotaVen = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == cobro.numfin && x.NUM_CUOTA == cobro.numCuota).ToList();
             bool validar = false;
             try
             {
@@ -227,7 +242,7 @@ namespace SistemaImbrino.Controllers
                     string numCuota = getCuotaAdiccional(cobro.numCuota);
 
                     fecha = Fecha_pago.ToString(formatoFecha);
-                    OTROCARG otroCarg = db.OTROCARG.Where(x => x.CAR_NUMFIN == cobro.numfin.ToString() && x.CAR_SECU == numCuota).FirstOrDefault();
+                    OTROCARG otroCarg = _db.OTROCARG.Where(x => x.CAR_NUMFIN == cobro.numfin.ToString() && x.CAR_SECU == numCuota).FirstOrDefault();
                     var ingreso = getTipoIngreso(otroCarg.CAR_CODCAR);
 
                     if (otroCarg == null || string.IsNullOrEmpty(ingreso))
@@ -252,6 +267,7 @@ namespace SistemaImbrino.Controllers
                     }
                     addNewIngOtro(fecha, tipoPago, descripcion, montoCargo, ncf, cobro.numfin, cliente, numRef, status.ToString(), idCargo);
                     pagarOtroCargoAdiccional(otroCarg, fecha, tipoCobro, numRef);
+                    numRecibo = numRef;
                 }
                 else
                 {
@@ -291,22 +307,21 @@ namespace SistemaImbrino.Controllers
                 viewDeposito.ACTIVO = true;
                 viewDeposito.NUM_FIN = numFin;
                 viewDeposito.NUM_REC = numRec;
-                db.OTROSDB.Add(viewDeposito);
+                _db.OTROSDB.Add(viewDeposito);
             }
             else
             {
-                db.ABOCUOTA.AddRange(ListaBOCUOTA);
-                db.INGCUOTA.AddRange(ListiNGCUOTAs);
-                db.ABOOCARG.AddRange(ListAboCarg);
-                db.INGOTRO.AddRange(ListINGOtros);
-                db.OTROCARG.AddRange(ListOtroCarg);
+                _db.ABOCUOTA.AddRange(ListaBOCUOTA);
+                _db.INGCUOTA.AddRange(ListiNGCUOTAs);
+                _db.ABOOCARG.AddRange(ListAboCarg);
+                _db.INGOTRO.AddRange(ListINGOtros);
+                _db.OTROCARG.AddRange(ListOtroCarg);
             }
-            db.SaveChanges();
+            _db.SaveChanges();
         }
 
-        private bool RealizarCobro(cl_cobro cobro, string tipoPago, ref decimal decuentoMora, ref decimal descuentoInteres, ref int totalDecuotasPagar, bool isOne = true, int aumentoRecibo = 0)
+        private bool RealizarCobro(cl_cobro cobro, string tipoPago, ref decimal decuentoMora, ref decimal descuentoInteres, ref int totalDecuotasPagar,ref int numRecibo, bool isOne = true, int aumentoRecibo = 0)
         {
-
             int numfin = cobro.numfin, idCuota = 0, NUMREC = 0;
             double mora = 0;
             decimal MontoCapital = 0, MontoCapitalOr = 0
@@ -327,7 +342,7 @@ namespace SistemaImbrino.Controllers
             int.TryParse(cobro.numCuota, out idCuota);
             INGCUOTA iNGCUOTA = new INGCUOTA();
             //Buscar cuota
-            List<sp_cuotasVencidas_Result> ListCuotaVen = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == numfin && x.NUM_CUOTA == numCuota).ToList();
+            List<sp_cuotasVencidas_Result> ListCuotaVen = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == numfin && x.NUM_CUOTA == numCuota).ToList();
             if (ListCuotaVen.Any() == false)
                 return false;
             _status = ListCuotaVen.FirstOrDefault().CUO_STATUS;
@@ -344,7 +359,7 @@ namespace SistemaImbrino.Controllers
             if (Messajson.Is_Success == false && isOne)
                 return false;
 
-            var cuota = db.CUOTA.Where(x => x.CUO_NUMFAC == numfin && x.CUO_NUMCUO == idCuota).FirstOrDefault();
+            var cuota = _db.CUOTA.Where(x => x.CUO_NUMFAC == numfin && x.CUO_NUMCUO == idCuota).FirstOrDefault();
 
 
             if (tipoCobro == TipoCobro.Abono.ToString())
@@ -518,8 +533,8 @@ namespace SistemaImbrino.Controllers
             cuota.CUO_STATUS = id_tipoCobro;
             cuota.CUO_NUMREC = NUMREC;
             cuota.CUO_FECHAP = Fecha_pago.ToString(formatoFecha);
-
-            db.Entry(cuota).State = EntityState.Modified;
+            numRecibo = NUMREC;
+            _db.Entry(cuota).State = EntityState.Modified;
             return true;
         }
 
@@ -527,13 +542,14 @@ namespace SistemaImbrino.Controllers
         {
             message Messajson = new message();
             ReturnFechapago(_Fecha_pago);
-            var tran = db.Database.BeginTransaction();
+            var tran = _db.Database.BeginTransaction();
+            int numRecibo = 0;
 
             try
             {
 
                 int intFinID = int.Parse(_numFin);
-                List<sp_cuotasVencidas_Result> cuotasVenDesc = db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == intFinID).OrderByDescending(x => x.NUM_CUOTA).ToList();
+                List<sp_cuotasVencidas_Result> cuotasVenDesc = _db.sp_cuotasVencidas(Fecha_pago).Where(x => x.C__FIN == intFinID).OrderByDescending(x => x.NUM_CUOTA).ToList();
 
                 cl_cobro cobro = new cl_cobro();
                 int totalCuotasPagar = cuotasVenDesc.Count;
@@ -550,11 +566,12 @@ namespace SistemaImbrino.Controllers
                         montoPagado = decimal.Parse((cu.capital + cu.INTERES).ToString())
                     };
 
-                    RealizarCobro(cobro, tipoPago, ref descuentoMora, ref descuentoInte, ref totalCuotasPagar, false);
+                    RealizarCobro(cobro, tipoPago, ref descuentoMora, ref descuentoInte, ref totalCuotasPagar,ref numRecibo, false);
                 }
 
                 GuardarCuota();
                 tran.Commit();
+                Messajson.NumRecibo = numRecibo;
                 Messajson.Message = "Se completo el pago correctamente";
                 Messajson.Is_Success = true;
             }
@@ -626,7 +643,7 @@ namespace SistemaImbrino.Controllers
         private void MaxABOCUOTA(string numCuota, int numfin, ref int Id_Abono)
         {
 
-            var abo = db.ABOCUOTA.Where(x => x.ABO_NUMFAC == numfin.ToString()).ToList();
+            var abo = _db.ABOCUOTA.Where(x => x.ABO_NUMFAC == numfin.ToString()).ToList();
             //var abo2 = db.ABOCUOTA.ToList();
             if (abo.Any())
                 int.TryParse(abo.Max(x => x.ABO_NUMABO), out Id_Abono);
@@ -637,7 +654,7 @@ namespace SistemaImbrino.Controllers
 
         private void MaxiNGCUOTARef(ref int NUMREC, ref string ncf)
         {
-            var IngAbo = db.INGCUOTA.OrderByDescending(x => x.ING_NUMREC).Take(1).ToList();
+            var IngAbo = _db.INGCUOTA.OrderByDescending(x => x.ING_NUMREC).Take(1).ToList();
             int idNcf = 0, idnumRef = 0;
 
             if (IngAbo.Any())
@@ -657,7 +674,53 @@ namespace SistemaImbrino.Controllers
                 NUMREC = 1;
                 ncf = string.Format("B01{0}", idNcf.ToString().PadLeft(8, '0'));
             }
+        }
+        public ActionResult PrintReport(int ReciboID)
+        {
+            message mensajeReturn = new message();
+            mensajeReturn.Is_Success = true;
 
+            try
+            {
+                string intialPath = Server.MapPath(Parameters.rutaReporte);
+                
+
+                if (mensajeReturn.Is_Success)
+                {
+                    List<Parameters> prt = new List<Parameters>()
+                    {
+                        new Parameters(){ParameterName="ReciboID",ParameterValue=ReciboID }
+                    };
+                    Parameters.guardarReporte(Response, ReportName.ReciboIngreso, prt, intialPath);
+                }
+            }
+            catch (Exception e)
+            {
+                mensajeReturn.Message = "Error inesperado: " + e.Message;
+                mensajeReturn.Is_Success = false;
+            }
+
+            return Json(mensajeReturn);
+        }
+
+        public ActionResult generateReport()
+        {
+
+            try
+            {
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+                string ruta = Server.MapPath(string.Format("{0}/{1}.pdf", Parameters.rutaReporte, ReportName.ReciboIngreso));
+
+                var fsResult = Parameters.viewReportPDF(ruta);
+                return fsResult;
+            }
+            catch (Exception e)
+            {
+                return Content("Error inesperado en el reporte: " + e.Message);
+
+            }
         }
     }
 }

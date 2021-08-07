@@ -256,9 +256,8 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
             timer: 8000
         });
     }
-  
-
 }
+
 
 function doSearch(tableId, searchID) {
     var tableReg = document.getElementById(tableId);

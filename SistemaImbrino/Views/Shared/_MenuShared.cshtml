@@ -1,251 +1,84 @@
-﻿<!-- Sidebar user panel -->
-<div class="user-panel">
-	<div class="pull-left image">
-		<img src="~/ContentPersonalizado/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-	</div>
-	<div class="pull-left info">
-		<p>The Frank</p>
-		<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-	</div>
+﻿
+<!--msb: main sidebar-->
+<div class="msb" id="msb">
+	<nav class="" role="navigation">
+
+		<!-- Main Menu -->
+		<div class="side-menu-container">
+			<ul class="nav navbar-nav">
+				<li><a href="@Url.Action("Index", "Home")">@System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP")</a></li>
+				<li class="active"><a href="@Url.Action("Index", "CobrosHeader")"><span class="glyphicon glyphicon-credit-card" /> Cobros</a></li>
+				<li><a href="@Url.Action("Index", "FinanciamientosHeader")"><span class="glyphicon glyphicon-usd" /> Financiamientos</a></li>
+				<li><a href="@Url.Action("Index", "CargosAdicionales")"><span class="glyphicon glyphicon-folder-close" /> Cargos Adicionales</a></li>
+
+				<!-- Dropdown maestros-->
+				<li class="panel panel-default" id="dpMaestros">
+					<a data-toggle="collapse" href="#dpMaestros-lvl1">
+						<span class="glyphicon glyphicon-book" /> Maestros
+						<span class="caret"></span>
+					</a>
+					<div id="dpMaestros-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "Clientes")"><span class="glyphicon glyphicon-user" /> Clientes</a></li>
+								<li><a href="@Url.Action("Index", "Fiadores")"><span class="glyphicon glyphicon-piggy-bank" /> Fiadores</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+				<!-- Dropdown Cuentas bancarias-->
+				<li class="panel panel-default" id="dpCuentasbancarias">
+					<a data-toggle="collapse" href="#dpCuentasbancarias-lvl1">
+						<span class="glyphicon glyphicon-list-alt" /> Cuentas bancarias
+						<span class="caret"></span>
+					</a>
+					<div id="dpCuentasbancarias-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "CreditosBancarios")"><span class="glyphicon glyphicon-backward" /> Creditos bancarios</a></li>
+								<li><a href="@Url.Action("Index", "DebitosBancarios")"><span class="glyphicon glyphicon-forward" /> Debitos bancarios</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-ok" /> Conciliacion bancaria</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+				<!-- Dropdown Cajas-->
+				<li class="panel panel-default" id="dpCaja">
+					<a data-toggle="collapse" href="#dpCaja-lvl1">
+						<span class="glyphicon glyphicon-shopping-cart" /> Caja
+						<span class="caret"></span>
+					</a>
+					<div id="dpCaja-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "cuadreCaja")"><span class="glyphicon glyphicon-transfer" /> Cuadre caja</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-sort" /> Cierre caja</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+				<!-- Dropdown Reportes-->
+				<li class="panel panel-default" id="dpReportes">
+					<a data-toggle="collapse" href="#dpReportes-lvl1">
+						<span class="glyphicon glyphicon-floppy-save"></span> Reportes
+						<span class="caret"></span>
+					</a>
+					<div id="dpReportes-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
+								<li><a id="lifinAtrasados">Financiamientos Atrasados</a></li>
+								<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
+								<li><a id="liRegistroNCF">Registro NCF</a></li>
+								<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
 </div>
-<!-- search form -->
-<form action="#" method="get" class="sidebar-form">
-	<div class="input-group">
-		<input type="text" name="q" class="form-control" placeholder="Search...">
-		<span class="input-group-btn">
-			<button type="submit" name="search" id="search-btn" class="btn btn-flat">
-				<i class="fa fa-search"></i>
-			</button>
-		</span>
-	</div>
-</form>
-<!-- /.search form -->
-<!-- sidebar menu: : style can be found in sidebar.less -->
-<ul class="sidebar-menu">
-	<li class="header">MAIN NAVIGATION</li>
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-dashboard"></i> <span>Dashboard</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-			<li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-		</ul>
-	</li>
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Capital Humano</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="/RH_Empleados"><i class="fa fa-circle-o"></i> Empleados</a></li>
-			<li><a href="/RH_AccionPersonalpendientes"><i class="fa fa-circle-o"></i> Acción Personal</a></li>
-			<li><a href="/RH_approvalAccionPersonal"><i class="fa fa-circle-o"></i> Aprobación Acción</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Perfil Empleado</a></li>
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Certificaciones
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="#"><i class="fa fa-circle-o"></i> Ingreso</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Solicitud Inspector</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Terminaciones MT</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Terminación Empleado</a></li>
-				</ul>
-			</li>
-
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Inasistencias
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="#"><i class="fa fa-circle-o"></i> Permisos</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Ausencias</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Licencias</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Jerarquización Empleado
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/RH_Niveles/Index"><i class="fa fa-circle-o"></i> Niveles</a></li>
-					<li><a href="/RH_Clasificaciones/Index"><i class="fa fa-circle-o"></i> Clasificación Niveles</a></li>
-					<li><a href="/RH_PosicionesN/Index"><i class="fa fa-circle-o"></i> Posicines</a></li>
-					<li><a href="/RH_Posiciones/Index"><i class="fa fa-circle-o"></i> Posición Area</a></li>
-					@*<li><a href="#@Html.ActionLink("Departamento","Index","Nacionalidades")"><i class="fa fa-circle-o"></i> Departamentos</a></li>*@
-				</ul>
-			</li>
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Clasificación Empleado
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/RH_Departamentos/Index"><i class="fa fa-circle-o"></i> Departamentos</a></li>
-					<li><a href="/RH_Nivel_Salarial/Index"><i class="fa fa-circle-o"></i> Niveles Salariales</a></li>
-					<li><a href="/RH_Forma_Pago/Index"><i class="fa fa-circle-o"></i> Formas de Pago</a></li>
-					<li><a href="/RH_Tipos_Empleados/Index"><i class="fa fa-circle-o"></i>Tipos Empleados</a></li>
-					<li><a href="/RH_Clase_Empleados"><i class="fa fa-circle-o"></i> Clases Empleados</a></li>
-					<li><a href="/RH_Turnos/Index"><i class="fa fa-circle-o"></i> Turnos</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Ubicación Empleado
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/Provincias/Index"><i class="fa fa-circle-o"></i> Provincia</a></li>
-					<li><a href="/Municipios/Index"><i class="fa fa-circle-o"></i> Municipio</a></li>
-					<li><a href="/Sectores/Index"><i class="fa fa-circle-o"></i> Sector</a></li>
-					<li><a href="/Nacionalidades/Index"><i class="fa fa-circle-o"></i> Nacionalidad</a></li>
-					@*<li><a href="#@Html.ActionLink("Departamento","Index","Nacionalidades")"><i class="fa fa-circle-o"></i> Departamentos</a></li>*@
-				</ul>
-			</li>
-		</ul>
-
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Mantenimientos</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="#"><i class="fa fa-circle-o"></i> Compañias</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Sucursales</a></li>
-			<li><a href="/RH_Tipos_Nomina/Index"><i class="fa fa-circle-o"></i> Tipos de Nomina</a></li>
-			<li><a href="/RH_Tipos_Ingresos/Index"><i class="fa fa-circle-o"></i> Tipos Ingresos</a></li>
-			<li><a href="/RH_Tipos_Descuentos/Index"><i class="fa fa-circle-o"></i> Tipos Descuentos</a></li>
-		</ul>
-	</li>
-
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Novedades</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="#"><i class="fa fa-circle-o"></i> Ingresos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Importar Ingresos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Descuentos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Importar Descuentos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Abono Prestamos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Horas Extras</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Importar Horas</a></li>
-
-			<li><a href="#"><i class="fa fa-circle-o"></i> Nomina Quincenal</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Nomina Mensual</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Nomina Semanal</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Saldo a Favor</a></li>
-		</ul>
-	</li>
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Otros Pagos</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="#"><i class="fa fa-circle-o"></i> Regalía</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Bonificación</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Prestaciones</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Seguridad</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Días Feriados</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Cambio Supervisor</a></li>
-		</ul>
-	</li>
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Parametros</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Impositivos
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="#"><i class="fa fa-circle-o"></i> ISR</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> AFP</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> ARS</a></li>
-				</ul>
-			</li>
-
-			<li>
-				<a href="#">
-					<i class="fa fa-circle-o"></i> Entidades
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-				</a>
-				<ul class="treeview-menu">
-					<li><a href="/RH_ARS/Index"><i class="fa fa-circle-o"></i> ARS</a></li>
-					<li><a href="/RH_AFP/Index"><i class="fa fa-circle-o"></i> AFP</a></li>
-					<li><a href="/RH_Sucursales/Index"><i class="fa fa-circle-o"></i> Sucursales</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Bancos</a></li>
-				</ul>
-			</li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Prestaciones</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Prestaciones Manuales</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Cálculo Propina</a></li>
-		</ul>
-	</li>
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Consultas</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="#"><i class="fa fa-circle-o"></i> Consulta de Nomina</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Prestaciones Generales</a></li>
-		</ul>
-	</li>
-
-	<li class="treeview">
-		<a href="#">
-			<i class="fa fa-share"></i> <span>Reportes</span>
-			<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
-		</a>
-		<ul class="treeview-menu">
-			<li><a href="#"><i class="fa fa-circle-o"></i> Listado General Empleados</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Listado de Acciones</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Listado Ausentismos</a></li>
-			<li><a href="#"><i class="fa fa-circle-o"></i> Transacciones Nomina</a></li>
-		</ul>
-	</li>
-
-</ul>
-
-
