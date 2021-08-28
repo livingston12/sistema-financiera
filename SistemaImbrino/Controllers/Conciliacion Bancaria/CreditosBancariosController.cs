@@ -65,6 +65,11 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 CreditoBancario.BENEFICIARIO = CreditoBancario.BENEFICIARIO == null ?
                                                     string.Empty :
                                                     CreditoBancario.BENEFICIARIO;
+                // disminuir monto cuenta bancaria
+                CreditoBancario.CERRADO = false;
+                CreditoBancario.VALIDADO = false;
+                modificarBalanceFecha(_db, CreditoBancario.CUENTA_BANCARIA, CreditoBancario.MONTO,tipoBalanceFecha.disminuir);
+                
                 _db.OTROSCR.Add(CreditoBancario);
                 _db.SaveChanges();
 
@@ -163,9 +168,9 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 credito.NUMERO_CHEQUE = numeroCheque;
                 credito.TIPO_CREDITO = creditoBancario.TIPO_CREDITO;
                 credito.TIPO_SALIDA = creditoBancario.TIPO_SALIDA;
-
-
+                
                 _db.Entry(credito).State = System.Data.Entity.EntityState.Modified;
+                modificarBalanceFecha(_db, creditoBancario.CUENTA_BANCARIA, credito.MONTO, creditoBancario.MONTO);
                 _db.SaveChanges();
                 message = new message()
                 {

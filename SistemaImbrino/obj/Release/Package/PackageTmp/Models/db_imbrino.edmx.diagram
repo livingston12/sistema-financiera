@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e86f72cf065e48978e255f7abe38f6e9" Name="Diagram1" ZoomLevel="57">
+      <Diagram DiagramId="e86f72cf065e48978e255f7abe38f6e9" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="DB_IMBRINOModel.INGOTRO" Width="1.5" PointX="9.625" PointY="6" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.CLIENTE" Width="1.5" PointX="5.375" PointY="7.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.archivos_subir" Width="1.5" PointX="0.75" PointY="5.75" />
@@ -37,6 +37,25 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCTE" Width="1.5" PointX="6.125" PointY="5" />
         <AssociationConnector Association="DB_IMBRINOModel.FK_CLIENTE_TIPOCTE" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.CUOTA" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.INGRESO" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.OTROCARG" Width="1.5" PointX="17.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.ABOOCARG" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CARGO" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_ConsultaFinDetalle" Width="2.125" PointX="5.5" PointY="18.625" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_ConsultaFin" Width="1.5" PointX="8.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCR1" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOCR2" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.BANCO" Width="1.5" PointX="19.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.CTABANCO" Width="1.5" PointX="17.375" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.OTROSCR" Width="1.5" PointX="10.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPODB1" Width="1.5" PointX="19.375" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.TIPODB2" Width="1.5" PointX="19.375" PointY="19.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.OTROSDB" Width="1.5" PointX="20.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" Width="1.5" PointX="3.375" PointY="20.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" Width="1.5" PointX="20.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.vw_CuadreCaja" Width="1.5" PointX="12.375" PointY="20.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" Width="1.5" PointX="0.75" PointY="20.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" Width="1.5" PointX="14.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

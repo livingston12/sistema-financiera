@@ -1,6 +1,7 @@
 ﻿
 <!--msb: main sidebar-->
 <div class="msb" id="msb">
+	
 	<nav class="" role="navigation">
 
 		<!-- Main Menu -->
@@ -36,9 +37,10 @@
 					<div id="dpCuentasbancarias-lvl1" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="@Url.Action("Index", "CreditosBancarios")"><span class="glyphicon glyphicon-backward" /> Creditos bancarios</a></li>
-								<li><a href="@Url.Action("Index", "DebitosBancarios")"><span class="glyphicon glyphicon-forward" /> Debitos bancarios</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-ok" /> Conciliacion bancaria</a></li>
+								<li><a href="@Url.Action("Index", "CreditosBancarios")"><span class="glyphicon glyphicon-backward" /> Creditos</a></li>
+								<li><a href="@Url.Action("Index", "DebitosBancarios")"><span class="glyphicon glyphicon-forward" /> Debitos</a></li>
+								<li><a id="liConciliacionBancaria"><span class="glyphicon glyphicon-ok" /> Conciliacion</a></li>
+								<li><a id="liMovimientoBancario"><span class="glyphicon glyphicon-ok" /> Movimientos</a></li>
 							</ul>
 						</div>
 					</div>
@@ -53,8 +55,8 @@
 					<div id="dpCaja-lvl1" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="@Url.Action("Index", "cuadreCaja")"><span class="glyphicon glyphicon-transfer" /> Cuadre caja</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-sort" /> Cierre caja</a></li>
+								<li><a href="@Url.Action("Index", "cuadreCaja")"><span class="glyphicon glyphicon-transfer" /> Cuadre</a></li>
+								<li><a id="liCierreCaja"><span class="glyphicon glyphicon-sort" /> Cierre</a></li>
 							</ul>
 						</div>
 					</div>
@@ -69,7 +71,7 @@
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
 								<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
-								<li><a id="lifinAtrasados">Financiamientos Atrasados</a></li>
+								<li><a id="lifinAtrasados">Fin Atrasados</a></li>
 								<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
 								<li><a id="liRegistroNCF">Registro NCF</a></li>
 								<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>

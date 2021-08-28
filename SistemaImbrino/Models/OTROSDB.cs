@@ -26,5 +26,7 @@ namespace SistemaImbrino.Models
         public Nullable<int> STATUS { get; set; }
         public Nullable<int> NUM_FIN { get; set; }
         public Nullable<int> NUM_REC { get; set; }
+        public Nullable<bool> VALIDADO { get; set; }
+        public Nullable<bool> CERRADO { get; set; }
     }
 }

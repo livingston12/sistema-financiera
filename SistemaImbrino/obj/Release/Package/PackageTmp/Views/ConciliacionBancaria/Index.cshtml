@@ -1,0 +1,168 @@
+﻿
+@{
+	ViewBag.Title = "Conciliacion bancaria";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="hero-callout">
+	<div class="row">
+		<div class="col-xs-6 col-md-2 ">
+			<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+		</div>
+	</div>
+	<input type="hidden" id="json" value="@ViewBag.json" />
+	<input type="hidden" id="cuenta" value="@ViewBag.cuentaBancaria" />
+	<br />
+	<div class="table-responsive">
+		<table id="tbl_conciliacionBancaria" class="table table-condensed table-hover table-bordered dataTable" style="width:100%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center th-pd-no-right">FECHA</th>
+					<th class="text-left th-pd-no-left">TRANSACCION</th>
+					<th class="text-left th-pd-no-left">CONCEPTO</th>
+					<th class="text-right th-pd-right">DEBITO</th>
+					<th class="text-right th-pd-right">CREDITO</th>
+					<th class="text-right th-pd-right">BALANCE</th>
+					<th class="text-center th-pd-no-right">VALIDADO</th>
+				</tr>
+			</thead>
+			<tbody> </tbody>
+			<tfoot class="" style="background-color:#d0cece">
+				<tr>
+					<th align="right" colspan="2"></th>
+					<th class="text-left">Total</th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		llenarTblConciliacion();
+
+		function llenarTblConciliacion()
+		{
+			var url = "@Url.Action("GetConciliacionBancaria")";
+			var _json = $("#json").val();
+			var _cuenta = $("#cuenta").val();
+			var _json = _json.replace('&quot','"');
+			var table = $("#tbl_conciliacionBancaria").DataTable(
+				{
+					destroy: true,
+					paging: false,
+					info: false,
+					searching: false,
+					ordering: false,
+					ajax: {
+						url: url,
+						type: "POST",
+						data: { json: _json, cuentaBancaria: _cuenta },
+						dataType: "json",
+						dataSrc: "data",
+						async: true
+					},
+					columns: [
+						{
+							"data": "Fecha",
+							"className": "dt-body-center"
+						},
+						{
+							"data": "Transacion",
+							"className": "dt-body-justify"
+						},
+						{
+							"data": "Concepto",
+							"className": "dt-body-justify"
+						},
+						{
+							"data": "Debito",
+							"render": function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							"className": "dt-body-right"
+						},
+						{
+							"data": "Credito",
+							"render": function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							"className": "dt-body-right"
+						},
+						{
+							"data": "BalanceGeneral",
+							"render": function (data) {
+								return number_format_js(data, 2, 0);
+							},
+							"className": "dt-body-right"
+						},
+						{
+							"data": "validado",
+							"className": "dt-body-center"
+						},
+					],
+					lengthChange: true,
+					footerCallback: function (row, data, start, end, display) {
+						var api = this.api(), data;
+
+						// Remove the formatting to get integer data for summation
+						var intVal = function (i) {
+							return typeof i === 'string' ?
+								i.replace(/[\$,]/g, '') * 1 :
+								typeof i === 'number' ?
+									i : 0;
+						};
+
+						// --------------- Credito
+						pageTotal = api
+							.column(3, { page: 'current' })
+							.data()
+							.reduce(function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0);
+						// Update footer
+						$(api.column(3).footer()).html(
+							number_format_js(pageTotal, 2, 0)
+						);
+
+						// --------------- debito
+						pageTotal = api
+							.column(4, { page: 'current' })
+							.data()
+							.reduce(function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0);
+						// Update footer
+						$(api.column(4).footer()).html(
+							number_format_js(pageTotal, 2, 0)
+						);
+					},
+					rowCallback: function (row, data,index) {
+						
+						// Balance
+						if (index === 0)
+						{
+							totalBalance = data.BalanceGeneral;
+						}						
+						totalBalance += (data.Debito + (data.Credito) * -1);
+						
+						$('td:eq(5)', row).html("<b>" + number_format_js(totalBalance, 2, 0) + "</b>");
+
+						// Validado
+						var html = "";
+						var checked = "";
+						if (data.Validado) {
+							checked = 'checked="checked"';
+						}
+						html = `<p><input type="checkbox" ${checked} class="checkbox" /></p>`;
+						$('td:eq(6)', row).html(html);
+					}
+				});
+
+		}
+	</script>
+}

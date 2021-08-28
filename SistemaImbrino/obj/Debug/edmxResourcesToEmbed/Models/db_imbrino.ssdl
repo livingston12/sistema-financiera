@@ -83,6 +83,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="CTA_NUMERO" Type="varchar" MaxLength="100" />
     <Property Name="CTA_BALFEC" Type="varchar" MaxLength="100" />
     <Property Name="CTA_BALCOR" Type="varchar" MaxLength="100" />
+    <Property Name="CTA_FECCOR" Type="date" />
   </EntityType>
   <EntityType Name="CUOTA">
     <Key>
@@ -238,6 +239,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="BENEFICIARIO" Type="varchar" MaxLength="150" />
     <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="VALIDADO" Type="bit" />
+    <Property Name="CERRADO" Type="bit" />
   </EntityType>
   <EntityType Name="OTROSDB">
     <Key>
@@ -255,6 +258,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="STATUS" Type="int" />
     <Property Name="NUM_FIN" Type="int" />
     <Property Name="NUM_REC" Type="int" />
+    <Property Name="VALIDADO" Type="bit" />
+    <Property Name="CERRADO" Type="bit" />
   </EntityType>
   <EntityType Name="TIPOCR1">
     <Key>
@@ -327,6 +332,30 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="nombreTabla" Type="varchar" MaxLength="100" />
     <Property Name="subir" Type="bit" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_ConciliacionBancaria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VW_ConciliacionBancaria">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="FECHATXT" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="DEBITO" />
+      <PropertyRef Name="CREDITO" />
+      <PropertyRef Name="TIPO" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" Nullable="false" />
+    <Property Name="FECHATXT" Type="varchar" MaxLength="29" Nullable="false" />
+    <Property Name="TRANSACION" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="DEBITO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CREDITO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="VALIDADO" Type="bit" Nullable="false" />
+    <Property Name="BALANCECORTE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TIPO" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="CERRADO" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -816,6 +845,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
   <Function Name="sp_cuotasVencidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Fecha_Pago" Type="date" Mode="In" />
   </Function>
+  <Function Name="usp_CierreCaja" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="ColumnsTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STG">
     <Parameter Name="table_name" Type="varchar" Mode="In" />
   </Function>
@@ -854,6 +884,22 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
     [CARGO].[enable] AS [enable]
     FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_ConciliacionBancaria" EntityType="Self.VW_ConciliacionBancaria" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_ConciliacionBancaria].[ID] AS [ID], 
+    [VW_ConciliacionBancaria].[FECHA] AS [FECHA], 
+    [VW_ConciliacionBancaria].[FECHATXT] AS [FECHATXT], 
+    [VW_ConciliacionBancaria].[TRANSACION] AS [TRANSACION], 
+    [VW_ConciliacionBancaria].[CUENTA] AS [CUENTA], 
+    [VW_ConciliacionBancaria].[CONCEPTO] AS [CONCEPTO], 
+    [VW_ConciliacionBancaria].[DEBITO] AS [DEBITO], 
+    [VW_ConciliacionBancaria].[CREDITO] AS [CREDITO], 
+    [VW_ConciliacionBancaria].[VALIDADO] AS [VALIDADO], 
+    [VW_ConciliacionBancaria].[BALANCECORTE] AS [BALANCECORTE], 
+    [VW_ConciliacionBancaria].[TIPO] AS [TIPO], 
+    [VW_ConciliacionBancaria].[CERRADO] AS [CERRADO]
+    FROM [dbo].[VW_ConciliacionBancaria] AS [VW_ConciliacionBancaria]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_ConsultaFin" EntityType="Self.vw_ConsultaFin" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

@@ -26,5 +26,7 @@ namespace SistemaImbrino.Models
         public string CONCEPTO { get; set; }
         public string BENEFICIARIO { get; set; }
         public bool Activo { get; set; }
+        public Nullable<bool> VALIDADO { get; set; }
+        public Nullable<bool> CERRADO { get; set; }
     }
 }

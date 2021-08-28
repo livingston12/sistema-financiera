@@ -533,6 +533,7 @@
     <EntitySetMapping Name="CTABANCO">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.CTABANCO">
         <MappingFragment StoreEntitySet="CTABANCO">
+          <ScalarProperty Name="CTA_FECCOR" ColumnName="CTA_FECCOR" />
           <ScalarProperty Name="CTA_BALCOR" ColumnName="CTA_BALCOR" />
           <ScalarProperty Name="CTA_BALFEC" ColumnName="CTA_BALFEC" />
           <ScalarProperty Name="CTA_NUMERO" ColumnName="CTA_NUMERO" />
@@ -544,6 +545,8 @@
     <EntitySetMapping Name="OTROSCR">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSCR">
         <MappingFragment StoreEntitySet="OTROSCR">
+          <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+          <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
           <ScalarProperty Name="Activo" ColumnName="Activo" />
           <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
           <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
@@ -578,6 +581,8 @@
     <EntitySetMapping Name="OTROSDB">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSDB">
         <MappingFragment StoreEntitySet="OTROSDB">
+          <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+          <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
           <ScalarProperty Name="NUM_REC" ColumnName="NUM_REC" />
           <ScalarProperty Name="NUM_FIN" ColumnName="NUM_FIN" />
           <ScalarProperty Name="STATUS" ColumnName="STATUS" />
@@ -661,5 +666,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="VW_ConciliacionBancaria">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_ConciliacionBancaria">
+        <MappingFragment StoreEntitySet="VW_ConciliacionBancaria">
+          <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="BALANCECORTE" ColumnName="BALANCECORTE" />
+          <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
+          <ScalarProperty Name="CREDITO" ColumnName="CREDITO" />
+          <ScalarProperty Name="DEBITO" ColumnName="DEBITO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="TRANSACION" ColumnName="TRANSACION" />
+          <ScalarProperty Name="FECHATXT" ColumnName="FECHATXT" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_CierreCaja" FunctionName="DB_IMBRINOModel.Store.usp_CierreCaja" />
   </EntityContainerMapping>
 </Mapping>

@@ -1,0 +1,85 @@
+﻿
+<!--msb: main sidebar-->
+<div class="msb" id="msb">
+	
+	<nav class="" role="navigation">
+
+		<!-- Main Menu -->
+		<div class="side-menu-container">
+			<ul class="nav navbar-nav">
+				<li><a href="@Url.Action("Index", "Home")">@System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP")</a></li>
+				<li class="active"><a href="@Url.Action("Index", "CobrosHeader")"><span class="glyphicon glyphicon-credit-card" /> Cobros</a></li>
+				<li><a href="@Url.Action("Index", "FinanciamientosHeader")"><span class="glyphicon glyphicon-usd" /> Financiamientos</a></li>
+				<li><a href="@Url.Action("Index", "CargosAdicionales")"><span class="glyphicon glyphicon-folder-close" /> Cargos Adicionales</a></li>
+
+				<!-- Dropdown maestros-->
+				<li class="panel panel-default" id="dpMaestros">
+					<a data-toggle="collapse" href="#dpMaestros-lvl1">
+						<span class="glyphicon glyphicon-book" /> Maestros
+						<span class="caret"></span>
+					</a>
+					<div id="dpMaestros-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "Clientes")"><span class="glyphicon glyphicon-user" /> Clientes</a></li>
+								<li><a href="@Url.Action("Index", "Fiadores")"><span class="glyphicon glyphicon-piggy-bank" /> Fiadores</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+				<!-- Dropdown Cuentas bancarias-->
+				<li class="panel panel-default" id="dpCuentasbancarias">
+					<a data-toggle="collapse" href="#dpCuentasbancarias-lvl1">
+						<span class="glyphicon glyphicon-list-alt" /> Cuentas bancarias
+						<span class="caret"></span>
+					</a>
+					<div id="dpCuentasbancarias-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "CreditosBancarios")"><span class="glyphicon glyphicon-backward" /> Creditos bancarios</a></li>
+								<li><a href="@Url.Action("Index", "DebitosBancarios")"><span class="glyphicon glyphicon-forward" /> Debitos bancarios</a></li>
+								<li><a id="liConciliacionBancaria"><span class="glyphicon glyphicon-ok" /> Conciliacion bancaria</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+				<!-- Dropdown Cajas-->
+				<li class="panel panel-default" id="dpCaja">
+					<a data-toggle="collapse" href="#dpCaja-lvl1">
+						<span class="glyphicon glyphicon-shopping-cart" /> Caja
+						<span class="caret"></span>
+					</a>
+					<div id="dpCaja-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="@Url.Action("Index", "cuadreCaja")"><span class="glyphicon glyphicon-transfer" /> Cuadre caja</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-sort" /> Cierre caja</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+				<!-- Dropdown Reportes-->
+				<li class="panel panel-default" id="dpReportes">
+					<a data-toggle="collapse" href="#dpReportes-lvl1">
+						<span class="glyphicon glyphicon-floppy-save"></span> Reportes
+						<span class="caret"></span>
+					</a>
+					<div id="dpReportes-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
+								<li><a id="lifinAtrasados">Financiamientos Atrasados</a></li>
+								<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
+								<li><a id="liRegistroNCF">Registro NCF</a></li>
+								<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+</div>

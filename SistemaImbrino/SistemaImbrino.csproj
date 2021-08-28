@@ -67,6 +67,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,6 +150,8 @@
     <Compile Include="Controllers\Automatitation.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Cargos adicionales\CargosAdicionalesController.cs" />
+    <Compile Include="Controllers\Cierre Caja\CierreCajaController.cs" />
+    <Compile Include="Controllers\Conciliacion Bancaria\ConciliacionBancariaController.cs" />
     <Compile Include="Controllers\Cuadre caja\CuadreCajaController.cs" />
     <Compile Include="Controllers\Cobros\CobrosController.cs" />
     <Compile Include="Controllers\Cobros\CobrosHeaderController.cs" />
@@ -275,15 +280,21 @@
     <Compile Include="Models\VENDEDOR.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\View_CierreCaja.cs" />
+    <Compile Include="Models\View_cierreConciliacion.cs" />
+    <Compile Include="Models\View_CuadreCaja.cs" />
     <Compile Include="Models\View_cliente.cs" />
     <Compile Include="Models\View_Cobrar.cs" />
     <Compile Include="Models\View_cobrosHeader.cs" />
+    <Compile Include="Models\View_ConciliacionBancaria.cs" />
     <Compile Include="Models\View_consultaFinanciamientos.cs" />
     <Compile Include="Models\View_ListCreditosBancarios.cs" />
     <Compile Include="Models\View_ListDebitosBancarios.cs" />
     <Compile Include="Models\View_ListFincaciamientos.cs" />
     <Compile Include="Models\View_fincaciamientos.cs" />
+    <Compile Include="Models\View_ResultValue.cs" />
+    <Compile Include="Models\VW_ConciliacionBancaria.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ConsultaFin.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
@@ -351,6 +362,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FechaHeader.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ConciliacionBancaria.cs">
+      <DependentUpon>ConciliacionBancaria.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reportes\ReciboIngreso.cs">
       <DependentUpon>ReciboIngreso.rpt</DependentUpon>
@@ -560,10 +578,12 @@
     <Content Include="Views\CuadreCaja\Index.cshtml" />
     <Content Include="Views\CuadreCaja\_cuadreCajaResumen.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\ConciliacionBancaria\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CierreCaja\" />
     <Folder Include="Views\IngresoCuotas\" />
   </ItemGroup>
   <ItemGroup>
@@ -593,6 +613,11 @@
     <EmbeddedResource Include="Reportes\FechaHeader.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FechaHeader.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ConciliacionBancaria.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ConciliacionBancaria.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReciboIngreso.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -670,7 +695,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49903</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49903/</IISUrl>
+          <IISUrl>http://localhost:49904/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://localhost:8080/</CustomServerUrl>

@@ -1,0 +1,44 @@
+﻿@model SistemaImbrino.Models.View_CuadreCajaResumen
+
+
+
+	<div class="col-xs-12 btn-defaultColorLite top">
+		<label class="col-xs-offset-5" style="padding-top: 5px;">R E S U M E N</label>
+	</div>
+	
+	<div class="col-xs-offset-2 col-xs-6">
+		<br />
+		<label>CAPITAL RECUPERADO</label>
+		<label class="col-xs-offset-4 pull-right not-bold">@String.Format("{0:n}", Model.TotalCapital)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>INTERES GENERADO</label>
+		<label class="col-xs-offset-4 pull-right not-bold">@String.Format("{0:n}", Model.TotalInteres)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>INGRESOS NO NETOS</label>
+		<label class="col-xs-offset-4 pull-right not-bold">@String.Format("{0:n}", Model.IngresosNoNetos)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>OTROS INGRESOS NETOS</label>
+		<label class="col-xs-offset-4 pull-right not-bold">@String.Format("{0:n}", Model.OtrosIngresosNetos)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<p class="col-xs-offset-4  col-xs-12 pull-right top-border"></p>
+		<p class="col-xs-offset-4 col-xs-12 pull-right top-border"></p>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>TOTAL INGRESADO</label>
+		<label class="col-xs-offset-4 pull-right">@String.Format("{0:n}", Model.TotalIngresado)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>DEPOSITOS</label>
+		<label class="col-xs-offset-4 pull-right">@String.Format("{0:n}", Model.DepositoTranferencia)</label>
+	</div>
+	<div class="col-xs-offset-2 col-xs-6">
+		<label>TOTAL INGRESOS NETOS</label>
+		<label class="col-xs-offset-4 pull-right">@String.Format("{0:n}", Model.TotalIngresosNeto)</label>
+	</div>
+
+
+

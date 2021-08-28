@@ -1,0 +1,622 @@
+﻿
+@{
+	ViewBag.Title = "Creditos bancarios";
+	ViewBag.nameView = "credito bancario";
+}
+
+<div class="row">
+
+	<div class="col-xs-12 col-md-1 pull-left text-center">
+		<p class="control-label text-defaultColor" style="font-size:23px;">FILTRO</p>
+	</div>
+
+	<div class="col-xs-12 col-md-1">
+		<button class="btn btn-block bg-pink" id="btn-todos" disabled>
+			Todos
+		</button>
+	</div>
+
+	@foreach (var filter in ViewBag.listFilters)
+	{
+		string listClasesAdd = string.Empty;
+		string Descripcion = filter.DESCRIPCION;
+		Descripcion = Descripcion.ToLower();
+
+		switch ((int)filter.ID)
+		{
+			case 1:
+				listClasesAdd = "col-md-2 pull-left";
+				break;
+			case 2:
+			case 3:
+				listClasesAdd = "col-md-2";
+				break;
+		}
+
+		<div class="col-xs-12 @listClasesAdd">
+			<button class="btn btn-defaultColor btn-block" id="btn-@Descripcion" style="text-transform:capitalize">
+				@Descripcion
+			</button>
+		</div>
+	}
+	<div class="col-xs-6 col-md-2">
+		<div class="input-group input-group ">
+			<span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon1" aria-hidden="true"></span>
+			<input type="text" id="txt_search" value="" style="top:1px" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon1" />
+		</div>
+	</div>
+	<div class="col-xs-6 col-md-2 ">
+		<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-6 col-md-2 pull-right">
+		<input type="submit" value="Crear nuevo" id="btn_crearCreditoBancario" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-creditoBancario" class="table table-condensed table-hover table-bordered dataTable" style="width: 98%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center">ID</th>
+					<th class="text-left th-pd-no-left" style="padding-left:8px">BANCO</th>
+					<th class="dt-body-left th-pd-no-left">CUENTA BANCARIA</th>
+					<th class="text-left th-pd-no-left" id="thNumeroCheque">NUMERO CHEQUE</th>
+					<th class="text-left th-pd-no-left">TIPO CREDITO</th>
+					<th class="text-left th-pd-no-left">TIPO SALIDA</th>
+					<th class="text-right th-pd-right">MONTO</th>
+					<th class="text-center">FECHA</th>
+					<th class="text-left th-pd-no-left" id="thBeneficiario">BENEFICIARIO</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal create cliente ----------------------------------------------->
+<div class="modal fade" id="modalCreate" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("CrearCreditoBancario")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Crear @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_create")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_crear">Crear</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarCreditoBancario")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width:1000px">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Action("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_Editar">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+
+	<script type="text/javascript">
+		var json =
+			[
+				{
+					btn: "btn-todos"
+				},
+				{
+					btn: "btn-cheque"
+				},
+				{
+					btn: "btn-transferencia"
+				},
+				{
+					btn: "btn-cargo"
+				}
+			]
+		$(document).ready(function () {
+
+			llenarTblCreditoBancario("btn-todos");
+
+			$("input").blur(function () {
+				validarTexto(this);
+				validarNumero(this);
+			});
+
+			function searchValue() {
+				var myValue = $('#txt_search').val();
+				$("input[type=search]").val(myValue);
+				$("input[type=search]").keyup();
+				$("tr").addClass("finded");
+			}
+
+			$("#txt_search").keyup(function () {
+				searchValue();
+			});
+
+			$(".btn-block").click(function () {
+				var currentBtn = $(this).attr("id");
+				var currentJson = json.find(x => x.btn == currentBtn);
+				if (!currentJson) {
+					return;
+				}
+				$("#thNumeroCheque").text("NUMERO CHEQUE");
+				$("#thBeneficiario").text("BENEFICIARIO");
+
+				$(".btn-block").removeAttr("disabled");
+				$("#" + currentBtn).attr("disabled", "disabled");
+				$(".btn-block").addClass("btn-defaultColor");
+				$("#" + currentBtn).removeClass("btn-defaultColor");
+				$("#" + currentBtn).addClass("bg-pink");
+				if (currentBtn === "btn-transferencia" ||
+					currentBtn === "btn-cargo")
+				{
+					$("#thNumeroCheque").html("");
+					if (currentBtn === "btn-cargo")
+					{
+						$("#thBeneficiario").html("");
+					}
+				}
+
+				llenarTblCreditoBancario(currentBtn);
+				$("th").removeClass("sorting");
+			});
+
+			$("#TIPO_CREDITO,#ETIPO_CREDITO").change(function ()
+			{
+				var id = $(this).val();
+				var preffix = $(this).attr("id") === "ETIPO_CREDITO" ?
+								"E" : "";
+				$("#"+preffix+"NUMERO_CHEQUE").attr("disabled", "disabled");
+
+				if (id == 2)
+				{
+
+					$("#" + preffix + "BENEFICIARIO").removeAttr("disabled");
+
+					$("#" + preffix + "lbl_NUMERO_CHEQUE").text("");
+					$("#" + preffix + "NUMERO_CHEQUE").val("");
+
+					$("#" + preffix + "lbl_BENEFICIARIO").text("Beneficiario");
+				}
+				else if (id == 3)
+				{
+					$("#" + preffix + "lbl_NUMERO_CHEQUE").text("");
+					$("#" + preffix + "lbl_BENEFICIARIO").text("");
+					$("#" + preffix + "NUMERO_CHEQUE").val("");
+					$("#" + preffix + "BENEFICIARIO").val("");
+
+					$("#" + preffix + "BENEFICIARIO").attr("disabled", "disabled");
+				}
+				else
+				{
+					$("#" + preffix + "lbl_NUMERO_CHEQUE").text("Numero cheque");
+					$("#" + preffix + "lbl_BENEFICIARIO").text("Beneficiario");
+
+					$("#" + preffix + "BENEFICIARIO").removeAttr("disabled");
+					$("#" + preffix + "NUMERO_CHEQUE").removeAttr("disabled");
+				}
+			});
+
+			$("#BANCO,#EBANCO").change(function ()
+			{
+				var id = $(this).val();
+				var currentAttrId = $(this).attr("id");
+
+				if (currentAttrId === "BANCO") {
+					GetCuentasBancarias("CUENTA_BANCARIA", id);
+				} else {
+					GetCuentasBancarias("ECUENTA_BANCARIA", id);
+				}
+			});
+
+
+
+			$("#btn_crearCreditoBancario").click(function () {
+				Show_closeModal("#modalCreate", true);
+				GetBancos();
+				GetTipoCredito();
+				GetTipoSalida();
+				formartFecharToDatePicker();
+			});
+
+			$("#btn_crear").click(function (e)
+			{
+				insertarEditarCargo("I");
+			});
+			$("#btn_Editar").click(function (e) {
+				insertarEditarCargo("U");
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+				Show_closeModal("#modalCreate", false);
+			});
+
+			 $("#btn-imprimir").click(function ()
+			 {
+				 valuesFecha(this);				 
+			 });
+		});
+
+		async function valuesFecha(currentBtn) {
+			const { value: formValues } = await Swal.fire({
+				title: 'Seleciona el rango de fechas',
+				html:
+					'<div class="row"> <div class="col-xs-6">' +
+					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
+					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
+				focusConfirm: false,				
+				preConfirm: () => {
+					return {
+						FechaDesde: document.getElementById('fechaDesde').value,
+						FechaHasta: document.getElementById('fechaHasta').value
+					}
+				},				
+				width: 600,
+				confirmButtonText: "Generar reporte",
+				confirmButtonColor: "#0293b2"
+			});
+
+			if (formValues)
+			{
+				var jsonFechas = JSON.stringify(formValues);
+				ImprimirReporte(jsonFechas, currentBtn);
+			}
+		}
+
+		function ImprimirReporte(jsonFechas, currentBtn)
+		{
+				var url = "@Url.Action("PrintReport")";
+			var $btn = $(currentBtn).button('loading');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { json: jsonFechas},
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}	
+                });
+		}
+		function llenarTblCreditoBancario(btnId)
+		{
+
+			var url = "@Url.Action("getCurrentCreditoBancario")";
+
+			var table = $("#tbl-creditoBancario").DataTable({
+					destroy: true,
+					paging: true,
+					info: false,
+					searching: true,
+					ordering: true,
+					ajax: {
+						url: url,
+						type: "POST",
+						data: { btnId: btnId },
+						dataType: "json",
+						dataSrc: ""
+					},
+					columns: [
+						{
+							data: "ID",
+							className: "dt-body-left"
+						},
+						{
+							data: "BANCO"
+						},
+						{
+							data: "CUENTA_BANCARIA",
+							className: "dt-body-left"
+						},
+						{
+							data: "NUMERO_CHEQUE",
+							className: "dt-body-left"
+						},
+						{
+							data: "TIPO_CREDITO",
+							className: "dt-body-left"
+						},
+						{
+							data: "TIPO_SALIDA",
+							className: "dt-body-left"
+						},
+						{
+							data: "MONTO",
+							className: "dt-body-right",
+							render: function (data) {
+								return number_format_js(data, 2, 0);
+							},
+						},
+						{
+							data: "FECHA",
+							className: "dt-body-left"
+						},
+						{
+							data: "BENEFICIARIO",
+							className: "dt-body-left"
+						},
+						{
+							data: "BENEFICIARIO",
+							className: "dt-body-center"
+						}
+
+					],
+				lengthChange: true,
+					rowCallback: function (row, data) {
+						var id = data.ID;
+						var html = `
+							<span class="glyphicon glyphicon-edit" onclick="editar_Popup(`+ id +`)" id="Ceditar" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentCargo(`+id+`,'de la cuenta `+ data.CUENTA_BANCARIA	+`')" id="Celiminar" aria-hidden="true"></span>
+							`;
+						$('td:eq(9)', row).html(html).addClass("wth-action");
+					}
+
+				});
+				$("th").removeClass("sorting_asc");
+			$(".dataTables_filter").addClass("NoVisible");
+		}
+
+		function insertarEditarCargo(typeAction) {
+			url = typeAction == "I" ? "@Url.Action("CrearCreditoBancario")" : "@Url.Action("ActualizarCreditoBancario")";
+
+			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _BANCO = $("#" + E + "BANCO").val().trim();
+			var _CUENTA_BANCARIA = $("#" + E + "CUENTA_BANCARIA").val();
+			var _NUMERO_CHEQUE = $("#" + E + "NUMERO_CHEQUE").val().trim();
+			var _TIPO_CREDITO = $("#" + E + "TIPO_CREDITO").val();
+			var _TIPO_SALIDA = $("#" + E + "TIPO_SALIDA").val();
+			var _MONTO = $("#" + E + "MONTO").val().replace(",","").trim();
+			var _FECHA = $("#" + E + "FECHA").val().trim();
+			var _BENEFICIARIO = $("#" + E + "BENEFICIARIO").val().trim();
+			var _CONCEPTO = $("#" + E + "CONCEPTO").val().trim();
+
+
+			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
+				_TIPO_CREDITO == "0" || _TIPO_SALIDA == "0" ||
+				_MONTO == "" || _MONTO == "0" ||
+				_FECHA == ""  || _CONCEPTO == ""
+				)
+			{
+				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+				return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					id: _id
+					, BANCO: _BANCO
+					, CUENTA_BANCARIA: _CUENTA_BANCARIA
+					, NUMERO_CHEQUE: _NUMERO_CHEQUE
+					, TIPO_CREDITO: _TIPO_CREDITO
+					, TIPO_SALIDA: _TIPO_SALIDA
+					, MONTO: _MONTO
+					, FECHA: _FECHA
+					, BENEFICIARIO: _BENEFICIARIO
+					, CONCEPTO: _CONCEPTO
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+
+		}
+
+
+		function GetBancos(id = 'BANCO')
+		{
+			var url = "@Url.Action("GetBancos")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "banco",true,true);
+				}
+			});
+		}
+
+		function GetCuentasBancarias(id = 'CUENTA_BANCARIA',valor)
+		{
+			var url = "@Url.Action("GetCuentasBancarias")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				async: false,
+				data: {
+					id: valor
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "cuenta de banco",true,true);
+				}
+			});
+		}
+
+		function GetTipoCredito(id = 'TIPO_CREDITO')
+		{
+			var url = "@Url.Action("GetTipoCredito")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "tipo de credito",true,true);
+				}
+			});
+		}
+		function GetTipoSalida(id = 'TIPO_SALIDA')
+		{
+			var url = "@Url.Action("GetTipoSalida")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				async: false,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "tipo de salida",true,true);
+				}
+			});
+		}
+
+		function EliminarCurrentCargo(id,nombre) {
+			mensajeEliminarCargo(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarCargo(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el credito bancario " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCreditoBancario(id);
+			});
+		}
+
+		function eliminarCreditoBancario(_id)
+		{
+			var url = "@Url.Action("EliminarCreditoBancario")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#id").val(_id);
+			Show_closeModal("#modalCeditar", true);
+
+			$("#ENUMERO_CHEQUE").empty();
+			$("#EMONTO").empty();
+			$("#EFECHA").empty();
+			$("#ECONCEPTO").empty();
+			$("#EBENEFICIARIO").empty();
+
+
+			GetBancos("EBANCO");
+			GetTipoCredito("ETIPO_CREDITO");
+			GetTipoSalida("ETIPO_SALIDA");
+			GetCuentasBancarias("ECUENTA_BANCARIA");
+			updateSelectMania("ECUENTA_BANCARIA");
+			updateSelectMania("EBANCO");
+			updateSelectMania("ETIPO_SALIDA");
+			updateSelectMania("ETIPO_CREDITO");
+
+			var url = "@Url.Action("GetCreditoBancarioDetail")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+
+					$("#EBANCO").val(_data.ID_BANCO);
+					updateSelectMania("EBANCO");
+					$("#EBANCO").trigger("change");
+					$("#ENUMERO_CHEQUE").val(_data.NUMERO_CHEQUE);
+					$("#ETIPO_CREDITO").val(_data.ID_TIPO_CREDITO);
+
+					$("#ETIPO_SALIDA").val(_data.ID_TIPO_SALIDA);
+
+					$("#EMONTO").val(_data.MONTO);
+					$("#EFECHA").val(_data.FECHA);
+					$("#EBENEFICIARIO").val(_data.BENEFICIARIO);
+					$("#ECONCEPTO").val(_data.CONCEPTO);
+					$("#id").val(_id);
+					$("#ECUENTA_BANCARIA").val(_data.ID_CUENTA_BANCARIA);
+
+					updateSelectMania("ECUENTA_BANCARIA");
+					updateSelectMania("ETIPO_SALIDA");
+					updateSelectMania("ETIPO_CREDITO");
+					$("#ETIPO_CREDITO").trigger("change");
+				},
+				complete: function (_data)
+				{
+
+				}
+			});
+			formartFecharToDatePicker();
+		}
+
+		function formartFecharToDatePicker() {
+			$('.ui-datepicker').addClass("datepickerFormat");
+		}
+	</script>
+
+}
+

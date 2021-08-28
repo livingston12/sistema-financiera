@@ -261,7 +261,6 @@ E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\De
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csproj.CopyComplete
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.dll
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.pdb
-E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csprojAssemblyReference.cache
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinDetalle.rpt
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinHeader.rpt
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\FinDetalle.cs
@@ -274,3 +273,8 @@ E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Re
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CuadreCaja.cs
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ReciboIngreso.rpt
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ReciboIngreso.cs
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\System.ValueTuple.dll
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\System.ValueTuple.xml
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Debug\SistemaImbrino.csprojAssemblyReference.cache
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ConciliacionBancaria.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ConciliacionBancaria.cs

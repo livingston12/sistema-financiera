@@ -88,6 +88,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
           <Property Name="CTA_NUMERO" Type="varchar" MaxLength="100" />
           <Property Name="CTA_BALFEC" Type="varchar" MaxLength="100" />
           <Property Name="CTA_BALCOR" Type="varchar" MaxLength="100" />
+          <Property Name="CTA_FECCOR" Type="date" />
         </EntityType>
         <EntityType Name="CUOTA">
           <Key>
@@ -243,6 +244,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
           <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="BENEFICIARIO" Type="varchar" MaxLength="150" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="VALIDADO" Type="bit" />
+          <Property Name="CERRADO" Type="bit" />
         </EntityType>
         <EntityType Name="OTROSDB">
           <Key>
@@ -260,6 +263,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
           <Property Name="STATUS" Type="int" />
           <Property Name="NUM_FIN" Type="int" />
           <Property Name="NUM_REC" Type="int" />
+          <Property Name="VALIDADO" Type="bit" />
+          <Property Name="CERRADO" Type="bit" />
         </EntityType>
         <EntityType Name="TIPOCR1">
           <Key>
@@ -332,6 +337,36 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
           <Property Name="nombreTabla" Type="varchar" MaxLength="100" />
           <Property Name="subir" Type="bit" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_ConciliacionBancaria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_ConciliacionBancaria">
+          <Key>
+            <PropertyRef Name="ID" />
+            
+            <PropertyRef Name="FECHATXT" />
+            
+            
+            <PropertyRef Name="CONCEPTO" />
+            <PropertyRef Name="DEBITO" />
+            <PropertyRef Name="CREDITO" />
+            
+            
+            <PropertyRef Name="TIPO" />
+            
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FECHA" Type="datetime" Nullable="false" />
+          <Property Name="FECHATXT" Type="varchar" MaxLength="29" Nullable="false" />
+          <Property Name="TRANSACION" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CONCEPTO" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="DEBITO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CREDITO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="VALIDADO" Type="bit" Nullable="false" />
+          <Property Name="BALANCECORTE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TIPO" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="CERRADO" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -856,6 +891,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
         <Function Name="sp_cuotasVencidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Fecha_Pago" Type="date" Mode="In" />
         </Function>
+        <Function Name="usp_CierreCaja" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ColumnsTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STG">
           <Parameter Name="table_name" Type="varchar" Mode="In" />
         </Function>
@@ -894,6 +930,22 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
     [CARGO].[enable] AS [enable]
     FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_ConciliacionBancaria" EntityType="Self.VW_ConciliacionBancaria" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_ConciliacionBancaria].[ID] AS [ID], 
+    [VW_ConciliacionBancaria].[FECHA] AS [FECHA], 
+    [VW_ConciliacionBancaria].[FECHATXT] AS [FECHATXT], 
+    [VW_ConciliacionBancaria].[TRANSACION] AS [TRANSACION], 
+    [VW_ConciliacionBancaria].[CUENTA] AS [CUENTA], 
+    [VW_ConciliacionBancaria].[CONCEPTO] AS [CONCEPTO], 
+    [VW_ConciliacionBancaria].[DEBITO] AS [DEBITO], 
+    [VW_ConciliacionBancaria].[CREDITO] AS [CREDITO], 
+    [VW_ConciliacionBancaria].[VALIDADO] AS [VALIDADO], 
+    [VW_ConciliacionBancaria].[BALANCECORTE] AS [BALANCECORTE], 
+    [VW_ConciliacionBancaria].[TIPO] AS [TIPO], 
+    [VW_ConciliacionBancaria].[CERRADO] AS [CERRADO]
+    FROM [dbo].[VW_ConciliacionBancaria] AS [VW_ConciliacionBancaria]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_ConsultaFin" EntityType="Self.vw_ConsultaFin" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1248,6 +1300,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
           <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
           <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
+          <EntitySet Name="VW_ConciliacionBancaria" EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" />
+          <FunctionImport Name="usp_CierreCaja" />
         </EntityContainer>
         <EntityType Name="INGOTRO">
           <Key>
@@ -1976,6 +2030,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="CTA_NUMERO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CTA_BALFEC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CTA_BALCOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTA_FECCOR" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="OTROSCR">
           <Key>
@@ -1993,6 +2048,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="BENEFICIARIO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="VALIDADO" Type="Boolean" />
+          <Property Name="CERRADO" Type="Boolean" />
         </EntityType>
         <EntityType Name="TIPODB1">
           <Key>
@@ -2024,6 +2081,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="STATUS" Type="Int32" />
           <Property Name="NUM_FIN" Type="Int32" />
           <Property Name="NUM_REC" Type="Int32" />
+          <Property Name="VALIDADO" Type="Boolean" />
+          <Property Name="CERRADO" Type="Boolean" />
         </EntityType>
         <EntityType Name="VW_rptCreditosBancarios">
           <Key>
@@ -2106,7 +2165,29 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="BalancePendiente" Type="Decimal" Nullable="false" />
+          <Property Name="BalancePendiente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="VW_ConciliacionBancaria">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="FECHATXT" />
+            <PropertyRef Name="CONCEPTO" />
+            <PropertyRef Name="DEBITO" />
+            <PropertyRef Name="CREDITO" />
+            <PropertyRef Name="TIPO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="FECHATXT" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="TRANSACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CUENTA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DEBITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CREDITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="VALIDADO" Type="Boolean" Nullable="false" />
+          <Property Name="BALANCECORTE" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TIPO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="CERRADO" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2646,6 +2727,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySetMapping Name="CTABANCO">
             <EntityTypeMapping TypeName="DB_IMBRINOModel.CTABANCO">
               <MappingFragment StoreEntitySet="CTABANCO">
+                <ScalarProperty Name="CTA_FECCOR" ColumnName="CTA_FECCOR" />
                 <ScalarProperty Name="CTA_BALCOR" ColumnName="CTA_BALCOR" />
                 <ScalarProperty Name="CTA_BALFEC" ColumnName="CTA_BALFEC" />
                 <ScalarProperty Name="CTA_NUMERO" ColumnName="CTA_NUMERO" />
@@ -2657,6 +2739,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySetMapping Name="OTROSCR">
             <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSCR">
               <MappingFragment StoreEntitySet="OTROSCR">
+                <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+                <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
                 <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
@@ -2691,6 +2775,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
           <EntitySetMapping Name="OTROSDB">
             <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSDB">
               <MappingFragment StoreEntitySet="OTROSDB">
+                <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+                <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
                 <ScalarProperty Name="NUM_REC" ColumnName="NUM_REC" />
                 <ScalarProperty Name="NUM_FIN" ColumnName="NUM_FIN" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
@@ -2774,6 +2860,25 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VW_ConciliacionBancaria">
+            <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_ConciliacionBancaria">
+              <MappingFragment StoreEntitySet="VW_ConciliacionBancaria">
+                <ScalarProperty Name="CERRADO" ColumnName="CERRADO" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="BALANCECORTE" ColumnName="BALANCECORTE" />
+                <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
+                <ScalarProperty Name="CREDITO" ColumnName="CREDITO" />
+                <ScalarProperty Name="DEBITO" ColumnName="DEBITO" />
+                <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+                <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+                <ScalarProperty Name="TRANSACION" ColumnName="TRANSACION" />
+                <ScalarProperty Name="FECHATXT" ColumnName="FECHATXT" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_CierreCaja" FunctionName="DB_IMBRINOModel.Store.usp_CierreCaja" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

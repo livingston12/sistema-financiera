@@ -1,6 +1,7 @@
 ﻿
 
 $(document).ready(function () {	
+	
 	$(".select").selectMania({
 		width: '100%',
 		size: 'small',
@@ -21,13 +22,15 @@ $(document).ready(function () {
 // insertar valor fecha
 function ValidarFechas(currentInput,date, datepicker)
 {
-	
 	if (date.length !== 0) {
 		var indexcurrentMonth = Number(datepicker.currentMonth);
 		var currentDay = datepicker.currentDay;
 		var currentYear = datepicker.currentYear;
 		var currentDate = currentDay + "-" + monthName(indexcurrentMonth) + "-" + currentYear;
+		indexcurrentMonth = indexcurrentMonth + 1;
+		var month = indexcurrentMonth < 10 ? '0' + indexcurrentMonth : indexcurrentMonth;
 		$(currentInput).val(currentDate);
+		$(currentInput).attr("dateValue", `${currentYear}-${month}-${currentDay}`);
 		validarTexto(currentInput);
 		
 	}
@@ -521,4 +524,11 @@ function GetTipoDebito(id = 'TIPO_SALIDA', url = "")
 			llenarDropdows(_data, id, "tipo de debito", true, true);
 		}
 	});
+}
+
+function getDateName(date) {
+	var dateParts = date.split("-");
+	var month = Number.parseInt(dateParts[1]);
+	var currentDate = dateParts[2] + "/" + monthName(month-1) + "/" + dateParts[0];
+	return currentDate;
 }

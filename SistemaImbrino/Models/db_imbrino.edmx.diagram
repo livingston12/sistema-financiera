@@ -55,6 +55,7 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" Width="1.5" PointX="20.375" PointY="11.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.vw_CuadreCaja" Width="1.5" PointX="12.375" PointY="20.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" Width="1.5" PointX="0.75" PointY="20.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" Width="1.5" PointX="14.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

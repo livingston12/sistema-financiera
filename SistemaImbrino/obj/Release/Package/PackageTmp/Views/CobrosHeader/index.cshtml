@@ -24,15 +24,14 @@
 	<br />
 
 	<table id="tbl_headerCuotas" class="table table-bordered">
-		<thead>
+		<thead class="btn-defaultColorLite">
 			<tr>
 				<th></th>
-				<th>Cliente</th>
-				@*<th class="text-center">Finaciamientos</th>*@
-				<th class="text-center">Balance Total</th>
-				<th class="text-center">Capital total</th>
-				<th class="text-center">Interes total</th>
-				<th class="text-center">Mora total</th>
+				<th>CLIENTE</th>
+				<th class="text-center">BALANCE TOTAL</th>
+				<th class="text-center">CAPITAL TOTAL</th>
+				<th class="text-center">INTERES TOTAL</th>
+				<th class="text-center">MORA TOTAL</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -61,18 +60,17 @@
 					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
 
 				</tr>
+				if (isVisible == "1")
+				{
+					<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
+						<td></td>
 
-				<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
-					<td></td>
-
-					<td colspan="5">
-						@*@Html.Partial("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })*@
-						@Html.Partial("_CobrosDetalleCliente", (SistemaImbrino.Models.View_cobrosHeader)CuotasVen)
-					</td>
-				</tr>
-
-
-
+						<td colspan="5">
+							@*@Html.Partial("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })*@
+							@Html.Partial("_CobrosDetalleCliente", (SistemaImbrino.Models.View_cobrosHeader)CuotasVen)
+						</td>
+					</tr>
+				}
 
 			}
 		</tbody>

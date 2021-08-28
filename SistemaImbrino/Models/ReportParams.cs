@@ -34,17 +34,18 @@ namespace SistemaImbrino.Models
 
         public enum ReportName
         {
-            EstadoCuenta = 1,
-            CuotasVencidas = 2,
-            Financiamientos_atrasados = 3,
-            RegistroNCF = 4,
-            IngresoCuotas = 5,
-            FinHeader = 6,
-            FinDetalle = 7,
-            CreditosBancarios = 8,
-            DebitosBancarios = 9,
-            CuadreCaja = 10,
-            ReciboIngreso = 11
+            EstadoCuenta,
+            CuotasVencidas,
+            Financiamientos_atrasados,
+            RegistroNCF,
+            IngresoCuotas,
+            FinHeader,
+            FinDetalle,
+            CreditosBancarios,
+            DebitosBancarios,
+            CuadreCaja,
+            ReciboIngreso ,
+            ConciliacionBancaria
         }
 
 
@@ -53,6 +54,16 @@ namespace SistemaImbrino.Models
         public static string returMonthName(int month)
         {
             return listaMeses[month - 1];
+        }
+        public static string returDateFormat(DateTime? date)
+        {
+            bool exist = date.HasValue;
+            string currentDate = string.Empty;
+            if (exist)
+            {
+                currentDate = $"{date.Value.ToString("dd")}/{returMonthName(date.Value.Month)}/{date.Value.ToString("yyyy")}";
+            }
+            return currentDate;
         }
         public static DataTable CreateDataTable<T>(IEnumerable<T> list)
         {
@@ -262,7 +273,7 @@ namespace SistemaImbrino.Models
                 case ReportName.CreditosBancarios:
                     txt_ReportName = _ReportName.ToString();
 
-                    IQueryable<VW_rptCreditosBancarios> _iqCB = db.VW_rptCreditosBancarios;
+                    IQueryable<VW_rptCreditosBancarios> _iqCB = db.VW_rptCreditosBancarios.OrderBy(x=>x.FECHA);
                     List<VW_rptCreditosBancarios> _listCB = new List<VW_rptCreditosBancarios>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
@@ -271,7 +282,7 @@ namespace SistemaImbrino.Models
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Creditos bancarios {criterios}" },
+                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Créditos bancarios {criterios}" },
                         new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
                     });
                     CrReport.Load(urlReporte);
@@ -280,7 +291,7 @@ namespace SistemaImbrino.Models
                 case ReportName.DebitosBancarios:
                     txt_ReportName = _ReportName.ToString();
 
-                    IQueryable<VW_rptDebitosBancarios> _iqDB = db.VW_rptDebitosBancarios;
+                    IQueryable<VW_rptDebitosBancarios> _iqDB = db.VW_rptDebitosBancarios.OrderBy(x=>x.FECHA);
                     List<VW_rptDebitosBancarios> _listDB = new List<VW_rptDebitosBancarios>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
@@ -289,7 +300,7 @@ namespace SistemaImbrino.Models
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Debitos bancarios {criterios}" },
+                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Débitos bancarios {criterios}" },
                         new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
                     });
                     CrReport.Load(urlReporte);
@@ -329,6 +340,30 @@ namespace SistemaImbrino.Models
                     CrReport.Load(urlReporte);
                     CrReport.SetDataSource(_listRI);
                     break;
+                case ReportName.ConciliacionBancaria:
+                    txt_ReportName = _ReportName.ToString();
+                    string FiltroCuenta = Listcriterios.Where(x => x.ParameterName == "FiltroCuenta").FirstOrDefault().ParameterValue.ToString();
+                    string cuenta = FiltroCuenta.Split('#')[1].Trim();
+                    DateTime? fechaCorte = getFechaCorte(cuenta);
+                    IQueryable<VW_ConciliacionBancaria> _iqCONB = db.VW_ConciliacionBancaria.Where(x=>x.CUENTA == cuenta).OrderBy(x=> x.FECHA);
+                    List<VW_ConciliacionBancaria> _listCONB = new List<VW_ConciliacionBancaria>();
+
+                    urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+                    _listCONB = criteriosConciliacionBancaria(Listcriterios, ref criterios, ref _iqCONB);
+                    string filtroFechas = Listcriterios.Where(x => x.ParameterName == "isMovimiento").FirstOrDefault().ParameterValue.ToString() == "True" ?
+                            "Movimiento bancario" : "Estado de cuenta";
+                    //Parametros del reporte
+                    parameters.AddRange(new List<Parameters>
+                    {
+                        new Parameters() { ParameterName = "FiltroFechas", ParameterValue = $"{filtroFechas} del {criterios}" },
+                        new Parameters() { ParameterName = "FiltroCuenta", ParameterValue = Listcriterios.Where(x=> x.ParameterName == "FiltroCuenta").FirstOrDefault().ParameterValue },
+                        new Parameters() { ParameterName = "FechaCorte", ParameterValue = returDateFormat(fechaCorte) },
+                        new Parameters() { ParameterName = "BalanceCorte", ParameterValue =  Listcriterios.Where(x=> x.ParameterName == "Balance").FirstOrDefault().ParameterValue },
+                        new Parameters() { ParameterName = "isMovimiento", ParameterValue =  Listcriterios.Where(x=> x.ParameterName == "isMovimiento").FirstOrDefault().ParameterValue },
+                    });
+                    CrReport.Load(urlReporte);
+                    CrReport.SetDataSource(_listCONB);
+                    break;
             }
 
             foreach (var prt in parameters)
@@ -342,6 +377,19 @@ namespace SistemaImbrino.Models
 
             guardarPDF(CrReport, txt_ReportName, intialPath);
             CrReport.Close();
+        }
+
+        private static DateTime? getFechaCorte(string cuenta)
+        {
+            DB_IMBRINOEntities db = new DB_IMBRINOEntities();
+            CTABANCO ctaBanco = db.CTABANCO.Where(x => x.CTA_NUMERO == cuenta).FirstOrDefault();
+            DateTime? result = DateTime.MinValue;
+            if (ctaBanco != null)
+            {
+                result = ctaBanco.CTA_FECCOR.HasValue ?
+                            ctaBanco.CTA_FECCOR : result;
+            }
+            return result;
         }
 
         public static ReportDocument configureCrystalReports(ReportDocument cryRpt, string DatabaseName, string servername)
@@ -806,6 +854,39 @@ namespace SistemaImbrino.Models
                 }
             }
 
+            return list.ToList();
+        }
+
+        private static List<VW_ConciliacionBancaria> criteriosConciliacionBancaria(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_ConciliacionBancaria> list)
+        {
+           
+            List<string> _listCriterio = new List<string>();
+
+            foreach (var cri in listcriterios)
+            {
+                switch (cri.ParameterName)
+                {
+                    case "FechaDesde":
+                        if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
+                        {
+                            DateTime.TryParse(cri.ParameterValue.ToString(), out DateTime fechaDesde);
+                            list = list.Where(x => x.FECHA >= fechaDesde);
+                            CurrentCriterio = string.Format("{0}/{1}/{2}", fechaDesde.ToString("dd"), returMonthName(fechaDesde.Month), fechaDesde.ToString("yyyy"));
+                            _listCriterio.Add(CurrentCriterio);
+                        }
+                        break;
+                    case "FechaHasta":
+                        if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
+                        {
+                            DateTime.TryParse(cri.ParameterValue.ToString(), out DateTime fechaHasta);
+                            list = list.Where(x => x.FECHA <= fechaHasta);
+                            CurrentCriterio = string.Format("{0}/{1}/{2}", fechaHasta.ToString("dd"), returMonthName(fechaHasta.Month), fechaHasta.ToString("yyyy"));
+                            _listCriterio.Add(CurrentCriterio);
+                        }
+                        break;
+                }                      
+            }
+            criterios = string.Join(" al ", _listCriterio.ToArray());
             return list.ToList();
         }
 

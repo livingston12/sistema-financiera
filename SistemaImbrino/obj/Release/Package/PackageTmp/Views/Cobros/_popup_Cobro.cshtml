@@ -5,11 +5,15 @@
 
 	decimal Mora = 0;
 
-	if (ViewBag.tipoCobro == "Pago" || ViewBag.tipoCobro == "Saldo cuota" || ViewBag.tipoCobro == "Saldo incluye pago de mora")
+	if (ViewBag.tipoCobro == "Pago"
+			|| ViewBag.tipoCobro == "Saldo cuota"
+			|| ViewBag.tipoCobro == "Saldo incluye pago de mora"
+			|| ViewBag.tipoCobro == "Registrar mora como cargo"
+		)
 	{
 		monto = Model.MONTO;
 
-		Mora =Model.mora;
+		Mora = Model.mora;
 	}
 	else if (ViewBag.tipoCobro == "Saldo NO pago de la mora" || ViewBag.tipoCobro == "Abono NO pago de la mora")
 	{
@@ -17,16 +21,22 @@
 
 		Mora = 0;
 	}
+	else if (ViewBag.tipoCobro == "Saldo cargo adicional" || ViewBag.tipoCobro == "Abono cargo adicional")
+	{
+		monto = Model.MONTO;
+
+		Mora = Model.MONTO;
+	}
 	else //if (ViewBag.tipoCobro == "Abono incluye pago de mora" || ViewBag.tipoCobro == "Abono")
 	{
 		monto = 0;
+		Mora = 0;
 
-		Mora = Model.mora;
+		if (Model != null)
+		{
+			Mora = Model.mora;
+		}
 	}
-
-
-
-
 
 }
 <input id="modal_numfin" type="hidden" value="@Model.C__FIN" />
@@ -37,13 +47,13 @@
 
 <div class="row">
 	<div class="col-md-4 text-left ">
-		<label>Monto</label>
+		<label id="lblMonto">Monto</label>
 		<input type="text" max="@Model.MONTO" value="@monto" class="form-control" id="modal_monto">
 	</div>
 
 	<div class="col-md-4 text-center ">
 		<label>Mora</label>
-		<input type="text"  max="@Model.mora" value="@Mora" class="form-control" id="modal_mora">
+		<input type="text" max="@Model.mora" value="@Mora" class="form-control" id="modal_mora">
 
 	</div>
 </div>

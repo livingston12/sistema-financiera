@@ -68,6 +68,7 @@ namespace SistemaImbrino.Models
         public virtual DbSet<VW_rptDebitosBancarios> VW_rptDebitosBancarios { get; set; }
         public virtual DbSet<vw_CuadreCaja> vw_CuadreCaja { get; set; }
         public virtual DbSet<VW_rptReciboIngreso> VW_rptReciboIngreso { get; set; }
+        public virtual DbSet<VW_ConciliacionBancaria> VW_ConciliacionBancaria { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {
@@ -85,6 +86,11 @@ namespace SistemaImbrino.Models
                 new ObjectParameter("Fecha_Pago", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_cuotasVencidas_Result>("sp_cuotasVencidas", fecha_PagoParameter);
+        }
+    
+        public virtual int usp_CierreCaja()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_CierreCaja");
         }
     }
 }

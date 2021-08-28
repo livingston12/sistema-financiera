@@ -56,6 +56,10 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                     return Json(message);
                 }
                 DebitoBancario.ACTIVO = true;
+                DebitoBancario.CERRADO = false;
+                DebitoBancario.VALIDADO = false;
+
+                modificarBalanceFecha(_db, DebitoBancario.CUENTA_BANCARIA, DebitoBancario.MONTO, tipoBalanceFecha.aumentar);
                 _db.OTROSDB.Add(DebitoBancario);
                 _db.SaveChanges();
 
@@ -139,6 +143,8 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                     };
                     return Json(message);
                 }
+                
+                
 
                 debito.BANCO = debitoBancario.BANCO;
                 debito.CONCEPTO = debitoBancario.CONCEPTO;
@@ -149,6 +155,7 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 debito.TIPO_DEBITO = debitoBancario.TIPO_DEBITO;
 
                 _db.Entry(debito).State = System.Data.Entity.EntityState.Modified;
+                modificarBalanceFecha(_db, debitoBancario.CUENTA_BANCARIA, debito.MONTO, debitoBancario.MONTO);
                 _db.SaveChanges();
                 message = new message()
                 {

@@ -19,5 +19,6 @@ namespace SistemaImbrino.Models
         public string CTA_NUMERO { get; set; }
         public string CTA_BALFEC { get; set; }
         public string CTA_BALCOR { get; set; }
+        public Nullable<System.DateTime> CTA_FECCOR { get; set; }
     }
 }

@@ -68,6 +68,11 @@ namespace SistemaImbrino.Controllers
             CUOTA = 1,
             OTROS_INGRESOS = 2
         }
+        public enum tipoBalanceFecha
+        {
+            aumentar,
+            disminuir
+        }
         public enum typeOTRO
         {
             INVERSIONES = 1,
@@ -354,7 +359,7 @@ namespace SistemaImbrino.Controllers
         public static string getBanco(int id)
         {
             var list = db.BANCO.Where(x => x.BCO_CODIGO == id).ToList();
-            string value = list.Any() ? list.FirstOrDefault().BCO_NOMBRE : string.Empty;
+            string value = list.Any() ? list.FirstOrDefault().BCO_ABREVI : string.Empty;
             return value.Trim();
         }
 
@@ -400,6 +405,12 @@ namespace SistemaImbrino.Controllers
             return value.Trim();
         }
 
+        public static string getBalanceCuentaBancaria(string cuenta)
+        {
+            var list = db.CTABANCO.Where(x => x.CTA_NUMERO == cuenta).ToList();
+            string value = list.Any() ? list.FirstOrDefault().CTA_BALCOR : string.Empty;
+            return value.Trim();
+        }
 
         public static message GuardarPrestamo(View_ListFincaciamientos financiamiento, DateTime fecha, OTROSCR OtroCargo)
         {
@@ -724,6 +735,27 @@ namespace SistemaImbrino.Controllers
                 menssageErrors
                     .Add($"El campo <b>{nameof(deposito.FECHA)}</b> tiene un formato incorrecto");
             }
+        }
+
+        public static void modificarBalanceFecha(DB_IMBRINOEntities _db, int idCuenta,decimal monto,tipoBalanceFecha tipoCambio)
+        {
+            if (tipoBalanceFecha.disminuir == tipoCambio)
+            {
+                monto = monto * -1;
+            }
+            var cuentaBanco = _db.CTABANCO.Where(x => x.CTA_CODIGO == idCuenta).FirstOrDefault();
+            decimal.TryParse(cuentaBanco.CTA_BALFEC, out decimal balanceFecha);
+            cuentaBanco.CTA_BALFEC = (balanceFecha + monto).ToString();
+            _db.Entry(cuentaBanco).State = EntityState.Modified;
+        }
+
+        public static void modificarBalanceFecha(DB_IMBRINOEntities _db, int idCuenta, decimal montoActual, decimal montoModificado)
+        {
+            tipoBalanceFecha tipo = montoModificado > montoActual ?
+                                                                tipoBalanceFecha.aumentar : 
+                                                                tipoBalanceFecha.disminuir;
+            decimal monto = montoModificado - montoActual;
+            modificarBalanceFecha(_db, idCuenta, monto, tipo);
         }
     }
 }

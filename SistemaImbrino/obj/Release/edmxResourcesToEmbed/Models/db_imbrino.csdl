@@ -66,6 +66,25 @@
       <End Role="CLIENTE" EntitySet="CLIENTE" />
     </AssociationSet>
     <EntitySet Name="CUOTA" EntityType="DB_IMBRINOModel.CUOTA" />
+    <EntitySet Name="INGRESO" EntityType="DB_IMBRINOModel.INGRESO" />
+    <EntitySet Name="OTROCARG" EntityType="DB_IMBRINOModel.OTROCARG" />
+    <EntitySet Name="ABOOCARG" EntityType="DB_IMBRINOModel.ABOOCARG" />
+    <EntitySet Name="CARGO" EntityType="DB_IMBRINOModel.CARGO" />
+    <EntitySet Name="vw_ConsultaFinDetalle" EntityType="DB_IMBRINOModel.vw_ConsultaFinDetalle" />
+    <EntitySet Name="vw_ConsultaFin" EntityType="DB_IMBRINOModel.vw_ConsultaFin" />
+    <EntitySet Name="TIPOCR1" EntityType="DB_IMBRINOModel.TIPOCR1" />
+    <EntitySet Name="TIPOCR2" EntityType="DB_IMBRINOModel.TIPOCR2" />
+    <EntitySet Name="BANCO" EntityType="DB_IMBRINOModel.BANCO" />
+    <EntitySet Name="CTABANCO" EntityType="DB_IMBRINOModel.CTABANCO" />
+    <EntitySet Name="OTROSCR" EntityType="DB_IMBRINOModel.OTROSCR" />
+    <EntitySet Name="TIPODB1" EntityType="DB_IMBRINOModel.TIPODB1" />
+    <EntitySet Name="TIPODB2" EntityType="DB_IMBRINOModel.TIPODB2" />
+    <EntitySet Name="OTROSDB" EntityType="DB_IMBRINOModel.OTROSDB" />
+    <EntitySet Name="VW_rptCreditosBancarios" EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" />
+    <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
+    <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
+    <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
+    <EntitySet Name="VW_ConciliacionBancaria" EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" />
   </EntityContainer>
   <EntityType Name="INGOTRO">
     <Key>
@@ -521,9 +540,9 @@
     <Property Type="Decimal" Name="MONTO" Nullable="false" Precision="18" Scale="2" />
     <Property Type="String" Name="TELEFONO" Nullable="false" MaxLength="14" />
     <Property Type="String" Name="TELEFONO2" Nullable="false" MaxLength="14" />
-    <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="148" />
+    <Property Type="String" Name="DESCRIPCION" Nullable="false" MaxLength="8000" />
     <Property Type="String" Name="FechaAbono" Nullable="false" MaxLength="100" />
-    <Property Type="Int32" Name="NUM_CUOTA" Nullable="false" />
+    <Property Type="String" Name="NUM_CUOTA" Nullable="true" />
     <Property Type="String" Name="empresa" Nullable="false" MaxLength="100" />
     <Property Type="Decimal" Name="CapitalTotal" Nullable="false" Precision="18" Scale="2" />
     <Property Type="Decimal" Name="InteresTotal" Nullable="false" Precision="18" Scale="2" />
@@ -531,14 +550,15 @@
     <Property Type="Double" Name="interesAbono" Nullable="false" />
     <Property Type="Double" Name="capital" Nullable="false" />
     <Property Type="Double" Name="INTERES" Nullable="false" />
-    <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="CUO_STATUS" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="FAC_GARANT" Nullable="false" MaxLength="150" />
     <Property Type="Double" Name="FAC_INTERE" Nullable="false" />
     <Property Type="String" Name="Status" Nullable="false" MaxLength="9" />
     <Property Type="Decimal" Name="mora" Nullable="false" Precision="18" Scale="2" />
-    <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="9" />
+    <Property Type="String" Name="CUO_TIPO" Nullable="false" MaxLength="12" />
     <Property Type="DateTime" Name="fechadt" Nullable="false" Precision="23" />
-    <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="fecha_Pago" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="tipo" Nullable="false" MaxLength="5" />
   </ComplexType>
   <EntityType Name="INGCUOTA">
     <Key>
@@ -555,6 +575,7 @@
     <Property Name="ING_DESCRI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ING_NCF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="isCuadrada" Type="Boolean" />
   </EntityType>
   <EntityType Name="ABOCUOTA">
     <Key>
@@ -608,6 +629,7 @@
     <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
     <Property Name="fechadt" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="ClienteId" Type="Int32" Nullable="false" />
+    <Property Name="isCuadrada" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Vw_SearchClientes_Fiadores">
     <Key>
@@ -680,5 +702,265 @@
     <Property Name="CUO_TIPO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="CUO_STAANT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="INGRESO">
+    <Key>
+      <PropertyRef Name="ING_CODIGO" />
+    </Key>
+    <Property Name="ING_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ING_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OTROCARG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="CAR_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SECU" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_NUMREC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FECHAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FECHAP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="ABOOCARG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ABO_NUMFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_SECCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_NUMABO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_CODCAR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_MONTOT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ABO_FECHA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="CAR_CODIGO" />
+      <PropertyRef Name="enable" />
+    </Key>
+    <Property Name="CAR_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="enable" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vw_ConsultaFinDetalle">
+    <Key>
+      <PropertyRef Name="ING_NUMREC" />
+    </Key>
+    <Property Name="ING_NUMREC" Type="Int32" Nullable="false" />
+    <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
+    <Property Name="ING_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ING_MONTOT" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ING_MONTOC" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOI" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOCAR" Type="Double" Nullable="false" />
+    <Property Name="ING_FECHA" Type="String" MaxLength="29" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ING_FORMPG" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ING_DESCRI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ING_NCF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tipo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_ConsultaFin">
+    <Key>
+      <PropertyRef Name="FAC_NUMFIN" />
+      <PropertyRef Name="CUO_STATUS" />
+    </Key>
+    <Property Name="FAC_NUMFIN" Type="Int32" Nullable="false" />
+    <Property Name="CUO_STATUS" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CUO_MONTOT" Type="Double" Nullable="false" />
+    <Property Name="CUO_MONTOI" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CUO_MONTOC" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CUO_NUMCUO" Type="Int32" Nullable="false" />
+    <Property Name="BalanceTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="cliente" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FAC_FECHA" Type="String" MaxLength="29" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPOCR1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TIPOCR2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="BANCO">
+    <Key>
+      <PropertyRef Name="BCO_CODIGO" />
+    </Key>
+    <Property Name="BCO_CODIGO" Type="Int32" Nullable="false" />
+    <Property Name="BCO_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BCO_ABREVI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BCO_SUCURS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BCO_TELEF1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BCO_TELEF2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BCO_TELEF3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CTABANCO">
+    <Key>
+      <PropertyRef Name="CTA_CODIGO" />
+    </Key>
+    <Property Name="CTA_CODIGO" Type="Int32" Nullable="false" />
+    <Property Name="CTA_BANCO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CTA_NUMERO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CTA_BALFEC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CTA_BALCOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OTROSCR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BANCO" Type="Int32" Nullable="false" />
+    <Property Name="CUENTA_BANCARIA" Type="Int32" Nullable="false" />
+    <Property Name="NUMERO_CHEQUE" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO_CREDITO" Type="Int32" Nullable="false" />
+    <Property Name="TIPO_SALIDA" Type="Int32" Nullable="false" />
+    <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" />
+    <Property Name="CLIENTE" Type="Int32" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="BENEFICIARIO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPODB1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TIPODB2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OTROSDB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BANCO" Type="Int32" Nullable="false" />
+    <Property Name="CUENTA_BANCARIA" Type="Int32" Nullable="false" />
+    <Property Name="TIPO_ENTRADA" Type="Int32" Nullable="false" />
+    <Property Name="TIPO_DEBITO" Type="Int32" Nullable="false" />
+    <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="STATUS" Type="Int32" />
+    <Property Name="NUM_FIN" Type="Int32" />
+    <Property Name="NUM_REC" Type="Int32" />
+  </EntityType>
+  <EntityType Name="VW_rptCreditosBancarios">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ACTIVO" />
+      <PropertyRef Name="CHEQUE" />
+      <PropertyRef Name="MONTO" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="BENEFICIARIO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="FECHAtxt" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TIPO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SALIDA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CHEQUE" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="BANCO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUENTA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VW_rptDebitosBancarios">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ACTIVO" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="FECHA" />
+      <PropertyRef Name="FECHAtxt" />
+      <PropertyRef Name="TIPO" />
+      <PropertyRef Name="ENTRADA" />
+      <PropertyRef Name="MONTO" />
+      <PropertyRef Name="BANCO" />
+      <PropertyRef Name="CUENTA" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHAtxt" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="TIPO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ENTRADA" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="MONTO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="BANCO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CUENTA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_CuadreCaja">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Cliente" />
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="MontoCapital" />
+      <PropertyRef Name="MontoInteres" />
+      <PropertyRef Name="FechaTexto" />
+      <PropertyRef Name="Tipo" />
+      <PropertyRef Name="TextoTipo" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Cliente" Type="String" Nullable="false" MaxLength="202" FixedLength="false" Unicode="false" />
+    <Property Name="Recibo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MontoTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MontoCapital" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="MontoInteres" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="FechaTexto" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="TextoTipo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="VW_rptReciboIngreso">
+    <Key>
+      <PropertyRef Name="Recibo" />
+    </Key>
+    <Property Name="NombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DireccionEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RncEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TelefonoEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Recibo" Type="Int32" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Contrato" Type="Int32" Nullable="false" />
+    <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+    <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="VW_ConciliacionBancaria">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="FECHATXT" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="DEBITO" />
+      <PropertyRef Name="CREDITO" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" />
+    <Property Name="FECHATXT" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+    <Property Name="TRANSACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CUENTA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DEBITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CREDITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="VALIDADO" Type="Boolean" />
   </EntityType>
 </Schema>

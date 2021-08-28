@@ -44,6 +44,8 @@ namespace SistemaImbrino.Reportes {
         
         private VW_rptReciboIngresoDataTable tableVW_rptReciboIngreso;
         
+        private VW_ConciliacionBancariaDataTable tableVW_ConciliacionBancaria;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -101,6 +103,9 @@ namespace SistemaImbrino.Reportes {
                 }
                 if ((ds.Tables["VW_rptReciboIngreso"] != null)) {
                     base.Tables.Add(new VW_rptReciboIngresoDataTable(ds.Tables["VW_rptReciboIngreso"]));
+                }
+                if ((ds.Tables["VW_ConciliacionBancaria"] != null)) {
+                    base.Tables.Add(new VW_ConciliacionBancariaDataTable(ds.Tables["VW_ConciliacionBancaria"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -222,6 +227,16 @@ namespace SistemaImbrino.Reportes {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public VW_ConciliacionBancariaDataTable VW_ConciliacionBancaria {
+            get {
+                return this.tableVW_ConciliacionBancaria;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -317,6 +332,9 @@ namespace SistemaImbrino.Reportes {
                 if ((ds.Tables["VW_rptReciboIngreso"] != null)) {
                     base.Tables.Add(new VW_rptReciboIngresoDataTable(ds.Tables["VW_rptReciboIngreso"]));
                 }
+                if ((ds.Tables["VW_ConciliacionBancaria"] != null)) {
+                    base.Tables.Add(new VW_ConciliacionBancariaDataTable(ds.Tables["VW_ConciliacionBancaria"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -410,6 +428,12 @@ namespace SistemaImbrino.Reportes {
                     this.tableVW_rptReciboIngreso.InitVars();
                 }
             }
+            this.tableVW_ConciliacionBancaria = ((VW_ConciliacionBancariaDataTable)(base.Tables["VW_ConciliacionBancaria"]));
+            if ((initTable == true)) {
+                if ((this.tableVW_ConciliacionBancaria != null)) {
+                    this.tableVW_ConciliacionBancaria.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -440,6 +464,8 @@ namespace SistemaImbrino.Reportes {
             base.Tables.Add(this.tablevw_CuadreCaja);
             this.tableVW_rptReciboIngreso = new VW_rptReciboIngresoDataTable();
             base.Tables.Add(this.tableVW_rptReciboIngreso);
+            this.tableVW_ConciliacionBancaria = new VW_ConciliacionBancariaDataTable();
+            base.Tables.Add(this.tableVW_ConciliacionBancaria);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -499,6 +525,12 @@ namespace SistemaImbrino.Reportes {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializeVW_rptReciboIngreso() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializeVW_ConciliacionBancaria() {
             return false;
         }
         
@@ -586,6 +618,9 @@ namespace SistemaImbrino.Reportes {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void VW_rptReciboIngresoRowChangeEventHandler(object sender, VW_rptReciboIngresoRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void VW_ConciliacionBancariaRowChangeEventHandler(object sender, VW_ConciliacionBancariaRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -5173,6 +5208,418 @@ namespace SistemaImbrino.Reportes {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class VW_ConciliacionBancariaDataTable : global::System.Data.TypedTableBase<VW_ConciliacionBancariaRow> {
+            
+            private global::System.Data.DataColumn columnID;
+            
+            private global::System.Data.DataColumn columnFECHA;
+            
+            private global::System.Data.DataColumn columnFECHATXT;
+            
+            private global::System.Data.DataColumn columnTRANSACION;
+            
+            private global::System.Data.DataColumn columnCUENTA;
+            
+            private global::System.Data.DataColumn columnCONCEPTO;
+            
+            private global::System.Data.DataColumn columnDEBITO;
+            
+            private global::System.Data.DataColumn columnCREDITO;
+            
+            private global::System.Data.DataColumn columnVALIDADO;
+            
+            private global::System.Data.DataColumn columnBALANCECORTE;
+            
+            private global::System.Data.DataColumn columnTIPO;
+            
+            private global::System.Data.DataColumn columnCERRADO;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaDataTable() {
+                this.TableName = "VW_ConciliacionBancaria";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal VW_ConciliacionBancariaDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected VW_ConciliacionBancariaDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn IDColumn {
+                get {
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FECHAColumn {
+                get {
+                    return this.columnFECHA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FECHATXTColumn {
+                get {
+                    return this.columnFECHATXT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn TRANSACIONColumn {
+                get {
+                    return this.columnTRANSACION;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CUENTAColumn {
+                get {
+                    return this.columnCUENTA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CONCEPTOColumn {
+                get {
+                    return this.columnCONCEPTO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DEBITOColumn {
+                get {
+                    return this.columnDEBITO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CREDITOColumn {
+                get {
+                    return this.columnCREDITO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn VALIDADOColumn {
+                get {
+                    return this.columnVALIDADO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn BALANCECORTEColumn {
+                get {
+                    return this.columnBALANCECORTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn TIPOColumn {
+                get {
+                    return this.columnTIPO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CERRADOColumn {
+                get {
+                    return this.columnCERRADO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaRow this[int index] {
+                get {
+                    return ((VW_ConciliacionBancariaRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event VW_ConciliacionBancariaRowChangeEventHandler VW_ConciliacionBancariaRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event VW_ConciliacionBancariaRowChangeEventHandler VW_ConciliacionBancariaRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event VW_ConciliacionBancariaRowChangeEventHandler VW_ConciliacionBancariaRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event VW_ConciliacionBancariaRowChangeEventHandler VW_ConciliacionBancariaRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void AddVW_ConciliacionBancariaRow(VW_ConciliacionBancariaRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaRow AddVW_ConciliacionBancariaRow(int ID, System.DateTime FECHA, string FECHATXT, string TRANSACION, string CUENTA, string CONCEPTO, decimal DEBITO, decimal CREDITO, bool VALIDADO, decimal BALANCECORTE, string TIPO, bool CERRADO) {
+                VW_ConciliacionBancariaRow rowVW_ConciliacionBancariaRow = ((VW_ConciliacionBancariaRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        ID,
+                        FECHA,
+                        FECHATXT,
+                        TRANSACION,
+                        CUENTA,
+                        CONCEPTO,
+                        DEBITO,
+                        CREDITO,
+                        VALIDADO,
+                        BALANCECORTE,
+                        TIPO,
+                        CERRADO};
+                rowVW_ConciliacionBancariaRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowVW_ConciliacionBancariaRow);
+                return rowVW_ConciliacionBancariaRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                VW_ConciliacionBancariaDataTable cln = ((VW_ConciliacionBancariaDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new VW_ConciliacionBancariaDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnID = base.Columns["ID"];
+                this.columnFECHA = base.Columns["FECHA"];
+                this.columnFECHATXT = base.Columns["FECHATXT"];
+                this.columnTRANSACION = base.Columns["TRANSACION"];
+                this.columnCUENTA = base.Columns["CUENTA"];
+                this.columnCONCEPTO = base.Columns["CONCEPTO"];
+                this.columnDEBITO = base.Columns["DEBITO"];
+                this.columnCREDITO = base.Columns["CREDITO"];
+                this.columnVALIDADO = base.Columns["VALIDADO"];
+                this.columnBALANCECORTE = base.Columns["BALANCECORTE"];
+                this.columnTIPO = base.Columns["TIPO"];
+                this.columnCERRADO = base.Columns["CERRADO"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.columnFECHA = new global::System.Data.DataColumn("FECHA", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFECHA);
+                this.columnFECHATXT = new global::System.Data.DataColumn("FECHATXT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFECHATXT);
+                this.columnTRANSACION = new global::System.Data.DataColumn("TRANSACION", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTRANSACION);
+                this.columnCUENTA = new global::System.Data.DataColumn("CUENTA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCUENTA);
+                this.columnCONCEPTO = new global::System.Data.DataColumn("CONCEPTO", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCONCEPTO);
+                this.columnDEBITO = new global::System.Data.DataColumn("DEBITO", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDEBITO);
+                this.columnCREDITO = new global::System.Data.DataColumn("CREDITO", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCREDITO);
+                this.columnVALIDADO = new global::System.Data.DataColumn("VALIDADO", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVALIDADO);
+                this.columnBALANCECORTE = new global::System.Data.DataColumn("BALANCECORTE", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBALANCECORTE);
+                this.columnTIPO = new global::System.Data.DataColumn("TIPO", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTIPO);
+                this.columnCERRADO = new global::System.Data.DataColumn("CERRADO", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCERRADO);
+                this.columnID.AllowDBNull = false;
+                this.columnFECHATXT.AllowDBNull = false;
+                this.columnFECHATXT.MaxLength = 29;
+                this.columnTRANSACION.MaxLength = 150;
+                this.columnCUENTA.MaxLength = 100;
+                this.columnCONCEPTO.AllowDBNull = false;
+                this.columnCONCEPTO.MaxLength = 150;
+                this.columnDEBITO.AllowDBNull = false;
+                this.columnCREDITO.AllowDBNull = false;
+                this.columnTIPO.AllowDBNull = false;
+                this.columnTIPO.MaxLength = 7;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaRow NewVW_ConciliacionBancariaRow() {
+                return ((VW_ConciliacionBancariaRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new VW_ConciliacionBancariaRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(VW_ConciliacionBancariaRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.VW_ConciliacionBancariaRowChanged != null)) {
+                    this.VW_ConciliacionBancariaRowChanged(this, new VW_ConciliacionBancariaRowChangeEvent(((VW_ConciliacionBancariaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.VW_ConciliacionBancariaRowChanging != null)) {
+                    this.VW_ConciliacionBancariaRowChanging(this, new VW_ConciliacionBancariaRowChangeEvent(((VW_ConciliacionBancariaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.VW_ConciliacionBancariaRowDeleted != null)) {
+                    this.VW_ConciliacionBancariaRowDeleted(this, new VW_ConciliacionBancariaRowChangeEvent(((VW_ConciliacionBancariaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.VW_ConciliacionBancariaRowDeleting != null)) {
+                    this.VW_ConciliacionBancariaRowDeleting(this, new VW_ConciliacionBancariaRowChangeEvent(((VW_ConciliacionBancariaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void RemoveVW_ConciliacionBancariaRow(VW_ConciliacionBancariaRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                dtReportes ds = new dtReportes();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "VW_ConciliacionBancariaDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class VW_rptEstadoCuentaRow : global::System.Data.DataRow {
@@ -8527,6 +8974,256 @@ namespace SistemaImbrino.Reportes {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class VW_ConciliacionBancariaRow : global::System.Data.DataRow {
+            
+            private VW_ConciliacionBancariaDataTable tableVW_ConciliacionBancaria;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal VW_ConciliacionBancariaRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableVW_ConciliacionBancaria = ((VW_ConciliacionBancariaDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int ID {
+                get {
+                    return ((int)(this[this.tableVW_ConciliacionBancaria.IDColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.IDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime FECHA {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableVW_ConciliacionBancaria.FECHAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FECHA\' in table \'VW_ConciliacionBancaria\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.FECHAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string FECHATXT {
+                get {
+                    return ((string)(this[this.tableVW_ConciliacionBancaria.FECHATXTColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.FECHATXTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string TRANSACION {
+                get {
+                    try {
+                        return ((string)(this[this.tableVW_ConciliacionBancaria.TRANSACIONColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TRANSACION\' in table \'VW_ConciliacionBancaria\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.TRANSACIONColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string CUENTA {
+                get {
+                    try {
+                        return ((string)(this[this.tableVW_ConciliacionBancaria.CUENTAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CUENTA\' in table \'VW_ConciliacionBancaria\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.CUENTAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string CONCEPTO {
+                get {
+                    return ((string)(this[this.tableVW_ConciliacionBancaria.CONCEPTOColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.CONCEPTOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal DEBITO {
+                get {
+                    return ((decimal)(this[this.tableVW_ConciliacionBancaria.DEBITOColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.DEBITOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal CREDITO {
+                get {
+                    return ((decimal)(this[this.tableVW_ConciliacionBancaria.CREDITOColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.CREDITOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool VALIDADO {
+                get {
+                    try {
+                        return ((bool)(this[this.tableVW_ConciliacionBancaria.VALIDADOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VALIDADO\' in table \'VW_ConciliacionBancaria\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.VALIDADOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public decimal BALANCECORTE {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableVW_ConciliacionBancaria.BALANCECORTEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'BALANCECORTE\' in table \'VW_ConciliacionBancaria\' is DBNull." +
+                                "", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.BALANCECORTEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string TIPO {
+                get {
+                    return ((string)(this[this.tableVW_ConciliacionBancaria.TIPOColumn]));
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.TIPOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool CERRADO {
+                get {
+                    try {
+                        return ((bool)(this[this.tableVW_ConciliacionBancaria.CERRADOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CERRADO\' in table \'VW_ConciliacionBancaria\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVW_ConciliacionBancaria.CERRADOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFECHANull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.FECHAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFECHANull() {
+                this[this.tableVW_ConciliacionBancaria.FECHAColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsTRANSACIONNull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.TRANSACIONColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetTRANSACIONNull() {
+                this[this.tableVW_ConciliacionBancaria.TRANSACIONColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCUENTANull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.CUENTAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCUENTANull() {
+                this[this.tableVW_ConciliacionBancaria.CUENTAColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsVALIDADONull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.VALIDADOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetVALIDADONull() {
+                this[this.tableVW_ConciliacionBancaria.VALIDADOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsBALANCECORTENull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.BALANCECORTEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetBALANCECORTENull() {
+                this[this.tableVW_ConciliacionBancaria.BALANCECORTEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCERRADONull() {
+                return this.IsNull(this.tableVW_ConciliacionBancaria.CERRADOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCERRADONull() {
+                this[this.tableVW_ConciliacionBancaria.CERRADOColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -8852,6 +9549,40 @@ namespace SistemaImbrino.Reportes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public VW_rptReciboIngresoRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class VW_ConciliacionBancariaRowChangeEvent : global::System.EventArgs {
+            
+            private VW_ConciliacionBancariaRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaRowChangeEvent(VW_ConciliacionBancariaRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public VW_ConciliacionBancariaRow Row {
                 get {
                     return this.eventRow;
                 }

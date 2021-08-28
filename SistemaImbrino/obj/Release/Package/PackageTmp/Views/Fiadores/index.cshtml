@@ -1,7 +1,282 @@
-﻿
+﻿@model SistemaImbrino.Models.FIADOR
+
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Title = "Maestro fiadores";
+	ViewBag.nameView = "Fiador";
 }
 
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_NOMBRE">Nombre</label>
+		<div class="form-group" id="dvCTE_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="FIA_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
+				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
+				@Html.EditorFor(model => model.FIA_NOMBRE, new { htmlAttributes = new { @class = "form-control texto" } })
+				<span id="spanCTE_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="FIA_CEDULA">Cedula</label>
+		<div class="form-group" id="dvFIA_CEDULA">
+			<div class="input-group">
+				<label class="input-group-addon" for="FIA_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.FIA_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula" } })
+				<span id="spanFIA_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="FIA_TELEFO">Telefono</label>
+		<div class="form-group" id="dvFIA_TELEFO">
+			<div class="input-group">
+				<label class="input-group-addon" for="FIA_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.FIA_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono" } })
+				<span id="spanFIA_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="FIA_DIRECC">Dirección</label>
+		<div class="form-group" id="dvFIA_DIRECC">
+			<div class="input-group">
+				<label class="input-group-addon" for="FIA_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
+				@*@Html.TextAreaFor(model => model.FIA_DIRECC, new { htmlAttributes = new { @class = "form-control", @rows = 2 } })*@
+				<textarea id="FIA_DIRECC" name="FIA_DIRECC" rows="2" class="form-control" > </textarea>
+				<span id="spanFIA_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-3">
+		<input type="submit" value="Crear" id="btn_crearFiador" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-fiador" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th>NOMBRE COMPLETO</th>
+					<th>CEDULA</th>
+					<th>TELEFONO</th>
+					<th>DIRECCION</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListFiadores != null)
+				{
+					foreach (var vw_fiador in ViewBag.ListFiadores)
+					{
+						@Html.Partial("_fiadoresDetalle", (SistemaImbrino.Models.FIADOR)vw_fiador)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarCliente")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn_EditarFiador">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			
+			$("#tbl-fiador").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearFiador").click(function (e)
+			{
+				insertarEditarFiador("I");
+			});
+			$("#btn_EditarFiador").click(function (e) {
+				insertarEditarFiador("U");
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarFiador(typeAction)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearFiador")" : "@Url.Action("ActualizarFiador")";
+
+			var _CTE_CODIGO = typeAction == "I" ? "0" : $("#FIA_CODIGO").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _FIA_NOMBRE = $("#" + E +"FIA_NOMBRE").val().trim();
+			var _FIA_CEDULA = $("#" + E + "FIA_CEDULA").val().trim();
+
+			if (typeAction == "I")
+			{
+				_FIA_CEDULA = _FIA_CEDULA.replaceAll("-", "");
+			}
+
+			var _FIA_TELEFO = $("#" + E + "FIA_TELEFO").val().trim();
+			var _FIA_DIRECC = $("#" + E + "FIA_DIRECC").val().trim();
+
+
+			if (_FIA_NOMBRE == "" ||
+				_FIA_CEDULA == "" || _FIA_TELEFO == "" ||
+				_FIA_DIRECC == ""
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					return;
+				}
+
+			if (_FIA_CEDULA.length != 11 && typeAction == "I")
+				{
+					MessageNotification("El formato de la cedula es incorrecto", false);
+					return;
+				}
+				//var url = "@Url.Action("CrearFiador")";
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					FIA_CODIGO: _CTE_CODIGO
+					, FIA_NOMBRE: _FIA_NOMBRE
+					, FIA_CEDULA: _FIA_CEDULA
+					, FIA_TELEFO: _FIA_TELEFO
+					, FIA_DIRECC: _FIA_DIRECC				
+
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+
+		}
+		
+		function EliminarCurrentFiador(id,nombre) {
+			mensajeEliminarFiador(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarFiador(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el cliente " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarFiador(id);
+				});
+		}
+
+		function eliminarFiador(_id)
+		{
+			var url = "@Url.Action("EliminarFiador")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#FIA_CODIGO").val(_id); 
+			//document.cookie = "CTE_CODIGO=" + id;
+
+			Show_closeModal("#modalCeditar", true);
+
+			
+
+			var url = "@Url.Action("GetCurrentFiador")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				//dataType: "json",
+				success: function (_data)
+				{
+
+					$("#EFIA_NOMBRE").val(_data.FIA_NOMBRE)
+					$("#EFIA_CEDULA").val(_data.FIA_CEDULA)
+					$("#EFIA_TELEFO").val(_data.FIA_TELEFO)
+					$("#EFIA_DIRECC").val(_data.FIA_DIRECC)
+					$("#FIA_CODIGO").val(_id);
+					//MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				}
+			});
+
+
+
+
+		}
+	</script>
+}
 

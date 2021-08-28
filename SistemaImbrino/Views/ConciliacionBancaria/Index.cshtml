@@ -1,0 +1,331 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="hero-callout">
+	<input type="hidden" id="balanceCorteHd" />
+	<div class="row">
+		<div class="col-lg-7 col-sm-12">
+			<p class="control-label" style="font-size:23px;" id="mensajeFechas"></p>
+		</div>
+		<div class="col-lg-5 col-sm-12">
+			<p class="control-label ml-54" style="font-size:23px;" id="mensajeCuentas"></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-lg-6">
+			<button id="btn-imprimir" class="btn btn-sm bg-pink" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+		</div>
+		<div class="col-md-12 col-lg-5" style="padding-right:0px">
+			<p class="control-label text-defaultColor ml-160" style="font-size:23px;" id="balanceCorte"></p>
+		</div>
+		<div class="col-md-6 col-lg-1 " style="padding-left:0px">
+			@if (!ViewBag.isMovimiento)
+			{
+				<button id="btn-corte" class="btn btn-sm bg-pink" style="padding:5px 5px;" data-loading-text="cargando...">Realizar Corte</button>
+			}
+		</div>
+
+	</div>
+	<input type="hidden" id="json" value="@ViewBag.json" />
+	<input type="hidden" id="cuenta" value="@ViewBag.cuentaBancaria" />
+	<br />
+	<div class="table-responsive">
+		<table id="tbl_conciliacionBancaria" class="table table-condensed table-hover table-bordered dataTable" style="width:100%">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center th-pd-no-right">FECHA</th>
+					<th class="text-left th-pd-no-left">TRANSACCION</th>
+					<th class="text-left th-pd-no-left">CONCEPTO</th>
+					<th class="text-right th-pd-right">DEBITO</th>
+					<th class="text-right th-pd-right">CREDITO</th>
+					<th class="text-right th-pd-right">BALANCE</th>
+					<th class="text-center th-pd-no-right">VALIDADO</th>
+				</tr>
+			</thead>
+			<tbody> </tbody>
+			<tfoot class="" style="background-color:#d0cece">
+				<tr>
+					<th align="right" colspan="2"></th>
+					<th class="text-left">Total</th>
+					<th class="text-right"></th>
+					<th class="text-right"></th>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			llenarTblConciliacion();
+			$("#btn-corte").click(function () {
+				cerrarConciliacion();
+			});
+			$("#btn-imprimir").click(function () {
+				imprimirReporte(this);
+			});
+		});
+
+		function validarConciliacion(objCheck) {
+			const id = $(objCheck).attr("id");
+			const tipo = $(objCheck).attr("tipo");
+			const validado = objCheck.checked;
+
+			var url = "@Url.Action("validarConciliacionAsync")";
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { id: id, tipo: tipo, validado: validado},
+					success: function (_data) {
+						if (_data.Is_Success)
+						{
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 1000,
+								timerProgressBar: true,
+								didOpen: (toast) => {
+									toast.addEventListener('mouseenter', Swal.stopTimer)
+									toast.addEventListener('mouseleave', Swal.resumeTimer)
+								}
+							})
+
+							Toast.fire({
+								icon: 'success',
+								title: 'Se valido correctamente'
+							})
+						}
+						else
+						{
+
+                        }
+					}
+                });
+
+		}
+		function imprimirReporte(currentBtn) {
+			var url = "@Url.Action("PrintReport")";
+			var $btn = $(currentBtn).button('loading');
+			var json = $("#json").val();
+			var mensajeCuentas = $("#mensajeCuentas").html();
+			var balanceCorte = $("#balanceCorteHd").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { json: json, filtroCuenta: mensajeCuentas, balance: balanceCorte,isMovimiento: "@ViewBag.isMovimiento"},
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+		}
+		function llenarTblConciliacion()
+		{
+			var jsonCuenta = [];
+			var url = "@Url.Action("GetConciliacionBancaria")";
+			var _json = $("#json").val();
+			var _cuenta = $("#cuenta").val();
+			var _json = _json.replace('&quot', '"');
+			var data = JSON.parse(_json);
+			const mensajeFechas = `@ViewBag.Title del ${getDateName(data.fechaDesde)} al ${getDateName(data.fechaHasta)}`;
+			$("#mensajeFechas").text(mensajeFechas);
+
+			var url = "@Url.Action("GetCuentas")";
+
+                 $.ajax({
+                    type: "GET",
+                    url: url,
+                     dataType: "json",
+                    success: function (_data) {
+						jsonCuenta = _data.find(x => x.id == _cuenta);
+						const mensajeCuentas = `Cuenta : ${jsonCuenta.value.replace("-","#")}`;
+						$("#mensajeCuentas").text(mensajeCuentas);
+                    }
+				 }).then(getDataTable(_json, _cuenta));
+		}
+		function getDataTable(_json, _cuenta) {
+				var url = "@Url.Action("GetConciliacionBancaria")";
+				$("#tbl_conciliacionBancaria").DataTable(
+					{
+						destroy: true,
+						paging: false,
+						info: false,
+						searching: false,
+						ordering: false,
+						ajax: {
+							url: url,
+							type: "POST",
+							data: { json: _json, cuentaBancaria: _cuenta },
+							dataType: "json",
+							dataSrc: "data",
+							async: true,
+							complete: function (data) {
+								$('.checkbox').change(function () {
+									validarConciliacion(this);
+								});
+							},
+						},
+						columns: [
+							{
+								"data": "Fecha",
+								"className": "dt-body-center",
+								"width": 100
+							},
+							{
+								"data": "Transacion",
+								"className": "dt-body-justify",
+								"width": 100
+							},
+							{
+								"data": "Concepto",
+								"className": "dt-body-justify"
+							},
+							{
+								"data": "Debito",
+								"render": function (data) {
+									return number_format_js(data, 2, 0);
+								},
+								"className": "dt-body-right",
+								"width": 100
+							},
+							{
+								"data": "Credito",
+								"render": function (data) {
+									return number_format_js(data, 2, 0);
+								},
+								"className": "dt-body-right",
+								"width": 100
+							},
+							{
+								"data": "BalanceGeneral",
+								"render": function (data) {
+									return number_format_js(data, 2, 0);
+								},
+								"className": "dt-body-right",
+								"width": 100
+							},
+							{
+								"data": "Validado",
+								"className": "dt-body-center",
+								width: 50
+							},
+						],
+						lengthChange: true,
+						footerCallback: function (row, data, start, end, display) {
+							var api = this.api(), data;
+
+							// Remove the formatting to get integer data for summation
+							var intVal = function (i) {
+								return typeof i === 'string' ?
+									i.replace(/[\$,]/g, '') * 1 :
+									typeof i === 'number' ?
+										i : 0;
+							};
+
+							// --------------- Credito
+							pageTotal = api
+								.column(3, { page: 'current' })
+								.data()
+								.reduce(function (a, b) {
+									return intVal(a) + intVal(b);
+								}, 0);
+							// Update footer
+							$(api.column(3).footer()).html(
+								number_format_js(pageTotal, 2, 0)
+							);
+
+							// --------------- debito
+							pageTotal = api
+								.column(4, { page: 'current' })
+								.data()
+								.reduce(function (a, b) {
+									return intVal(a) + intVal(b);
+								}, 0);
+							// Update footer
+							$(api.column(4).footer()).html(
+								number_format_js(pageTotal, 2, 0)
+							);
+						},
+						rowCallback: function (row, data, index) {
+
+							// Balance
+							if (index === 0) {
+								totalBalance = data.BalanceGeneral;
+								$("#balanceCorte").text("Balance al corte : " + number_format_js(totalBalance, 2, 0));
+								$("#balanceCorteHd").val(totalBalance);
+							}
+							totalBalance += (data.Debito + (data.Credito) * -1);
+
+							$('td:eq(5)', row).html("<b>" + number_format_js(totalBalance, 2, 0) + "</b>");
+
+							// Validado
+							var html = "";
+							var checked = "";
+							if (data.Validado) {
+								checked = 'checked="checked"';
+							}
+							html = `<p style="text-align: -webkit-center;"><input id=${data.Id} tipo="${data.Tipo}" type="checkbox" ${checked} class="checkbox chkLg" /></p>`;
+							if (data.Cerrado || "@ViewBag.isMovimiento" == "True")
+							{
+								html = `<p style="text-align: -webkit-center;"><input disabled  type="checkbox" ${checked} class="checkbox chkLg disabled" /></p>`;
+							}
+							$('td:eq(6)', row).html(html);
+						}
+					});
+		}
+		function cerrarConciliacion() {
+			let balance = $("#tbl_conciliacionBancaria tbody tr:last td")[5];
+			balance = $(balance).children(0).text();
+			var chkSinseleccionar = $(".chkLg:not(:checked)");
+			if (chkSinseleccionar.length > 0) {
+				MessageNotification("Debe validar todos los datos para realizar el corte", false, true);
+			} else {
+				var chkSeleccionados = $(".chkLg:checked");
+				var data = [];
+				 chkSeleccionados.each((index,obj) => {
+					 data.push(
+					{
+						id: $(obj).attr("id"),
+						tipo: $(obj).attr("tipo"),
+						balance: balance
+					});
+				});
+				var json = JSON.stringify(data);
+				generarCorteConciliacion(json);
+			}
+		}
+		function generarCorteConciliacion(json) {
+			var url = "@Url.Action("CerrarConciliacionAsync")";
+			var fechaCorte = JSON.parse($("#json").val()).fechaHasta;
+                 $.ajax({
+                    type: "POST",
+                    url: url,
+					dataType: "json",
+					 data: {
+						 json: json,
+						 fechaCorte: fechaCorte
+					 },
+					 success: function (_data) {
+						 MessageNotification(_data.Message, _data.Is_Success, true,false,"@Url.Action("Index","Home")");
+                    }
+				 });
+		}
+	</script>
+}

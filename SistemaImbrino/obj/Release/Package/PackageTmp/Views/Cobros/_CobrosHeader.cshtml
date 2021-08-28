@@ -6,7 +6,7 @@
 <div class="container-fluid panel panel-warning">
 	
 	<div class="row">
-		<div class="col-xs-12 col-md-12 bg-bluelgh">
+		<div class="col-xs-12 col-md-12 btn-defaultColor">
 			<label class="col-xs-6 text-right">DATOS DEL FINANCIAMIENTO</label>
 			<label class="col-xs-6 text-right">Fecha pago: @ViewBag.FechaPago</label>
 		</div>
@@ -60,13 +60,10 @@
 				Direccion:
 			</label>
 			@Html.LabelFor(model => model.DIRE_CLIENTE, Model.DIRE_CLIENTE, new { @id = "DIRE_CLIENTE", @class = "control-label not-bold" })
-
 		</div>
 		<div class="col-xs-6  col-md-6">
 			<label class="not-bold  col-xs-8 col-md-3 col-xs-offset-0  col-md-offset-7 text-left ">Forma pago:</label>
 			@Html.LabelFor(model => model.forma_pago, Model.forma_pago, new { @id = "forma_pago", @class = "control-label not-bold col-xs-1 text-right noPdRight" })
-
-
 		</div>
 
 		<div class="col-xs-6">
@@ -77,9 +74,6 @@
 		<div class="col-xs-6  text-left">
 			<label class="not-bold col-xs-9  col-md-4  col-xs-offset-0 col-md-offset-7">Total cuotas:</label>
 			@Html.LabelFor(model => model.CUOTA_TOTAL, Model.CUOTA_TOTAL.ToString(), new { @id = "CUOTA_TOTAL", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
-			@*<label id="CUOTA_TOTAL" class="control-label col-xs-1 text-left noPdRight noPdLeft">
-				@ViewBag.CUOTA_TOTAL
-			</label>*@
 		</div>
 
 		<div class="col-xs-6 ">
@@ -90,11 +84,7 @@
 
 		<div class="col-xs-6">
 			<label id="lblCp" class="not-bold col-xs-9 col-md-4  col-xs-offset-0 col-md-offset-7 text-left">Cuotas pendientes:</label>
-		@Html.LabelFor(model => model.CUOTA_PENDIENTE, Model.CUOTA_PENDIENTE.ToString(), new { @id = "CUOTA_PENDIENTE", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
-			@*<label id="CUOTA_PENDIENTE" class="control-label col-xs-1 text-left noPdRight noPdLeft">
-				@ViewBag.CUOTA_PENDIENTE
-			</label>*@
-
+			@Html.LabelFor(model => model.CUOTA_PENDIENTE, Model.CUOTA_PENDIENTE.ToString(), new { @id = "CUOTA_PENDIENTE", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
 		</div>
 		
 	</div>
@@ -131,15 +121,13 @@
 			@Html.LabelFor(model => model.INTERES, String.Format("{0:n}", Model.INTERES), new { @id = "BalanceInteresTOTAL", @class = "control-label not-bold col-xs-2  text-right noPdRight" })
 		</div>
 
-		<div class="col-xs-8 col-md-6  bg-bluelgh">
+		<div class="col-xs-8 col-md-6  btn-defaultColor" style="padding-top:5px;">
 			<label class="not-bold">Ultima fecha pago:</label>
 			@Html.LabelFor(model => model.ULTIMO_PAGO, Model.ULTIMO_PAGO, new { @id = "ULTIMO_PAGO", @class = "control-label not-bold " })
-			@*<label class="control-label not-bold" id="ULTIMO_PAGO">@ViewBag.Fecha_ultimoPago </label>*@
 		</div>
 
-		<div class="col-xs-4  col-md-6 bg-bluelgh">
+		<div class="col-xs-4  col-md-6 btn-defaultColor" style="padding-top:5px;">
 			<label class="not-bold col-xs-4 col-xs-offset-0 col-md-3 col-md-offset-7 text-left">Mora:</label>
-			@*@Html.LabelFor(model => model.mora, String.Format("{0:n}", Model.mora), new { @id = "mora", @class = "control-label not-bold col-xs-2 text-right noPdRight" })*@
 			<label class="control-label not-bold col-xs-2 text-right noPdRight" id="mora">@ViewBag.Mora</label>
 				   
 		</div>

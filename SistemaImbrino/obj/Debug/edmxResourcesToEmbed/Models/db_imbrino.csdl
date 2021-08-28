@@ -84,6 +84,8 @@
     <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
     <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
     <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
+    <EntitySet Name="VW_ConciliacionBancaria" EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" />
+    <FunctionImport Name="usp_CierreCaja" />
   </EntityContainer>
   <EntityType Name="INGOTRO">
     <Key>
@@ -812,6 +814,7 @@
     <Property Name="CTA_NUMERO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="CTA_BALFEC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="CTA_BALCOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CTA_FECCOR" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="OTROSCR">
     <Key>
@@ -829,6 +832,8 @@
     <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="BENEFICIARIO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="VALIDADO" Type="Boolean" />
+    <Property Name="CERRADO" Type="Boolean" />
   </EntityType>
   <EntityType Name="TIPODB1">
     <Key>
@@ -860,6 +865,8 @@
     <Property Name="STATUS" Type="Int32" />
     <Property Name="NUM_FIN" Type="Int32" />
     <Property Name="NUM_REC" Type="Int32" />
+    <Property Name="VALIDADO" Type="Boolean" />
+    <Property Name="CERRADO" Type="Boolean" />
   </EntityType>
   <EntityType Name="VW_rptCreditosBancarios">
     <Key>
@@ -942,6 +949,28 @@
     <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
-    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" />
+    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="VW_ConciliacionBancaria">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="FECHATXT" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="DEBITO" />
+      <PropertyRef Name="CREDITO" />
+      <PropertyRef Name="TIPO" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="FECHATXT" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+    <Property Name="TRANSACION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUENTA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DEBITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CREDITO" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="VALIDADO" Type="Boolean" Nullable="false" />
+    <Property Name="BALANCECORTE" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TIPO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="CERRADO" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

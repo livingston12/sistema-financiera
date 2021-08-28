@@ -370,7 +370,7 @@
 				icon: "warning",
 				title: "Desea incluir cuotas adiccionales ?",
 				showCancelButton: true,
-				confirmButtonColor: '#f0ad4e',
+				confirmButtonColor: '#0293b2',
 				confirmButtonText: 'SI'
 
 			}).then((result) => {
@@ -927,6 +927,7 @@
 				mensajeCuotas();
 				$(".swal2-cancel").text("NO");
 				$(".swal2-cancel").focus();
+				$(".swal2-cancel").addClass("btn-danger");
 				$("#btn-activarPrestamo").removeAttr("disabled");
 			});
 

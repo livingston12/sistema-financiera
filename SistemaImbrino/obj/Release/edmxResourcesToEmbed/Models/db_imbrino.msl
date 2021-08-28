@@ -312,12 +312,14 @@
           <ScalarProperty Name="CUO_TIPO" ColumnName="CUO_TIPO" />
           <ScalarProperty Name="fechadt" ColumnName="fechadt" />
           <ScalarProperty Name="fecha_Pago" ColumnName="fecha_Pago" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
     <EntitySetMapping Name="INGCUOTA">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.INGCUOTA">
         <MappingFragment StoreEntitySet="INGCUOTA">
+          <ScalarProperty Name="isCuadrada" ColumnName="isCuadrada" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
           <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
@@ -349,6 +351,7 @@
     <EntitySetMapping Name="VW_rptRegistroNCF">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptRegistroNCF">
         <MappingFragment StoreEntitySet="VW_rptRegistroNCF">
+          <ScalarProperty Name="isCuadrada" ColumnName="isCuadrada" />
           <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
           <ScalarProperty Name="fechadt" ColumnName="fechadt" />
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
@@ -416,6 +419,260 @@
           <ScalarProperty Name="CUO_NUMREC" ColumnName="CUO_NUMREC" />
           <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
           <ScalarProperty Name="CUO_NUMFAC" ColumnName="CUO_NUMFAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INGRESO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.INGRESO">
+        <MappingFragment StoreEntitySet="INGRESO">
+          <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+          <ScalarProperty Name="ING_CODIGO" ColumnName="ING_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROCARG">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROCARG">
+        <MappingFragment StoreEntitySet="OTROCARG">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="CAR_FECHAP" ColumnName="CAR_FECHAP" />
+          <ScalarProperty Name="CAR_FECHAR" ColumnName="CAR_FECHAR" />
+          <ScalarProperty Name="CAR_MONTOT" ColumnName="CAR_MONTOT" />
+          <ScalarProperty Name="CAR_STATUS" ColumnName="CAR_STATUS" />
+          <ScalarProperty Name="CAR_NUMREC" ColumnName="CAR_NUMREC" />
+          <ScalarProperty Name="CAR_CODCAR" ColumnName="CAR_CODCAR" />
+          <ScalarProperty Name="CAR_SECU" ColumnName="CAR_SECU" />
+          <ScalarProperty Name="CAR_NUMFIN" ColumnName="CAR_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ABOOCARG">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.ABOOCARG">
+        <MappingFragment StoreEntitySet="ABOOCARG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ABO_FECHA" ColumnName="ABO_FECHA" />
+          <ScalarProperty Name="ABO_MONTOT" ColumnName="ABO_MONTOT" />
+          <ScalarProperty Name="ABO_CODCAR" ColumnName="ABO_CODCAR" />
+          <ScalarProperty Name="ABO_NUMABO" ColumnName="ABO_NUMABO" />
+          <ScalarProperty Name="ABO_SECCAR" ColumnName="ABO_SECCAR" />
+          <ScalarProperty Name="ABO_NUMFIN" ColumnName="ABO_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARGO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.CARGO">
+        <MappingFragment StoreEntitySet="CARGO">
+          <ScalarProperty Name="enable" ColumnName="enable" />
+          <ScalarProperty Name="CAR_DESCRI" ColumnName="CAR_DESCRI" />
+          <ScalarProperty Name="CAR_CODIGO" ColumnName="CAR_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ConsultaFinDetalle">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_ConsultaFinDetalle">
+        <MappingFragment StoreEntitySet="vw_ConsultaFinDetalle">
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+          <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+          <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+          <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+          <ScalarProperty Name="ING_MONTOCAR" ColumnName="ING_MONTOCAR" />
+          <ScalarProperty Name="ING_MONTOI" ColumnName="ING_MONTOI" />
+          <ScalarProperty Name="ING_MONTOC" ColumnName="ING_MONTOC" />
+          <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+          <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+          <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+          <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ConsultaFin">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_ConsultaFin">
+        <MappingFragment StoreEntitySet="vw_ConsultaFin">
+          <ScalarProperty Name="FAC_FECHA" ColumnName="FAC_FECHA" />
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+          <ScalarProperty Name="BalanceTotal" ColumnName="BalanceTotal" />
+          <ScalarProperty Name="CUO_NUMCUO" ColumnName="CUO_NUMCUO" />
+          <ScalarProperty Name="CUO_MONTOC" ColumnName="CUO_MONTOC" />
+          <ScalarProperty Name="CUO_MONTOI" ColumnName="CUO_MONTOI" />
+          <ScalarProperty Name="CUO_MONTOT" ColumnName="CUO_MONTOT" />
+          <ScalarProperty Name="CUO_STATUS" ColumnName="CUO_STATUS" />
+          <ScalarProperty Name="FAC_NUMFIN" ColumnName="FAC_NUMFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPOCR1">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOCR1">
+        <MappingFragment StoreEntitySet="TIPOCR1">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPOCR2">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPOCR2">
+        <MappingFragment StoreEntitySet="TIPOCR2">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANCO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.BANCO">
+        <MappingFragment StoreEntitySet="BANCO">
+          <ScalarProperty Name="BCO_TELEF3" ColumnName="BCO_TELEF3" />
+          <ScalarProperty Name="BCO_TELEF2" ColumnName="BCO_TELEF2" />
+          <ScalarProperty Name="BCO_TELEF1" ColumnName="BCO_TELEF1" />
+          <ScalarProperty Name="BCO_SUCURS" ColumnName="BCO_SUCURS" />
+          <ScalarProperty Name="BCO_ABREVI" ColumnName="BCO_ABREVI" />
+          <ScalarProperty Name="BCO_NOMBRE" ColumnName="BCO_NOMBRE" />
+          <ScalarProperty Name="BCO_CODIGO" ColumnName="BCO_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CTABANCO">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.CTABANCO">
+        <MappingFragment StoreEntitySet="CTABANCO">
+          <ScalarProperty Name="CTA_BALCOR" ColumnName="CTA_BALCOR" />
+          <ScalarProperty Name="CTA_BALFEC" ColumnName="CTA_BALFEC" />
+          <ScalarProperty Name="CTA_NUMERO" ColumnName="CTA_NUMERO" />
+          <ScalarProperty Name="CTA_BANCO" ColumnName="CTA_BANCO" />
+          <ScalarProperty Name="CTA_CODIGO" ColumnName="CTA_CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROSCR">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSCR">
+        <MappingFragment StoreEntitySet="OTROSCR">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="TIPO_SALIDA" ColumnName="TIPO_SALIDA" />
+          <ScalarProperty Name="TIPO_CREDITO" ColumnName="TIPO_CREDITO" />
+          <ScalarProperty Name="NUMERO_CHEQUE" ColumnName="NUMERO_CHEQUE" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPODB1">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPODB1">
+        <MappingFragment StoreEntitySet="TIPODB1">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPODB2">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.TIPODB2">
+        <MappingFragment StoreEntitySet="TIPODB2">
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTROSDB">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.OTROSDB">
+        <MappingFragment StoreEntitySet="OTROSDB">
+          <ScalarProperty Name="NUM_REC" ColumnName="NUM_REC" />
+          <ScalarProperty Name="NUM_FIN" ColumnName="NUM_FIN" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="TIPO_DEBITO" ColumnName="TIPO_DEBITO" />
+          <ScalarProperty Name="TIPO_ENTRADA" ColumnName="TIPO_ENTRADA" />
+          <ScalarProperty Name="CUENTA_BANCARIA" ColumnName="CUENTA_BANCARIA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_rptCreditosBancarios">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptCreditosBancarios">
+        <MappingFragment StoreEntitySet="VW_rptCreditosBancarios">
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="CHEQUE" ColumnName="CHEQUE" />
+          <ScalarProperty Name="SALIDA" ColumnName="SALIDA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="FECHAtxt" ColumnName="FECHAtxt" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="BENEFICIARIO" ColumnName="BENEFICIARIO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_rptDebitosBancarios">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptDebitosBancarios">
+        <MappingFragment StoreEntitySet="VW_rptDebitosBancarios">
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="ENTRADA" ColumnName="ENTRADA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="FECHAtxt" ColumnName="FECHAtxt" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_CuadreCaja">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_CuadreCaja">
+        <MappingFragment StoreEntitySet="vw_CuadreCaja">
+          <ScalarProperty Name="TextoTipo" ColumnName="TextoTipo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="FechaTexto" ColumnName="FechaTexto" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="MontoInteres" ColumnName="MontoInteres" />
+          <ScalarProperty Name="MontoCapital" ColumnName="MontoCapital" />
+          <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Recibo" ColumnName="Recibo" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_rptReciboIngreso">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptReciboIngreso">
+        <MappingFragment StoreEntitySet="VW_rptReciboIngreso">
+          <ScalarProperty Name="BalancePendiente" ColumnName="BalancePendiente" />
+          <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+          <ScalarProperty Name="NCF" ColumnName="NCF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="Recibo" ColumnName="Recibo" />
+          <ScalarProperty Name="TelefonoEmpresa" ColumnName="TelefonoEmpresa" />
+          <ScalarProperty Name="RncEmpresa" ColumnName="RncEmpresa" />
+          <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
+          <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_ConciliacionBancaria">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_ConciliacionBancaria">
+        <MappingFragment StoreEntitySet="VW_ConciliacionBancaria">
+          <ScalarProperty Name="VALIDADO" ColumnName="VALIDADO" />
+          <ScalarProperty Name="CREDITO" ColumnName="CREDITO" />
+          <ScalarProperty Name="DEBITO" ColumnName="DEBITO" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="CUENTA" ColumnName="CUENTA" />
+          <ScalarProperty Name="TRANSACION" ColumnName="TRANSACION" />
+          <ScalarProperty Name="FECHATXT" ColumnName="FECHATXT" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

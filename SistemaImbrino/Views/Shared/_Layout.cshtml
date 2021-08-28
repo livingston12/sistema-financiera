@@ -6,87 +6,26 @@
 	<title>@ViewBag.Title</title>
 	@Styles.Render("~/Content/css")
 	@Scripts.Render("~/bundles/modernizr")
-	
+
 </head>
 <body>
 
 
-	<div class="navbar bg-pink  navbar-fixed-top">
+	<div class="navbar  navbar-fixed-top">
 		<div class="container ">
-			@*<div class="navbar-header ">
-			<button type="button" class="navbar-toggle " data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			@Html.ActionLink(System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP"), "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-BlueLight" })
-		</div>*@
+
 			<div class="navbar-header ">
 				<button type="button" class="navbar-toggle visible-xs " data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="glyphicon glyphicon-align-justify"></span>
 				</button>
 			</div>
-				<div class="navbar-collapse collapse">
 
-					@*<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Cobro", "Index", "CobrosHeader", null, new { @class = "text-BlueLight" })</li>
-
-
-
-					<li>@Html.ActionLink("Financiamientos", "Index", "FinanciamientosHeader", null, new { @class = "text-BlueLight" })</li>
-					<li>@Html.ActionLink("Cargos adicionales", "Index", "CargosAdicionales", null, new { @class = "text-BlueLight" })</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Maestros <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								@Html.ActionLink("Clientes", "Index", "Clientes", null, new { @class = "text-BlueLight" })
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>@Html.ActionLink("Fiadores", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuentas bancarias <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								@Html.ActionLink("Creditos bancarios", "Index", "CreditosBancarios", null, new { @class = "text-BlueLight" })
-							</li>
-							<li role="separator" class="divider"></li>
-							<li>@Html.ActionLink("Debitos bancarios", "Index", "DebitosBancarios", null, new { @class = "text-BlueLight" })</li>
-							<li role="separator" class="divider"></li>
-							<li>@Html.ActionLink("Conciliacion bancaria", "Index", "Fiadores", null, new { @class = "text-BlueLight" })</li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Caja <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								@Html.ActionLink("Cuadre de caja", "Index", "cuadreCaja", null, new { @class = "text-BlueLight" })
-							</li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle text-BlueLight" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							@*<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a id="lifinAtrasados">Financiamientos Atrasados</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a id="liRegistroNCF">Registro NCF</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
-						</ul>
-					</li>
-
-				</ul>*@
-					<a href="~/Views/Shared/_Layout.cshtml"></a>
-					@Html.Partial("_MenuShared")
-
-				</div>
+			<div class="navbar-collapse collapse">
+				@Html.Partial("_MenuShared")
 			</div>
+
 		</div>
+	</div>
 	@*<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
@@ -97,12 +36,12 @@
 			<!-- /.sidebar -->
 		</aside>*@
 
-	
-	<div class="container body-content">
+
+	<div class="container-fluid  body-content" id="body-content">
 		<div class="bs-border  bs-border-top-info " style="padding-top:0px;">
 			@if (@ViewBag.Title != null)
 			{
-				<h3 class="" style=" "><b>@ViewBag.Title</b></h3>
+				<h3 id="content-title">@ViewBag.Title</h3>
 				<hr class="hrnoMargin" style="padding-bottom:20px;" />
 			}
 			<div class="">
@@ -325,36 +264,85 @@
 			</div>
 		</div>
 	</div>
+
+	@*------------- popup ConciliacionBancaria -------------*@
+	<div class="modal fade" id="conciliacionBancariaModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GetConciliacionBancaria","conciliacionBancaria")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header bg-warning">
+					<a href="@Url.Action("Index","Home")" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h4 class="modal-title text-center text-warningLight" id="lblTitle">Buscar conciliacion bancaria </h4>
+					<input type="hidden" id="isMovimiento" value="false" />
+				</div>
+
+				<div class="modal-body" id="conciliacionBancariaContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left">
+							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="La fecha desde mayor a la fecha corte"></span></label>
+							<input type="text" class="form-control datepicker" placeholder="DD-MMM-AAAA" disabled id="modal_FechaDesdeCB">
+						</div>
+						<div class="col-sm-6 text-right">
+							<label>Fecha Hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha hasta de la conciliacion"></span></label>
+							<input type="text" class="form-control datepicker" placeholder="DD-MMM-AAAA" id="modal_FechaHastaCB">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Cuenta bancaria  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cuenta del banco"></span></label>
+							<select id="dwCuentaCB" class="form-control"></select>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-BuscarConciliacion">Generar</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 
-        $(document).ready(function () {
+		$(document).ready(function () {
+			var objNav = $("#msb");
+			if (objNav.is(":visible")) {
+				var width = objNav.width();
+				$("#body-content").css("margin-left", width);
+			} else {
+				$("#body-content").css("margin-left", 0);
+			}
 			$('[data-toggle="tooltip"]').tooltip();
 
             $("#dwClientes").selectMania({
                 width: '100%',
                 size: 'medium',
                 search: true
-
             });
             $("#dwClientesFA").selectMania({
                 width: '100%',
                 size: 'medium',
                 search: true
-
 			});
 
 			$("#dwClientesIC").selectMania({
 				width: '100%',
 				size: 'medium',
 				search: true
-
 			});
 
 			$("#dwFinIC").selectMania({
 				width: '100%',
 				size: 'medium',
 				search: true
+			});
 
+			$("#dwCuentaCB").selectMania({
+				width: '100%',
+				size: 'medium',
+				search: true
 			});
 
 
@@ -398,8 +386,6 @@
                         llenarDrop(_data,'FA');
                     }
 				});
-
-				FinIC
 			});
 
 			// Abrir popup Registro NCF
@@ -419,11 +405,77 @@
                         llenarDrop(_data,'IC');
                     }
 				});
-
-
 			});
 
+			// Abrir popup conciliacion bancaria y movimiento bancario
+			$("#liConciliacionBancaria,#liMovimientoBancario").click(function () {
+				Show_closeModal("#conciliacionBancariaModal", true);
+				var currentId = $(this).attr("id");
+				var isMovimiento = false;
+				var title = "Buscar conciliacion bancaria";
+				if (currentId === "liMovimientoBancario") {
+					$("#modal_FechaDesdeCB").removeAttr("disabled");
+					title = "Buscar movimiento bancario";
+					isMovimiento = true;
+				}
+				else {
+					$("#modal_FechaDesdeCB").attr("disabled", true);
+				}
+				$("#lblTitle").text(title);
+				$("#isMovimiento").val(isMovimiento);
+				var url = "@Url.Action("GetCuentas", "ConciliacionBancaria")";
 
+                 $.ajax({
+                    type: "POST",
+                    url: url,
+                     dataType: "json",
+                    success: function (_data) {
+                        llenarDrop(_data,'CB');
+                    }
+				});
+			});
+
+			// Cierre caja
+			$("#liCierreCaja").click(function ()
+			{
+				mensajeCierreCaja();
+				$(".swal2-cancel").text("NO");
+				$(".swal2-cancel").focus();
+			});
+
+			function mensajeCierreCaja() {
+				swal.fire({
+					position: 'center',
+					icon: "warning",
+					title: "Seguro que desea cerrar la caja ?",
+					showCancelButton: true,
+					confirmButtonColor: '#0293b2',
+					confirmButtonText: 'SI'
+
+				}).then((result) => {
+					if (result.isConfirmed) {
+						cerrarCaja();
+					}
+				});
+			}
+
+			async function cerrarCaja()
+			{
+				var url = "@Url.Action("cierreCaja", "cierreCaja")";
+				$.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    data: {},
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+							MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index","Home")");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, false);
+                        }
+                    }
+                });
+			}
             // Boton de generar reporte de estado de cuenta
 			$("#btn-GenerarReporteEC").click(function () {
 				var $btn = $(this).button('loading');
@@ -603,7 +655,48 @@
 						$btn.button('reset');
 					}
                 });
-            });
+			});
+
+			// Boton pantalla conciliacion bancaria
+			$("#btn-BuscarConciliacion").click(function ()
+			{
+				var $btn = $(this).button('loading');
+				var url = $("#conciliacionBancariaModal").data('url');
+				var isMovimiento = $("#isMovimiento").val();
+				var _modal_FechaDesde = $("#modal_FechaDesdeCB").attr("dateValue");
+				var _modal_FechaHasta = $("#modal_FechaHastaCB").attr("dateValue");
+
+				if (isMovimiento === "false")
+				{
+					_modal_FechaDesde = $("#modal_FechaDesdeCB").val();
+				}
+				var _modal_cuentaBancaria = $("#dwCuentaCB").val();
+				var _json = JSON.stringify({fechaDesde: _modal_FechaDesde,fechaHasta: _modal_FechaHasta});
+
+				$.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    data: {
+						json: _json,
+						cuentaBancaria: _modal_cuentaBancaria
+                    },
+					success: function (_data) {
+						if (_data.message.Is_Success)
+						{
+							window.location.href = `@Url.Action("Index", "ConciliacionBancaria")?json=${_json}&cuentaBancaria=${_modal_cuentaBancaria}&movimiento=${isMovimiento}`;
+						}
+						else
+						{
+							MessageNotification(_data.message.Message, _data.Is_Success, false)
+						}
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+			});
+
 
         });
 
@@ -611,7 +704,8 @@
         // Llenar drowdown en clientes pantalla cuotas vencidas
         function llenarDrop(data, Report) {
 
-            var IdDw = "";
+			var IdDw = "-- Selecciona un cliente --";
+			var texto = "";
 			if (Report == "CV") {
 				IdDw = "#dwClientes";
 			}
@@ -623,10 +717,15 @@
 			}
 			else if (Report == "FinIC") {
 				IdDw = "#dwFinIC";
+				texto = "-- Selecciona un financiamiento --";
+			}
+			else if (Report == "CB") {
+				IdDw = "#dwCuentaCB";
+				texto = "-- Selecciona una cuenta --"
 			}
 
             $(IdDw).append($('<option />', {
-                text: '-- Selecciona un cliente --',
+				text: texto,
                 value: '',
             }));
 
@@ -637,7 +736,8 @@
                 }));
 
 
-            });
+			});
+			console.log(data);
             $(IdDw).selectMania('update');
 
         }
@@ -762,6 +862,25 @@
                 }
             });
 
+			$("#dwCuentaCB").change(function () {
+				var url = "@Url.Action("GetFechaCorte", "ConciliacionBancaria")";
+				var cuentaId = $(this).val();
+
+				$.ajax({
+					type: "POST",
+					url: url,
+					dataType: "json",
+					data: {
+						cuentaId: cuentaId
+					},
+					success: function (_data) {
+						if ($("#isMovimiento").val() === "false")
+						{
+							$("#modal_FechaDesdeCB").val(_data);
+						}
+					}
+				});
+			});
 
         }
 	</script>

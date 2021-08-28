@@ -1,6 +1,23 @@
 ﻿
 
+$(document).ready(function () {	
+	$(".select").selectMania({
+		width: '100%',
+		size: 'small',
+		search: true
 
+	});
+	$(".dataTable").DataTable();	
+	
+
+	$('.datepicker').datepicker({
+		onSelect: function (date, datepicker) {
+			ValidarFechas(this, date, datepicker);
+		},
+		dateFormat: 'dd-mm-yy',
+		monthNames: nameMonthComplete()
+	});
+});
 // insertar valor fecha
 function ValidarFechas(currentInput,date, datepicker)
 {
@@ -11,13 +28,12 @@ function ValidarFechas(currentInput,date, datepicker)
 		var currentYear = datepicker.currentYear;
 		var currentDate = currentDay + "-" + monthName(indexcurrentMonth) + "-" + currentYear;
 		$(currentInput).val(currentDate);
+		validarTexto(currentInput);
 		
 	}
 
 
 }
-
-
 
 // Llenar drowdowns	
 function llenarDropdows(data, IdObject, texto, addFirt = true,isSelectMania = true) {
@@ -31,25 +47,23 @@ function llenarDropdows(data, IdObject, texto, addFirt = true,isSelectMania = tr
 			value: 0
 		}));
 	}
-
-
 	$(data).each(function (index, element) {
 		$(IdDw).append($('<option />', {
 			text: element.value,
 			value: element.id
 		}));
-
-
 	});
 	if (isSelectMania)
 	{
 		$(IdDw).selectMania('update');
 	}
-	
-
-
-
 }
+
+// update select mania
+function updateSelectMania(id)
+{
+	$("#" + id).selectMania('update');
+} 
 
 // Validar Texto
 function validarTexto(input)
@@ -62,21 +76,19 @@ function validarTexto(input)
 	var inputLenth = texto.length;
 	var is_tel = currentinput.hasClass("telefono");
 	var is_ced = currentinput.hasClass("cedula");
+	var currentDiv = $("#dv" + currentinput.attr("id"));
+	var currentSpan = $("#span" + currentinput.attr("id"));
 
 	if (is_ced || is_tel)
 	{
-
 		texto = texto.replaceAll("-", "");
 		currentinput.val("");
-
-		var currentDiv = $("#dv" + currentinput.attr("id"));
-		var currentSpan = $("#span" + currentinput.attr("id"));
+		
 		var len = 11;		
 		len = is_tel ? 10 : len;
 		
 		if (texto.length !== len)
-		{
-			//MessageNotification("El formato de la cedula es incorrecto", false);	
+		{	
 			currentDiv.removeClass("has-success");
 			currentDiv.addClass("has-error");
 			currentSpan.removeClass("glyphicon-ok");
@@ -91,15 +103,11 @@ function validarTexto(input)
 
 		}
 		currentinput.val(texto);
-	}
-		
+	}		
 	
 	// Validar si el campo acepta texto
 	if (currentinput.hasClass("texto") && inputLenth === 0)
 		currentinput.val("");
-	
-
-
 
 	if (inputLenth === 0) {		
 		currentDiv.removeClass("has-success");
@@ -220,9 +228,9 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
 		swal.fire({
 			position: 'center',
 			icon: typeError,
-			title: messsage,
+			html: messsage,
 			showCancelButton: false,
-			confirmButtonColor: '#f0ad4e',
+			confirmButtonColor: '#0293b2',
 			confirmButtonText: 'OK'
 		}).then((result) => {
 			if (result.isConfirmed) {
@@ -231,7 +239,6 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
 					if (goinTo === "")
 						document.location.reload();
 					else
-						//window.history.back();
 						window.location.href = goinTo;
 				}				
 					
@@ -244,14 +251,13 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
         Swal.fire({
             position: 'center',
             icon: typeError,
-            title: messsage,
+			html: messsage,
             showConfirmButton: isButton,
             timer: 8000
         });
     }
-  
-
 }
+
 
 function doSearch(tableId, searchID) {
     var tableReg = document.getElementById(tableId);
@@ -275,10 +281,12 @@ function doSearch(tableId, searchID) {
             if (found2 && i % 2 === 0 || isVisible === '0') {
                 tableReg.rows[i].style.display = 'none';
             } else {
-                tableReg.rows[i].style.display = 'table-row';
+				tableReg.rows[i].style.display = 'table-row';
+				tableReg.rows[i].classList.add("finded");
             }
         } else {
-            tableReg.rows[i].style.display = 'none';
+			tableReg.rows[i].style.display = 'none';
+			tableReg.rows[i].classList.remove("finded");
         }
     }
 }
@@ -421,3 +429,96 @@ function enterAsTab() {
 }
 
 
+function GetBancos(id = 'BANCO', url = "") {
+	$.ajax({
+		type: "GET",
+		url: url,
+		data: {
+
+		},
+		async: false,
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "banco", true, true);
+		}
+	});
+}
+
+function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "") {
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data: {
+			id: valor
+		},
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "cuenta de banco", true, true);
+		}
+	});
+}
+
+// Creditos bancarios
+
+async function GetTipoCredito(id = 'TIPO_CREDITO', url = "") {
+	await $.ajax({
+		type: "GET",
+		url: url,
+		data: {
+
+		},
+		async: false,
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de credito", true, true);
+		}
+	});
+}
+async function GetTipoSalida(id = 'TIPO_SALIDA', url = "") {
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data: {
+
+		},
+		dataType: "json",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de salida", true, true);
+		}
+	});
+}	
+// Debitos bancarios
+
+function GetTipoEntrada(id = 'TIPO_SALIDA', url = "")
+{
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data:
+		{
+		},
+		dataType: "JSON",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de entrada", true, true);
+		}
+	});
+}
+
+function GetTipoDebito(id = 'TIPO_SALIDA', url = "")
+{	
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: false,
+		data:
+		{
+		},
+		dataType: "JSON",
+		success: function (_data) {
+			llenarDropdows(_data, id, "tipo de debito", true, true);
+		}
+	});
+}

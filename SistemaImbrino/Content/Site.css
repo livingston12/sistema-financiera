@@ -89,10 +89,10 @@ textarea {
 	color: white;
 }
 
-	.text-BlueLight:hover {
-		color: #204d74;
-		background-color: #eee !important;
-	}
+.text-BlueLight:hover {
+	color: #204d74;
+	background-color: #eee !important;
+}
 
 .BgNav {
 	background-color: #f6c23e;
@@ -234,3 +234,37 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 	background-color: #e3e6e6;
 }
 
+.table-bordered {
+	border: 0px !important;
+}
+
+.chkLg {
+	transform: scale(2);
+	-ms-transform: scale(2);
+	-webkit-transform: scale(2);
+	padding: 10px;
+}
+
+@media (min-width: 1197px) {
+	.ml-54 {
+		margin-left: 54px;
+	}
+
+	.ml-160 {
+		margin-left: 160px;
+	}
+}
+
+.msb .navbar-nav li a:hover {
+	background-color: #204d74
+}
+
+.swal2-styled.swal2-cancel {
+	background-color: #b92c28 !important;
+}
+
+#content-title {
+	font-family: Verdana, sans-serif;
+	text-transform: capitalize;
+	font-weight: bold;
+}

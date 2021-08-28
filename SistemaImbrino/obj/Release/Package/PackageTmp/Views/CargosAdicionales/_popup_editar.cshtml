@@ -1,0 +1,63 @@
+﻿@model SistemaImbrino.Models.OTROCARG
+
+
+
+<input type="hidden" id="id" name="id" />
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<label class="control-label" for="ECAR_NUMFIN">NUMERO FIN</label>
+		<div class="form-group" id="dvECAR_NUMFIN">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_NUMFIN">NF</label>
+				@Html.EditorFor(model => model.CAR_NUMFIN, new { htmlAttributes = new { @class = "form-control texto", @id = "ECAR_NUMFIN" } })
+				<span id="spanECAR_NUMFIN" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<label class="control-label" for="ECAR_MONTOT">MONTO</label>
+		<div class="form-group" id="dvECAR_MONTOT">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_MONTOT"><i class="glyphicon glyphicon-usd"></i></label>
+				@Html.EditorFor(model => model.CAR_MONTOT, new { htmlAttributes = new { @class = "form-control number numberDecimal", @id = "ECAR_MONTOT" } })
+				<span id="spanECAR_MONTOT" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<label class="control-label" for="ECAR_SECU">SECUENCIA</label>
+		<div class="form-group" id="dvECAR_SECU">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_SECU">S</label>
+				@Html.EditorFor(model => model.CAR_SECU, new { htmlAttributes = new { @class = "form-control", @id = "ECAR_SECU", @disabled = "disabled" } })
+				<span id="spanECAR_SECU" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6">
+		<label class="control-label" for="ECAR_CODCAR">TIPO</label>
+		<div class="form-group" id="dvECAR_CODCAR">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_CODCAR"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select id="ECAR_CODCAR" class="form-control select"></select>
+				<span id="spanECAR_CODCAR" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6">
+		<label class="control-label date" for="ECAR_FECHAR">FECHA</label>
+		<div class="form-group" id="dvECAR_FECHAR">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_FECHAR"><i class="glyphicon glyphicon-calendar"></i></label>
+				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="ECAR_FECHAR">
+				<span id="spanECAR_FECHAR" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+

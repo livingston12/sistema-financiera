@@ -7,7 +7,7 @@ namespace SistemaImbrino.Models
 {
     public class View_CuadreCajaGeneral
     {
-        public IEnumerable<View_CuadreCaja> Detalle { get; set; }
+        public IQueryable<View_CuadreCaja> Detalle { get; set; }
         public View_CuadreCajaResumen Resumen { get; set; }
     }
     public class View_CuadreCaja
