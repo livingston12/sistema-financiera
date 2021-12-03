@@ -17,7 +17,7 @@ email: livingstonreynoso@gmail.com
     
 <h3 align="center"><a href="https://github.com/livingston12/sistema-financiera">Sistema Financiera</a></h3>
     <p align="center">
-        An awesome App to finacial system      
+        An awesome App to finacial system created for a financial loan company.     
     </p>
 </p>
 
