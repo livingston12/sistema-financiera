@@ -9,7 +9,7 @@ namespace SistemaImbrino.Models
         public int ID_BANCO { get; set; }
         public string BANCO
         {
-            get { return BaseController.getBanco(ID_BANCO); }
+            get { return BaseController.getBanco(ID_BANCO).Result; }
         }
         public int ID_CUENTA_BANCARIA { get; set; }
 
@@ -55,12 +55,12 @@ namespace SistemaImbrino.Models
                 }
                 catch (Exception)
                 {
-                    return null;
+                    return DateTime.Now;
                 }
             }
         }
 
-        public DateTime? FechaHastaDt
+        public DateTime FechaHastaDt
         {
             get
             {

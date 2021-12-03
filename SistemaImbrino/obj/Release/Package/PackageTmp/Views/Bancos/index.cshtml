@@ -1,0 +1,293 @@
+﻿@model SistemaImbrino.Models.BANCO
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Bancos";
+	ViewBag.nameView = "Banco";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_NOMBRE">Banco</label>
+		<div class="form-group" id="dvBCO_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_NOMBRE"><i class="glyphicon glyphicon-home"></i></label>
+				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
+				@Html.EditorFor(model => model.BCO_NOMBRE, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanBCO_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_ABREVI">Abreviatura</label>
+		<div class="form-group" id="dvBCO_ABREVI">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_ABREVI"><i class="glyphicon glyphicon-eye-open"></i></label>
+				@Html.EditorFor(model => model.BCO_ABREVI, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanBCO_ABREVI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_SUCURS">Sucursal</label>
+		<div class="form-group" id="dvBCO_SUCURS">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_SUCURS"><i class="glyphicon glyphicon-road"></i></label>
+				@Html.EditorFor(model => model.BCO_SUCURS, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanBCO_SUCURS" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_TELEF1">Telefono 1</label>
+		<div class="form-group" id="dvBCO_TELEF1">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_TELEF1"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF1, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
+				<span id="spanBCO_TELEF1" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_TELEF2">Telefono 2</label>
+		<div class="form-group" id="dvBCO_TELEF2">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_TELEF2"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF2, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
+				<span id="spanBCO_TELEF2" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="BCO_TELEF3">Telefono 3</label>
+		<div class="form-group" id="dvBCO_TELEF3">
+			<div class="input-group">
+				<label class="input-group-addon" for="BCO_TELEF3"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF3, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
+				<span id="spanBCO_TELEF3" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearBanco" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-banco" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">Banco</th>
+					<th class="th-pd-no-left">Abreviado</th>
+					<th class="th-pd-no-left">Sucursal</th>
+					<th class="th-pd-no-left">Telefono1</th>
+					<th class="th-pd-no-left">Telefono2</th>
+					<th class="th-pd-no-left">Telefono3</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListBancos != null)
+				{
+					foreach (var vw_banco in ViewBag.ListBancos)
+					{
+						@Html.Partial("_bancosDetalle", (SistemaImbrino.Models.BANCO)vw_banco)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarBanco")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarBanco">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			
+			$("#tbl-banco").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearBanco").click(function (e)
+			{
+				insertarEditarBanco("I", this);
+			});
+			$("#btn_EditarBanco").click(function (e) {
+				insertarEditarBanco("U", this);
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarBanco(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearBanco")" : "@Url.Action("ActualizarBanco")";
+			var $btn = $(currentBtn).button('loading');
+
+			var _BCO_CODIGO = typeAction == "I" ? "0" : $("#BCO_CODIGO").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _BCO_NOMBRE = $("#" + E +"BCO_NOMBRE").val().trim();
+			var _BCO_ABREVI = $("#" + E + "BCO_ABREVI").val().trim();
+			var _BCO_SUCURS = $("#" + E + "BCO_SUCURS").val().trim();
+			var _BCO_TELEF1 = $("#" + E + "BCO_TELEF1").val().trim();
+			var _BCO_TELEF2 = $("#" + E + "BCO_TELEF2").val().trim();
+			var _BCO_TELEF3 = $("#" + E + "BCO_TELEF3").val().trim();
+
+			if (_BCO_NOMBRE == "" ||
+				_BCO_SUCURS == "" ||
+				_BCO_TELEF1 == ""
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
+					return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					BCO_CODIGO: _BCO_CODIGO
+					, BCO_NOMBRE: _BCO_NOMBRE
+					, BCO_ABREVI: _BCO_ABREVI
+					, BCO_SUCURS: _BCO_SUCURS
+					, BCO_TELEF1: _BCO_TELEF1
+					, BCO_TELEF2: _BCO_TELEF2
+					, BCO_TELEF3: _BCO_TELEF3
+
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+
+		}
+		
+		function EliminarCurrentBanco(id, nombre) {
+			mensajeEliminarBanco(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarBanco(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el banco " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarBanco(id);
+				});
+		}
+
+		function eliminarBanco(_id)
+		{
+			var url = "@Url.Action("EliminarBanco")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#BCO_CODIGO").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			var url = "@Url.Action("GetCurrentBanco")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#EBCO_NOMBRE").val(_data.BCO_NOMBRE);
+					$("#EBCO_ABREVI").val(_data.BCO_ABREVI);
+					$("#EBCO_SUCURS").val(_data.BCO_SUCURS);
+					$("#EBCO_TELEF1").val(_data.BCO_TELEF1);
+					$("#EBCO_TELEF2").val(_data.BCO_TELEF2);
+					$("#EBCO_TELEF3").val(_data.BCO_TELEF3);
+
+					$("#EBCO_CODIGO").val(_id);
+
+				}
+			});
+		}
+	</script>
+}
+

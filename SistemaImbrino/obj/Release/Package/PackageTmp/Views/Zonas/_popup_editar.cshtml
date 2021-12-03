@@ -1,0 +1,18 @@
+﻿@model SistemaImbrino.Models.ZONA
+
+
+<input type="hidden" id="ZON_CODIGO" name="ZON_CODIGO"/>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EZON_DESCRI">Zona</label>
+		<div class="form-group" id="dvEZON_DESCRI">
+			<div class="input-group">
+				<label class="input-group-addon" for="EZON_DESCRI"><i class="glyphicon glyphicon-tree-conifer"></i></label>
+				@Html.EditorFor(model => model.ZON_DESCRI, new { htmlAttributes = new { @class = "form-control texto", @id = "EZON_DESCRI" } })
+				<span id="spanEZON_DESCRI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+

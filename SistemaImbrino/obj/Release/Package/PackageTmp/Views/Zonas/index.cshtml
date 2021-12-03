@@ -1,0 +1,209 @@
+﻿@model SistemaImbrino.Models.ZONA
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Zonas";
+	ViewBag.nameView = "Zona";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="ZON_DESCRI">Zona</label>
+		<div class="form-group" id="dvZON_DESCRI">
+			<div class="input-group">
+				<label class="input-group-addon" for="ZON_DESCRI"><i class="glyphicon glyphicon-tree-conifer"></i></label>
+				@Html.EditorFor(model => model.ZON_DESCRI, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanZON_DESCRI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearZona" class="btn btn-success btn-block" />
+	</div>
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-zona" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">Zona</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListZonas != null)
+				{
+					foreach (var vw_zona in ViewBag.ListZonas)
+					{
+						@Html.Partial("_zonasDetalle", (SistemaImbrino.Models.ZONA)vw_zona)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarVendedor")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarZona">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			
+			$("#tbl-zona").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearZona").click(function (e)
+			{
+				insertarEditarZona("I", this);
+			});
+			$("#btn_EditarZona").click(function (e) {
+				insertarEditarZona("U", this);
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarZona(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearZona")" : "@Url.Action("ActualizarZona")";
+			var $btn = $(currentBtn).button('loading');
+
+			var _ZON_CODIGO = typeAction == "I" ? "0" : $("#ZON_CODIGO").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _ZON_DESCRI = $("#" + E +"ZON_DESCRI").val().trim();
+			
+
+			if (_ZON_DESCRI == ""
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
+					return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					 ZON_CODIGO: _ZON_CODIGO
+					,ZON_DESCRI: _ZON_DESCRI
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+
+		}
+		
+		function EliminarCurrentZona(id, nombre) {
+			mensajeEliminarZona(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarZona(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el zona " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarZona(id);
+				});
+		}
+
+		function eliminarZona(_id)
+		{
+			var url = "@Url.Action("EliminarZona")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#ZON_CODIGO").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			var url = "@Url.Action("GetCurrentZona")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#EZON_DESCRI").val(_data.ZON_DESCRI);
+					$("#EZON_CODIGO").val(_id);
+				}
+			});
+		}
+	</script>
+}
+

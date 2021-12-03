@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers
 {
+    [Authorize(Roles = "financiamientos,admin")]
     public class FinanciamientosController : BaseController
     {
         public FinanciamientosController()
@@ -160,7 +161,7 @@ namespace SistemaImbrino.Controllers
                                     Promotor = Financiamiento.Promotor,
                                     TipoFin = Financiamiento.TipoFin,
                                     TipoInteres = Financiamiento.TipoInteres,
-                                    TipoCuota = Financiamiento.TipoCuota,
+                                    TipoCuota = x.TipoCuota,
                                     Garantia = Financiamiento.Garantia,
                                     PorInt = Financiamiento.PorInt,
                                     FormaPago =Financiamiento.FormaPago,

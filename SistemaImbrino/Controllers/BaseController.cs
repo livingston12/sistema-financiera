@@ -1,20 +1,23 @@
 ﻿using SistemaImbrino.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers
 {
     public class BaseController : Controller
     {
+
         public static DB_IMBRINOEntities db = new DB_IMBRINOEntities();
         public string MensajeErrorCath = "Error inesperado en la aplicacion Favor contactar a un soporte";
         private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
         public static string formatoFecha = "MM/dd/yyyy";
 
-      
+
         public enum TipoCobro
         {
             Pago = 11
@@ -98,7 +101,7 @@ namespace SistemaImbrino.Controllers
         }
 
 
-        public static TipoCobro ReturnTipoCobro(string tipo_Cobro)
+        public static Task<TipoCobro> ReturnTipoCobro(string tipo_Cobro)
         {
             TipoCobro returnTipo_cobro = TipoCobro.Pago;
             switch (tipo_Cobro)
@@ -119,27 +122,33 @@ namespace SistemaImbrino.Controllers
                     break;
             }
 
-            return returnTipo_cobro;
+            return Task.Run(() => returnTipo_cobro);
         }
 
-        public static List<View_cobrosHeader> CobrosHeader(string cliente = "", bool is_Procedure = false)
+        public static Task<View_cobrosHeader> CobrosHeader(string cliente = "", bool is_Procedure = false)
         {
             var clientesAgrupados = ClientesAgrupados(cliente, false);
-
-            List<View_cobrosHeader> listCobrosHeader = clientesAgrupados.Select(x => new View_cobrosHeader
+            var total = ClientesAgrupadosTotal();
+            View_cobrosHeader listCobrosHeader = new View_cobrosHeader()
             {
-                interesTotal = x.Sum(x2 => x2.InteresTotal),
-                capitalTotal = x.Sum(x2 => x2.CapitalTotal),
-                montoTotal = x.Sum(x2 => x2.MONTO),
-                moraTotal = x.Sum(x2 => x2.mora),
-                cliente = cliente == "" ? x.Key : x.FirstOrDefault().C__FIN.ToString(),
-                FinID = generateFindID(cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count(), cliente, x.Max(x2 => x2.CodigoCLiente)),//(cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count()) > 1 ? 0 : MaxFinIdByClient(x.Max(x2 => x2.CodigoCLiente)),
-                ClienteId = x.Max(x2 => x2.CodigoCLiente),
-                CountT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count()
-            }
-           ).ToList();
-
-            return listCobrosHeader;
+                Limit = EntityFramewrowkExtension.limit,
+                Page = EntityFramewrowkExtension.page,
+                Total = total,
+                Detalle = clientesAgrupados.Select(x =>
+                    new View_cobrosDetalle()
+                    {
+                        interesTotal = x.Sum(x2 => x2.InteresTotal),
+                        capitalTotal = x.Sum(x2 => x2.CapitalTotal),
+                        montoTotal = x.Sum(x2 => x2.MONTO),
+                        moraTotal = x.Sum(x2 => x2.mora),
+                        cliente = cliente == "" ? x.Key : x.FirstOrDefault().C__FIN.ToString(),
+                        FinID = generateFindID(cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count(), cliente, x.Max(x2 => x2.CodigoCLiente)),//(cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count()) > 1 ? 0 : MaxFinIdByClient(x.Max(x2 => x2.CodigoCLiente)),
+                        ClienteId = x.Max(x2 => x2.CodigoCLiente),
+                        CountT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count()
+                    })
+                    .OrderBy(y => y.cliente)
+            };
+            return Task.Run(() => listCobrosHeader);
         }
 
         public static bool pagarOtroCargoAdiccional(OTROCARG otroCargo, string fechaPago, TipoCobro status, int numRef)
@@ -151,7 +160,7 @@ namespace SistemaImbrino.Controllers
                 {
                     otroCargo.CAR_FECHAP = fechaPago;
                 }
-                otroCargo.CAR_STATUS = ((int)status).ToString();
+                otroCargo.CAR_STATUS = ((int)Status.NUEVO).ToString();
                 otroCargo.CAR_NUMREC = numRef.ToString();
                 db.Entry(otroCargo).State = EntityState.Modified;
                 actualizo = true;
@@ -182,7 +191,6 @@ namespace SistemaImbrino.Controllers
             return numAboi.ToString();
         }
 
-
         public static string MaxCarSecun(string NumFin)
         {
             var listAboCarg = db.OTROCARG.Where(x => x.CAR_NUMFIN == NumFin).ToList();
@@ -200,12 +208,13 @@ namespace SistemaImbrino.Controllers
             }
             return numSecuni.ToString();
         }
+
         private static int generateFindID(int counter, string cliente, int codCLiente)
         {
             return counter > 1 ? 0 : MaxFinIdByClient(codCLiente);
         }
 
-        public static List<View_cobrosHeader> CobrosHeader_SP(string cliente = "", bool is_Procedure = false, DateTime? fecha_pago = null)
+        public static List<View_cobrosDetalle> CobrosHeader_SP(string cliente = "", bool is_Procedure = false, DateTime? fecha_pago = null)
         {
 
             var clientesAgrupados = db.sp_cuotasVencidas(fecha_pago).Where(x => x.CLIENTE == cliente).ToList().GroupBy(x => x.C__FIN.ToString());
@@ -220,52 +229,63 @@ namespace SistemaImbrino.Controllers
                         MoraTotal = x.Sum(x2 => x2.mora),
                         cliente = cliente == "" ? x.Max(x2 => x2.CLIENTE) : x.Max(x2 => x2.C__FIN).ToString(),
                         countT = cliente == "" ? x.GroupBy(x2 => x2.C__FIN).Count() : x.Count(),
-                        ClienteId = x.Max(x2 => x2.CodigoCLiente)
+                        ClienteId = x.Max(x2 => x2.CodigoCLiente),
+                        otrosTotal = x.Where(j => j.NUM_CUOTA.isNumber() == false).Sum(x2 => x2.MONTO)
                     })
                     .ToList();
-            List<View_cobrosHeader> listCobrosHeader = new List<View_cobrosHeader>();
+            List<View_cobrosDetalle> listCobrosDetalle = listClientesCuotas.Select(x =>
+                                                        new View_cobrosDetalle()
+                                                        {
+                                                            cliente = x.cliente,
+                                                            capitalTotal = x.capitalTotal - x.otrosTotal,
+                                                            interesTotal = x.interesTotal,
+                                                            montoTotal = x.montoTotal - x.otrosTotal,
+                                                            CountT = x.countT,
+                                                            ClienteId = x.ClienteId,
+                                                            moraTotal = x.MoraTotal,
+                                                            FinID = x.countT > 1 ?
+                                                                    0 :
+                                                                    MaxFinIdByClient(x.ClienteId),
+                                                            otrosTotal = x.otrosTotal
+                                                        })
+                                                        .ToList();
 
-            foreach (var lcc in listClientesCuotas)
-            {
-                listCobrosHeader.Add(new View_cobrosHeader
-                {
-                    cliente = lcc.cliente,
-                    capitalTotal = lcc.capitalTotal,
-                    interesTotal = lcc.interesTotal,
-                    montoTotal = lcc.montoTotal,
-                    CountT = lcc.countT,
-                    ClienteId = lcc.ClienteId,
-                    moraTotal = lcc.MoraTotal
-                    ,
-                    FinID = lcc.countT > 1 ? 0 : MaxFinIdByClient(lcc.ClienteId)
-                });
-            }
 
-            return listCobrosHeader;
+            return listCobrosDetalle;
         }
-
 
         private static IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> ClientesAgrupados(string cliente = "", bool is_detail = false)
         {
             IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> clientesAgrupados = null;
             db = new DB_IMBRINOEntities();
             if (cliente == "" && is_detail == false)
-                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).ToList().GroupBy(x => x.CLIENTE);
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).ToPagination().GroupBy(x => x.CLIENTE);
             else
-                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).Where(x => x.CLIENTE == cliente).ToList().GroupBy(x => x.C__FIN.ToString());
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).Where(x => x.CLIENTE == cliente).ToPagination().GroupBy(x => x.C__FIN.ToString());
             return clientesAgrupados;
         }
 
-
+        private static int ClientesAgrupadosTotal(string cliente = "", bool is_detail = false)
+        {
+            IEnumerable<IGrouping<string, sp_cuotasVencidas_Result>> clientesAgrupados = null;
+            db = new DB_IMBRINOEntities();
+            if (cliente == "" && is_detail == false)
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).GroupBy(x => x.CLIENTE);
+            else
+                clientesAgrupados = db.sp_cuotasVencidas(DateTime.Now).Where(x => x.CLIENTE == cliente).GroupBy(x => x.C__FIN.ToString());
+            return clientesAgrupados.Count();
+        }
 
         private static int MaxFinIdByClient(int clienteID)
         {
-            return db.VW_rptCuotasVencidas.Where(x => x.CodigoCLiente == clienteID).FirstOrDefault().C__FIN;
+            var cuotas = db.sp_cuotasVencidas(DateTime.Now).Where(x => x.CodigoCLiente == clienteID).ToList(); //db.VW_rptCuotasVencidas.Where(x => x.CodigoCLiente == clienteID);
+            int? numFIn = cuotas.Any() ? cuotas.FirstOrDefault().C__FIN : 0;
+            return numFIn.HasValue ? numFIn.Value : 0;
         }
 
         public string returnDate(DateTime fecha)
         {
-            string fechaReturn = string.Format("{0}-{1}-{2}", fecha.Day, returMonthName(fecha.Month), fecha.Year);
+            string fechaReturn = string.Format("{0}-{1}-{2}", fecha.ToString("dd"), returMonthName(fecha.Month), fecha.ToString("yyyy"));
 
             return fechaReturn;
         }
@@ -281,7 +301,7 @@ namespace SistemaImbrino.Controllers
 
         }
 
-        public bool validarCargo(OTROCARG Cargo)
+        public bool validarOtrosCargo(OTROCARG Cargo)
         {
             double montoT = 0;
             double.TryParse(Cargo.CAR_MONTOT.Replace(",", ""), out montoT);
@@ -293,6 +313,7 @@ namespace SistemaImbrino.Controllers
                          && montoT > 0
                          && !string.IsNullOrEmpty(Cargo.CAR_NUMFIN);
         }
+
         public bool validarFiador(FIADOR FIADOR)
         {
             return !string.IsNullOrEmpty(FIADOR.FIA_NOMBRE)
@@ -300,6 +321,36 @@ namespace SistemaImbrino.Controllers
                          && !string.IsNullOrEmpty(FIADOR.FIA_CEDULA)
                          && !string.IsNullOrEmpty(FIADOR.FIA_DIRECC);
         }
+
+        public bool validarBanco(BANCO BANCO)
+        {
+            return !string.IsNullOrEmpty(BANCO.BCO_NOMBRE)
+                         && !string.IsNullOrEmpty(BANCO.BCO_SUCURS)
+                         && !string.IsNullOrEmpty(BANCO.BCO_TELEF1);
+        }
+
+        public bool validarVendedor(VENDEDOR VENDEDOR)
+        {
+            return !string.IsNullOrEmpty(VENDEDOR.VEN_NOMBRE);
+        }
+
+        public bool validarZona(ZONA ZONA)
+        {
+            return !string.IsNullOrEmpty(ZONA.ZON_DESCRI);
+        }
+
+        public bool validarCuenta(CTABANCO CUENTA)
+        {
+            return !string.IsNullOrEmpty(CUENTA.CTA_NUMERO)
+                && CUENTA.CTA_BANCO != "0";
+        }
+
+        public bool validarCargo(CARGO CARGO)
+        {
+            return !string.IsNullOrEmpty(CARGO.CAR_DESCRI);
+        }
+        
+
         public int lastCodCliente()
         {
             int maxVal = db.CLIENTE.Any()
@@ -308,6 +359,7 @@ namespace SistemaImbrino.Controllers
             maxVal++;
             return maxVal;
         }
+
         public int lastCodFiador()
         {
             int maxVal = db.FIADOR.Any()
@@ -316,6 +368,54 @@ namespace SistemaImbrino.Controllers
             maxVal = maxVal + 1;
             return maxVal;
         }
+
+        public int lastCodBanco()
+        {
+            int maxVal = db.BANCO.Any()
+                        ? db.BANCO.Max(x => x.BCO_CODIGO)
+                        : 0;
+            maxVal = maxVal + 1;
+            return maxVal;
+        }
+
+        public int lastCodVendedor()
+        {
+            int maxVal = db.VENDEDOR.Any()
+                        ? db.VENDEDOR.Max(x => x.VEN_CODIGO)
+                        : 0;
+            maxVal = maxVal + 1;
+            return maxVal;
+        }
+
+        public string lastCodZona()
+        {
+            string maxVals = db.ZONA.Any()
+                        ? db.ZONA.Max(x => x.ZON_CODIGO)
+                        : "0";
+            int.TryParse(maxVals, out int maxVal);
+            maxVal = maxVal + 1;
+            return maxVal.ToString();
+        }
+
+        public int lastCodCuenta()
+        {
+            int maxVal = db.CTABANCO.Any()
+                        ? db.CTABANCO.Max(x => x.CTA_CODIGO)
+                        : 0;
+            maxVal = maxVal + 1;
+            return maxVal;
+        }
+
+        public string lastCodCargo()
+        {
+            string maxVals = db.CARGO.Any()
+                        ? db.CARGO.Max(x => x.CAR_CODIGO)
+                        : "0";
+            int.TryParse(maxVals, out int maxVal);
+            maxVal = maxVal + 1;
+            return maxVal.ToString();
+        }
+
         public static string returMonthName(int month)
         {
             return listaMeses[month - 1];
@@ -349,18 +449,31 @@ namespace SistemaImbrino.Controllers
             int month = Array.FindIndex(listaMeses, x => x == monthName);
             return month + 1;
         }
-        public static string getTipoIngreso(string ingresoId)
+
+        public async static Task<string> getTipoIngresoAsync(string ingresoId)
         {
-            var ingresos = db.INGRESO.Where(x => x.ING_CODIGO == ingresoId).ToList();
-            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().ING_DESCRI : string.Empty;
+            var ingresos = await db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToListAsync();
+            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
             return ingreso.Trim();
         }
 
-        public static string getBanco(int id)
+        public static string getTipoIngreso(string ingresoId)
         {
+            var ingresos = db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToList();
+            string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
+            return ingreso.Trim();
+        }
+
+        public static Task<string> getBanco(int id)
+        {
+            db = new DB_IMBRINOEntities();
             var list = db.BANCO.Where(x => x.BCO_CODIGO == id).ToList();
             string value = list.Any() ? list.FirstOrDefault().BCO_ABREVI : string.Empty;
-            return value.Trim();
+            return Task.Run<string>(() =>
+           {
+               return value.Trim();
+           });
+
         }
 
         public static string getTipoSalida(int id)
@@ -376,6 +489,7 @@ namespace SistemaImbrino.Controllers
             string value = list.Any() ? list.FirstOrDefault().DESCRIPCION : string.Empty;
             return value.Trim();
         }
+
         public static string getTipoEntrada(int id)
         {
             var list = db.TIPODB1.Where(x => x.ID == id).ToList();
@@ -569,79 +683,7 @@ namespace SistemaImbrino.Controllers
             return insertado;
         }
 
-        public View_CuadreCajaGeneral GetListCuadreCaja(DateTime? cierreFecha = null)
-        {
-            db = new DB_IMBRINOEntities();
-            List<String> ListOtrosIngresosNetos = new List<string>()
-            {
-                "OTROS_EC","OTROS_DT"
-            };
 
-            List<String> ListTotalIngresado = new List<string>()
-            {
-                "CUOTAS_EC","CUOTAS_DT"
-            };
-
-            var CajaGeneral = new View_CuadreCajaGeneral()
-            {
-                Detalle = db.vw_CuadreCaja
-                        .GroupBy(x => new
-                        {
-                            x.ID,
-                            x.Tipo,
-                            x.TextoTipo
-                        })
-                        .Select(x => new View_CuadreCaja
-                        {
-                            ID = x.Key.ID,
-                            Tipo = x.Key.Tipo,
-                            TipoTexto = x.Key.TextoTipo,
-                            TotalTipo = x.Where(z => z.Tipo == x.Key.Tipo)
-                                                        .Sum(z => z.MontoTotal),
-                            TotalTipoAnterior = db.vw_CuadreCaja.Where(z => z.ID == x.Key.ID - 1)
-                                                        .Sum(z => z.MontoTotal),
-                            Detalle = x.Where(z => z.Tipo == x.Key.Tipo)
-                                                    .Select(z => new View_CuadreCajaDetalle
-                                                    {
-                                                        Recibo = z.Recibo,
-                                                        Cliente = z.Cliente,
-                                                        Descripcion = z.Descripcion,
-                                                        MontoCapital = z.MontoCapital,
-                                                        MontoInteres = z.MontoInteres,
-                                                        MontoTotal = z.MontoTotal,
-                                                        Fecha = z.Fecha,
-                                                        FechaTexto = z.FechaTexto
-                                                    }),
-                        })
-                        .OrderBy(z => z.ID),
-                Resumen = db.vw_CuadreCaja
-                        .GroupBy(x => new
-                        {
-                            x.ID,
-                            x.Tipo,
-                            x.TextoTipo
-                        })
-                        .Select(x => new View_CuadreCajaResumen()
-                        {
-                            TotalCapital = db.vw_CuadreCaja.Where(z => ListTotalIngresado
-                                                .Contains(z.Tipo))
-                                            .Sum(z => z.MontoCapital),
-                            TotalInteres = db.vw_CuadreCaja.Where(z => ListTotalIngresado
-                                                .Contains(z.Tipo))
-                                            .Sum(z => z.MontoInteres),
-                            IngresosNoNetos = db.vw_CuadreCaja.Where(z => z.Tipo == "INGRESOS_NN")
-                                            .Sum(z => z.MontoTotal),
-                            OtrosIngresosNetos =
-                                    db.vw_CuadreCaja.Where(z => ListOtrosIngresosNetos
-                                                .Contains(z.Tipo))
-                                        .Sum(z => z.MontoTotal),
-                            DepositoTranferencia = db.vw_CuadreCaja.Where(z => z.Tipo == "SALIDAS")
-                                            .Sum(z => z.MontoTotal),
-                        })
-                        .FirstOrDefault()
-            };
-            return CajaGeneral;
-        }
 
         public message validarMetodoPago(string tipoPago, OTROSDB Deposito)
         {
@@ -663,7 +705,7 @@ namespace SistemaImbrino.Controllers
                         menssageErrors
                             .Add("El tipo de pago <b>deposito</b> necesita informacion de deposito");
                     }
-                    else if(Deposito.TIPO_ENTRADA != 1)
+                    else if (Deposito.TIPO_ENTRADA != 1)
                     {
                         menssageErrors
                              .Add("El tipo de entrada tiene que ser <b>DEPOSITO</b>");
@@ -698,21 +740,22 @@ namespace SistemaImbrino.Controllers
 
             message.Message = string.Join("<br>", menssageErrors);
             message.Is_Success = !menssageErrors.Any();
-           
+
             return message;
         }
 
         private void validarDeposito(OTROSDB deposito, List<string> menssageErrors)
         {
-            if (string.IsNullOrEmpty(getBanco(deposito.BANCO)))
+            var banco = getBanco(deposito.BANCO).Result;
+            if (string.IsNullOrEmpty(banco))
             {
                 menssageErrors
-                    .Add($"El campo <b>{nameof(deposito.BANCO)}</b> no puede ser vacio");
+                    .Add($"El campo <b>{nameof(deposito.BANCO)} abreviado </b> no puede ser vacio");
             }
             if (string.IsNullOrEmpty(getCuentaBancaria(deposito.CUENTA_BANCARIA)))
             {
                 menssageErrors
-                    .Add($"El campo <b>{nameof(deposito.CUENTA_BANCARIA).Replace("_"," ")}</b> no puede ser vacio");
+                    .Add($"El campo <b>{nameof(deposito.CUENTA_BANCARIA).Replace("_", " ")}</b> no puede ser vacio");
             }
             if (string.IsNullOrEmpty(getTipoDebito(deposito.TIPO_DEBITO)))
             {
@@ -737,7 +780,7 @@ namespace SistemaImbrino.Controllers
             }
         }
 
-        public static void modificarBalanceFecha(DB_IMBRINOEntities _db, int idCuenta,decimal monto,tipoBalanceFecha tipoCambio)
+        public static void modificarBalanceFecha(DB_IMBRINOEntities _db, int idCuenta, decimal monto, tipoBalanceFecha tipoCambio)
         {
             if (tipoBalanceFecha.disminuir == tipoCambio)
             {
@@ -752,10 +795,37 @@ namespace SistemaImbrino.Controllers
         public static void modificarBalanceFecha(DB_IMBRINOEntities _db, int idCuenta, decimal montoActual, decimal montoModificado)
         {
             tipoBalanceFecha tipo = montoModificado > montoActual ?
-                                                                tipoBalanceFecha.aumentar : 
+                                                                tipoBalanceFecha.aumentar :
                                                                 tipoBalanceFecha.disminuir;
             decimal monto = montoModificado - montoActual;
             modificarBalanceFecha(_db, idCuenta, monto, tipo);
         }
+
+        public static async Task<View_fechas> fechasCierreCaja()
+        {
+            db = new DB_IMBRINOEntities();
+            DateTime fechaDesde = DateTime.Now.Date;
+            DateTime fechaHasta = DateTime.Now.Date;
+            var sistema = await db.SISTEMA.FirstOrDefaultAsync();
+            var listCaja = await db.vw_CuadreCaja.Where(x => x.isCuadrada == false).ToListAsync();
+            if (sistema != null)
+            {
+                fechaDesde = sistema.FECHA_CIERRE.AddDays(1);
+
+            }
+            if (listCaja.Any())
+            {
+                fechaHasta = listCaja.Max(x => x.fechadt);
+            }
+
+            View_fechas fechas = new View_fechas()
+            {
+                FechaDesde = fechaDesde.ToString("yyyy-MM-dd"),
+                FechaHasta = fechaHasta.ToString("yyyy-MM-dd")
+            };
+            return fechas;
+        }
+
+       
     }
 }

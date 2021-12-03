@@ -24,7 +24,8 @@
 		<div class="form-group" id="dvCAR_NUMFIN">
 			<div class="input-group">
 				<label class="input-group-addon" for="CAR_NUMFIN">NF</label>
-				@Html.EditorFor(model => model.CAR_NUMFIN, new { htmlAttributes = new { @class = "form-control number" } })
+				<select id="CAR_NUMFIN" class="form-control select"></select>
+				@*@Html.EditorFor(model => model.CAR_NUMFIN, new { htmlAttributes = new { @class = "form-control number" } })*@
 				<span id="spanCAR_NUMFIN" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -45,9 +46,11 @@
 		<label class="control-label" for="CAR_MONTOT">MONTO</label>
 		<div class="form-group" id="dvCAR_MONTOT">
 			<div class="input-group">
-				<label class="input-group-addon" for="CAR_MONTOT"><i class="glyphicon glyphicon-usd"></i></label>
-				@Html.EditorFor(model => model.CAR_MONTOT, new { htmlAttributes = new { @class = "form-control number numberDecimal" } })
-				<span id="spanCAR_MONTOT" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+				<label class="input-group-addon" for="CAR_MONTOT">
+					<i class="glyphicon glyphicon-usd"></i>
+				</label>
+				@Html.EditorFor(model => model.CAR_MONTOT, new { htmlAttributes = new { @class = "form-control number numberDecimal widtTotal" } })
+				<span id="spanCAR_MONTOT" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
 	</div>
@@ -57,7 +60,7 @@
 		<div class="form-group" id="dvCAR_FECHAR">
 			<div class="input-group">
 				<label class="input-group-addon" for="CAR_FECHAR"><i class="glyphicon glyphicon-calendar"></i></label>
-				<input type="text" class="form-control date datepicker" placeholder="Fecha" id="CAR_FECHAR">
+				<input type="text" class="form-control date datepicker widtTotal" placeholder="Fecha" id="CAR_FECHAR">
 				<span id="spanCAR_FECHAR" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -132,7 +135,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function () {
-
+			llenarFinanciamientos();
 			GetTiposCargo();
 
 
@@ -153,6 +156,19 @@
 				Show_closeModal("#modalCeditar", false);
 			});
 		});
+		function llenarFinanciamientos() {
+			const url = "@Url.Action("getFinAndUser")";
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {},				
+				dataType: "json",
+				success: function (_data) {
+					llenarDrop(_data, "CA");
+				}
+			})
+		}
 
 		function insertarEditarCargo(typeAction)
 		{

@@ -1,0 +1,26 @@
+﻿@model SistemaImbrino.Models.View_cobrosHeader
+<table id="tbl_DetalleCuotas" class="table table-bordered">
+	<thead>
+		<tr>
+			<th># Fin</th>
+			<th class="text-center">Cuotas</th>
+			<th class="text-center">Balance</th>
+			<th class="text-center">Capital</th>
+			<th class="text-center">Interes</th>
+			<th class="text-center">Mora</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var CuotasVen in Model.Detalle)
+		{
+			<tr role="row">
+				<td><a class="control-label a">@CuotasVen.cliente </a></td>
+				<td class="text-center">@CuotasVen.CountT</td>
+				<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.montoTotal)</td>
+				<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.capitalTotal)</td>
+				<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.interesTotal)</td>
+				<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
+			</tr>
+		}
+	</tbody>
+</table>

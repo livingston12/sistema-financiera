@@ -2,7 +2,7 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = "Maestro clientes";
+	ViewBag.Title = "Clientes";
 	ViewBag.nameView = "Cliente";
 }
 
@@ -18,7 +18,7 @@
 			<div class="input-group">
 				<label class="input-group-addon" for="CTE_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
 				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
-				@Html.EditorFor(model => model.CTE_NOMBRE, new { htmlAttributes = new { @class = "form-control texto" } })
+				@Html.EditorFor(model => model.CTE_NOMBRE, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
 				<span id="spanCTE_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 		<div class="form-group" id="dvCApellido">
 			<div class="input-group">
 				<label class="input-group-addon" for="CTE_APELLI"><i class="glyphicon glyphicon-font"></i></label>
-				@Html.EditorFor(model => model.CTE_APELLI, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.EditorFor(model => model.CTE_APELLI, new { htmlAttributes = new { @class = "form-control widtTotal" } })
 				<span id="spanCNombre" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 		<div class="form-group" id="dvCTE_CEDULA">
 			<div class="input-group">
 				<label class="input-group-addon" for="CTE_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
-				@Html.EditorFor(model => model.CTE_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula" } })
+				@Html.EditorFor(model => model.CTE_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula widtTotal" } })
 				<span id="spanCTE_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -51,32 +51,19 @@
 		<div class="form-group" id="dvCTE_TELEFO">
 			<div class="input-group">
 				<label class="input-group-addon" for="CTE_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
-				@Html.EditorFor(model => model.CTE_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono" } })
+				@Html.EditorFor(model => model.CTE_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
 				<span id="spanCTE_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
 	</div>
 
-
 	<div class="col-xs-12 col-sm-6 col-lg-4 ">
-		<label class="control-label" for="CTE_DIRECC">DIRECCIÓN</label>
-		<div class="form-group" id="dvCTE_DIRECC">
+		<label class="control-label" for="CTE_TELEFO2">TELEFONO 2</label>
+		<div class="form-group" id="dvCTE_TELEFO2">
 			<div class="input-group">
-				<label class="input-group-addon" for="CTE_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
-				@Html.EditorFor(model => model.CTE_DIRECC, new { htmlAttributes = new { @class = "form-control" } })
-				<span id="spanCTE_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="col-xs-12 col-sm-6 col-lg-4">
-		<label class="control-label" for="CTE_ZONA">ZONA</label>
-		<div class="form-group" id="dvCTE_ZONA">
-			<div class="input-group">
-				<label class="input-group-addon" for="CTE_ZONA"><i class="glyphicon glyphicon-th-list"></i></label>
-				<select class="form-control" id="CTE_ZONA" name="CTE_ZONA"></select>
-				<span id="spanCTE_ZONA" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<label class="input-group-addon" for="CTE_TELEFO2"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.CTE_TELEFO2, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
+				<span id="spanCTE_TELEFO2" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
 	</div>
@@ -92,11 +79,34 @@
 		</div>
 	</div>
 
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="CTE_ZONA">ZONA</label>
+		<div class="form-group" id="dvCTE_ZONA">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_ZONA"><i class="glyphicon glyphicon-th-list"></i></label>
+				<select class="form-control select" id="CTE_ZONA" name="CTE_ZONA"></select>
+				<span id="spanCTE_ZONA" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTE_DIRECC">DIRECCIÓN</label>
+		<div class="form-group" id="dvCTE_DIRECC">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTE_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
+				@Html.TextAreaFor(model => model.CTE_DIRECC, new { @class = "form-control widtTotal", @cols = "50", @rows = "3" })
+				@*@Html.EditorFor(model => model.CTE_DIRECC, new { htmlAttributes = new { @class = "form-control widtTotal" } })*@
+				<span id="spanCTE_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 
 <div class="row">
-	<div class="col-xs-12 col-md-3">
+	<div class="col-xs-12 col-md-2">
 		<input type="submit" value="Crear" id="btn_crearCliente" class="btn btn-success btn-block" />
 	</div>
 
@@ -108,12 +118,13 @@
 		<table id="tbl-cliente" class="table table-condensed table-hover table-bordered">
 			<thead class="btn-defaultColorLite">
 				<tr>
-					<th>NOMBRE COMPLETO</th>
-					<th>CEDULA</th>
-					<th>TELEFONO</th>
-					<th>DIRECCION</th>
-					<th>ZONA</th>
-					<th>TIPO CLIENTE</th>
+					<th class="th-pd-no-left">NOMBRE</th>
+					<th class="th-pd-no-left">CEDULA</th>
+					<th class="th-pd-no-left">TELEFONO</th>
+					<th class="th-pd-no-left">TELEFONO</th>
+					<th class="th-pd-no-left">DIRECCION</th>
+					<th class="th-pd-no-left">ZONA</th>
+					<th class="th-pd-no-left">TIPO</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -148,7 +159,7 @@
 				@Html.Partial("_popup_editar")
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn_EditarCliente">Actualizar</button>
+				<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn_EditarCliente">Actualizar</button>
 				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
 
 			</div>
@@ -162,6 +173,11 @@
 
 			GetZonas();
 			GetTiposClientes();
+			$("#CTE_TIPO").selectMania({
+				width: '100%',
+				size: 'small',
+				search: false
+			});
 			$("#tbl-cliente").DataTable();
 
 			$("input").blur(function () {
@@ -170,10 +186,10 @@
 
 			$("#btn_crearCliente").click(function (e)
 			{
-				insertarEditarCLiente("I");
+				insertarEditarCLiente("I", this);
 			});
 			$("#btn_EditarCliente").click(function (e) {
-				insertarEditarCLiente("U");
+				insertarEditarCLiente("U", this);
 			});
 
 			$(".btn-cancelarPop").click(function (e) {
@@ -181,10 +197,10 @@
 			});
 		});
 
-		function insertarEditarCLiente(typeAction)
+		function insertarEditarCLiente(typeAction, currentBtn)
 		{
 			url = typeAction == "I" ? "@Url.Action("CrearCliente")" : "@Url.Action("ActualizarCliente")";
-
+			var $btn = $(currentBtn).button('loading');
 			var _CTE_CODIGO = typeAction == "I" ? "0" : $("#CTE_CODIGO").val().trim();
 
 			    var E = typeAction == "I" ? "" : "E";
@@ -198,6 +214,7 @@
 			}
 				
 			var _CTE_TELEFO = $("#" + E + "CTE_TELEFO").val().trim();
+			var _CTE_TELEFO2 = $("#" + E + "CTE_TELEFO2").val().trim();
 			var _CTE_DIRECC = $("#" + E + "CTE_DIRECC").val().trim();
 			var _CTE_ZONA = $("#" + E + "CTE_ZONA").val();
 			var _CTE_TIPO = $("#" + E + "CTE_TIPO").val();
@@ -208,13 +225,15 @@
 				)
 				{
 					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
 					return;
 				}
 
 			if (_CTE_CEDULA.length != 11 && typeAction == "I")
 				{
 					MessageNotification("El formato de la cedula es incorrecto", false);
-					return;
+				$btn.button('reset');
+				return;
 				}
 				//var url = "@Url.Action("CrearCliente")";
 				$.ajax({
@@ -229,14 +248,17 @@
 					,CTE_TELEFO : _CTE_TELEFO
 					,CTE_DIRECC : _CTE_DIRECC
 					,CTE_ZONA : _CTE_ZONA
-					,CTE_TIPO: _CTE_TIPO
+					, CTE_TIPO: _CTE_TIPO
+					, CTE_TELEFO2: _CTE_TELEFO2
 					
 				},
 				dataType: "json",
 				success: function (_data)
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
-					
+				},
+				complete: function () {
+						$btn.button('reset');
 				}
 			});
 
@@ -252,7 +274,7 @@
 				},
 				dataType: "json",
 				success: function (_data) {
-					llenarDropdows(_data, id, "Zona cliente",true,false);
+					llenarDropdows(_data, id, "Zona cliente",true,true);
 				}
 			});
 		}
@@ -268,12 +290,12 @@
 				dataType: "json",
 				success: function (_data)
 				{
-					llenarDropdows(_data, id, "Tipo cliente",false,false);
+					llenarDropdows(_data, id, "Tipo cliente",false,true);
 				}
 			});
 		}
 
-		function EliminarCurrentClient(id,nombre) {
+		function EliminarCurrentClient(id, nombre) {
 			mensajeEliminarCliente(id, nombre);
 			$(".swal2-cancel").text("NO");
 			$(".swal2-cancel").focus();
@@ -307,7 +329,6 @@
 				success: function (_data)
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
-
 				}
 			});
 		}
@@ -315,7 +336,6 @@
 		function editar_Popup(_id)
 		{
 			$("#CTE_CODIGO").val(_id);
-			//document.cookie = "CTE_CODIGO=" + id;
 
 			Show_closeModal("#modalCeditar", true);
 
@@ -332,7 +352,6 @@
 				data: {
 					id: _id
 				},
-				//dataType: "json",
 				success: function (_data)
 				{
 
@@ -340,11 +359,11 @@
 					$("#ECTE_APELLI").val(_data.CTE_APELLI)
 					$("#ECTE_CEDULA").val(_data.CTE_CEDULA)
 					$("#ECTE_TELEFO").val(_data.CTE_TELEFO)
+					$("#ECTE_TELEFO2").val(_data.CTE_TELEFO2)
 					$("#ECTE_DIRECC").val(_data.CTE_DIRECC)
 					$("#ECTE_ZONA").val(_data.CTE_ZONA)
 					$("#ECTE_TIPO").val(_data.CTE_TIPO)
 					$("#CTE_CODIGO").val(_id);
-					//MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
 
 				}
 			});

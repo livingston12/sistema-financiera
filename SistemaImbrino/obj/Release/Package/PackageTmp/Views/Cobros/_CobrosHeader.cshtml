@@ -3,139 +3,134 @@
 @{ 
 	decimal balanceTotal = Model.CAPITAL + Model.INTERES;	
 }
-<div class="container-fluid panel panel-warning">
+<div class="container-fluid">
 	
 	<div class="row">
-		<div class="col-xs-12 col-md-12 btn-defaultColor">
-			<label class="col-xs-6 text-right">DATOS DEL FINANCIAMIENTO</label>
-			<label class="col-xs-6 text-right">Fecha pago: @ViewBag.FechaPago</label>
+		<div class="col-xs-12 col-md-12 btn-defaultColor img-rounded">
+			<label class="col-xs-12 text-center font-size-18">DATOS DEL FINANCIAMIENTO</label>
+			<label class="col-xs-12 text-center font-size-18"><span class="font-size-16 not-bold">Fecha de Pago : </span>@ViewBag.FechaPago</label>
 		</div>
-		<div class="col-xs-6 col-md-6 text-left ">
-			<label id="lblFin" class="not-bold">
+		@*<div class="col-xs-6 col-md-6 text-left ">*@
+			<label id="lblFin" class="not-bold pull-left">
 				Finaciamiento:
-				@Html.LabelFor(model => model.C__FIN, Model.C__FIN.ToString(), new { @id = "Num_Fin", @class = "control-label not-bold" })
+				@Html.LabelFor(model => model.C__FIN, Model.C__FIN.ToString(), new { @id = "Num_Fin", @class = "control-label" })
 			</label>
-		</div>
-		<div class="col-xs-6 text-left">
-			<label class="not-bold col-xs-3 col-md-3 col-xs-offset-5 col-sm-offset-6 col-md-offset-7 text-left">
+		@*</div>*@
+		@*<div class="col-xs-6 text-left">*@
+			<label class="not-bold pull-right text-left col-xs-2 width-20-Por">
 				Monto:
-
+				@Html.LabelFor(model => model.MONTO, String.Format("{0:n}", Model.MontoTotal), new { @id = "monto", @class = "control-label font-size-16 col-xs-9 pull-right text-right noPdRight" })
 			</label>
-			@Html.LabelFor(model => model.MONTO, String.Format("{0:n}", Model.MontoTotal), new { @id = "monto", @class = "control-label not-bold col-xs-1 col-md-2 text-right noPdRight" })
-		</div>
+		@*</div>*@
 	</div>
 	<hr class="hrnoMargin" />
 
 	<div class="row">
-
-		<div class="col-xs-6 col-md-6">
-			<label id="lblFac" class="not-bold">
+		
+			<label id="lblFac" class="not-bold pull-left">
 				Factura:
 				@Html.LabelFor(model => model.C__FIN, Model.C__FIN.ToString(), new { @id = "Num_Fac", @class = "control-label not-bold" })
 			</label>
-		</div>
-		<div class="col-xs-6 text-left">
-			<label class="not-bold col-xs-3 col-md-3 col-xs-offset-5 col-sm-offset-6 col-md-offset-7 text-left">
-				Fecha:
-			</label>
-			@Html.LabelFor(model => model.fecha, Model.fecha, new { @id = "fecha", @class = "control-label not-bold col-xs-1 col-md-2 text-right" })
-
-		</div>
-		<div class="clearfix"></div>
-		<div class="col-xs-12 col-md-6">
-			<label class="not-bold">
-				Cliente:
-			</label>
-			@Html.LabelFor(model => model.CLIENTE, Model.CLIENTE, new { @id = "cliente", @class = "control-label" })
-		</div>
-
-		<div class="col-xs-12 col-md-6">
-			<label class="not-bold  col-md-3 col-xs-2 col-xs-offset-0 col-md-offset-7 text-left">% Interes:</label>
-			@Html.LabelFor(model => model.FAC_INTERE, String.Format("{0:n}", Model.FAC_INTERE) + "%", new { @id = "FAC_INTERE", @class = "control-label not-bold col-md-2 col-xs-1 text-right noPdRight" })
-		</div>
-
-		<div class="clearfix"></div>
-		<div class="col-xs-12  col-md-6 text-left">
-			<label class="control-label not-bold ">
-				Direccion:
-			</label>
-			@Html.LabelFor(model => model.DIRE_CLIENTE, Model.DIRE_CLIENTE, new { @id = "DIRE_CLIENTE", @class = "control-label not-bold" })
-		</div>
-		<div class="col-xs-6  col-md-6">
-			<label class="not-bold  col-xs-8 col-md-3 col-xs-offset-0  col-md-offset-7 text-left ">Forma pago:</label>
-			@Html.LabelFor(model => model.forma_pago, Model.forma_pago, new { @id = "forma_pago", @class = "control-label not-bold col-xs-1 text-right noPdRight" })
-		</div>
-
-		<div class="col-xs-6">
-			<label class="not-bold">Telefono:</label>
-			@Html.LabelFor(model => model.TELEFONO1, Model.TELEFONO1, new { @id = "tel", @class = "control-label not-bold" })
-		</div>
 		
-		<div class="col-xs-6  text-left">
-			<label class="not-bold col-xs-9  col-md-4  col-xs-offset-0 col-md-offset-7">Total cuotas:</label>
-			@Html.LabelFor(model => model.CUOTA_TOTAL, Model.CUOTA_TOTAL.ToString(), new { @id = "CUOTA_TOTAL", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
-		</div>
+			<label class="not-bold  pull-right col-xs-2 text-left width-20-Por">
+				Fecha:
+				@Html.LabelFor(model => model.fecha, Model.fecha, new { @id = "fecha", @class = "control-label  col-xs-9 pull-right not-bold text-right noPdRight" })
+			</label>
 
-		<div class="col-xs-6 ">
-			<label class="not-bold ">Cedula:</label>
+		<div class="clearfix"></div>
+		
+		<label class="not-bold pull-left">
+			Cliente:
+			@Html.LabelFor(model => model.CLIENTE, Model.CLIENTE, new { @id = "cliente", @class = "control-label font-size-16" })
+		</label>
+				
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			% Interes:
+			@Html.LabelFor(model => model.FAC_INTERE, String.Format("{0:n}", Model.FAC_INTERE) + "%", new { @id = "FAC_INTERE", @class = "control-label not-bold col-xs-7 pull-right text-right noPdRight" })
+		</label>
+		
+
+		<div class="clearfix"></div>
+		<label class="control-label not-bold pull-left ">
+			Direccion:
+			@Html.LabelFor(model => model.DIRE_CLIENTE, Model.DIRE_CLIENTE, new { @id = "DIRE_CLIENTE", @class = "control-label not-bold" })
+		</label>
+		
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por" style="font-size:13.6px;">
+			Forma pago:
+			@Html.LabelFor(model => model.forma_pago, Model.forma_pago, new { @id = "forma_pago", @class = "control-label not-bold col-xs-6 pull-right text-right noPdRight" })
+		</label>
+
+		<div class="clearfix"></div>
+		<label class="not-bold pull-left">
+			Telefono:
+			@Html.LabelFor(model => model.TELEFONO1, Model.TELEFONO1, new { @id = "tel", @class = "control-label not-bold" })
+		</label>
+		
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			Total cuotas:
+			@Html.LabelFor(model => model.CUOTA_TOTAL, Model.CUOTA_TOTAL.ToString(), new { @id = "CUOTA_TOTAL", @class = "control-label pull-right text-center col-xs-5" })
+		</label>
+
+		<div class="clearfix"></div>
+		<label class="not-bold pull-left">
+			Cedula:
 			@Html.LabelFor(model => model.CEDULA_CLIENTE, Model.CEDULA_CLIENTE, new { @id = "CEDULA_CLIENTE", @class = "control-label not-bold" })
-		</div>
+		</label>
 
-
-		<div class="col-xs-6">
-			<label id="lblCp" class="not-bold col-xs-9 col-md-4  col-xs-offset-0 col-md-offset-7 text-left">Cuotas pendientes:</label>
-			@Html.LabelFor(model => model.CUOTA_PENDIENTE, Model.CUOTA_PENDIENTE.ToString(), new { @id = "CUOTA_PENDIENTE", @class = "control-label col-xs-1 text-left noPdRight noPdLeft" })
-		</div>
+		<label id="lblCp" class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			Cuotas pendientes:
+			@Html.LabelFor(model => model.CUOTA_PENDIENTE, Model.CUOTA_PENDIENTE.ToString(), new { @id = "CUOTA_PENDIENTE", @class = "control-label pull-right text-center col-xs-4 noPdLeft" })
+		</label>
 		
 	</div>
 
 	<hr class="hrnoMargin" />
 	<div class="row marginDiv">
-		<div class="col-xs-12 col-md-6">
-			<label class="not-bold">Fiador:</label>
+		<label class="not-bold pull-left">
+			Fiador:
 			@Html.LabelFor(model => model.FIADOR, Model.FIADOR, new { @id = "FIADOR", @class = "control-label not-bold" })
-		</div>
+		</label>
 
-		<div class="col-xs-4 col-md-6">
-			<label class="not-bold col-xs-5 col-md-3  col-xs-offset-0 col-md-offset-7 text-left">
-				Balance:
-			</label>
-			@Html.LabelFor(model => model.balanceTOTAL, String.Format("{0:n}", @balanceTotal), new { @id = "balance", @class = "control-label col-xs-2 bg-defaultlgh text-right noPdRight" })
-		</div>
-		<div class="clearfix visible-xs" ></div>
-		<div class="col-xs-12 col-md-6 ">
-			<label class="not-bold ">Garantia:</label>
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			Balance:
+			@Html.LabelFor(model => model.balanceTOTAL, String.Format("{0:n}", @balanceTotal), new { @id = "balance", @class = "control-label pull-right col-xs-6 bg-defaultlgh font-size-16" })
+		</label>
+
+		<div class="clearfix"></div>
+		<label class="not-bold pull-left">
+			Garantia:
 			@Html.LabelFor(model => model.FAC_GARANT, Model.FAC_GARANT, new { @id = "FAC_GARANT", @class = "control-label not-bold" })
-		</div>
-		<div class="col-xs-6 ">
-			<label class="not-bold col-xs-3 col-xs-offset-0 col-md-3 col-md-offset-7  text-left">Capital:</label>
-			@Html.LabelFor(model => model.CAPITAL, String.Format("{0:n}", Model.CAPITAL), new { @id = "BalanceCapitalTOTAL", @class = "control-label not-bold col-xs-2 bg-defaultlgh text-right noPdRight" })
-		</div>
-		<div class="col-xs-6 ">
-			<label class="not-bold">Promotor:</label>
+		</label>
+
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			Capital:
+			@Html.LabelFor(model => model.CAPITAL, String.Format("{0:n}", Model.CAPITAL), new { @id = "BalanceCapitalTOTAL", @class = "control-label pull-right col-xs-6 bg-defaultlgh font-size-16" })
+		</label>
+
+		<div class="clearfix"></div>
+		<label class="not-bold pull-left">
+			Promotor:
 			@Html.LabelFor(model => model.PROMOTOR, Model.PROMOTOR, new { @id = "PROMOTOR", @class = "control-label not-bold" })
-		</div>
+		</label>
 
-		<div class="col-xs-6 col-xs-pull-6 col-md-pull-0">
-			<label class="not-bold col-xs-3 col-xs-offset-0   col-md-3 col-md-offset-7 text-left">Interes:</label>
-			@Html.LabelFor(model => model.INTERES, String.Format("{0:n}", Model.INTERES), new { @id = "BalanceInteresTOTAL", @class = "control-label not-bold col-xs-2  text-right noPdRight" })
-		</div>
+		<label class="not-bold pull-right col-xs-2 text-left width-20-Por">
+			Interes:
+			@Html.LabelFor(model => model.INTERES, String.Format("{0:n}", Model.INTERES), new { @id = "BalanceInteresTOTAL", @class = "control-label pull-right col-xs-6 bg-defaultlgh font-size-16" })
+		</label>
 
-		<div class="col-xs-8 col-md-6  btn-defaultColor" style="padding-top:5px;">
-			<label class="not-bold">Ultima fecha pago:</label>
-			@Html.LabelFor(model => model.ULTIMO_PAGO, Model.ULTIMO_PAGO, new { @id = "ULTIMO_PAGO", @class = "control-label not-bold " })
+		<div class="clearfix"></div>
+		<div class="col-xs-12  btn-defaultColor noPdLeft img-rounded" style="padding-top:2px;">
+			<label class="not-bold col-xs-6">
+				Ultima fecha pago:
+				@Html.LabelFor(model => model.ULTIMO_PAGO, Model.ULTIMO_PAGO, new { @id = "ULTIMO_PAGO", @class = "control-label not-bold " })
+			</label>
+			<label class="not-bold col-xs-6 pull-right text-right noPdRight">
+				Mora:
+				<label class="control-label not-bold" id="mora">@ViewBag.Mora</label>
+			</label>
 		</div>
-
-		<div class="col-xs-4  col-md-6 btn-defaultColor" style="padding-top:5px;">
-			<label class="not-bold col-xs-4 col-xs-offset-0 col-md-3 col-md-offset-7 text-left">Mora:</label>
-			<label class="control-label not-bold col-xs-2 text-right noPdRight" id="mora">@ViewBag.Mora</label>
-				   
-		</div>
-
 	</div>
-
-
-
 </div>
 
 

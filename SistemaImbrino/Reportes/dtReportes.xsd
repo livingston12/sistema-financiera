@@ -713,6 +713,15 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="CarteraPrestamos" msprop:Generator_TableClassName="CarteraPrestamosDataTable" msprop:Generator_TableVarName="tableCarteraPrestamos" msprop:Generator_RowChangedName="CarteraPrestamosRowChanged" msprop:Generator_TablePropName="CarteraPrestamos" msprop:Generator_RowDeletingName="CarteraPrestamosRowDeleting" msprop:Generator_RowChangingName="CarteraPrestamosRowChanging" msprop:Generator_RowEvHandlerName="CarteraPrestamosRowChangeEventHandler" msprop:Generator_RowDeletedName="CarteraPrestamosRowDeleted" msprop:Generator_RowClassName="CarteraPrestamosRow" msprop:Generator_UserTableName="CarteraPrestamos" msprop:Generator_RowEvArgName="CarteraPrestamosRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Banco" msprop:Generator_ColumnVarNameInTable="columnBanco" msprop:Generator_ColumnPropNameInRow="Banco" msprop:Generator_ColumnPropNameInTable="BancoColumn" msprop:Generator_UserColumnName="Banco" type="xs:string" minOccurs="0" />
+              <xs:element name="Monto" msprop:Generator_ColumnVarNameInTable="columnMonto" msprop:Generator_ColumnPropNameInRow="Monto" msprop:Generator_ColumnPropNameInTable="MontoColumn" msprop:Generator_UserColumnName="Monto" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NumeroCuenta" msprop:Generator_ColumnVarNameInTable="columnNumeroCuenta" msprop:Generator_ColumnPropNameInRow="NumeroCuenta" msprop:Generator_ColumnPropNameInTable="NumeroCuentaColumn" msprop:Generator_UserColumnName="NumeroCuenta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">

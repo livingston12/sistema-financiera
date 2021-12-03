@@ -1,7 +1,7 @@
 ﻿
 @{
 	ViewBag.Title = "Créditos bancarios";
-	ViewBag.nameView = "crédito bancario";
+	ViewBag.nameView = "Crédito Bancario";
 }
 
 <div class="row">
@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="col-xs-12 col-md-1">
-		<button class="btn btn-block bg-pink" id="btn-todos" disabled>
+		<button class="btn btn-block bg-pink" data-loading-text="cargando..." id="btn-todos" disabled>
 			Todos
 		</button>
 	</div>
@@ -89,7 +89,7 @@
 	<div class="modal-dialog" role="document" style="width:1000px">
 		<div class="modal-content">
 			<div class="modal-header bg-warning">
-				Crear @ViewBag.nameView
+				Crear Nuevo @ViewBag.nameView
 				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel"> </h4>
 			</div>
@@ -252,10 +252,10 @@
 
 			$("#btn_crear").click(function (e)
 			{
-				insertarEditarCargo("I");
+				insertarEditarCargo("I", this);
 			});
 			$("#btn_Editar").click(function (e) {
-				insertarEditarCargo("U");
+				insertarEditarCargo("U", this);
 			});
 
 			$(".btn-cancelarPop").click(function (e) {
@@ -265,7 +265,7 @@
 
 			 $("#btn-imprimir").click(function ()
 			 {
-				 valuesFecha(this);				 
+				 valuesFecha(this);
 			 });
 		});
 
@@ -276,13 +276,13 @@
 					'<div class="row"> <div class="col-xs-6">' +
 					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
 					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
-				focusConfirm: false,				
+				focusConfirm: false,
 				preConfirm: () => {
 					return {
 						FechaDesde: document.getElementById('fechaDesde').value,
 						FechaHasta: document.getElementById('fechaHasta').value
 					}
-				},				
+				},
 				width: 600,
 				confirmButtonText: "Generar reporte",
 				confirmButtonColor: "#0293b2"
@@ -315,7 +315,7 @@
 					},
 					complete: function () {
 						$btn.button('reset');
-					}	
+					}
                 });
 		}
 		function llenarTblCreditoBancario(btnId)
@@ -328,7 +328,7 @@
 					paging: true,
 					info: false,
 					searching: true,
-					ordering: true,
+					ordering: false,
 					ajax: {
 						url: url,
 						type: "POST",
@@ -359,7 +359,7 @@
 							data: "TIPO_CREDITO",
 							className: "dt-body-left",
 							width: 100
-							
+
 						},
 						{
 							data: "TIPO_SALIDA",
@@ -405,9 +405,9 @@
 			$(".dataTables_filter").addClass("NoVisible");
 		}
 
-		function insertarEditarCargo(typeAction) {
+		function insertarEditarCargo(typeAction, currentBtn) {
 			url = typeAction == "I" ? "@Url.Action("CrearCreditoBancario")" : "@Url.Action("ActualizarCreditoBancario")";
-
+			var $btn = $(currentBtn).button('loading');
 			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
 
 			var E = typeAction == "I" ? "" : "E";
@@ -416,8 +416,8 @@
 			var _NUMERO_CHEQUE = $("#" + E + "NUMERO_CHEQUE").val().trim();
 			var _TIPO_CREDITO = $("#" + E + "TIPO_CREDITO").val();
 			var _TIPO_SALIDA = $("#" + E + "TIPO_SALIDA").val();
-			var _MONTO = $("#" + E + "MONTO").val().replace(",","").trim();
-			var _FECHA = $("#" + E + "FECHA").attr("dateValue");	
+			var _MONTO = $("#" + E + "MONTO").val().replaceAll(",","").trim();
+			var _FECHA = $("#" + E + "FECHA").attr("dateValue");
 			var _BENEFICIARIO = $("#" + E + "BENEFICIARIO").val().trim();
 			var _CONCEPTO = $("#" + E + "CONCEPTO").val().trim();
 
@@ -452,6 +452,8 @@
 				success: function (_data)
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				},complete: function () {
+						$btn.button('reset');
 				}
 			});
 

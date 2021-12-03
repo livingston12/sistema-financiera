@@ -19,9 +19,12 @@ namespace SistemaImbrino.Models
         public string CTE_APELLI { get; set; }
         public string CTE_CEDULA { get; set; }
         public string CTE_TELEFO { get; set; }
+        public string CTE_TELEFO2 { get; set; }
         public string CTE_DIRECC { get; set; }
         public string Zona { get; set; }
         public string Tipo { get; set; }
+        public Nullable<int> tipoId { get; set; }
+        public string zonaId { get; set; }
         public int type { get; set; }
     }
 }

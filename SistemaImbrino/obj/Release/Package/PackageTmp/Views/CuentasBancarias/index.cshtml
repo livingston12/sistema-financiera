@@ -1,0 +1,243 @@
+﻿@model SistemaImbrino.Models.CTABANCO
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Cuentas Bancarias";
+	ViewBag.nameView = "Cuenta Bancaria";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTA_BANCO">Banco</label>
+		<div class="form-group" id="dvCTA_BANCO">
+			<div class="input-group">				
+				<label class="input-group-addon" for="CTA_BANCO"><i class="glyphicon glyphicon-home"></i></label>
+				<select id="CTA_BANCO" class="form-control select"></select>
+				<span id="spanCTA_BANCO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CTA_NUMERO">Cuenta</label>
+		<div class="form-group" id="dvCTA_NUMERO">
+			<div class="input-group">
+				<label class="input-group-addon" for="CTA_NUMERO"><i class="glyphicon glyphicon-subtitles"></i></label>
+				@Html.EditorFor(model => model.CTA_NUMERO, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanCTA_NUMERO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearCuenta" class="btn btn-success btn-block" />
+	</div>
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cuenta" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">Banco</th>
+					<th class="th-pd-no-left">Cuenta</th>
+					<th class="th-pd-no-left">Balance Corte</th>
+					<th class="th-pd-no-left">Balance Fecha</th>
+					<th class="th-pd-no-left">Fecha Corte</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListCuentas != null)
+				{
+					foreach (var vw_cuenta in ViewBag.ListCuentas)
+					{
+						@Html.Partial("_cuentasDetalle", (SistemaImbrino.Models.CTABANCO)vw_cuenta)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cuenta ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarVendedor")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarCuenta">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			GetBancos();
+			$("#tbl-cuenta").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearCuenta").click(function (e)
+			{
+				insertarEditarCuenta("I", this);
+			});
+			$("#btn_EditarCuenta").click(function (e) {
+				insertarEditarCuenta("U", this);
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+		function GetBancos(id = 'CTA_BANCO') {
+
+			var url = "@Url.Action("GetBancos")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: {
+
+				},
+				dataType: "json",
+				success: function (_data) {
+					llenarDropdows(_data, id, "Banco",true,true);
+				}
+			});
+		}
+		function insertarEditarCuenta(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearCuenta")" : "@Url.Action("ActualizarCuenta")";
+			var $btn = $(currentBtn).button('loading');
+
+			var _CTA_CODIGO = typeAction == "I" ? "0" : $("#CTA_CODIGO").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+
+			var _CTA_BANCO = $("#" + E +"CTA_BANCO").val().trim();
+			var _CTA_NUMERO = $("#" + E + "CTA_NUMERO").val().trim();
+
+			if (_CTA_NUMERO == "" || _CTA_BANCO == "0"
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
+					return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					  CTA_CODIGO: _CTA_CODIGO
+					, CTA_BANCO: _CTA_BANCO
+					, CTA_NUMERO: _CTA_NUMERO
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+
+		}
+		
+		function EliminarCurrentCuenta(id, nombre) {
+			mensajeEliminarCuenta(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarCuenta(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar la cuenta " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCuenta(id);
+				});
+		}
+
+		function eliminarCuenta(_id)
+		{
+			var url = "@Url.Action("EliminarCuenta")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			GetBancos("ECTA_BANCO");
+			$("#CTA_CODIGO").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			var url = "@Url.Action("GetCurrentCuenta")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#ECTA_BANCO").val(_data.CTA_BANCO);
+					updateSelectMania("ECTA_BANCO");
+					$("#ECTA_NUMERO").val(_data.CTA_NUMERO);
+					$("#ECTA_CODIGO").val(_id);
+				}
+			});
+		}
+	</script>
+}
+

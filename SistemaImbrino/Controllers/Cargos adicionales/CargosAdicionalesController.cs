@@ -1,10 +1,15 @@
 ﻿using SistemaImbrino.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers.Cargos_adicionales
 {
+    [Authorize(Roles = "cargosadicionales,admin")]
     public class CargosAdicionalesController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -19,7 +24,7 @@ namespace SistemaImbrino.Controllers.Cargos_adicionales
             message message;
             try
             {
-                if (!validarCargo(otroCargo))
+                if (!validarOtrosCargo(otroCargo))
                 {
                     message = new message()
                     {
@@ -59,6 +64,7 @@ namespace SistemaImbrino.Controllers.Cargos_adicionales
             var fechaSpt = otroCargo.CAR_FECHAR.Split('-');
             otroCargo.CAR_FECHAR = $"{returMonthNumber(fechaSpt[1])}/{fechaSpt[0]}/{fechaSpt[2]}";         
         }
+
         public JsonResult ActualizarCargo(OTROCARG otroCargo)
         {
             message message;
@@ -168,6 +174,7 @@ namespace SistemaImbrino.Controllers.Cargos_adicionales
             Status status = (Status)Enum.Parse(typeof(Status), statusId);
             return status.ToString();
         }
+
         public static string getFecha(typeFecha tipoFecha,string fecha)
         {
             try
@@ -194,6 +201,29 @@ namespace SistemaImbrino.Controllers.Cargos_adicionales
                 fecha = string.Empty;
             }
             return fecha;
+        }
+
+        public async Task<JsonResult> getFinAndUser()
+        {
+            var finPendientes =  await db.VW_rptEstadoCuenta
+                                    .Where(x=>x.CUOTA_PENDIENTE > 0)
+                                    .Select(x => x.C__FIN)
+                                    .ToListAsync();
+
+            var financiamientosActivos = await db.FINANCY
+                                            .Where(x =>
+                                                    finPendientes
+                                                    .Contains(x.FIN_NUMERO)
+                                                    )
+                                            .Select(x => new View_Financiamiento_User()
+                                            {
+                                                codCliente = x.FIN_NUMCTE,
+                                                numFinanciamiento = x.FIN_NUMERO
+                                            })
+                                            .ToListAsync();
+            var result = financiamientosActivos.Select(x => new { id = x.numFinanciamiento ,value = x.clienteFinanciamiento}).ToList();
+
+            return Json(result);
         }
     }
 }

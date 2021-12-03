@@ -37,16 +37,14 @@
     <Property Name="BCO_TELEF2" Type="varchar" MaxLength="100" />
     <Property Name="BCO_TELEF3" Type="varchar" MaxLength="100" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="CARGO">
     <Key>
-      <PropertyRef Name="CAR_CODIGO" />
-      <PropertyRef Name="enable" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="CAR_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CAR_DESCRI" Type="varchar" MaxLength="100" />
     <Property Name="enable" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="CARTERA">
     <Key>
@@ -217,7 +215,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="CAR_SECU" Type="varchar" MaxLength="100" />
     <Property Name="CAR_CODCAR" Type="varchar" MaxLength="100" />
     <Property Name="CAR_NUMREC" Type="varchar" MaxLength="100" />
-    <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" />
+    <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CAR_MONTOT" Type="varchar" MaxLength="100" />
     <Property Name="CAR_FECHAR" Type="varchar" MaxLength="100" />
     <Property Name="CAR_FECHAP" Type="varchar" MaxLength="100" />
@@ -260,6 +258,41 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     <Property Name="NUM_REC" Type="int" />
     <Property Name="VALIDADO" Type="bit" />
     <Property Name="CERRADO" Type="bit" />
+  </EntityType>
+  <EntityType Name="ROLES">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rol" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SISTEMA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="SIS_EMPRES" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_DIRECC" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_TELEFO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_RNC" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_DEPART" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_PASO" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_SIGNAL" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTCHE" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTCLI" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTFIA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTFIN" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTFAC" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTREC" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTVEN" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTDEP" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTCOM" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_SENAL2" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_ULTSAL" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_NCF1" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SIS_NCF2" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FECHA_CIERRE" Type="date" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="TIPOCR1">
     <Key>
@@ -309,6 +342,32 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.CARGO' does not have a primary key 
     </Key>
     <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
     <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TIPOS_USUARIOS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO_ROLES">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="RolId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIOS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Pass" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="VENDEDOR">
     <Key>
@@ -398,26 +457,83 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not hav
 warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_CuadreCaja">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="ING_NUMREC" />
+      <PropertyRef Name="ING_NUMFIN" />
+      <PropertyRef Name="ING_STATUS" />
+      <PropertyRef Name="ING_MONTOT" />
+      <PropertyRef Name="ING_MONTOT_CUO" />
+      <PropertyRef Name="ING_MONTOC" />
+      <PropertyRef Name="ING_MONTOI" />
+      <PropertyRef Name="ING_FECHA" />
+      <PropertyRef Name="ING_FORMPG" />
+      <PropertyRef Name="ING_DESCRI" />
+      <PropertyRef Name="ING_DESCRI_NCF" />
+      <PropertyRef Name="ING_NCF" />
+      <PropertyRef Name="mes" />
+      <PropertyRef Name="dia" />
+      <PropertyRef Name="year" />
+      <PropertyRef Name="mesAbr" />
+      <PropertyRef Name="MORA" />
       <PropertyRef Name="Cliente" />
-      <PropertyRef Name="Descripcion" />
-      <PropertyRef Name="MontoCapital" />
-      <PropertyRef Name="MontoInteres" />
-      <PropertyRef Name="FechaTexto" />
-      <PropertyRef Name="Tipo" />
-      <PropertyRef Name="TextoTipo" />
+      <PropertyRef Name="ClienteId" />
+      <PropertyRef Name="fechadt" />
+      <PropertyRef Name="isCuadrada" />
+      <PropertyRef Name="descriOtro" />
+    </Key>
+    <Property Name="ING_NUMREC" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
+    <Property Name="ING_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ING_MONTOT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOT_CUO" Type="decimal" Precision="20" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOC" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOI" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_FECHA" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="ING_FORMPG" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ING_DESCRI" Type="varchar(max)" Nullable="false" />
+    <Property Name="ING_DESCRI_NCF" Type="varchar(max)" Nullable="false" />
+    <Property Name="ING_NCF" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="mes" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="dia" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="year" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="mesAbr" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="MORA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="OTRO" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
+    <Property Name="ClienteId" Type="int" Nullable="false" />
+    <Property Name="fechadt" Type="date" Nullable="false" />
+    <Property Name="isCuadrada" Type="bit" Nullable="false" />
+    <Property Name="descriOtro" Type="varchar(max)" Nullable="false" />
+    <Property Name="montoOtro" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.VW_CuadreCajaSalidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VW_CuadreCajaSalidas">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="keyId" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
-    <Property Name="Recibo" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="105" Nullable="false" />
+    <Property Name="Recibo" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="109" Nullable="false" />
     <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="MontoCapital" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="MontoInteres" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="MontoCapital" Type="int" Nullable="false" />
+    <Property Name="MontoInteres" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" />
     <Property Name="FechaTexto" Type="varchar" MaxLength="29" Nullable="false" />
-    <Property Name="Tipo" Type="varchar" MaxLength="9" Nullable="false" />
-    <Property Name="TextoTipo" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="TextoTipo" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="keyId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_IMBRINO.dbo.vw_initialRols' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_initialRols">
+    <Key>
+      <PropertyRef Name="rol" />
+      <PropertyRef Name="descripcion" />
+    </Key>
+    <Property Name="rol" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="26" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCreditosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -460,7 +576,6 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
       <PropertyRef Name="TELEFONO2" />
       <PropertyRef Name="DESCRIPCION" />
       <PropertyRef Name="FechaAbono" />
-      <PropertyRef Name="NUM_CUOTA" />
       <PropertyRef Name="empresa" />
       <PropertyRef Name="CapitalTotal" />
       <PropertyRef Name="InteresTotal" />
@@ -475,6 +590,9 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
       <PropertyRef Name="mora" />
       <PropertyRef Name="CUO_TIPO" />
       <PropertyRef Name="fechadt" />
+      <PropertyRef Name="fecha_Pago" />
+      <PropertyRef Name="tipo" />
+      <PropertyRef Name="NUM_CUOTA" />
     </Key>
     <Property Name="C__FIN" Type="int" Nullable="false" />
     <Property Name="CodigoCLiente" Type="int" Nullable="false" />
@@ -486,13 +604,13 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
     <Property Name="Cedula_FIADOR" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="PROMOTOR" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Fecha" Type="varchar" MaxLength="8000" Nullable="false" />
-    <Property Name="CUOTA" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="CUOTA" Type="varchar(max)" Nullable="false" />
     <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="TELEFONO" Type="varchar" MaxLength="14" Nullable="false" />
-    <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
-    <Property Name="DESCRIPCION" Type="varchar" MaxLength="148" Nullable="false" />
+    <Property Name="TELEFONO" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="TELEFONO2" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="8000" Nullable="false" />
     <Property Name="FechaAbono" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="NUM_CUOTA" Type="int" Nullable="false" />
+    <Property Name="NUM_CUOTA" Type="varchar(max)" Nullable="false" />
     <Property Name="empresa" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CapitalTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="InteresTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -500,13 +618,15 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
     <Property Name="interesAbono" Type="float" Nullable="false" />
     <Property Name="capital" Type="float" Nullable="false" />
     <Property Name="INTERES" Type="float" Nullable="false" />
-    <Property Name="CUO_STATUS" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="CUO_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="FAC_GARANT" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="FAC_INTERE" Type="float" Nullable="false" />
     <Property Name="Status" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="mora" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="CUO_TIPO" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="CUO_TIPO" Type="varchar" MaxLength="12" Nullable="false" />
     <Property Name="fechadt" Type="datetime" Nullable="false" />
+    <Property Name="fecha_Pago" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptDebitosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -603,11 +723,11 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados' does not have a
     <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
     <Property Name="CEDULA_CLIENTE" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="DIRE_CLIENTE" Type="varchar" MaxLength="8000" Nullable="false" />
-    <Property Name="TELEFONO1" Type="varchar" MaxLength="14" Nullable="false" />
-    <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
+    <Property Name="TELEFONO1" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="TELEFONO2" Type="varchar" MaxLength="12" Nullable="false" />
     <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="19" Nullable="false" />
     <Property Name="CUOTA" Type="int" Nullable="false" />
-    <Property Name="CuotaTxt" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="CuotaTxt" Type="varchar(max)" Nullable="false" />
     <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="CAPITAL" Type="decimal" Precision="38" Scale="2" Nullable="false" />
     <Property Name="INTERES" Type="decimal" Precision="38" Scale="2" Nullable="false" />
@@ -638,27 +758,15 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does no
   <EntityType Name="VW_rptFinAtrasados_details">
     <Key>
       <PropertyRef Name="C__FIN" />
-      <PropertyRef Name="CLIENTE" />
       <PropertyRef Name="CEDULA_CLIENTE" />
-      <PropertyRef Name="DIRE_CLIENTE" />
-      <PropertyRef Name="TELEFONO1" />
-      <PropertyRef Name="TELEFONO2" />
-      <PropertyRef Name="ULTIMO_PAGO" />
-      <PropertyRef Name="CUOTA" />
-      <PropertyRef Name="MONTO" />
-      <PropertyRef Name="CAPITAL" />
-      <PropertyRef Name="INTERES" />
-      <PropertyRef Name="empresa" />
-      <PropertyRef Name="CodigoCLiente" />
-      <PropertyRef Name="fechadt" />
     </Key>
     <Property Name="C__FIN" Type="int" Nullable="false" />
     <Property Name="CLIENTE" Type="varchar" MaxLength="201" Nullable="false" />
     <Property Name="CEDULA_CLIENTE" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="DIRE_CLIENTE" Type="varchar" MaxLength="8000" Nullable="false" />
-    <Property Name="TELEFONO1" Type="varchar" MaxLength="14" Nullable="false" />
-    <Property Name="TELEFONO2" Type="varchar" MaxLength="14" Nullable="false" />
-    <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="TELEFONO1" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="TELEFONO2" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="ULTIMO_PAGO" Type="varchar" MaxLength="19" Nullable="false" />
     <Property Name="CUOTA" Type="int" Nullable="false" />
     <Property Name="MONTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="CAPITAL" Type="decimal" Precision="38" Scale="2" Nullable="false" />
@@ -673,18 +781,20 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptReciboIngreso' does not have 
     <Key>
       <PropertyRef Name="Recibo" />
     </Key>
-    <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" />
-    <Property Name="DireccionEmpresa" Type="varchar" MaxLength="100" />
-    <Property Name="RncEmpresa" Type="varchar" MaxLength="100" />
-    <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="100" />
-    <Property Name="Recibo" Type="int" Nullable="false" />
-    <Property Name="CONCEPTO" Type="varchar(max)" />
+    <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DireccionEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="RncEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="201" Nullable="false" />
+    <Property Name="BalancePendiente" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
     <Property Name="NCF" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Contrato" Type="int" Nullable="false" />
-    <Property Name="Cliente" Type="varchar" MaxLength="201" Nullable="false" />
-    <Property Name="Monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="FormaPago" Type="varchar" MaxLength="13" />
-    <Property Name="BalancePendiente" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Recibo" Type="int" Nullable="false" />
+    <Property Name="CONCEPTO" Type="varchar(max)" Nullable="false" />
+    <Property Name="Monto" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+    <Property Name="FormaPago" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="ING_MONTOT" Type="float" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -694,11 +804,13 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
       <PropertyRef Name="ING_NUMFIN" />
       <PropertyRef Name="ING_STATUS" />
       <PropertyRef Name="ING_MONTOT" />
+      <PropertyRef Name="ING_MONTOT_CUO" />
       <PropertyRef Name="ING_MONTOC" />
       <PropertyRef Name="ING_MONTOI" />
       <PropertyRef Name="ING_FECHA" />
       <PropertyRef Name="ING_FORMPG" />
       <PropertyRef Name="ING_DESCRI" />
+      <PropertyRef Name="ING_DESCRI_NCF" />
       <PropertyRef Name="ING_NCF" />
       <PropertyRef Name="mes" />
       <PropertyRef Name="dia" />
@@ -708,22 +820,27 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
       <PropertyRef Name="Cliente" />
       <PropertyRef Name="ClienteId" />
       <PropertyRef Name="fechadt" />
+      <PropertyRef Name="isCuadrada" />
+      <PropertyRef Name="OTRO" />
     </Key>
     <Property Name="ING_NUMREC" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
-    <Property Name="ING_STATUS" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ING_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="ING_MONTOT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ING_MONTOT_CUO" Type="decimal" Precision="20" Scale="2" Nullable="false" />
     <Property Name="ING_MONTOC" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="ING_MONTOI" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="ING_FECHA" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="ING_FECHA" Type="varchar" MaxLength="11" Nullable="false" />
     <Property Name="ING_FORMPG" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="ING_DESCRI" Type="varchar(max)" Nullable="false" />
+    <Property Name="ING_DESCRI_NCF" Type="varchar(max)" Nullable="false" />
     <Property Name="ING_NCF" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="mes" Type="varchar" MaxLength="2" Nullable="false" />
     <Property Name="dia" Type="varchar" MaxLength="2" Nullable="false" />
     <Property Name="year" Type="varchar" MaxLength="4" Nullable="false" />
     <Property Name="mesAbr" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="MORA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="OTRO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Cliente" Type="varchar" MaxLength="202" Nullable="false" />
     <Property Name="ClienteId" Type="int" Nullable="false" />
     <Property Name="fechadt" Type="date" Nullable="false" />
@@ -740,12 +857,51 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <Property Name="CTE_NOMBRE" Type="varchar" MaxLength="100" />
     <Property Name="CTE_APELLI" Type="varchar" MaxLength="100" />
     <Property Name="CTE_CEDULA" Type="varchar" MaxLength="100" />
-    <Property Name="CTE_TELEFO" Type="varchar" MaxLength="100" />
+    <Property Name="CTE_TELEFO" Type="varchar" MaxLength="12" />
+    <Property Name="CTE_TELEFO2" Type="varchar" MaxLength="12" />
     <Property Name="CTE_DIRECC" Type="varchar" MaxLength="100" />
     <Property Name="Zona" Type="varchar" MaxLength="100" />
     <Property Name="Tipo" Type="varchar" MaxLength="100" />
+    <Property Name="tipoId" Type="int" />
+    <Property Name="zonaId" Type="varchar" MaxLength="100" />
     <Property Name="type" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK__USUARIO_R__RolId__06B7F65E">
+    <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+    <End Role="USUARIO_ROLES" Type="Self.USUARIO_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLES">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="USUARIO_ROLES">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USUARIO_R__Usuar__05C3D225">
+    <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="1" />
+    <End Role="USUARIO_ROLES" Type="Self.USUARIO_ROLES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIOS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="USUARIO_ROLES">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USUARIOS__Tipo__000AF8CF">
+    <End Role="TIPOS_USUARIOS" Type="Self.TIPOS_USUARIOS" Multiplicity="1" />
+    <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPOS_USUARIOS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="USUARIOS">
+        <PropertyRef Name="Tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CLIENTE_TIPOCTE">
     <End Role="TIPOCTE" Type="Self.TIPOCTE" Multiplicity="0..1" />
     <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
@@ -853,6 +1009,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="ABOCUOTA" EntityType="Self.ABOCUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ABOOCARG" EntityType="Self.ABOOCARG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BANCO" EntityType="Self.BANCO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CARTERA" EntityType="Self.CARTERA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CTABANCO" EntityType="Self.CTABANCO" Schema="dbo" store:Type="Tables" />
@@ -868,6 +1025,8 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="OTROCARG" EntityType="Self.OTROCARG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROSCR" EntityType="Self.OTROSCR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROSDB" EntityType="Self.OTROSDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SISTEMA" EntityType="Self.SISTEMA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOCR1" EntityType="Self.TIPOCR1" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOCR2" EntityType="Self.TIPOCR2" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
@@ -875,16 +1034,12 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="TIPODB2" EntityType="Self.TIPODB2" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPOS_USUARIOS" EntityType="Self.TIPOS_USUARIOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO_ROLES" EntityType="Self.USUARIO_ROLES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ZONA" EntityType="Self.ZONA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" Schema="STG" store:Type="Tables" />
-    <EntitySet Name="CARGO" EntityType="Self.CARGO" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [CARGO].[CAR_CODIGO] AS [CAR_CODIGO], 
-    [CARGO].[CAR_DESCRI] AS [CAR_DESCRI], 
-    [CARGO].[enable] AS [enable]
-    FROM [dbo].[CARGO] AS [CARGO]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="VW_ConciliacionBancaria" EntityType="Self.VW_ConciliacionBancaria" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [VW_ConciliacionBancaria].[ID] AS [ID], 
@@ -933,18 +1088,53 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     </EntitySet>
     <EntitySet Name="vw_CuadreCaja" EntityType="Self.vw_CuadreCaja" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
-    [vw_CuadreCaja].[ID] AS [ID], 
+    [vw_CuadreCaja].[ING_NUMREC] AS [ING_NUMREC], 
+    [vw_CuadreCaja].[ING_NUMFIN] AS [ING_NUMFIN], 
+    [vw_CuadreCaja].[ING_STATUS] AS [ING_STATUS], 
+    [vw_CuadreCaja].[ING_MONTOT] AS [ING_MONTOT], 
+    [vw_CuadreCaja].[ING_MONTOT_CUO] AS [ING_MONTOT_CUO], 
+    [vw_CuadreCaja].[ING_MONTOC] AS [ING_MONTOC], 
+    [vw_CuadreCaja].[ING_MONTOI] AS [ING_MONTOI], 
+    [vw_CuadreCaja].[ING_FECHA] AS [ING_FECHA], 
+    [vw_CuadreCaja].[ING_FORMPG] AS [ING_FORMPG], 
+    [vw_CuadreCaja].[ING_DESCRI] AS [ING_DESCRI], 
+    [vw_CuadreCaja].[ING_DESCRI_NCF] AS [ING_DESCRI_NCF], 
+    [vw_CuadreCaja].[ING_NCF] AS [ING_NCF], 
+    [vw_CuadreCaja].[mes] AS [mes], 
+    [vw_CuadreCaja].[dia] AS [dia], 
+    [vw_CuadreCaja].[year] AS [year], 
+    [vw_CuadreCaja].[mesAbr] AS [mesAbr], 
+    [vw_CuadreCaja].[MORA] AS [MORA], 
+    [vw_CuadreCaja].[OTRO] AS [OTRO], 
     [vw_CuadreCaja].[Cliente] AS [Cliente], 
-    [vw_CuadreCaja].[Recibo] AS [Recibo], 
-    [vw_CuadreCaja].[Descripcion] AS [Descripcion], 
-    [vw_CuadreCaja].[MontoTotal] AS [MontoTotal], 
-    [vw_CuadreCaja].[MontoCapital] AS [MontoCapital], 
-    [vw_CuadreCaja].[MontoInteres] AS [MontoInteres], 
-    [vw_CuadreCaja].[Fecha] AS [Fecha], 
-    [vw_CuadreCaja].[FechaTexto] AS [FechaTexto], 
-    [vw_CuadreCaja].[Tipo] AS [Tipo], 
-    [vw_CuadreCaja].[TextoTipo] AS [TextoTipo]
+    [vw_CuadreCaja].[ClienteId] AS [ClienteId], 
+    [vw_CuadreCaja].[fechadt] AS [fechadt], 
+    [vw_CuadreCaja].[isCuadrada] AS [isCuadrada], 
+    [vw_CuadreCaja].[descriOtro] AS [descriOtro], 
+    [vw_CuadreCaja].[montoOtro] AS [montoOtro]
     FROM [dbo].[vw_CuadreCaja] AS [vw_CuadreCaja]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_CuadreCajaSalidas" EntityType="Self.VW_CuadreCajaSalidas" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_CuadreCajaSalidas].[ID] AS [ID], 
+    [VW_CuadreCajaSalidas].[Cliente] AS [Cliente], 
+    [VW_CuadreCajaSalidas].[Recibo] AS [Recibo], 
+    [VW_CuadreCajaSalidas].[Descripcion] AS [Descripcion], 
+    [VW_CuadreCajaSalidas].[MontoTotal] AS [MontoTotal], 
+    [VW_CuadreCajaSalidas].[MontoCapital] AS [MontoCapital], 
+    [VW_CuadreCajaSalidas].[MontoInteres] AS [MontoInteres], 
+    [VW_CuadreCajaSalidas].[Fecha] AS [Fecha], 
+    [VW_CuadreCajaSalidas].[FechaTexto] AS [FechaTexto], 
+    [VW_CuadreCajaSalidas].[Tipo] AS [Tipo], 
+    [VW_CuadreCajaSalidas].[TextoTipo] AS [TextoTipo], 
+    [VW_CuadreCajaSalidas].[keyId] AS [keyId]
+    FROM [dbo].[VW_CuadreCajaSalidas] AS [VW_CuadreCajaSalidas]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_initialRols" EntityType="Self.vw_initialRols" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_initialRols].[rol] AS [rol], 
+    [vw_initialRols].[descripcion] AS [descripcion]
+    FROM [dbo].[vw_initialRols] AS [vw_initialRols]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptCreditosBancarios" EntityType="Self.VW_rptCreditosBancarios" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -993,7 +1183,9 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptCuotasVencidas].[Status] AS [Status], 
     [VW_rptCuotasVencidas].[mora] AS [mora], 
     [VW_rptCuotasVencidas].[CUO_TIPO] AS [CUO_TIPO], 
-    [VW_rptCuotasVencidas].[fechadt] AS [fechadt]
+    [VW_rptCuotasVencidas].[fechadt] AS [fechadt], 
+    [VW_rptCuotasVencidas].[fecha_Pago] AS [fecha_Pago], 
+    [VW_rptCuotasVencidas].[tipo] AS [tipo]
     FROM [dbo].[VW_rptCuotasVencidas] AS [VW_rptCuotasVencidas]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptDebitosBancarios" EntityType="Self.VW_rptDebitosBancarios" store:Type="Views" store:Schema="dbo">
@@ -1087,14 +1279,16 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptReciboIngreso].[DireccionEmpresa] AS [DireccionEmpresa], 
     [VW_rptReciboIngreso].[RncEmpresa] AS [RncEmpresa], 
     [VW_rptReciboIngreso].[TelefonoEmpresa] AS [TelefonoEmpresa], 
-    [VW_rptReciboIngreso].[Recibo] AS [Recibo], 
-    [VW_rptReciboIngreso].[CONCEPTO] AS [CONCEPTO], 
+    [VW_rptReciboIngreso].[Cliente] AS [Cliente], 
+    [VW_rptReciboIngreso].[BalancePendiente] AS [BalancePendiente], 
+    [VW_rptReciboIngreso].[ING_NUMFIN] AS [ING_NUMFIN], 
     [VW_rptReciboIngreso].[NCF] AS [NCF], 
     [VW_rptReciboIngreso].[Contrato] AS [Contrato], 
-    [VW_rptReciboIngreso].[Cliente] AS [Cliente], 
+    [VW_rptReciboIngreso].[Recibo] AS [Recibo], 
+    [VW_rptReciboIngreso].[CONCEPTO] AS [CONCEPTO], 
     [VW_rptReciboIngreso].[Monto] AS [Monto], 
     [VW_rptReciboIngreso].[FormaPago] AS [FormaPago], 
-    [VW_rptReciboIngreso].[BalancePendiente] AS [BalancePendiente]
+    [VW_rptReciboIngreso].[ING_MONTOT] AS [ING_MONTOT]
     FROM [dbo].[VW_rptReciboIngreso] AS [VW_rptReciboIngreso]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptRegistroNCF" EntityType="Self.VW_rptRegistroNCF" store:Type="Views" store:Schema="dbo">
@@ -1103,17 +1297,20 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptRegistroNCF].[ING_NUMFIN] AS [ING_NUMFIN], 
     [VW_rptRegistroNCF].[ING_STATUS] AS [ING_STATUS], 
     [VW_rptRegistroNCF].[ING_MONTOT] AS [ING_MONTOT], 
+    [VW_rptRegistroNCF].[ING_MONTOT_CUO] AS [ING_MONTOT_CUO], 
     [VW_rptRegistroNCF].[ING_MONTOC] AS [ING_MONTOC], 
     [VW_rptRegistroNCF].[ING_MONTOI] AS [ING_MONTOI], 
     [VW_rptRegistroNCF].[ING_FECHA] AS [ING_FECHA], 
     [VW_rptRegistroNCF].[ING_FORMPG] AS [ING_FORMPG], 
     [VW_rptRegistroNCF].[ING_DESCRI] AS [ING_DESCRI], 
+    [VW_rptRegistroNCF].[ING_DESCRI_NCF] AS [ING_DESCRI_NCF], 
     [VW_rptRegistroNCF].[ING_NCF] AS [ING_NCF], 
     [VW_rptRegistroNCF].[mes] AS [mes], 
     [VW_rptRegistroNCF].[dia] AS [dia], 
     [VW_rptRegistroNCF].[year] AS [year], 
     [VW_rptRegistroNCF].[mesAbr] AS [mesAbr], 
     [VW_rptRegistroNCF].[MORA] AS [MORA], 
+    [VW_rptRegistroNCF].[OTRO] AS [OTRO], 
     [VW_rptRegistroNCF].[Cliente] AS [Cliente], 
     [VW_rptRegistroNCF].[ClienteId] AS [ClienteId], 
     [VW_rptRegistroNCF].[fechadt] AS [fechadt], 
@@ -1127,12 +1324,27 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [Vw_SearchClientes_Fiadores].[CTE_APELLI] AS [CTE_APELLI], 
     [Vw_SearchClientes_Fiadores].[CTE_CEDULA] AS [CTE_CEDULA], 
     [Vw_SearchClientes_Fiadores].[CTE_TELEFO] AS [CTE_TELEFO], 
+    [Vw_SearchClientes_Fiadores].[CTE_TELEFO2] AS [CTE_TELEFO2], 
     [Vw_SearchClientes_Fiadores].[CTE_DIRECC] AS [CTE_DIRECC], 
     [Vw_SearchClientes_Fiadores].[Zona] AS [Zona], 
     [Vw_SearchClientes_Fiadores].[Tipo] AS [Tipo], 
+    [Vw_SearchClientes_Fiadores].[tipoId] AS [tipoId], 
+    [Vw_SearchClientes_Fiadores].[zonaId] AS [zonaId], 
     [Vw_SearchClientes_Fiadores].[type] AS [type]
     FROM [dbo].[Vw_SearchClientes_Fiadores] AS [Vw_SearchClientes_Fiadores]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK__USUARIO_R__RolId__06B7F65E" Association="Self.FK__USUARIO_R__RolId__06B7F65E">
+      <End Role="ROLES" EntitySet="ROLES" />
+      <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USUARIO_R__Usuar__05C3D225" Association="Self.FK__USUARIO_R__Usuar__05C3D225">
+      <End Role="USUARIOS" EntitySet="USUARIOS" />
+      <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USUARIOS__Tipo__000AF8CF" Association="Self.FK__USUARIOS__Tipo__000AF8CF">
+      <End Role="TIPOS_USUARIOS" EntitySet="TIPOS_USUARIOS" />
+      <End Role="USUARIOS" EntitySet="USUARIOS" />
+    </AssociationSet>
     <AssociationSet Name="FK_CLIENTE_TIPOCTE" Association="Self.FK_CLIENTE_TIPOCTE">
       <End Role="TIPOCTE" EntitySet="TIPOCTE" />
       <End Role="CLIENTE" EntitySet="CLIENTE" />

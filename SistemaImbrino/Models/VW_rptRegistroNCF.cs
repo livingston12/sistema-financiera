@@ -33,5 +33,8 @@ namespace SistemaImbrino.Models
         public System.DateTime fechadt { get; set; }
         public int ClienteId { get; set; }
         public bool isCuadrada { get; set; }
+        public decimal OTRO { get; set; }
+        public string ING_DESCRI_NCF { get; set; }
+        public decimal ING_MONTOT_CUO { get; set; }
     }
 }

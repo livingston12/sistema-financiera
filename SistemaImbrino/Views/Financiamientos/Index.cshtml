@@ -305,8 +305,8 @@
 				inputPlaceholder: 'ingrese Cantidad cuotas',
 				showCancelButton: true,
 				inputValidator: (cantidad) => {
-					if (!cantidad || cantidad < 1 || cantidad > 5) {
-						return 'Debe ingresar una cantidad entre 1 y 5'
+					if (!cantidad || cantidad < 1 || cantidad > 10) {
+						return 'Debe ingresar una cantidad entre 1 y 10'
 					}
 				}
 			})
@@ -319,7 +319,7 @@
 
 		async function  mensajeMethodCreate() {
 			Swal.fire({
-				title: 'Selecciona metodo de pago',
+				title: 'Selecciona metodo de desembolso',
 				input: 'select',
 				inputOptions: {
 					'Tipo metodo': {
@@ -334,7 +334,7 @@
 						if (value !== "") {
 							resolve()
 						} else {
-							resolve('Necesita seleccionar un metodo de pago')
+							resolve('Necesita seleccionar un metodo de desembolso')
 						}
 					})
 				}
@@ -346,6 +346,7 @@
 					GetTipoCredito("TIPO_CREDITO", "@Url.Action("getTipoCredito", "CreditosBancarios")");
 					GetTipoSalida("TIPO_SALIDA", "@Url.Action("getTipoSalida", "CreditosBancarios")");
 					$("#FECHA").attr("disabled", true);
+					$("#FECHA").val($("#Fecha").val());
 					$("#TIPO_CREDITO").attr("disabled", true);
 					$("#TIPO_CREDITO").addClass("disabled");
 					$("#TIPO_CREDITO").val(idTipoCredito);
@@ -417,9 +418,10 @@
 		}
 	}
 
-	function ActivarPrestamo()
+	function ActivarPrestamo(currentBtn)
 	{
-		insertarCargo();	
+		insertarCargo();
+		var $btn = $(currentBtn).button('loading');
 		var currentinput = $("#Fecha").val().split("-");
 		var currentDay = currentinput[0];
 		var currentMonth = monthNumber(currentinput[1]);
@@ -444,6 +446,9 @@
 			dataType: "json",
 			success: function (_data) {
 				MessageNotification(_data.Message, _data.Is_Success, _data.Is_Success);
+			},
+			complete: function () {
+				$btn.button('reset');
 			}
 		});
 	}
@@ -717,7 +722,7 @@
 
 			$("#btn-crearCheque").click(function ()
 			{
-				ActivarPrestamo();
+				ActivarPrestamo(this);
 			});
 
 			$("#BANCO").change(function () {

@@ -1,46 +1,109 @@
-﻿
-<!--msb: main sidebar-->
+﻿<!--msb: main sidebar-->
 <div class="msb" id="msb">
-	
+
 	<nav class="" role="navigation">
 
 		<!-- Main Menu -->
 		<div class="side-menu-container">
 			<ul class="nav navbar-nav">
-				<li><a href="@Url.Action("Index", "Home")">@System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP")</a></li>
-				<li class="active"><a href="@Url.Action("Index", "CobrosHeader")"><span class="glyphicon glyphicon-credit-card" /> Cobros</a></li>
-				<li><a href="@Url.Action("Index", "FinanciamientosHeader")"><span class="glyphicon glyphicon-usd" /> Financiamientos</a></li>
-				<li><a href="@Url.Action("Index", "CargosAdicionales")"><span class="glyphicon glyphicon-folder-close" /> Cargos Adicionales</a></li>
-
+				<li class="btn-defaultColorLite"><a href="@Url.Action("Index", "Home")"><b style="color:black; font-size: 15px;">@System.Configuration.ConfigurationManager.AppSettings.Get("nameAPP")</b></a></li>
 				<!-- Dropdown maestros-->
 				<li class="panel panel-default" id="dpMaestros">
 					<a data-toggle="collapse" href="#dpMaestros-lvl1">
-						<span class="glyphicon glyphicon-book" /> Maestros
+						Datos Generales
 						<span class="caret"></span>
 					</a>
 					<div id="dpMaestros-lvl1" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="@Url.Action("Index", "Clientes")"><span class="glyphicon glyphicon-user" /> Clientes</a></li>
-								<li><a href="@Url.Action("Index", "Fiadores")"><span class="glyphicon glyphicon-piggy-bank" /> Fiadores</a></li>
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("clientes"))
+								{
+									<li><a href="@Url.Action("Index", "Clientes")">Clientes</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("cargosadicionales"))
+								{
+									<li><a href="@Url.Action("Index", "Fiadores")">Fiadores</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+								ViewContext.HttpContext.User.IsInRole("promotores"))
+								{
+									<li><a href="@Url.Action("Index", "Vendedores")">Promotores</a></li>
+								}
+
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("bancos"))
+								{
+									<li><a href="@Url.Action("Index", "Bancos")">Bancos</a></li>
+
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+								   ViewContext.HttpContext.User.IsInRole("cuentasbancarias"))
+								{
+									<li><a href="@Url.Action("Index", "CuentasBancarias")">Cuentas Bancarias</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+								   ViewContext.HttpContext.User.IsInRole("zonas"))
+								{
+									<li><a href="@Url.Action("Index", "Zonas")">Zonas</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+								   ViewContext.HttpContext.User.IsInRole("cargos"))
+								{
+									<li><a href="@Url.Action("Index", "Cargos")">Cargos Adiccionales</a></li>
+								}
 							</ul>
 						</div>
 					</div>
 				</li>
+				@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+						ViewContext.HttpContext.User.IsInRole("financiamientosHeader"))
+				{
+					<li><a href="@Url.Action("Index", "FinanciamientosHeader")">Financiamientos</a></li>
+				}
+				@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+						ViewContext.HttpContext.User.IsInRole("cobros"))
+				{
+					<li class="active"><a href="@Url.Action("Index", "CobrosHeader")">Cobros</a></li>
+				}
+				@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+						ViewContext.HttpContext.User.IsInRole("cargosadicionales"))
+				{
+					<li><a href="@Url.Action("Index", "CargosAdicionales")">Cargos Adicionales</a></li>
+				}
+
+
 
 				<!-- Dropdown Cuentas bancarias-->
 				<li class="panel panel-default" id="dpCuentasbancarias">
 					<a data-toggle="collapse" href="#dpCuentasbancarias-lvl1">
-						<span class="glyphicon glyphicon-list-alt" /> Cuentas bancarias
+						Cuentas Bancarias
 						<span class="caret"></span>
 					</a>
 					<div id="dpCuentasbancarias-lvl1" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="@Url.Action("Index", "CreditosBancarios")"><span class="glyphicon glyphicon-backward" /> Creditos</a></li>
-								<li><a href="@Url.Action("Index", "DebitosBancarios")"><span class="glyphicon glyphicon-forward" /> Debitos</a></li>
-								<li><a id="liConciliacionBancaria"><span class="glyphicon glyphicon-ok" /> Conciliacion</a></li>
-								<li><a id="liMovimientoBancario"><span class="glyphicon glyphicon-ok" /> Movimientos</a></li>
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("creditos"))
+								{
+									<li><a href="@Url.Action("Index", "CreditosBancarios")">Créditos</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("debitos"))
+								{
+									<li><a href="@Url.Action("Index", "DebitosBancarios")">Débitos</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("conciliacion"))
+								{
+									<li><a id="liConciliacionBancaria">Conciliación</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("conciliacion"))
+								{
+									<li><a id="liMovimientoBancario">Otros Movimientos</a></li>
+								}
 							</ul>
 						</div>
 					</div>
@@ -49,38 +112,51 @@
 				<!-- Dropdown Cajas-->
 				<li class="panel panel-default" id="dpCaja">
 					<a data-toggle="collapse" href="#dpCaja-lvl1">
-						<span class="glyphicon glyphicon-shopping-cart" /> Caja
+						Caja
 						<span class="caret"></span>
 					</a>
 					<div id="dpCaja-lvl1" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
-								<li><a href="@Url.Action("Index", "cuadreCaja")"><span class="glyphicon glyphicon-transfer" /> Cuadre</a></li>
-								<li><a id="liCierreCaja"><span class="glyphicon glyphicon-sort" /> Cierre</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<!-- Dropdown Reportes-->
-				<li class="panel panel-default" id="dpReportes">
-					<a data-toggle="collapse" href="#dpReportes-lvl1">
-						<span class="glyphicon glyphicon-floppy-save"></span> Reportes
-						<span class="caret"></span>
-					</a>
-					<div id="dpReportes-lvl1" class="panel-collapse collapse">
-						<div class="panel-body">
-							<ul class="nav navbar-nav">
-								<li><a id="licuotasVencidas">Cuotas vencidas</a></li>
-								<li><a id="lifinAtrasados">Fin Atrasados</a></li>
-								<li><a id="liEstadoCuenta">Estado de cuenta</a></li>
-								<li><a id="liRegistroNCF">Registro NCF</a></li>
-								<li><a id="liIngresoCuotas">Ingresos Cuotas</a></li>
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("cuadrecaja"))
+								{
+									<li><a href="@Url.Action("Index", "cuadreCaja")">Cuadre de Caja</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+								   ViewContext.HttpContext.User.IsInRole("cierrecaja"))
+								{
+									<li><a id="liCierreCaja">Cierre de Caja</a></li>
+								}
 							</ul>
 						</div>
 					</div>
 				</li>
 
+				<!-- Dropdown Reportes-->
+				<li class="panel panel-default" id="dpReportes">
+					<a data-toggle="collapse" href="#dpReportes-lvl1">
+						Otros Reportes
+						<span class="caret"></span>
+					</a>
+					<div id="dpReportes-lvl1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a id="licuotasVencidas">Cuotas Vencidas</a></li>
+								<li><a id="lifinAtrasados">FIN Atrasados</a></li>
+								<li><a id="liEstadoCuenta">Estados de Cuenta</a></li>
+								<li><a id="liIngresoCuotas">Ingresos</a></li>
+								<li><a id="liRegistroNCF">N.C.F.</a></li>
+								<li><a id="liReimprimirRecibo">Re-Imprimir Recibo</a></li>
+								<li><a href="@Url.Action("Index", "CarteraPrestamos")">Cartera Prestamos</a></li>
+
+							</ul>
+						</div>
+					</div>
+				</li>
+				<li class="panel panel-default" style="padding-top: 16rem;"><a href="@Url.Action("Logout", "Login")">Cerrar Sesión <i class="glyphicon glyphicon-log-out"></i></a></li>
 			</ul>
+
 		</div><!-- /.navbar-collapse -->
 	</nav>
 </div>

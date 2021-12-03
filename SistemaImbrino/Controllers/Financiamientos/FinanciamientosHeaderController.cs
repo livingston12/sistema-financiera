@@ -8,6 +8,7 @@ using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Financiamientos
 {
+    [Authorize(Roles = "financiamientosHeader,admin")]
     public class FinanciamientosHeaderController : Controller
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -70,7 +71,7 @@ namespace SistemaImbrino.Controllers.Financiamientos
 
                 consultaFin = null;
             }
-            return Json(consultaFin);
+            return Json(consultaFin, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PrintReport(string data = "",string status = "")
         {

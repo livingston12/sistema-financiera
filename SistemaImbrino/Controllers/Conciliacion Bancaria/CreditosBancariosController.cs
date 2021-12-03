@@ -7,6 +7,7 @@ using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
 {
+    [Authorize(Roles = "creditos,admin")]
     public class CreditosBancariosController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -21,10 +22,11 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
         public JsonResult getCurrentCreditoBancario(string btnId)
         {
             string value = btnId.Replace("btn-", "").ToUpper();
+            DateTime dateToSearch = DateTime.Now.AddDays(-45);
             bool findFilter = string.Compare(value, "todos", StringComparison.CurrentCultureIgnoreCase) == 0 ?
                                 false : true;
-            List<View_ListCreditosBancarios> ListCreditosBancarios =
-                _db.OTROSCR
+            IEnumerable<View_ListCreditosBancarios> ListCreditosBancarios =
+                    _db.OTROSCR
                     .Where(x => x.Activo == true)
                     .Select(x => new View_ListCreditosBancarios()
                     {
@@ -40,12 +42,27 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                         MONTO = x.MONTO,
                         FECHAdt = x.FECHA
                     })
-                    .ToList();
+                    .Where(x=>x.FECHAdt >= dateToSearch)
+                    .ToList()
+                    .OrderByDescending(x => x.FECHAdt);
             if (findFilter)
             {
-                ListCreditosBancarios = ListCreditosBancarios.Where(x => x.TIPO_CREDITO == value).ToList();
+                int idTipoCredito = 0;
+                switch (value)
+                {
+                    case "CHEQUE":
+                        idTipoCredito = 1;
+                        break;
+                    case "TRANSFERENCIA":
+                        idTipoCredito = 2;
+                        break;
+                    case "CARGO":
+                        idTipoCredito = 3;
+                        break;
+                }
+                ListCreditosBancarios = ListCreditosBancarios.Where(x => x.ID_TIPO_CREDITO == idTipoCredito).ToList();
             }
-            return Json(ListCreditosBancarios);
+            return Json(ListCreditosBancarios, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CrearCreditoBancario(OTROSCR CreditoBancario)
@@ -163,7 +180,8 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 credito.BENEFICIARIO = beneficiario;
                 credito.CONCEPTO = creditoBancario.CONCEPTO;
                 credito.CUENTA_BANCARIA = creditoBancario.CUENTA_BANCARIA;
-                credito.FECHA = creditoBancario.FECHA;
+                credito.FECHA = creditoBancario.FECHA.HasValue ?
+                                creditoBancario.FECHA : credito.FECHA;
                 credito.MONTO = creditoBancario.MONTO;
                 credito.NUMERO_CHEQUE = numeroCheque;
                 credito.TIPO_CREDITO = creditoBancario.TIPO_CREDITO;

@@ -1,0 +1,210 @@
+﻿@model SistemaImbrino.Models.VENDEDOR
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Promotores";
+	ViewBag.nameView = "Promotor";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="VEN_NOMBRE">Nombre</label>
+		<div class="form-group" id="dvVEN_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="VEN_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
+				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
+				@Html.EditorFor(model => model.VEN_NOMBRE, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanVEN_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearVendedor" class="btn btn-success btn-block" />
+	</div>
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-vendedor" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">Promotor</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListVendedores != null)
+				{
+					foreach (var vw_vendedor in ViewBag.ListVendedores)
+					{
+						@Html.Partial("_vendedoresDetalle", (SistemaImbrino.Models.VENDEDOR)vw_vendedor)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarVendedor")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarVendedor">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			
+			$("#tbl-vendedor").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearVendedor").click(function (e)
+			{
+				insertarEditarVendedor("I", this);
+			});
+			$("#btn_EditarVendedor").click(function (e) {
+				insertarEditarVendedor("U", this);
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarVendedor(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearVendedor")" : "@Url.Action("ActualizarVendedor")";
+			var $btn = $(currentBtn).button('loading');
+
+			var _VEN_CODIGO = typeAction == "I" ? "0" : $("#VEN_CODIGO").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _VEN_NOMBRE = $("#" + E +"VEN_NOMBRE").val().trim();
+			
+
+			if (_VEN_NOMBRE == ""
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
+					return;
+			}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					 VEN_CODIGO: _VEN_CODIGO
+					,VEN_NOMBRE: _VEN_NOMBRE
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+
+		}
+		
+		function EliminarCurrentVendedor(id, nombre) {
+			mensajeEliminarVendedor(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarVendedor(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el vendedor " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarVendedor(id);
+				});
+		}
+
+		function eliminarVendedor(_id)
+		{
+			var url = "@Url.Action("EliminarVendedor")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#VEN_CODIGO").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			var url = "@Url.Action("GetCurrentVendedor")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#EVEN_NOMBRE").val(_data.VEN_NOMBRE);
+					$("#EVEN_CODIGO").val(_id);
+				}
+			});
+		}
+	</script>
+}
+

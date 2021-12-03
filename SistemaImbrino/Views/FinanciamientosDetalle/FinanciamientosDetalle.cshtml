@@ -1,5 +1,7 @@
 ﻿
 @{
+	/**/
+
 	ViewBag.Title = "Comportamiento de financiamiento";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -181,7 +183,7 @@
 
 			}
 
-			  $("#btn-imprimir").click(function ()
+			$("#btn-imprimir").click(function ()
 			{
 				var $btn = $(this).button('loading');
 				var url = "@Url.Action("PrintReport")";
@@ -205,8 +207,8 @@
 					}
 
                 });
-
 			});
+
 		});
 	</script>
 

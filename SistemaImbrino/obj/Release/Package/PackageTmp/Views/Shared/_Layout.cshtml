@@ -6,13 +6,13 @@
 	<title>@ViewBag.Title</title>
 	@Styles.Render("~/Content/css")
 	@Scripts.Render("~/bundles/modernizr")
-	
+
 </head>
 <body>
 
 
-	<div class="navbar  navbar-fixed-top">
-		<div class="container ">
+	<div class="navbar  navbar-fixed-top" id="menu">
+		<div class="container-fluid">
 
 			<div class="navbar-header ">
 				<button type="button" class="navbar-toggle visible-xs " data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,22 +26,12 @@
 
 		</div>
 	</div>
-	@*<aside class="main-sidebar">
-			<!-- sidebar: style can be found in sidebar.less -->
-			<section class="sidebar">
-				<!-- Sidebar Menu -->
-				@Html.Partial("_MenuShared")
-				<!-- /.sidebar-menu -->
-			</section>
-			<!-- /.sidebar -->
-		</aside>*@
 
-
-	<div class="container-fluid  body-content" id="body-content">
+	<div class="container-fluid body-content" id="body-content">
 		<div class="bs-border  bs-border-top-info " style="padding-top:0px;">
 			@if (@ViewBag.Title != null)
 			{
-				<h3><b>@ViewBag.Title</b></h3>
+				<h3 id="content-title">@ViewBag.Title</h3>
 				<hr class="hrnoMargin" style="padding-bottom:20px;" />
 			}
 			<div class="">
@@ -49,29 +39,30 @@
 			</div>
 		</div>
 
-		<footer></footer>
 	</div>
 
 
 
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/bootstrap")
+
 	@Scripts.Render("~/bundles/scripts")
+
 	@RenderSection("scripts", required: false)
 
 	@*------------- popup estado de cuenta reporte -------------*@
 	<div class="modal fade" id="estadoCuentaModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","EstadoCuenta")' role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a type="button" class="close btn-cancelarCurrentCuota" href="@Url.Action("Index","Home")" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte  estado cuenta </h4>
+					<h3 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte  Estado de Cuenta </h3>
 				</div>
 				<div class="modal-body" id="EstadoCuentaContainer">
 					<div class="row">
 						<div class="col-sm-6 text-left ">
 							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorte">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" dateValue="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorte">
 						</div>
 
 						<div class="col-sm-6 text-left ">
@@ -88,12 +79,12 @@
 
 						<div class="col-sm-6 text-left ">
 							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
-							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPago">
+							<input type="text" class="form-control datepicker date" placeholder="fecha (>) mayor de" id="modal_UltimoPago">
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteEC">Generar Reporte</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-GenerarReporteEC">Generar Reporte</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 
 				</div>
@@ -105,22 +96,20 @@
 	<div class="modal fade" id="cuotasVencidasModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","cuotasVencidas")' role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte cuotas vencidas </h4>
+					<h3 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte Cuotas Vencidas </h3>
 				</div>
 				<div class="modal-body" id="EstadoCuentaContainer">
 					<div class="row">
 						<div class="col-sm-6 text-left ">
 							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteCV">
+							<input type="text" class="form-control date datepicker" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" dateValue="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteCV">
 						</div>
 
 						<div class="col-sm-6 text-left ">
 							<label>Cliente  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cliente en especifico"></span></label>
 							<select id="dwClientes" class="form-control"></select>
-
-
 						</div>
 					</div>
 					<div class="row">
@@ -132,12 +121,12 @@
 
 						<div class="col-sm-6 text-left ">
 							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
-							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPagoCV">
+							<input type="text" class="form-control date datepicker" placeholder="fecha (>) mayor de" id="modal_UltimoPagoCV">
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteCV">Generar Reporte</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-GenerarReporteCV">Generar Reporte</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 
 				</div>
@@ -149,15 +138,15 @@
 	<div class="modal fade" id="finAtrasadosModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","finAtrasados")' role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel">Reporte financiamientos atrasados </h4>
+					<h3 class="modal-title text-center text-warningLight" id="myModalLabel">Reporte Financiamientos Atrasados </h3>
 				</div>
 				<div class="modal-body" id="EstadoCuentaContainer">
 					<div class="row">
 						<div class="col-sm-6 text-left ">
 							<label>Fecha Corte <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha corte menor de"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteFA">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" dateValue="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaCorteFA">
 						</div>
 						<div class="col-sm-6 text-left ">
 							<label>Cliente <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Cliente en especifico"></span></label>
@@ -169,13 +158,13 @@
 					<div class="row">
 						<div class="col-sm-6 text-left ">
 							<label>Ultimo pago <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Clientes con fecha de ultimo pago mayor de"></span></label>
-							<input type="date" class="form-control" placeholder="fecha (>) mayor de" id="modal_UltimoPagoFA">
+							<input type="text" class="form-control datepicker date" placeholder="fecha (>) mayor de" id="modal_UltimoPagoFA">
 						</div>
 
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteFA">Generar Reporte</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-GenerarReporteFA">Generar Reporte</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 
 				</div>
@@ -187,25 +176,25 @@
 	<div class="modal fade" id="registroNCFModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","RegistroNCF")' role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a href="@Url.Action("Index","Home")" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel">Reporte Registro NCF </h4>
+					<h3 class="modal-title text-center text-warningLight" id="myModalLabel">Número de Comprobante Fiscal (NCF) </h3>
 				</div>
 				<div class="modal-body" id="registroNCFContainer">
 					<div class="row">
 						<div class="col-sm-6 text-left">
 							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha inicio del RNC"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeRN">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")" dateValue="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeRN">
 						</div>
 						<div class="col-sm-6 text-right">
 							<label>Fecha Hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha fin del RNC"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaRN">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" dateValue="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaRN">
 						</div>
 					</div>
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteRN">Generar Reporte</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-GenerarReporteRN">Generar Reporte</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 
 				</div>
@@ -217,19 +206,19 @@
 	<div class="modal fade" id="ingresoCuotasModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","IngresoCuotas")' role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a href="@Url.Action("Index","Home")" class="close btn-cancelarCurrentCuota" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte Ingresos por cuotas </h4>
+					<h3 class="modal-title text-center text-warningLight" id="myModalLabel"> Reporte de Ingresos </h3>
 				</div>
 				<div class="modal-body" id="">
 					<div class="row">
 						<div class="col-sm-6 text-left ">
 							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha desde"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeIC">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")" id="modal_FechaDesdeIC">
 						</div>
 						<div class="col-sm-6 text-left ">
 							<label>Fecha hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha Hasta"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaIC">
+							<input type="text" class="form-control datepicker date" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaIC">
 						</div>
 
 
@@ -248,8 +237,8 @@
 						<div class="col-sm-6 text-left ">
 							<label>Ordenar por  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Orden del reporte"></span></label>
 							<select id="dwOrdenIC" class="form-control">
-								<option value="Cliente">Cliente</option>
 								<option value="Recibo">Numero Recibo</option>
+								<option value="Cliente">Cliente</option>
 								<option value="Monto">Monto</option>
 
 							</select>
@@ -257,7 +246,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-GenerarReporteIC">Generar Reporte</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-GenerarReporteIC">Generar Reporte</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 
 				</div>
@@ -270,20 +259,21 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 
-				<div class="modal-header bg-warning">
+				<div class="modal-header btn-defaultColor">
 					<a href="@Url.Action("Index","Home")" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-					<h4 class="modal-title text-center text-warningLight" id="myModalLabel">Buscar conciliacion bancaria </h4>
+					<h3 class="modal-title text-center text-warningLight" id="lblTitle">Conciliación Bancaria </h3>
+					<input type="hidden" id="isMovimiento" value="false" />
 				</div>
 
 				<div class="modal-body" id="conciliacionBancariaContainer">
 					<div class="row">
 						<div class="col-sm-6 text-left">
 							<label>Fecha Desde <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="La fecha desde mayor a la fecha corte"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaDesdeCB">
+							<input type="text" class="form-control datepicker" placeholder="DD-MMM-AAAA" disabled id="modal_FechaDesdeCB">
 						</div>
-						<div class="col-sm-6 text-right">
+						<div class="col-sm-6">
 							<label>Fecha Hasta <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="fecha hasta de la conciliacion"></span></label>
-							<input type="date" class="form-control" placeholder="dd/mm/AAAA" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="modal_FechaHastaCB">
+							<input type="text" class="form-control datepicker" placeholder="DD-MMM-AAAA" id="modal_FechaHastaCB">
 						</div>
 					</div>
 
@@ -296,7 +286,34 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn-BuscarConciliacion">Generar</button>
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-BuscarConciliacion">Generar</button>
+					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*------------- popup reimprimir recibo -------------*@
+	<div class="modal fade" id="reImprimirReciboModal" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("GenerarReportePDF","ReImprimirRecibo")' role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header btn-defaultColor">
+					<a href="@Url.Action("Index","Home")" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h3 class="modal-title text-center text-warningLight" id="lblTitle">Reimprimir Recibo </h3>
+				</div>
+
+				<div class="modal-body" id="reImprimirReciboContainer">
+					<div class="row">
+						<div class="col-sm-6 text-left ">
+							<label>Num Recibo <span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Reimprimir Recibo"></span></label>
+							<input type="text" id="modal_ReciboRR" class="form-control" />
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn bg-pink pull-left" data-loading-text="cargando..." id="btn-ReimprimirRecibo">Generar</button>
 					<a href="@Url.Action("Index","Home")" class="btn btn-danger pull-right">Atras</a>
 				</div>
 			</div>
@@ -306,13 +323,9 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			var objNav = $("#msb");
-			if (objNav.is(":visible")) {
-				var width = objNav.width();
-				$("#body-content").css("margin-left", width);
-			} else {
-				$("#body-content").css("margin-left", 0);
-			}
+
+
+
 			$('[data-toggle="tooltip"]').tooltip();
 
             $("#dwClientes").selectMania({
@@ -343,12 +356,19 @@
 				size: 'medium',
 				search: true
 			});
-			
 
-            desabilitarCamposSegunSelect();
+			desabilitarCamposSegunSelect();
+
 
 			$('#msbo').on('click', function () {
 				$('body').toggleClass('msb-x');
+				var objNav = $("#msb");
+			if (objNav.is(":visible")) {
+				var width = objNav.width();
+				$("#body-content").css("margin-left", width);
+			} else {
+				$("#body-content").css("margin-left", 0);
+			}
 			});
              // Abrir popup Estado cuenta
             $("#liEstadoCuenta").click(function () {
@@ -385,8 +405,6 @@
                         llenarDrop(_data,'FA');
                     }
 				});
-
-				FinIC
 			});
 
 			// Abrir popup Registro NCF
@@ -403,14 +421,27 @@
                     url: url,
                      dataType: "json",
                     success: function (_data) {
-                        llenarDrop(_data,'CB');
+                        llenarDrop(_data,'IC');
                     }
 				});
 			});
 
-			// Abrir popup ingreso por cuotas
-			$("#liConciliacionBancaria").click(function () {
+			// Abrir popup conciliacion bancaria y movimiento bancario
+			$("#liConciliacionBancaria,#liMovimientoBancario").click(function () {
 				Show_closeModal("#conciliacionBancariaModal", true);
+				var currentId = $(this).attr("id");
+				var isMovimiento = false;
+				var title = "Conciliación Bancaria";
+				if (currentId === "liMovimientoBancario") {
+					$("#modal_FechaDesdeCB").removeAttr("disabled");
+					title = "Movimientos Bancarios";
+					isMovimiento = true;
+				}
+				else {
+					$("#modal_FechaDesdeCB").attr("disabled", true);
+				}
+				$("#lblTitle").text(title);
+				$("#isMovimiento").val(isMovimiento);
 				var url = "@Url.Action("GetCuentas", "ConciliacionBancaria")";
 
                  $.ajax({
@@ -423,14 +454,122 @@
 				});
 			});
 
+			// Abrir popup Reimprimir Recibo
+			$("#liReimprimirRecibo").click(function ()
+			{
+				Show_closeModal("#reImprimirReciboModal", true);
+				
+			});
+
+			// Cierre caja
+			$("#liCierreCaja").click(function ()
+			{
+				const url = "@Url.Action("fechasCierres", "cuadreCaja")";
+				const tieneDatos = validarExistenDatosCaja();
+				if (tieneDatos) {
+					getFechasCierre(url);
+					$(".swal2-cancel").focus();
+				} else {
+					Swal.fire({
+						html: `<div class="alert btn-defaultColor text-center" style="font-size:26px;">
+								No existen datos registrado para este periodo de tiempo
+							  </div>`,
+						width: 600,
+						confirmButtonColor: "#9c389b"
+					})
+				}
+			});
+			function validarExistenDatosCaja() {
+				const url = '@Url.Action("ValidarDatos","CierreCaja")';
+				var result = false;
+				$.ajax({
+					type: "POST",
+					url: url,
+					async: false,
+					data: {},
+					dataType: "json",
+					success: function (_data) {
+						result = _data;
+					}
+				});
+				return result;
+			}
+
+			function getFechasCierre(url) {
+				$.ajax({
+					type: "POST",
+					url: url,
+					async: true,
+					data: {},
+					dataType: "json",
+					success: function (_data) {
+						mensajeCierreCaja(_data.Item1);
+					}
+				});
+			}
+
+
+
+			async function mensajeCierreCaja(data) {
+				await Swal.fire({
+					title: '<h2>Seguro que desea cerrar la caja ?</h2>',
+					html:
+						'<div class="row "> <div class="col-xs-6 form-group-lg">' +
+						'<input type="text" id="fechaDesde" disabled class="form-control swal2-input"> </div>' +
+						'<div class="col-xs-6 form-group-lg"><input disabled type="text" id="fechaHasta" class="form-control swal2-input"></div></div>',
+					focusConfirm: false,
+					willOpen: () => {
+						const fechaDesde = data.FechaDesde;
+						const fechaHasta = data.FechaHasta;
+						const fechaDesdePartida = fechaDesde.split("-");
+						const fechaDesdeFormateada = `${fechaDesdePartida[2]}/${monthName(parseInt(fechaDesdePartida[1]) - 1)}/${fechaDesdePartida[0]}`;
+						const fechaHastaPartida = fechaHasta.split("-");
+						const fechaHastaFormateada = `${fechaHastaPartida[2]}/${monthName(parseInt(fechaHastaPartida[1]) - 1)}/${fechaHastaPartida[0]}`;
+
+						$("#fechaDesde").val(fechaDesdeFormateada);
+						$("#fechaHasta").val(fechaHastaFormateada);
+						$(".swal2-confirm").addClass("btn btn-lg");
+						$(".swal2-confirm").removeClass("swal2-confirm");
+						$(".swal2-cancel").addClass("btn btn-lg btn-danger");
+						$(".swal2-cancel").removeClass("swal2-cancel");
+					},
+					width: 600,
+					confirmButtonText: "Si",
+					confirmButtonColor: "#0293b2",
+					cancelButtonText: 'No',
+					showCancelButton: true,
+				}).then((result) => {
+					if (result.isConfirmed) {
+						cerrarCaja();
+					}
+				});
+			}
+
+			async function cerrarCaja()
+			{
+				var url = "@Url.Action("cierreCaja", "cierreCaja")";
+				$.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    data: {},
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+							MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index","Home")");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, false);
+                        }
+                    }
+                });
+			}
             // Boton de generar reporte de estado de cuenta
 			$("#btn-GenerarReporteEC").click(function () {
 				var $btn = $(this).button('loading');
                 var url = $("#estadoCuentaModal").data('url');
-                var _modal_FechaCorte = $("#modal_FechaCorte").val();
+				var _modal_FechaCorte = $("#modal_FechaCorte").attr("datevalue");
                 var _modal_montoFinanciar = $("#modal_montoFinanciar").val();
                 var _modal_montoActual = $("#modal_montoActual").val();
-                var _modal_UltimoPago = $("#modal_UltimoPago").val();
+				var _modal_UltimoPago = $("#modal_UltimoPago").attr("datevalue");
 
 
                 $.ajax({
@@ -460,10 +599,10 @@
 			$("#btn-GenerarReporteCV").click(function () {
 				var $btn = $(this).button('loading');
                 var url = $("#cuotasVencidasModal").data('url');
-                var _modal_FechaCorte = $("#modal_FechaCorteCV").val();
+				var _modal_FechaCorte = $("#modal_FechaCorteCV").attr("datevalue");
                 var _modal_Cliente = $("#dwClientes").val();
                 var _modal_CuotasV = $("#modal_ckCuotasV").prop('checked');
-                var _modal_UltimoPago = $("#modal_UltimoPagoCV").val();
+				var _modal_UltimoPago = $("#modal_UltimoPagoCV").attr("datevalue");
 
 
                 $.ajax({
@@ -499,9 +638,9 @@
 			{
 				var $btn = $(this).button('loading');
                 var url = $("#finAtrasadosModal").data('url');
-                var _modal_FechaCorte = $("#modal_FechaCorteFA").val();
+				var _modal_FechaCorte = $("#modal_FechaCorteFA").attr("datevalue");
                 var _modal_Cliente = $("#dwClientesFA").val();
-                var _modal_UltimoPago = $("#modal_UltimoPagoFA").val();
+				var _modal_UltimoPago = $("#modal_UltimoPagoFA").attr("datevalue");
 
 
 
@@ -537,8 +676,8 @@
 			$("#btn-GenerarReporteIC").click(function () {
 				var $btn = $(this).button('loading');
 				var url = $("#ingresoCuotasModal").data('url');
-				var _modal_Desde = $("#modal_FechaDesdeIC").val();
-				var _modal_Hasta = $("#modal_FechaHastaIC").val();
+				var _modal_Desde = $("#modal_FechaDesdeIC").attr("datevalue");
+				var _modal_Hasta = $("#modal_FechaHastaIC").attr("datevalue");
 				var _modal_cliente = $("#dwClientesIC").val();
 				var _modal_Fin = $("#dwFinIC").val();
 				var _modal_ordenPor = $("#dwOrdenIC").val();
@@ -577,8 +716,8 @@
 			$("#btn-GenerarReporteRN").click(function () {
 				var $btn = $(this).button('loading');
                 var url = $("#registroNCFModal").data('url');
-                var _modal_FechaDesde = $("#modal_FechaDesdeRN").val();
-				var _modal_FechaHasta = $("#modal_FechaHastaRN").val();
+				var _modal_FechaDesde = $("#modal_FechaDesdeRN").attr("datevalue");
+				var _modal_FechaHasta = $("#modal_FechaHastaRN").attr("datevalue");
 
                 $.ajax({
                     type: "POST",
@@ -609,8 +748,14 @@
 			{
 				var $btn = $(this).button('loading');
 				var url = $("#conciliacionBancariaModal").data('url');
-				var _modal_FechaDesde = $("#modal_FechaDesdeCB").val();
-				var _modal_FechaHasta = $("#modal_FechaHastaCB").val();
+				var isMovimiento = $("#isMovimiento").val();
+				var _modal_FechaDesde = $("#modal_FechaDesdeCB").attr("dateValue");
+				var _modal_FechaHasta = $("#modal_FechaHastaCB").attr("dateValue");
+
+				if (isMovimiento === "false")
+				{
+					_modal_FechaDesde = $("#modal_FechaDesdeCB").val();
+				}
 				var _modal_cuentaBancaria = $("#dwCuentaCB").val();
 				var _json = JSON.stringify({fechaDesde: _modal_FechaDesde,fechaHasta: _modal_FechaHasta});
 
@@ -625,20 +770,49 @@
 					success: function (_data) {
 						if (_data.message.Is_Success)
 						{
-							window.location.href = `@Url.Action("Index", "ConciliacionBancaria")?json=${_json}&cuentaBancaria=${_modal_cuentaBancaria}`;
+							window.location.href = `@Url.Action("Index", "ConciliacionBancaria")?json=${_json}&cuentaBancaria=${_modal_cuentaBancaria}&movimiento=${isMovimiento}`;
 						}
 						else
 						{
 							MessageNotification(_data.message.Message, _data.Is_Success, false)
 						}
-						console.log(_data);
 					},
 					complete: function () {
 						$btn.button('reset');
 					}
                 });
 			});
-			
+
+			// Boton pantalla reimprimir recibo
+			$("#btn-ReimprimirRecibo").click(function ()
+			{
+				var $btn = $(this).button('loading');
+				var url = $("#reImprimirReciboModal").data('url');
+				var _modal_recibo = $("#modal_ReciboRR").val();
+				
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    data: {
+						recibo: _modal_recibo
+                    },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport", "ReImprimirRecibo")";
+                            window.open(url, "_new");
+                        } else {
+                            MessageNotification(_data.Message, _data.Is_Success, false)
+                        }
+
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+                });
+				  
+			});
 
         });
 
@@ -665,6 +839,10 @@
 				IdDw = "#dwCuentaCB";
 				texto = "-- Selecciona una cuenta --"
 			}
+			else if (Report == "CA") {
+				IdDw = "#CAR_NUMFIN";
+				texto = "-- Seleccione un financiamineto --"
+			}
 
             $(IdDw).append($('<option />', {
 				text: texto,
@@ -678,7 +856,7 @@
                 }));
 
 
-            });
+			});
             $(IdDw).selectMania('update');
 
         }
@@ -744,9 +922,11 @@
                 var Fecha = $(this).val();
                 var modal_UltimoPagoCV = $("#modal_UltimoPagoCV");
                 if (Fecha.length == 10) {
-                    modal_UltimoPagoCV.prop("disabled", "disabled");
+					modal_UltimoPagoCV.prop("disabled", "disabled");
+					$("#modal_UltimoPagoCV").val("");
                 } else {
-                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					$(this).val("");
                 }
             });
 
@@ -754,9 +934,11 @@
                 var Fecha = $(this).val();
                 var modal_UltimoPagoCV = $("#modal_FechaCorteCV");
                 if (Fecha.length == 10) {
-                    modal_UltimoPagoCV.prop("disabled", "disabled");
+					modal_UltimoPagoCV.prop("disabled", "disabled");
+					$("#modal_FechaCorteCV").val("");
                 } else {
-                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					$(this).val("");
                 }
             });
 
@@ -785,24 +967,47 @@
              // Filtros Reporte Financiamientos atrasados
             $("#modal_FechaCorteFA").blur(function () {
                 var Fecha = $(this).val();
-                var modal_UltimoPagoCV = $("#modal_UltimoPagoFA");
+                var modal_UltimoPagoFA = $("#modal_UltimoPagoFA");
                 if (Fecha.length == 10) {
-                    modal_UltimoPagoCV.prop("disabled", "disabled");
+					modal_UltimoPagoFA.prop("disabled", "disabled");
+					modal_UltimoPagoFA.val("");
                 } else {
-                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					modal_UltimoPagoFA.removeAttr("disabled", "disabled");
+					$(this).val("");
                 }
             });
 
             $("#modal_UltimoPagoFA").blur(function () {
                 var Fecha = $(this).val();
-                var modal_UltimoPagoCV = $("#modal_FechaCorteFA");
+				var modal_FechaCorteFA = $("#modal_FechaCorteFA");
                 if (Fecha.length == 10) {
-                    modal_UltimoPagoCV.prop("disabled", "disabled");
+					modal_FechaCorteFA.prop("disabled", "disabled");
+					modal_FechaCorteFA.val("");
                 } else {
-                    modal_UltimoPagoCV.removeAttr("disabled", "disabled");
+					modal_FechaCorteFA.removeAttr("disabled", "disabled");
+					$(this).val("");
                 }
             });
 
+			$("#dwCuentaCB").change(function () {
+				var url = "@Url.Action("GetFechaCorte", "ConciliacionBancaria")";
+				var cuentaId = $(this).val();
+
+				$.ajax({
+					type: "POST",
+					url: url,
+					dataType: "json",
+					data: {
+						cuentaId: cuentaId
+					},
+					success: function (_data) {
+						if ($("#isMovimiento").val() === "false")
+						{
+							$("#modal_FechaDesdeCB").val(_data);
+						}
+					}
+				});
+			});
 
         }
 	</script>

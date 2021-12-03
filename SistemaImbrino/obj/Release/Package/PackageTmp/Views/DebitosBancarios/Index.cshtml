@@ -1,13 +1,13 @@
 ﻿
 @{
-	ViewBag.Title = "Debitos bancarios";
-	ViewBag.nameView = "credito bancario";
+	ViewBag.Title = "Débitos Bancarios";
+	ViewBag.nameView = "Débito Bancario";
 }
 
 <div class="row">
 
 	<div class="col-xs-12 col-md-1 pull-left text-center">
-		<p class="control-label text-defaultColor" style="font-size:23px;">FILTRO</p>
+		<p class="control-label text-defaultColor" style="font-size:23px;"><b>FILTRO</b></p>
 	</div>
 
 	<div class="col-xs-12 col-md-1">
@@ -64,9 +64,9 @@
 		<table id="tbl-debitoBancario" class="table table-condensed table-hover table-bordered dataTable" style="width: 98%">
 			<thead class="btn-defaultColorLite">
 				<tr>
-					<th class="text-center">ID</th>
+					<th class="text-center th-pd-no-right">ID</th>
 					<th class="text-left th-pd-no-left">BANCO</th>
-					<th class="text-left th-pd-no-left">CUENTA BANCARIA</th>
+					<th class="text-left th-pd-no-left"># CUENTA</th>
 					<th class="text-left th-pd-no-left">TIPO DEBITO</th>
 					<th class="text-left th-pd-no-left">TIPO ENTRADA</th>
 					<th class="text-right th-pd-right">MONTO</th>
@@ -75,8 +75,7 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
-			</tbody>
+			<tbody></tbody>
 		</table>
 
 	</div>
@@ -89,7 +88,7 @@
 	<div class="modal-dialog" role="document" style="width:1000px">
 		<div class="modal-content">
 			<div class="modal-header bg-warning">
-				Crear @ViewBag.nameView
+				Crear Nuevo @ViewBag.nameView
 				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel"> </h4>
 			</div>
@@ -145,7 +144,7 @@
 				}
 			]
 		$(document).ready(function () {
-			
+
 			llenarTblDebitoBancario("btn-todos");
 			GetTipoEntrada();
 			GetTipoDebito();
@@ -178,12 +177,12 @@
 				$("#" + currentBtn).removeClass("btn-defaultColor");
 				$("#" + currentBtn).addClass("bg-pink");
 
-				
+
 				llenarTblDebitoBancario(currentBtn);
 				$("th").removeClass("sorting");
 			});
 
-			
+
 
 			$("#BANCO,#EBANCO").change(function ()
 			{
@@ -196,21 +195,21 @@
 				} else
 				{
 					GetCuentasBancarias("ECUENTA_BANCARIA", id);
-				}			
+				}
 			});
 
 			$("#btn_crearDebitoBancario").click(function () {
 				Show_closeModal("#modalCreate", true);
-				GetBancos();				
+				GetBancos();
 				GetTipoSalida();
 			});
 
 			$("#btn_crear").click(function (e)
 			{
-				insertarEditarDebito("I");
+				insertarEditarDebito("I", this);
 			});
 			$("#btn_Editar").click(function (e) {
-				insertarEditarDebito("U");
+				insertarEditarDebito("U", this);
 			});
 
 			$(".btn-cancelarPop").click(function (e) {
@@ -229,13 +228,13 @@
 					'<div class="row"> <div class="col-xs-6">' +
 					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
 					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
-				focusConfirm: false,				
+				focusConfirm: false,
 				preConfirm: () => {
 					return {
 						FechaDesde: document.getElementById('fechaDesde').value,
 						FechaHasta: document.getElementById('fechaHasta').value
 					}
-				},				
+				},
 				width: 600,
 				confirmButtonText: "Generar reporte",
 				confirmButtonColor: "#0293b2"
@@ -268,7 +267,7 @@
 					},
 					complete: function () {
 						$btn.button('reset');
-					}	
+					}
                 });
 		}
 
@@ -282,7 +281,7 @@
 					paging: true,
 					info: false,
 					searching: true,
-					ordering: true,
+					ordering: false,
 					ajax: {
 						url: url,
 						type: "POST",
@@ -293,23 +292,28 @@
 					columns: [
 						{
 							data: "ID",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 10
 						},
 						{
-							data: "BANCO"
+							data: "BANCO",
+							width: 150
 						},
 						{
 							data: "CUENTA_BANCARIA",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 120
 						},
 						{
 							data: "TIPO_DEBITO",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 100
 						},
 						{
 							data: "TIPO_ENTRADA",
-							className: "dt-body-left"
-						},						
+							className: "dt-body-left",
+							width: 110
+						},
 						{
 							data: "MONTO",
 							className: "dt-body-right",
@@ -317,14 +321,17 @@
 							{
 								return number_format_js(data, 2, 0);
 							},
+							width: 100
 						},
 						{
 							data: "FECHA",
-							className: "dt-body-center"
+							className: "dt-body-center",
+							width: 80
 						},
 						{
 							data: "CONCEPTO",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 400
 						},
 						{
 							data: "CONCEPTO",
@@ -334,12 +341,12 @@
 					],
 				lengthChange: true,
 				rowCallback: function (row, data)
-				{						
+				{
 						var id = data.ID;
 						var html = `
 							<span class="glyphicon glyphicon-edit" onclick="editar_Popup(`+ id +`)" id="Ceditar" aria-hidden="true"></span>
 							<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentDebito(`+id+`,'de la cuenta `+ data.CUENTA_BANCARIA	+`')" id="Celiminar" aria-hidden="true"></span>
-							`;						
+							`;
 					$('td:eq(8)', row).html(html).addClass("wth-action");
 					}
 
@@ -349,9 +356,10 @@
 			formartFecharToDatePicker();
 		}
 
-		function insertarEditarDebito(typeAction) {
+		function insertarEditarDebito(typeAction, currentBtn) {
 			url = typeAction == "I" ? "@Url.Action("CrearDebitoBancario")" : "@Url.Action("ActualizarDebitoBancario")";
-
+			
+			var $btn = $(currentBtn).button('loading');
 			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
 
 			var E = typeAction == "I" ? "" : "E";
@@ -359,15 +367,15 @@
 			var _CUENTA_BANCARIA = $("#" + E + "CUENTA_BANCARIA").val();
 			var _TIPO_ENTRADA = $("#" + E + "TIPO_ENTRADA").val();
 			var _TIPO_DEBITO = $("#" + E + "TIPO_DEBITO").val();
-			var _MONTO = $("#" + E + "MONTO").val().replace(",","").trim();
-			var _FECHA = $("#" + E + "FECHA").val().trim();
+			var _MONTO = $("#" + E + "MONTO").val().replaceAll(",","").trim();
+			var _FECHA = $("#" + E + "FECHA").attr("dateValue");
 			var _CONCEPTO = $("#" + E + "CONCEPTO").val().trim();
 
 
 			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
 				_TIPO_ENTRADA == "0" || _MONTO == "" ||
-				_MONTO == "0" || _FECHA == "" ||			
-				_CONCEPTO == "" || _TIPO_DEBITO == "0" 
+				_MONTO == "0" || _FECHA == "" ||
+				_CONCEPTO == "" || _TIPO_DEBITO == "0"
 				)
 			{
 				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
@@ -392,6 +400,9 @@
 				success: function (_data)
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				},
+				complete: function () {
+					$btn.button('reset');
 				}
 			});
 		}
@@ -514,7 +525,7 @@
 			GetBancos("EBANCO");
 			GetTipoEntrada("ETIPO_ENTRADA");
 			GetCuentasBancarias("ECUENTA_BANCARIA");
-			GetTipoDebito("ETIPO_DEBITO");			
+			GetTipoDebito("ETIPO_DEBITO");
 
 			var url = "@Url.Action("GetDebitoBancarioDetail")";
 			$.ajax({
@@ -530,22 +541,22 @@
 					$("#EBANCO").val(_data.ID_BANCO);
 					updateSelectMania("EBANCO");
 					$("#EBANCO").trigger("change");
-					$("#ENUMERO_CHEQUE").val(_data.NUMERO_CHEQUE);					
-					$("#ETIPO_ENTRADA").val(_data.ID_TIPO_ENTRADA);	
-					$("#ETIPO_DEBITO").val(_data.ID_TIPO_DEBITO);	
+					$("#ENUMERO_CHEQUE").val(_data.NUMERO_CHEQUE);
+					$("#ETIPO_ENTRADA").val(_data.ID_TIPO_ENTRADA);
+					$("#ETIPO_DEBITO").val(_data.ID_TIPO_DEBITO);
 					$("#EMONTO").val(_data.MONTO);
 					$("#EFECHA").val(_data.FECHA);
 					$("#ECONCEPTO").val(_data.CONCEPTO);
 					$("#id").val(_id);
 					$("#ECUENTA_BANCARIA").val(_data.ID_CUENTA_BANCARIA);
-					
+
 					updateSelectMania("ECUENTA_BANCARIA");
 					updateSelectMania("ETIPO_ENTRADA");
 					updateSelectMania("ETIPO_DEBITO");
 				},
 				complete: function (_data)
 				{
-					
+
 				}
 			});
 			formartFecharToDatePicker();

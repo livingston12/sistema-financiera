@@ -1,0 +1,214 @@
+﻿@model SistemaImbrino.Models.CARGO
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Cargos";
+	ViewBag.nameView = "Cargo";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="CAR_DESCRI">Cargo</label>
+		<div class="form-group" id="dvCAR_DESCRI">
+			<div class="input-group">
+				<label class="input-group-addon" for="CAR_DESCRI"><i class="glyphicon glyphicon-user"></i></label>
+				@Html.EditorFor(model => model.CAR_DESCRI, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanCAR_DESCRI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearCargo" class="btn btn-success btn-block" />
+	</div>
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cargo" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">Cargo</th>
+					<th class="th-pd-no-left">Activo</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListCargos != null)
+				{
+					foreach (var vw_cargo in ViewBag.ListCargos)
+					{
+						@Html.Partial("_cargosDetalle", (SistemaImbrino.Models.CARGO)vw_cargo)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar cliente ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarVendedor")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarCargo">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			
+			$("#tbl-cargo").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearCargo").click(function (e)
+			{
+				insertarEditarCargo("I", this);
+			});
+			$("#btn_EditarCargo").click(function (e) {
+				insertarEditarCargo("U", this);
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+			});
+		});
+
+		function insertarEditarCargo(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearCargo")" : "@Url.Action("ActualizarCargo")";
+			var $btn = $(currentBtn).button('loading');
+
+			var _CAR_CODIGO = typeAction == "I" ? "0" : $("#CAR_CODIGO").val();
+			console.log(_CAR_CODIGO);
+
+			var E = typeAction == "I" ? "" : "E";
+			var _CAR_DESCRI = $("#" + E + "CAR_DESCRI").val().trim();
+			var _enable = $("#" + E + "enable").is(":checked") == true ? "1" : "0";
+
+			if (_CAR_DESCRI == ""
+				)
+				{
+					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
+					return;
+				}
+
+				$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					CAR_CODIGO: _CAR_CODIGO
+					, CAR_DESCRI: _CAR_DESCRI
+					, enable: _enable
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+
+		}
+		
+		function EliminarCurrentCargo(id, nombre) {
+			mensajeEliminarCargo(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarCargo(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el cargo " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#F0AD4E',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCargo(id);
+				});
+		}
+
+		function eliminarCargo(_id)
+		{
+			var url = "@Url.Action("EliminarCargo")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#CAR_CODIGO").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			var url = "@Url.Action("GetCurrentCargo")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#ECAR_DESCRI").val(_data.CAR_DESCRI);
+					var checkbox = document.getElementById('Eenable');
+					checkbox.checked = _data.enable == 1;
+					$("#ECAR_CODIGO").val(_id);
+				}
+			});
+		}
+	</script>
+}
+

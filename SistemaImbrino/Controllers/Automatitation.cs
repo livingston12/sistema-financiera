@@ -5,46 +5,45 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SistemaImbrino.Controllers
 {
     public class Automatitation
     {
-        private DB_IMBRINOEntities db = new DB_IMBRINOEntities();
-        
-        public  void automatizarArchivos()
+        private static DB_IMBRINOEntities db = new DB_IMBRINOEntities();
+
+        public void automatizarArchivos()
         {
             db = new DB_IMBRINOEntities();
             db.Database.CommandTimeout = 0;
             OleDbConnection con = new OleDbConnection();
             try
             {
-                
-                string rutaArchivos = System.Configuration.ConfigurationManager.AppSettings["rutaArchivos"];
-               
-                con.ConnectionString = string.Format("Provider=VFPOLEDB.1;Data Source={0};Collating Sequence=machine;",rutaArchivos);
-                con.Open();
-                
 
-                OleDbCommand ocmd = con.CreateCommand();           
+                string rutaArchivos = System.Configuration.ConfigurationManager.AppSettings["rutaArchivos"];
+
+                con.ConnectionString = string.Format("Provider=VFPOLEDB.1;Data Source={0};Collating Sequence=machine;", rutaArchivos);
+                con.Open();
+
+
+                OleDbCommand ocmd = con.CreateCommand();
                 ocmd.CommandTimeout = 0;
-              
+
 
                 var archivos_subir = db.archivos_subir.Where(x => x.subir == true).ToList();
                 foreach (var archivo in archivos_subir)
                 {
                     var columnms = db.ColumnsTables(archivo.nombreTabla);
                     ColumnsTables_Result columnasTabla = db.ColumnsTables(archivo.nombreTabla).FirstOrDefault();
-                 
+
                     ocmd.CommandText = columnasTabla.select_insert; //string.Format("SELECT * FROM {0}.DBF", archivo.nombreArchivo);
-                   
+
                     DataTable dt = new DataTable();
                     dt.Load(ocmd.ExecuteReader());
-                    
+
                     bulkInsert(dt, "STG." + archivo.nombreTabla);
 
-                   
+
                 }
                 con.Close();
             }
@@ -61,7 +60,7 @@ namespace SistemaImbrino.Controllers
             using (SqlConnection connection = new SqlConnection(db.Database.Connection.ConnectionString))
             {
                 SqlCommand command = new SqlCommand($"TRUNCATE TABLE {nombreTabla}", connection);
-                
+
                 // Crear sql bulk copy
                 SqlBulkCopy bulkCopy =
                     new SqlBulkCopy
@@ -101,10 +100,10 @@ namespace SistemaImbrino.Controllers
                 using (var db2 = new DB_IMBRINOEntities())
                 {
                     db2.Database.ExecuteSqlCommand(SQL, parametros.ToArray());
-                   
+
                     r = true;
                 }
-              
+
             }
 
             catch (Exception)
@@ -113,6 +112,37 @@ namespace SistemaImbrino.Controllers
             }
 
             return r;
+        }
+
+        public static void initialDataDb()
+        {
+            bool isInitial = false;
+
+            if (!db.TIPOS_USUARIOS.Any())
+            {
+                db.TIPOS_USUARIOS.Add(new TIPOS_USUARIOS()
+                {
+                    Tipo = "Administrador"
+                });
+                isInitial = true;
+            }
+            if (!db.ROLES.Any())
+            {
+                var roles = db.vw_initialRols.ToList();
+                List<ROLES> listRoles = roles.Select(
+                    x => new ROLES()
+                    {
+                        Rol = x.rol,
+                        Descripcion = x.descripcion
+                    }).ToList();
+                db.ROLES.AddRange(listRoles);
+                isInitial = true;
+            }
+
+            if (isInitial)
+            {
+                db.SaveChanges();
+            }
         }
     }
 }

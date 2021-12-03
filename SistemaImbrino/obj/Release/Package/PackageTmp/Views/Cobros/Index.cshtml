@@ -6,9 +6,14 @@
 
 
 <head>
-	<meta name="viewport" content="width=device-width" />
-	<title>Index</title>
+	<link href="~/Content/fixedColumns.dataTables.min.css" />
+	<link href="~/Content/fixedHeader.dataTables.min.css" />
 
+	<style>
+		.select-mania-dropdown {
+			position: relative !important;
+		}
+	</style>
 </head>
 
 
@@ -17,53 +22,58 @@
 
 
 <div class="row ">
+	@{
+		string classDisabled = ViewBag.isCobroTotal ? "disabled" : string.Empty;
 
+	}
 	<input type="hidden" id="Fecha_pago" value="@ViewBag.FechaPago" />
-	<div class="col-sm-12 text-right ">
-		<a id="btn-HeaderCuotas" class="btn btn-warning pull-left" href="@Url.Action("Index","CobrosHeader")"><span class="glyphicon glyphicon-triangle-left"></span> Atras</a>
+	<div class="col-sm-12 text-right pd-top-10">
+		<a id="btn-HeaderCuotas" class="btn btn-warning pull-left" onclick="window.history.back();"><span class="glyphicon glyphicon-triangle-left"></span> Atras</a>
 		<button id="btn-limpiar" class="btn btn-danger" onclick="document.location.reload();"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
-		<button id="btn-cobroTotal_" class="btn btn-primary"><span class="glyphicon glyphicon-credit-card"></span> Saldo total</button>
+		@if (classDisabled == "disabled")
+		{
+			<button class="btn btn-primary @classDisabled" disabled><span class="glyphicon glyphicon-credit-card"></span> Saldo total</button>
+		}
+		else
+		{
+			<button id="btn-cobroTotal_" class="btn btn-primary"><span class="glyphicon glyphicon-credit-card"></span> Saldo total</button>
+		}
+
 		<button id="btn-ProcesarCobro" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Procesar Cobro</button>
 	</div>
 
 </div>
-<br />
-<div class="table-responsiveCustom">
-	<table class="table table-hover table-bordered table-condensed  table-fixed" id="tbl_detalleCuotasC">
-		<thead class="btn-defaultColorLite">
+<div class="table-responsive">
+	<table class="stripe row-border order-column" style="width:100%" id="tbl_detalleCuotasC">
+		<thead class="btn-defaultColor">
 			<tr>
-				<th style="width:10px !important;">Cuota</th>
-				<th>F. Vencim</th>
-				<th>Monto</th>
-				<th>Status</th>
-				<th>Mora</th>
-				<th>Observaciones</th>
-				<th>Tipo Cuota</th>
-				<th>Tipo Pago</th>
+				<th class="text-center" style="padding-right:7px;">Cuota</th>
+				<th class="text-left">Vencimiento</th>
+				<th class="text-right">Monto</th>
+				<th class="text-center">Status</th>
+				<th class="text-right" style="padding-right:7px;">Mora</th>
+				<th class="text-center">Observaciones</th>
+				<th class="text-center">Tipo Cuota</th>
+				<th class="text-center">Tipo Pago</th>
 			</tr>
 		</thead>
+
 		<tbody>
 
 			@foreach (var CuotasVen in ViewBag.ListCuotasVencidas)
 			{
-
 				@Html.Partial("_CobrosDetalle", (SistemaImbrino.Models.sp_cuotasVencidas_Result)CuotasVen)
-
-
 			}
 
 
 		</tbody>
 
+
 	</table>
-
-
+	<div class="col-xs-12 text-center btn-defaultColor img-rounded">
+		<p id="lblTotalGeneral" class="font-size-22"></p>
+	</div>
 </div>
-<div class="col-xs-12 text-left label btn-defaultColorLite">
-	<label id="lblTotalGeneral" style="font-size:1.5rem" class="control-label " />
-</div>
-
-
 
 
 <!--------------------------------------- Modal por cada cuota seleccionada ----------------------------------------------->
@@ -92,8 +102,7 @@
 			<div class="modal-header bg-warning">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">
-					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-					Cobrar Cuota
+					C O B R O S
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -147,30 +156,44 @@
 </div>
 
 @section scripts {
+	<script src="~/Scripts/dataTables.fixedColumns.min.js"></script>
+	<script src="~/Scripts/dataTables.fixedHeader.min.js"></script>
+
 	<script type="text/javascript">
 		var data = [];
 		var OtrosDepositos = [];
 		$(document).ready(function ()
 		{
+
+
 			HabilitarPrimeraceldaTabla();
-			$("#tbl_detalleCuotasC").DataTable(
+			$(".dw-cobro").selectMania('update');
+			const table = $('#tbl_detalleCuotasC').removeAttr('width').DataTable(
 				{
 					"searching": false,
 					"lengthChange": false,
 					"paging": false,
 					"ordering": false,
-					"info": false
+					"info": false,
+					responsive: true,
+					scrollY: "250px",
+					scrollX: true,
+					scrollCollapse: true,
+					columnDefs: [
+						{ width: '30%', targets: 5 }
+					]
 				}
 			);
-		
+
+
 			$(".btn-cerrarPopupD").click(function () {
-				Show_closeModal("#DepositoModal", false);
+				openModal("#DepositoModal", false);
 				$("#modal_forma_pago").val("");
 				$("#modal_forma_pago").trigger("change");
 			})
 
 			$("#btn-crearDeposito").click(function () {
-				var _url = $("#ProcesarCobroModal").data('url');				
+				var _url = $("#ProcesarCobroModal").data('url');
 				ProcesarCobros(_url,false,this);
 			})
 			$("#modal_forma_pago").change(function ()
@@ -208,7 +231,6 @@
 					$("#lbl-" + index).text("");
 
 					$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
-
 				} else {
 					var tipo_Cobro = "";
 					if (id_tipo == "11") {
@@ -253,7 +275,7 @@
 
 					$.get(url, function (data) {
 						$('#CobroContainer').html(data);
-						Show_closeModal("#CobroModal", true);
+						openModal("#CobroModal", true);
 
 						// Desabilita las opciones que no necesitan usar el campo requerido
 						if (id_tipo == "11" || id_tipo == "17" ) // Abono
@@ -263,12 +285,18 @@
 						if (id_tipo == "22" || id_tipo == "23") // otros cargos
 						{
 							$("#modal_monto").attr("disabled", true);
-							$("#lblMonto").text("Mora calculada");
+							$("#lblMonto").text("Monto pendiente");
 						}
 
 						if (id_tipo == "15" || id_tipo == "18" || id_tipo == "21" || id_tipo == "20" || id_tipo == "16")
 						{
 							$("#modal_mora").attr("disabled", true);
+						}
+						if (id_tipo == "12") {
+							$("#lblMonto").text("Monto a abonar a cuota");
+						}
+						if (id_tipo == "21") {
+							$("#lblMonto").text("Monto a abonar a cuota");
 						}
 					});
 				}
@@ -280,12 +308,12 @@
 				var observacion = "";
 				var _numfin = $("#modal_numfin").val();
 				var _numcuota = $("#modal_numcuota").val();
-				var _monto = parseFloat(modal_monto.val());
-				var _mora = parseFloat(modal_mora.val());
+				var _monto = parseFloat(modal_monto.val().replace(/[^\d\.\-]/g, ""));
+				var _mora = parseFloat(modal_mora.val().replace(/[^\d\.\-]/g, ""));
 				var _tipoCobro = $("#modal_tipoCobro").val();
 				var _otroCargo = 0;
 
-				var TotalMonto = parseFloat(modal_monto.attr("max"));
+				var TotalMonto = parseFloat(modal_monto.attr("max").replace(/[^\d\.\-]/g, ""));
 
 				if (_monto == "0" && _mora == "0")
 				{
@@ -330,7 +358,7 @@
 
 				AddItemArray2(_numcuota, data, json);
 
-				Show_closeModal("#CobroModal", false);
+				openModal("#CobroModal", false);
 
 				if (_tipoCobro == "Pago" || _tipoCobro == "Saldo incluye pago de mora" || _tipoCobro == "Saldo modificar monto mora"
 					|| _tipoCobro == "Saldo NO pago de la mora" || _tipoCobro == "Saldo cuota" || _tipoCobro == "Saldo cargo adicional"
@@ -350,8 +378,11 @@
 				var observacion = GenerarObservacion(_tipoCobro, _monto,_mora,_otroCargo);
 
 				$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
+				console.log("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
+
 				$("#lbl-" + _numcuota).html(observacion);
 				$("#lbl-" + _numcuota).addClass("text-primary");
+				$(".dw-cobro").selectMania('update');
 
 			});
 
@@ -405,11 +436,14 @@
 						}
 						Subtotal += index.montoPagado;
 						otroCargos += index.mora;
-						otroCargoAdicional += index.otroCargo;
+						if (index.tipoCobro !== "Registrar mora como cargo") {
+							otroCargoAdicional += index.otroCargo;
+						}
 					});
 
 
-					Show_closeModal("#ProcesarCobroModal", true);
+					openModal("#ProcesarCobroModal", true);
+
 					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, 0, 0, false, otroCargoAdicional);
 				}
 			});
@@ -434,10 +468,10 @@
 				var id_numFin = $('#Num_Fin').html();
 				var Fecha_pago = $("#Fecha_pago").val();
 				var url = Modal.data('url') + "?_FinID=" + id_numFin + "&_Fecha_pago=" + Fecha_pago;
-				
+
 				$.get(url, function (data) {
 					$('#CobroContainerAll').html(data);
-					Show_closeModal("#CobroTotalModal", true);
+					openModal("#CobroTotalModal", true);
 				});
 			});
 
@@ -458,21 +492,24 @@
 			{
 				var modal_montodescuentoMora = $("#modal_descuentoMora");
 				var modal_montodescuentoInt = $("#modal_descuentoInt");
-				var totalMora = parseFloat(modal_montodescuentoMora.attr("max"));
-				var TotalInteres = parseFloat(modal_montodescuentoInt.attr("max"));
-				var montoMoraDesc = parseFloat(modal_montodescuentoMora.val());
-				var montoInteresDesc = parseFloat(modal_montodescuentoInt.val());
+				var totalMora = parseFloat(modal_montodescuentoMora.attr("max").replace(/[^\d\.\-]/g, ""));
+				var TotalInteres = parseFloat(modal_montodescuentoInt.attr("max").replace(/[^\d\.\-]/g, ""));
+				var montoMoraDesc = parseFloat(modal_montodescuentoMora.val().replace(/[^\d\.\-]/g, ""));
+				var montoInteresDesc = parseFloat(modal_montodescuentoInt.val().replace(/[^\d\.\-]/g, ""));
 				var numFin = $("#modal_finID").val();
-				var MontoTotal = parseFloat($("#modal_MontoTotal").val());
+				var MontoTotal = parseFloat($("#modal_MontoTotal").val().replace(/[^\d\.\-]/g, ""));
+				var montoCargos = parseFloat($("#modal_MontoOtros").val().replace(/[^\d\.\-]/g, ""));
+
 
 				if (montoInteresDesc > TotalInteres) {
 					MessageNotification("El descuento de interes no puede exceder al monto total del interes pendiente de pago", false);
 					return;
 				}
 				var numFin = numFin, Subtotal = MontoTotal, itebis = 0, otroCargos = totalMora ;
-				Show_closeModal("#CobroTotalModal", false);
-				Show_closeModal("#ProcesarCobroModal", true);
-				LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, montoMoraDesc, montoInteresDesc,true);
+
+				openModal("#CobroTotalModal", false);
+				openModal("#ProcesarCobroModal", true);
+				LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, montoMoraDesc, montoInteresDesc, true, montoCargos);
 			});
 
             $(".btn-cancelarCurrentCuota").click(function () {
@@ -495,13 +532,13 @@
 		//Borrar item de un array
         function removeItemArray(array) {
 			var index = array.pop();
-			return index;			
+			return index;
 		}
 
 		function mensajeMethodCreate(idTipoDebito)
 		{
 			var idTipoDebito = idTipoDebito === "D" ? 1 : 2;
-			Show_closeModal("#DepositoModal", true);
+			openModal("#DepositoModal", true);
 			GetBancos("BANCO","@Url.Action("getBancos","DebitosBancarios")");
 			GetTipoDebito("TIPO_DEBITO", "@Url.Action("GetTipoDebito", "DebitosBancarios")");
 			GetTipoEntrada("TIPO_ENTRADA", "@Url.Action("GetTipoEntrada", "DebitosBancarios")");
@@ -511,15 +548,15 @@
 			$("#TIPO_ENTRADA").attr("disabled", true);
 			$("#TIPO_ENTRADA").addClass("disabled");
 			$("#TIPO_ENTRADA").val(idTipoDebito);
-			
-			$("#MONTO").attr("disabled", true);			
-			$("#MONTO").val(calcularTotal());
+
+			$("#MONTO").attr("disabled", true);
+			$("#MONTO").val($("#modal_lblTotal").text());
 			$("#TIPO_DEBITO").attr("disabled", true);
 			$("#TIPO_DEBITO").val(1);
 
 			updateSelectMania("TIPO_DEBITO");
 			updateSelectMania("TIPO_ENTRADA");
-			
+
 		}
 		// LLenar datos en el popup de procesar los cobros
 		function LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, descuentoMora = 0,descuentoInteres = 0,istotal = false,otrosCargoAdicional = 0) {
@@ -558,7 +595,9 @@
 					}
 					Subtotal += index.montoPagado;
 					otroCargos += index.mora;
-					otroCargosAdiccionales += index.otroCargo;
+					if (index.tipoCobro !== "Registrar mora como cargo") {
+						otroCargosAdiccionales += index.otroCargo;
+					}
 				});
 
 				total = (Subtotal + otroCargos);
@@ -573,10 +612,10 @@
 		// Cobrar Cuotas seleccionadas
 		function ProcesarCobros(url, isTotal = "false",btn)
 		{
-			
+
 			var tipo_Pago = $("#modal_forma_pago").val();
-			var descMora = parseFloat($("#modal_descMora").val());
-            var descInt = parseFloat($("#modal_descInt").val());
+			var descMora = parseFloat($("#modal_descMora").val().replace(/[^\d\.\-]/g, ""));
+			var descInt = parseFloat($("#modal_descInt").val().replace(/[^\d\.\-]/g, ""));
             var lblNumFin = $("#modal_lblFin").text();
 			var Fecha_pago = $("#Fecha_pago").val();
 			var modal_aumento_recibo = $("#modal_aumento_recibo").val();
@@ -598,7 +637,7 @@
 						, tipoPago: tipo_Pago
 						, _Fecha_pago: Fecha_pago
 					},
-					success: function (_data) {						
+					success: function (_data) {
 						MessageNotificationImprimir(_data, btn, lblNumFin);
 					}
 				});
@@ -610,7 +649,7 @@
 				$.ajax({
 					type: "POST",
 					url: url,
-					dataType: "json",					
+					dataType: "json",
 					data: {
 						json: strDatos
 						, tipoPago: tipo_Pago
@@ -631,7 +670,7 @@
 			Swal.fire({
 				title: 'Deseas imprimir el recibo de ingreso?',
 				showDenyButton: true,
-				showCancelButton: true,
+				showCancelButton: false,
 				confirmButtonText: `SI`,
 				denyButtonText: `NO`,
 			}).then((result) => {
@@ -644,7 +683,7 @@
 			});
 		}
 		function insertarDeposito()
-		{			
+		{
 			var _BANCO = $("#BANCO").val();
 			var _CUENTA_BANCARIA = $("#CUENTA_BANCARIA").val();
 			var _TIPO_ENTRADA = $("#TIPO_ENTRADA").val();
@@ -656,8 +695,8 @@
 
 			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
 				_TIPO_ENTRADA == "0" || _MONTO == "" ||
-				_MONTO == "0" || _FECHA == "" ||			
-				_CONCEPTO == "" || _TIPO_DEBITO == "0" 
+				_MONTO == "0" || _FECHA == "" ||
+				_CONCEPTO == "" || _TIPO_DEBITO == "0"
 				)
 			{
 				MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
@@ -679,7 +718,7 @@
 
 		function HabilitarPrimeraceldaTabla() {
 
-			$("#tbl_detalleCuotasC tbody tr").eq(0).find("select").removeAttr("disabled");
+			$("#tbl_detalleCuotasC tbody tr:nth(0)").find("select").removeAttr("disabled");
 		}
 
 		function ImprimirReporte(ReciboID, currentBtn, lblNumFin ="")
@@ -704,8 +743,15 @@
 					},
 					complete: function () {
 						//$btn.button('reset');
-					}	
+					}
                 });
+		}
+		function openModal(id, open) {
+			Show_closeModal(id, open);
+			$("input").blur(function () {
+				debugger;
+				validarNumero(this);
+			});
 		}
 	</script>
 }

@@ -1,6 +1,5 @@
 ﻿body {
-	padding-top: 50px;
-	padding-bottom: 20px;
+	padding-top: 0px;
 }
 
 a {
@@ -12,6 +11,8 @@ a {
 	padding-left: 15px;
 	padding-right: 15px;
 }
+
+
 
 textarea {
 	resize: none;
@@ -147,11 +148,11 @@ textarea {
 }
 
 .noPdRight {
-	padding-right: 0px;
+	padding-right: 0px !important;
 }
 
 .noPdLeft {
-	padding-left: 0px;
+	padding-left: 0px !important;
 }
 
 .Sivisible {
@@ -162,15 +163,19 @@ textarea {
 	display: none;
 }
 
-.table-responsiveCustom {
-	overflow-x: auto;
+
+#tbl_detalleCuotasC tbody {
 	overflow-y: auto;
-	height: 30rem;
+	width: 100%;
+	height: 5vw;
+	position: relative;
 }
 
 .widtTotal {
 	max-width: 3000px !important;
 }
+
+
 
 .has-incorrect {
 	border: #a94442;
@@ -180,12 +185,7 @@ textarea {
 	border: green;
 }
 
-@media only screen and (max-width: 768px) {
-	/* For mobile phones: */
-	[class*="col-"] {
-		padding: 2px;
-	}
-}
+
 
 .paginate_button {
 	color: #337ab7 !important
@@ -244,17 +244,41 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 	-webkit-transform: scale(2);
 	padding: 10px;
 }
+.home {
+	background: url(img/logo.jpg);
+	background-repeat: no-repeat;
+	background-color: #daf1ff;
+	height: 100% !important;
+}
 
-@media (min-width: 1197px) {
-	.ml-54 {
-		margin-left: 54px;
+@media (max-width: 420px) {
+	#body-content {
+		margin-left: 0px;
+		width: 100% !important;
 	}
 
-	.ml-160 {
-		margin-left: 160px;
+	.msb .navbar-nav li a {
+		margin-left: 15px !important;
+		padding: 15px !important;
 	}
 }
 
+@media (min-width: 720px) {
+
+	#body-content {
+		margin-left: 199px;
+	}
+}
+
+
+
+
+@media only screen and (max-width: 720px) {
+	/* For mobile phones: */
+	[class*="col-"] {
+		padding: 2px;
+	}
+}
 .msb .navbar-nav li a:hover {
 	background-color: #204d74
 }
@@ -268,3 +292,159 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 	text-transform: capitalize;
 	font-weight: bold;
 }
+
+.nav > li > a:focus {
+	background-color:transparent !important;
+}
+
+.panel-collapse {
+	background-color: #8e598d;
+	list-style-type: disc !important;
+}
+
+.modal-header {
+	background-color: #0293b2 !important;
+	color: white;
+	font-size: 24px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+div.ui-datepicker {
+	font-size: 18px;
+}
+
+.panel-purple {
+	border: 2px solid #9c389b !important;
+}
+
+.font-size-16 {
+	font-size: 16px !important;
+}
+.font-size-18 {
+	font-size: 18px !important;
+}
+.font-size-22 {
+	font-size: 22px !important;
+}
+
+.pd-top-10 {
+	padding-top: 10px !important;
+}
+
+.width-20-Por{
+	width: 20% !important;
+}
+
+#contenido-cuenta{
+	margin: 10px 0 0px 0;
+
+}
+
+
+
+header[class="titulo"] {
+	font-size: 18px;
+	width: 100%;
+	background-color: #9c389b;
+	color: white;
+	padding-top:5px;
+	padding-bottom: 5px;
+	padding-left: 8px;
+}
+
+#contenido-cuenta .titulo {
+	background-color: #03b7de;
+}
+
+#tbl-cuenta{
+	width: 100% !important;
+}
+
+#data-resumen {
+	flex-direction: row;
+}
+
+#data-resumen div{
+	display: flex;
+}
+
+#data-resumen div p{
+	width:50%;
+	margin:5px 10px;
+}
+
+.dataTables_filter{
+	float: right !important;
+}
+
+.dataTables_length{
+	float: left !important;
+}
+
+.select-mania-group-text {
+	font-size: 13px !important;
+}
+/***************************** Datos de login	*****************************/
+#container-login {
+	margin-top: 100px !important;
+	box-shadow: 0 5px 30px 0 #000;
+	min-height: 220px !important;
+}
+
+.page-layout-admin-login {
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	background-color: #373330;
+	height: 101%;
+	max-height: 100%;
+	min-width: 50rem;
+}
+
+
+.login-header {
+	margin: 0 0 3rem;
+}
+
+.page-layout-admin-login .page-wrapper {
+	flex-grow: 0;
+	flex-shrink: 0;
+	background-color: #fff;
+	border: 1px solid #e3e3e3;
+	box-shadow: 0 5px 30px 0 #000;
+	display: block;
+	float: none;
+	margin: auto;
+	max-width: 45rem;
+	min-height: 30rem;
+	min-width: 0;
+	padding: 40px 80px 50px;
+	position: relative;
+	width: 100%;
+	z-index: 1;
+}
+
+.page-wrapper {
+	background-color: #fff;
+	display: inline-block;
+	margin-left: -4px;
+	vertical-align: top;
+	width: calc(100% - 8.800000000000001rem);
+}
+
+.login-footer {
+	color: #989287;
+	font-size: 1rem;
+	font-weight: 400;
+	left: 0;
+	margin: 5rem 0 2rem;
+	position: absolute;
+	text-align: center;
+	top: 100%;
+	width: 100%;
+}
+/***************************** Datos de login	*****************************/

@@ -1,0 +1,26 @@
+﻿@model SistemaImbrino.Models.CARGO
+
+
+<input type="hidden" id="CAR_CODIGO" name="CAR_CODIGO"/>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="ECAR_DESCRI">Cargo</label>
+		<div class="form-group" id="dvECAR_DESCRI">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECAR_DESCRI"><i class="glyphicon glyphicon-user"></i></label>
+				@Html.EditorFor(model => model.CAR_DESCRI, new { htmlAttributes = new { @class = "form-control texto widtTotal", @id= "ECAR_DESCRI" } })
+				<span id="spanECAR_DESCRI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6" style="margin-top: 32px;">
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input chkLg" id="Eenable">
+			<label class="form-check-label" for="Eenable" style="margin-left: 1rem;">Activo</label>
+		</div>
+	</div>
+
+</div>
+

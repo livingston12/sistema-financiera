@@ -8,6 +8,7 @@ using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
 {
+    [Authorize(Roles = "conciliacion,admin")]
     public class ConciliacionBancariaController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();

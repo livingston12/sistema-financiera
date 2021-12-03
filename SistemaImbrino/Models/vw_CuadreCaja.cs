@@ -14,16 +14,29 @@ namespace SistemaImbrino.Models
     
     public partial class vw_CuadreCaja
     {
-        public int ID { get; set; }
+        public string ING_NUMREC { get; set; }
+        public int ING_NUMFIN { get; set; }
+        public string ING_STATUS { get; set; }
+        public decimal ING_MONTOT { get; set; }
+        public decimal ING_MONTOT_CUO { get; set; }
+        public decimal ING_MONTOC { get; set; }
+        public decimal ING_MONTOI { get; set; }
+        public string ING_FECHA { get; set; }
+        public string ING_FORMPG { get; set; }
+        public string ING_DESCRI { get; set; }
+        public string ING_DESCRI_NCF { get; set; }
+        public string ING_NCF { get; set; }
+        public string mes { get; set; }
+        public string dia { get; set; }
+        public string year { get; set; }
+        public string mesAbr { get; set; }
+        public decimal MORA { get; set; }
+        public Nullable<decimal> OTRO { get; set; }
         public string Cliente { get; set; }
-        public string Recibo { get; set; }
-        public string Descripcion { get; set; }
-        public decimal MontoTotal { get; set; }
-        public decimal MontoCapital { get; set; }
-        public decimal MontoInteres { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public string FechaTexto { get; set; }
-        public string Tipo { get; set; }
-        public string TextoTipo { get; set; }
+        public int ClienteId { get; set; }
+        public System.DateTime fechadt { get; set; }
+        public bool isCuadrada { get; set; }
+        public string descriOtro { get; set; }
+        public Nullable<decimal> montoOtro { get; set; }
     }
 }

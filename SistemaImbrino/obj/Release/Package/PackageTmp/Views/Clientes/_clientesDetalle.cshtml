@@ -3,19 +3,20 @@
 
 
 <tr>
-	@{ 
+	@{
 		string nombre_completo = string.Format("{0} {1}", Model.CTE_NOMBRE, Model.CTE_APELLI);
 	}
-	<td class="">
+	<td width="200px" class="">
 		@nombre_completo
 	</td>
-	<td>@Model.CTE_CEDULA</td>
-	<td>@Model.CTE_TELEFO</td>
-	<td class="">@Model.CTE_DIRECC</td>
+	<td width="120">@Model.CTE_CEDULA</td>
+	<td width="95px">@Model.CTE_TELEFO</td>
+	<td width="95px">@Model.CTE_TELEFO2</td>
+	<td width="300px">@Model.CTE_DIRECC</td>
 	<td class="">@Model.ZONA.ZON_DESCRI</td>
 	<td>
 		@{
-			string color = "",Tipo = Model.TIPOCTE.TIP_DESCRI;
+			string color = "", Tipo = Model.TIPOCTE.TIP_DESCRI;
 			if (Tipo == "NORMAL")
 			{
 				color = "label-default";
@@ -32,6 +33,6 @@
 		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.CTE_CODIGO)" id="Ceditar" aria-hidden="true"></span>
 		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentClient(@Model.CTE_CODIGO,'@nombre_completo')" id="Celiminar" aria-hidden="true"></span>
 
-	</td>   	  
+	</td>
 
 </tr>

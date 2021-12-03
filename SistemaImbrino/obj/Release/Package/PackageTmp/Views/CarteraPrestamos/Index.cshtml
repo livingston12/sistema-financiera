@@ -1,0 +1,43 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "";
+}
+
+@Html.Partial("_carteraPrestamo")
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function ()
+		{
+			const urlResumen = "@Url.Action("GetCarteraPrestamoResumenAsync")";
+			const urlDetalle = "@Url.Action("GetCarteraPrestamoDetalleAsync")";
+			getResumenFinanciamiento(urlResumen, urlDetalle);
+
+			$("#btn-imprimir").click(function ()
+			{
+				var $btn = $(this).button('loading');
+				var url = "@Url.Action("PrintReport")";
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+					data: { },
+                    success: function (_data) {
+                        if (_data.Is_Success) {
+                            var url = "@Url.Action("generateReport")";
+                            window.open(url, "_new");
+                        } else {
+							MessageNotification(_data.Message, _data.Is_Success, true);
+                        }
+					},
+					complete: function () {
+						$btn.button('reset');
+					}
+
+                });
+			});
+		});
+	</script>
+}

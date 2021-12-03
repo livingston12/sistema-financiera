@@ -46,7 +46,6 @@ namespace SistemaImbrino.Models
         public virtual DbSet<INGCUOTA> INGCUOTA { get; set; }
         public virtual DbSet<ABOCUOTA> ABOCUOTA { get; set; }
         public virtual DbSet<VW_rptRegistroNCF> VW_rptRegistroNCF { get; set; }
-        public virtual DbSet<Vw_SearchClientes_Fiadores> Vw_SearchClientes_Fiadores { get; set; }
         public virtual DbSet<ZONA> ZONA { get; set; }
         public virtual DbSet<TIPOCTE> TIPOCTE { get; set; }
         public virtual DbSet<CUOTA> CUOTA { get; set; }
@@ -66,9 +65,17 @@ namespace SistemaImbrino.Models
         public virtual DbSet<OTROSDB> OTROSDB { get; set; }
         public virtual DbSet<VW_rptCreditosBancarios> VW_rptCreditosBancarios { get; set; }
         public virtual DbSet<VW_rptDebitosBancarios> VW_rptDebitosBancarios { get; set; }
-        public virtual DbSet<vw_CuadreCaja> vw_CuadreCaja { get; set; }
         public virtual DbSet<VW_rptReciboIngreso> VW_rptReciboIngreso { get; set; }
         public virtual DbSet<VW_ConciliacionBancaria> VW_ConciliacionBancaria { get; set; }
+        public virtual DbSet<SISTEMA> SISTEMA { get; set; }
+        public virtual DbSet<vw_CuadreCaja> vw_CuadreCaja { get; set; }
+        public virtual DbSet<VW_CuadreCajaSalidas> VW_CuadreCajaSalidas { get; set; }
+        public virtual DbSet<Vw_SearchClientes_Fiadores> Vw_SearchClientes_Fiadores { get; set; }
+        public virtual DbSet<ROLES> ROLES { get; set; }
+        public virtual DbSet<TIPOS_USUARIOS> TIPOS_USUARIOS { get; set; }
+        public virtual DbSet<USUARIO_ROLES> USUARIO_ROLES { get; set; }
+        public virtual DbSet<USUARIOS> USUARIOS { get; set; }
+        public virtual DbSet<vw_initialRols> vw_initialRols { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {

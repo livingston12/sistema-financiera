@@ -7,6 +7,7 @@ using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
 {
+    [Authorize(Roles = "debitos,admin")]
     public class DebitosBancariosController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -19,10 +20,12 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
 
         public JsonResult getCurrentDebitoBancario(string btnId)
         {
+            DateTime dateToSearch = DateTime.Now.AddDays(-45);
             string value = btnId.Replace("btn-", "").ToUpper();
             bool findFilter = string.Compare(value, "todos", StringComparison.CurrentCultureIgnoreCase) == 0 ?
                                 false : true;
-            List<View_ListDebitosBancarios> ListDebitosBancarios =
+            
+            IEnumerable<View_ListDebitosBancarios> ListDebitosBancarios =
                 _db.OTROSDB
                     .Where(x => x.ACTIVO == true)
                     .Select(x => new View_ListDebitosBancarios()
@@ -37,10 +40,25 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                         FECHAdt = x.FECHA,
                         ID_TIPO_DEBITO = x.TIPO_DEBITO
                     })
-                    .ToList();
+                    .Where(x => x.FECHAdt >= dateToSearch)
+                    .ToList()
+                    .OrderByDescending(x => x.FECHAdt);
             if (findFilter)
             {
-                ListDebitosBancarios = ListDebitosBancarios.Where(x => x.TIPO_DEBITO == value).ToList();
+                int idTipoDebito = 0;
+                switch (value)
+                {
+                    case "DESPOSITO":
+                        idTipoDebito = 1;
+                        break;
+                    case "TRANFERENCIA":
+                        idTipoDebito = 2;
+                        break;
+                    case "OTRO":
+                        idTipoDebito = 3;
+                        break;
+                }
+                ListDebitosBancarios = ListDebitosBancarios.Where(x => x.ID_TIPO_ENTRADA == idTipoDebito).ToList();
             }
             return Json(ListDebitosBancarios);
         }
@@ -58,6 +76,7 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 DebitoBancario.ACTIVO = true;
                 DebitoBancario.CERRADO = false;
                 DebitoBancario.VALIDADO = false;
+                DebitoBancario.STATUS = 5;
 
                 modificarBalanceFecha(_db, DebitoBancario.CUENTA_BANCARIA, DebitoBancario.MONTO, tipoBalanceFecha.aumentar);
                 _db.OTROSDB.Add(DebitoBancario);
@@ -149,7 +168,8 @@ namespace SistemaImbrino.Controllers.Conciliacion_Bancaria
                 debito.BANCO = debitoBancario.BANCO;
                 debito.CONCEPTO = debitoBancario.CONCEPTO;
                 debito.CUENTA_BANCARIA = debitoBancario.CUENTA_BANCARIA;
-                debito.FECHA = debitoBancario.FECHA;
+                debito.FECHA = debitoBancario.FECHA.HasValue ?
+                                debitoBancario.FECHA : debito.FECHA;
                 debito.MONTO = debitoBancario.MONTO;
                 debito.TIPO_ENTRADA = debitoBancario.TIPO_ENTRADA;
                 debito.TIPO_DEBITO = debitoBancario.TIPO_DEBITO;

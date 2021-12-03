@@ -8,37 +8,46 @@ using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers
 {
+    [Authorize(Roles = "cobros,admin")]
     public class CobrosHeaderController : BaseController
-    {
-       
+    {      
 
         // GET: CobrosHeader
-        public  ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var listCobrosHeader = CobrosHeader();
-            ViewBag.listCobrosHeader = listCobrosHeader.OrderBy(x=>x.cliente).ToList();          
-            return  View();
+            EntityFramewrowkExtension.page = 1;
+            EntityFramewrowkExtension.limit = int.MaxValue;
+
+            View_cobrosHeader listCobrosHeader = await CobrosHeader();
+            return View(listCobrosHeader);
         }
 
         // GET: CobrosHeader
-        
-        public ActionResult Index2(string findID)
+        public async Task<ActionResult> prueba(int page, int limit)
         {
-            var listCobrosHeader = CobrosHeader();
-            ViewBag.listCobrosHeader = listCobrosHeader.OrderBy(x => x.cliente).ToList();
+            EntityFramewrowkExtension.page = page;
+            EntityFramewrowkExtension.limit = int.MaxValue;
+
+            View_cobrosHeader listCobrosHeader = await CobrosHeader();
+            return View("Index", listCobrosHeader);
+        }
+
+        // GET: CobrosHeader
+
+        public async Task<ActionResult> Index2(string findID)
+        {
+            View_cobrosHeader listCobrosHeader = await CobrosHeader();
             ViewBag.valor = findID;
-            return View("Index");
+            return View("Index", listCobrosHeader);
         }
 
-        public ActionResult _CobrosDetalleCliente()//(string cliente)
+        public ActionResult DetalleCobro(string cliente)
         {
-            //var detalleCuotasCliente = CobrosHeader(cliente);
-           
-            //return PartialView(detalleCuotasCliente);
-            return PartialView();
+           View_cobrosHeader listCobrosHeader = CobrosHeader(cliente).Result;
+            return PartialView(listCobrosHeader);
         }
 
-  
-        
+
+
     }
 }

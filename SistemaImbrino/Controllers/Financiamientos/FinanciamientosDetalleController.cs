@@ -8,6 +8,7 @@ using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Financiamientos
 {
+    [Authorize(Roles = "financiamientosDetalle,admin")]
     public class FinanciamientosDetalleController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -56,7 +57,7 @@ namespace SistemaImbrino.Controllers.Financiamientos
                                  });
             
            
-            return Json(listDetalle);
+            return Json(listDetalle, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PrintReport(string FindID = "")
@@ -89,7 +90,7 @@ namespace SistemaImbrino.Controllers.Financiamientos
                 mensajeReturn.Is_Success = false;
             }
 
-            return Json(mensajeReturn);
+            return Json(mensajeReturn, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult generateReport()

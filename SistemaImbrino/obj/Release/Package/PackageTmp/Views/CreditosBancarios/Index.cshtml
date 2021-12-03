@@ -1,17 +1,17 @@
 ﻿
 @{
-	ViewBag.Title = "Creditos bancarios";
-	ViewBag.nameView = "credito bancario";
+	ViewBag.Title = "Créditos bancarios";
+	ViewBag.nameView = "Crédito Bancario";
 }
 
 <div class="row">
 
 	<div class="col-xs-12 col-md-1 pull-left text-center">
-		<p class="control-label text-defaultColor" style="font-size:23px;">FILTRO</p>
+		<p class="control-label text-defaultColor" style="font-size:23px;"><b>FILTRO</b></p>
 	</div>
 
 	<div class="col-xs-12 col-md-1">
-		<button class="btn btn-block bg-pink" id="btn-todos" disabled>
+		<button class="btn btn-block bg-pink" data-loading-text="cargando..." id="btn-todos" disabled>
 			Todos
 		</button>
 	</div>
@@ -64,10 +64,10 @@
 		<table id="tbl-creditoBancario" class="table table-condensed table-hover table-bordered dataTable" style="width: 98%">
 			<thead class="btn-defaultColorLite">
 				<tr>
-					<th class="text-center">ID</th>
+					<th class="text-center th-pd-no-right">ID</th>
 					<th class="text-left th-pd-no-left" style="padding-left:8px">BANCO</th>
-					<th class="dt-body-left th-pd-no-left">CUENTA BANCARIA</th>
-					<th class="text-left th-pd-no-left" id="thNumeroCheque">NUMERO CHEQUE</th>
+					<th class="dt-body-left th-pd-no-left"># CUENTA</th>
+					<th class="text-left th-pd-no-left" id="thNumeroCheque"># CHEQUE</th>
 					<th class="text-left th-pd-no-left">TIPO CREDITO</th>
 					<th class="text-left th-pd-no-left">TIPO SALIDA</th>
 					<th class="text-right th-pd-right">MONTO</th>
@@ -89,7 +89,7 @@
 	<div class="modal-dialog" role="document" style="width:1000px">
 		<div class="modal-content">
 			<div class="modal-header bg-warning">
-				Crear @ViewBag.nameView
+				Crear Nuevo @ViewBag.nameView
 				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel"> </h4>
 			</div>
@@ -170,7 +170,7 @@
 				if (!currentJson) {
 					return;
 				}
-				$("#thNumeroCheque").text("NUMERO CHEQUE");
+				$("#thNumeroCheque").text("# CHEQUE");
 				$("#thBeneficiario").text("BENEFICIARIO");
 
 				$(".btn-block").removeAttr("disabled");
@@ -220,7 +220,7 @@
 				}
 				else
 				{
-					$("#" + preffix + "lbl_NUMERO_CHEQUE").text("Numero cheque");
+					$("#" + preffix + "lbl_NUMERO_CHEQUE").text("# cheque");
 					$("#" + preffix + "lbl_BENEFICIARIO").text("Beneficiario");
 
 					$("#" + preffix + "BENEFICIARIO").removeAttr("disabled");
@@ -252,10 +252,10 @@
 
 			$("#btn_crear").click(function (e)
 			{
-				insertarEditarCargo("I");
+				insertarEditarCargo("I", this);
 			});
 			$("#btn_Editar").click(function (e) {
-				insertarEditarCargo("U");
+				insertarEditarCargo("U", this);
 			});
 
 			$(".btn-cancelarPop").click(function (e) {
@@ -265,7 +265,7 @@
 
 			 $("#btn-imprimir").click(function ()
 			 {
-				 valuesFecha(this);				 
+				 valuesFecha(this);
 			 });
 		});
 
@@ -276,13 +276,13 @@
 					'<div class="row"> <div class="col-xs-6">' +
 					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
 					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
-				focusConfirm: false,				
+				focusConfirm: false,
 				preConfirm: () => {
 					return {
 						FechaDesde: document.getElementById('fechaDesde').value,
 						FechaHasta: document.getElementById('fechaHasta').value
 					}
-				},				
+				},
 				width: 600,
 				confirmButtonText: "Generar reporte",
 				confirmButtonColor: "#0293b2"
@@ -297,7 +297,7 @@
 
 		function ImprimirReporte(jsonFechas, currentBtn)
 		{
-				var url = "@Url.Action("PrintReport")";
+			var url = "@Url.Action("PrintReport")";
 			var $btn = $(currentBtn).button('loading');
 
                 $.ajax({
@@ -315,7 +315,7 @@
 					},
 					complete: function () {
 						$btn.button('reset');
-					}	
+					}
                 });
 		}
 		function llenarTblCreditoBancario(btnId)
@@ -328,7 +328,7 @@
 					paging: true,
 					info: false,
 					searching: true,
-					ordering: true,
+					ordering: false,
 					ajax: {
 						url: url,
 						type: "POST",
@@ -339,26 +339,32 @@
 					columns: [
 						{
 							data: "ID",
-							className: "dt-body-left"
+							className: "dt-body-center",
+							width: 10
 						},
 						{
-							data: "BANCO"
+							data: "BANCO",
+							width: 150
 						},
 						{
 							data: "CUENTA_BANCARIA",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 100
 						},
 						{
 							data: "NUMERO_CHEQUE",
-							className: "dt-body-left"
+							className: "dt-body-left",
 						},
 						{
 							data: "TIPO_CREDITO",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 100
+
 						},
 						{
 							data: "TIPO_SALIDA",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 80
 						},
 						{
 							data: "MONTO",
@@ -366,14 +372,17 @@
 							render: function (data) {
 								return number_format_js(data, 2, 0);
 							},
+							width: 80
 						},
 						{
 							data: "FECHA",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 80
 						},
 						{
 							data: "BENEFICIARIO",
-							className: "dt-body-left"
+							className: "dt-body-left",
+							width: 200
 						},
 						{
 							data: "BENEFICIARIO",
@@ -386,7 +395,7 @@
 						var id = data.ID;
 						var html = `
 							<span class="glyphicon glyphicon-edit" onclick="editar_Popup(`+ id +`)" id="Ceditar" aria-hidden="true"></span>
-							<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentCargo(`+id+`,'de la cuenta `+ data.CUENTA_BANCARIA	+`')" id="Celiminar" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentCargo(`+id+`,'de la cuenta `+ data.CUENTA_BANCARIA +`')" id="Celiminar" aria-hidden="true"></span>
 							`;
 						$('td:eq(9)', row).html(html).addClass("wth-action");
 					}
@@ -396,9 +405,9 @@
 			$(".dataTables_filter").addClass("NoVisible");
 		}
 
-		function insertarEditarCargo(typeAction) {
+		function insertarEditarCargo(typeAction, currentBtn) {
 			url = typeAction == "I" ? "@Url.Action("CrearCreditoBancario")" : "@Url.Action("ActualizarCreditoBancario")";
-
+			var $btn = $(currentBtn).button('loading');
 			var _id = typeAction == "I" ? "0" : $("#id").val().trim();
 
 			var E = typeAction == "I" ? "" : "E";
@@ -407,8 +416,8 @@
 			var _NUMERO_CHEQUE = $("#" + E + "NUMERO_CHEQUE").val().trim();
 			var _TIPO_CREDITO = $("#" + E + "TIPO_CREDITO").val();
 			var _TIPO_SALIDA = $("#" + E + "TIPO_SALIDA").val();
-			var _MONTO = $("#" + E + "MONTO").val().replace(",","").trim();
-			var _FECHA = $("#" + E + "FECHA").val().trim();
+			var _MONTO = $("#" + E + "MONTO").val().replaceAll(",","").trim();
+			var _FECHA = $("#" + E + "FECHA").attr("dateValue");
 			var _BENEFICIARIO = $("#" + E + "BENEFICIARIO").val().trim();
 			var _CONCEPTO = $("#" + E + "CONCEPTO").val().trim();
 
@@ -443,6 +452,8 @@
 				success: function (_data)
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				},complete: function () {
+						$btn.button('reset');
 				}
 			});
 

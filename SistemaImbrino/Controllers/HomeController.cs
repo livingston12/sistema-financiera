@@ -6,21 +6,22 @@ using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            string automaStr = System.Configuration.ConfigurationManager.AppSettings["Automatic"].ToString();
-            bool auto = false;
+            //string automaStr = System.Configuration.ConfigurationManager.AppSettings["Automatic"].ToString();
+            //bool auto = false;
 
-            bool.TryParse(automaStr, out auto);
+            //bool.TryParse(automaStr, out auto);
 
-            if (auto)
-            {
-                Automatitation at = new Automatitation();
-                at.automatizarArchivos();
-            }
-         
+            //if (auto)
+            //{
+            //    Automatitation at = new Automatitation();
+            //    at.automatizarArchivos();
+            //}
+            Automatitation.initialDataDb();
             return View();
         }
 

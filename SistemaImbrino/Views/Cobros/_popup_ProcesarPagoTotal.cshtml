@@ -1,8 +1,9 @@
-﻿@model SistemaImbrino.Models.View_cobrosHeader
+﻿@model SistemaImbrino.Models.View_cobrosDetalle
 
 
 <input type="hidden" id="modal_finID" value="@Model.cliente" />
 <input type="hidden" id="modal_MontoTotal" value="@Model.montoTotal" />
+<input type="hidden" id="modal_MontoOtros" value="@Model.otrosTotal" />
 @{
 	decimal interesTotal = Model.interesTotal;
 	decimal moraTotal = Model.moraTotal;

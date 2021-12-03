@@ -17,5 +17,6 @@ namespace SistemaImbrino.Models
         public string CAR_CODIGO { get; set; }
         public string CAR_DESCRI { get; set; }
         public int enable { get; set; }
+        public int ID { get; set; }
     }
 }

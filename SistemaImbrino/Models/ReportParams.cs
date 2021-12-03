@@ -1,11 +1,13 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using SistemaImbrino.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,6 +33,7 @@ namespace SistemaImbrino.Models
         public object ParameterValue { get; set; }
         public static readonly string rutaReporte = "~/Reportes";
         private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
+        
 
         public enum ReportName
         {
@@ -44,8 +47,9 @@ namespace SistemaImbrino.Models
             CreditosBancarios,
             DebitosBancarios,
             CuadreCaja,
-            ReciboIngreso ,
-            ConciliacionBancaria
+            ReciboIngreso,
+            ConciliacionBancaria,
+            CarteraPrestamos
         }
 
 
@@ -95,106 +99,69 @@ namespace SistemaImbrino.Models
             DB_IMBRINOEntities db = new DB_IMBRINOEntities();
             ReportDocument CrReport = new ReportDocument();
 
-
             string urlReporte = intialPath;
             List<Parameters> parameters = new List<Parameters>();
             string criterios = string.Empty;
-            string txt_ReportName = string.Empty;
+            string txt_ReportName = _ReportName.ToString();
             string data = string.Empty;
-
+            string userName = "Imbrino";
+            string tituloReporte = string.Empty;
+           
 
             switch (_ReportName)
             {
                 case ReportName.EstadoCuenta:
-                    txt_ReportName = _ReportName.ToString();
+                    tituloReporte = "Estados de Cuenta";
                     IQueryable<VW_rptEstadoCuenta> _iqEC = db.VW_rptEstadoCuenta;
                     List<VW_rptEstadoCuenta> _listEC = new List<VW_rptEstadoCuenta>();
-
-                    urlReporte = Path.Combine(urlReporte, txt_ReportName + ".rpt"); //string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+                    urlReporte = Path.Combine(urlReporte, txt_ReportName + ".rpt");
                     _listEC = criteriosEstadoCuenta(Listcriterios, ref criterios, ref _iqEC);
                     _listEC = _listEC.OrderBy(x => x.CLIENTE).ThenBy(x => x.Fecha).ToList();
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="Estado cuenta" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listEC);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listEC, CrReport);
                     break;
                 case ReportName.CuotasVencidas:
-                    txt_ReportName = _ReportName.ToString();
-
+                    tituloReporte = "Cuotas Vencidas";
                     IQueryable<VW_rptCuotasVencidas> _iqCV = db.VW_rptCuotasVencidas;
                     List<VW_rptCuotasVencidas> _listCV = new List<VW_rptCuotasVencidas>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listCV = criteriosCuotasVencidas(Listcriterios, ref criterios, ref _iqCV);
                     _listCV = _listCV.OrderBy(x => x.CLIENTE).ThenBy(x => x.fechadt).ToList();
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="Cuotas vencidas" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listCV);
 
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listCV, CrReport);
                     break;
                 case ReportName.Financiamientos_atrasados:
-
-                    txt_ReportName = _ReportName.ToString();
+                    tituloReporte = "Financiamientos Atrasados";
                     IQueryable<VW_rptFinAtrasados_details> _iqFA = db.VW_rptFinAtrasados_details;
                     List<VW_rptFinAtrasados_details> _listFA = new List<VW_rptFinAtrasados_details>();
                     urlReporte = string.Format("{0}/{1}.rpt", urlReporte, txt_ReportName);
                     _listFA = criteriosFin_atrasados(Listcriterios, ref criterios, ref _iqFA);
                     _listFA = _listFA.OrderBy(x => x.CLIENTE).ThenBy(x => x.fechadt).ToList();
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = "Financiamientos atrasados" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-
-
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listFA);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listFA, CrReport);
                     break;
                 case ReportName.RegistroNCF:
-                    txt_ReportName = _ReportName.ToString();
+                    tituloReporte = "Número de Comprobante Fiscal (NCF)";
 
-                    IQueryable<VW_rptRegistroNCF> _iqRN = db.VW_rptRegistroNCF;
+                    IQueryable<VW_rptRegistroNCF> _iqRN = db.VW_rptRegistroNCF.Where(x => x.ING_MONTOT > 0);
                     List<VW_rptRegistroNCF> _listRN = new List<VW_rptRegistroNCF>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listRN = criteriosRegistroNCF(Listcriterios, ref criterios, ref _iqRN);
                     _listRN = _listRN.OrderBy(x => x.ING_NCF).ThenBy(x => x.fechadt).ToList();
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="ARCHIVO PARA REGISTRO DE NCF" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
 
-
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listRN);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listRN, CrReport);
                     break;
 
                 case ReportName.IngresoCuotas:
-                    txt_ReportName = _ReportName.ToString();
-
-                    IQueryable<VW_rptRegistroNCF> _iqIC = db.VW_rptRegistroNCF;
+                    tituloReporte = "Ingresos";
+                    IQueryable<VW_rptRegistroNCF> _iqIC = db.VW_rptRegistroNCF.Where(x => x.ING_MONTOT > 0);
                     List<VW_rptRegistroNCF> _listIC = new List<VW_rptRegistroNCF>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listIC = criteriosIngresoCuotas(Listcriterios, ref criterios, ref _iqIC);
+                    
                     var ordenarPor = Listcriterios.Where(x => x.ParameterName == "OrdenarPor").FirstOrDefault().ParameterValue;
                     switch (ordenarPor)
                     {
@@ -205,23 +172,14 @@ namespace SistemaImbrino.Models
                             _listIC = _listIC.OrderBy(x => x.ING_NUMREC).ToList();
                             break;
                         case "Monto":
-                            _listIC = _listIC.OrderByDescending(x => x.ING_MONTOT).ToList();
+                            _listIC = _listIC.OrderByDescending(x => x.ING_MONTOT + x.OTRO).ToList();
                             break;
                     }
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="REPORTE INGRESOS POR CUOTAS" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listIC);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listIC, CrReport);
                     break;
                 case ReportName.FinHeader:
-                    txt_ReportName = _ReportName.ToString();
+                    tituloReporte = "Financiamientos";
                     data = Listcriterios.FirstOrDefault().ParameterValue.ToString();
                     List<vw_ConsultaFin> _listFH = new List<vw_ConsultaFin>();
                     var consulta = Newtonsoft.Json.JsonConvert.DeserializeObject<List<View_consultaFinanciamientos>>(data);
@@ -238,120 +196,109 @@ namespace SistemaImbrino.Models
                                     FAC_FECHA = x.Fecha,
                                     CUO_STATUS = string.Empty
                                 })
+                                .OrderBy(c=>c.cliente)
                                 .ToList();
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="REPORTE FINANCIAMIENTOS" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listFH);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listFH, CrReport);
                     break;
                 case ReportName.FinDetalle:
-                    txt_ReportName = _ReportName.ToString();
-
+                    tituloReporte = "Detalle del Financiamiento";
                     IQueryable<vw_ConsultaFinDetalle> _iqFD = db.vw_ConsultaFinDetalle;
                     List<vw_ConsultaFinDetalle> _listFD = new List<vw_ConsultaFinDetalle>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listFD = criteriosFinDetalle(Listcriterios, ref criterios, ref _iqFD);
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue ="ARCHIVO PARA REGISTRO DE NCF" },
-                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listFD);
+
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listFD, CrReport);
                     break;
                 case ReportName.CreditosBancarios:
-                    txt_ReportName = _ReportName.ToString();
-
-                    IQueryable<VW_rptCreditosBancarios> _iqCB = db.VW_rptCreditosBancarios.OrderBy(x=>x.FECHA);
+                    IQueryable<VW_rptCreditosBancarios> _iqCB = db.VW_rptCreditosBancarios.OrderBy(x => x.FECHA);
                     List<VW_rptCreditosBancarios> _listCB = new List<VW_rptCreditosBancarios>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listCB = criteriosCreditosBancarios(Listcriterios, ref criterios, ref _iqCB);
+                    tituloReporte = $"Créditos Bancario {criterios}";
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Créditos bancarios {criterios}" },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listCB);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listCB, CrReport);
+                    parameters.Remove(parameters.Where(x => x.ParameterName == "Criterios").FirstOrDefault());
                     break;
                 case ReportName.DebitosBancarios:
-                    txt_ReportName = _ReportName.ToString();
-
-                    IQueryable<VW_rptDebitosBancarios> _iqDB = db.VW_rptDebitosBancarios.OrderBy(x=>x.FECHA);
+                    IQueryable<VW_rptDebitosBancarios> _iqDB = db.VW_rptDebitosBancarios.OrderBy(x => x.FECHA);
                     List<VW_rptDebitosBancarios> _listDB = new List<VW_rptDebitosBancarios>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listDB = criteriosDebitosBancarios(Listcriterios, ref criterios, ref _iqDB);
+                    tituloReporte = $"Débitos Bancario {criterios}";
 
-                    //Parametros del reporte
-                    parameters.AddRange(new List<Parameters>
-                    {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Débitos bancarios {criterios}" },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" }
-                    });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listDB);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listDB, CrReport);
+                    parameters.Remove(parameters.Where(x => x.ParameterName == "Criterios").FirstOrDefault());
                     break;
                 case ReportName.CuadreCaja:
-                    txt_ReportName = _ReportName.ToString();
-
-                    IQueryable<vw_CuadreCaja> _iqCC = db.vw_CuadreCaja;
-                    List<vw_CuadreCaja> _listCC = new List<vw_CuadreCaja>();
-
+                    View_CuadreCajaGeneral _listCC = View_generalClass.GetListCuadreCaja();
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
-                    _listCC = criteriosCuadreCajas(Listcriterios, ref criterios, ref _iqCC);
-                    var resumen = getResumenCuadreCaja();
+                    criteriosCuadreCajas(Listcriterios, ref criterios);
+                    var resumen = _listCC.Resumen;
+                    tituloReporte = $"Cuadre de Caja {criterios}";
 
-                    //Parametros del reporte
+                    List<View_CuadreCajaReport> result = new List<View_CuadreCajaReport>();
+                    foreach (var x in _listCC.Detalle)
+                    {
+                        var current = x.Detalle
+                            .Where(j => j.Fecha.HasValue)
+                            .Select(j => new View_CuadreCajaReport
+                            {
+                                ID = x.ID,
+                                Cliente = j.Cliente,
+                                Descripcion = j.Descripcion,
+                                Fecha = j.Fecha.Value,
+                                FechaTexto = j.FechaTexto,
+                                MontoCapital = j.MontoCapital.HasValue ?
+                                                    j.MontoCapital.Value : 0,
+                                MontoInteres = j.MontoInteres.HasValue ? j.MontoInteres.Value : 0,
+                                MontoTotal = j.MontoTotal.HasValue ? j.MontoTotal.Value : 0,
+                                Recibo = j.Recibo,
+                                Tipo = x.Tipo,
+                                TextoTipo = x.TipoTexto
+                            })
+                            .ToList();
+                        result.AddRange(current);
+                    }
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, result, CrReport);
+                    parameters.Remove(parameters.Where(x => x.ParameterName == "Criterios").FirstOrDefault());
                     parameters.AddRange(new List<Parameters>
                     {
-                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = $"Cuadre caja {criterios}" },
-                        new Parameters() { ParameterName = "UserName", ParameterValue = "Imbrino" },
                         new Parameters() { ParameterName = "Deposito", ParameterValue = resumen.DepositoTranferencia },
                         new Parameters() { ParameterName = "IngresosNoNetos", ParameterValue = resumen.IngresosNoNetos },
-                        new Parameters() { ParameterName = "OtrosIngresosNetos", ParameterValue = resumen.OtrosIngresosNetos }
+                        new Parameters() { ParameterName = "OtrosIngresosNetos", ParameterValue = resumen.OtrosIngresosNetos },
+                        new Parameters() { ParameterName = "CapitalRecuperado", ParameterValue = resumen.TotalCapital },
+                        new Parameters() { ParameterName = "InteresGenerado", ParameterValue = resumen.TotalInteres },
                     });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listCC);
                     break;
                 case ReportName.ReciboIngreso:
-                    txt_ReportName = _ReportName.ToString();
-
                     IQueryable<VW_rptReciboIngreso> _iqRI = db.VW_rptReciboIngreso;
                     List<VW_rptReciboIngreso> _listRI = new List<VW_rptReciboIngreso>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listRI = criteriosReciboIngreso(Listcriterios, ref criterios, ref _iqRI);
-                  
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listRI);
+
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listRI, CrReport, false);
+                    parameters.RemoveAll(j => j.ParameterName.Length > 0);
                     break;
                 case ReportName.ConciliacionBancaria:
-                    txt_ReportName = _ReportName.ToString();
                     string FiltroCuenta = Listcriterios.Where(x => x.ParameterName == "FiltroCuenta").FirstOrDefault().ParameterValue.ToString();
                     string cuenta = FiltroCuenta.Split('#')[1].Trim();
                     DateTime? fechaCorte = getFechaCorte(cuenta);
-                    IQueryable<VW_ConciliacionBancaria> _iqCONB = db.VW_ConciliacionBancaria.Where(x=>x.CUENTA == cuenta).OrderBy(x=> x.FECHA);
+                    IQueryable<VW_ConciliacionBancaria> _iqCONB = db.VW_ConciliacionBancaria.Where(x => x.CUENTA == cuenta).OrderBy(x => x.FECHA);
                     List<VW_ConciliacionBancaria> _listCONB = new List<VW_ConciliacionBancaria>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
                     _listCONB = criteriosConciliacionBancaria(Listcriterios, ref criterios, ref _iqCONB);
                     string filtroFechas = Listcriterios.Where(x => x.ParameterName == "isMovimiento").FirstOrDefault().ParameterValue.ToString() == "True" ?
                             "Movimiento bancario" : "Estado de cuenta";
+
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listCONB, CrReport);
+                    parameters.RemoveAll(j => j.ParameterName.Length > 0);
                     //Parametros del reporte
                     parameters.AddRange(new List<Parameters>
                     {
@@ -361,8 +308,21 @@ namespace SistemaImbrino.Models
                         new Parameters() { ParameterName = "BalanceCorte", ParameterValue =  Listcriterios.Where(x=> x.ParameterName == "Balance").FirstOrDefault().ParameterValue },
                         new Parameters() { ParameterName = "isMovimiento", ParameterValue =  Listcriterios.Where(x=> x.ParameterName == "isMovimiento").FirstOrDefault().ParameterValue },
                     });
-                    CrReport.Load(urlReporte);
-                    CrReport.SetDataSource(_listCONB);
+                    break;
+                case ReportName.CarteraPrestamos:
+                    var carteraPrestamo = Task.Run<View_CarteraPrestamos>(() => { return View_generalClass.getCarteraPrestamos(); }).Result;
+                    List<View_DetalleCuenta> _listCART = carteraPrestamo.Detalle.ToList();
+
+                    urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);
+                    loadReport(tituloReporte, urlReporte, userName, criterios, parameters, _listCART, CrReport);
+                    parameters.Remove(parameters.Where(x => x.ParameterName == "Criterios").FirstOrDefault());
+
+                    //Parametros del reporte
+                    parameters.AddRange(new List<Parameters>
+                    {
+                        new Parameters() { ParameterName = "Capital", ParameterValue = carteraPrestamo.Resumen.Capital },
+                        new Parameters() { ParameterName = "Interes", ParameterValue = carteraPrestamo.Resumen.Interes },
+                    });
                     break;
             }
 
@@ -377,6 +337,34 @@ namespace SistemaImbrino.Models
 
             guardarPDF(CrReport, txt_ReportName, intialPath);
             CrReport.Close();
+        }
+
+        private static void loadReport<T>(string NombreReporte,string urlReporte, string userName, string criterios, List<Parameters> parameters,List<T> data , ReportDocument CrReport, bool hasHeader = true)
+        {
+            //Parametros del reporte
+            parameters.AddRange(new List<Parameters>
+                    {
+                        new Parameters() { ParameterName = "NombreReporte", ParameterValue = NombreReporte },
+                        new Parameters() { ParameterName = "Criterios", ParameterValue = criterios },
+                        new Parameters() { ParameterName = "UserName", ParameterValue = userName }
+                    });
+            CrReport.Load(urlReporte);
+            
+            if (hasHeader)
+            {
+                DB_IMBRINOEntities db = new DB_IMBRINOEntities();
+                var sistema = db.SISTEMA.ToList();
+                for (int i = 0; i < CrReport.Subreports.Count; i++)
+                {
+                    if (CrReport.Subreports[i].Database.Tables.Count > 0)
+                    {
+                        CrReport.Subreports[i].SetDataSource(sistema);
+                    }
+                }                
+            }
+            CrReport.SetDataSource(data);
+
+
         }
 
         private static DateTime? getFechaCorte(string cuenta)
@@ -397,7 +385,6 @@ namespace SistemaImbrino.Models
             ConnectionInfo myConnectionInfo = new ConnectionInfo();
             TableLogOnInfos crtableLogoninfos = new TableLogOnInfos();
             TableLogOnInfo crtableLogoninfo = new TableLogOnInfo();
-            ConnectionInfo crConnectionInfo = new ConnectionInfo();
             Tables CrTables;
             try
             {
@@ -405,7 +392,7 @@ namespace SistemaImbrino.Models
                 try
                 {
                     Password = System.Configuration.ConfigurationManager.AppSettings["Password"].ToString();
-                    UserID = System.Configuration.ConfigurationManager.AppSettings["UserID"].ToString(); ;
+                    UserID = System.Configuration.ConfigurationManager.AppSettings["UserID"].ToString();
                 }
                 catch (Exception)
                 {
@@ -417,10 +404,10 @@ namespace SistemaImbrino.Models
                 myConnectionInfo.Password = Password;
 
                 CrTables = cryRpt.Database.Tables;
-                foreach (CrystalDecisions.CrystalReports.Engine.Table CrTable in CrTables)
+                foreach (Table CrTable in CrTables)
                 {
                     crtableLogoninfo = CrTable.LogOnInfo;
-                    crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                    crtableLogoninfo.ConnectionInfo = myConnectionInfo;
                     CrTable.ApplyLogOnInfo(crtableLogoninfo);
                 }
             }
@@ -446,6 +433,13 @@ namespace SistemaImbrino.Models
             CrReport.ExportToDisk(ExportFormatType.PortableDocFormat, path);
         }
 
+        private static List<T> Criterios<T>(List<Parameters> listcriterios, ref string criterios, ref IQueryable<T> list)
+        {
+            List<T> data = list.ToList();
+            var dataw = data.GetType();
+
+            return data;
+        }
         private static List<VW_rptEstadoCuenta> criteriosEstadoCuenta(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptEstadoCuenta> list)
         {
             double MONTO_FINANCIAR = 0, BALANCE_ACTUAL = 0;
@@ -516,7 +510,6 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out fecha);
                             list = list.Where(x => x.fechadt < fecha);
-                            //list = list.FindAll(e => e.ULTIMO_PAGO < cri.ParameterValue.ToString());
                             CurrentCriterio = string.Format("Fecha corte {0}", cri.ParameterValue);
                             _listCriterio.Add(CurrentCriterio);
                         }
@@ -598,7 +591,7 @@ namespace SistemaImbrino.Models
         private static List<VW_rptRegistroNCF> criteriosRegistroNCF(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptRegistroNCF> list)
         {
             List<string> _listCriterio = new List<string>();
-
+            string fechaFormateada = string.Empty;
             foreach (var cri in listcriterios)
             {
                 switch (cri.ParameterName)
@@ -608,8 +601,10 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out DateTime fechaDesde);
                             list = list.Where(x => x.fechadt >= fechaDesde);
-                            CurrentCriterio = string.Format("Fecha desde {0}", cri.ParameterValue);
+                            fechaFormateada = string.Format("{0}/{1}/{2}", fechaDesde.ToString("dd"), returMonthName(fechaDesde.Month), fechaDesde.ToString("yy"));
+                            CurrentCriterio = $"Fecha desde: {fechaFormateada}";
                             _listCriterio.Add(CurrentCriterio);
+
                         }
                         break;
                     case "fechaHasta":
@@ -617,7 +612,9 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out DateTime fechaHasta);
                             list = list.Where(x => x.fechadt <= fechaHasta);
-                            CurrentCriterio = string.Format("Fecha hasta {0}", cri.ParameterValue);
+                            fechaFormateada = string.Format("{0}/{1}/{2}", fechaHasta.ToString("dd"), returMonthName(fechaHasta.Month), fechaHasta.ToString("yy"));
+                            CurrentCriterio = $"{CurrentCriterio} y {string.Format("Fecha hasta: {0}", fechaFormateada)}";
+                            _listCriterio.RemoveAt(0);
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
@@ -632,9 +629,14 @@ namespace SistemaImbrino.Models
         {
             DateTime fechaDesde, fechaHasta;
             List<string> _listCriterio = new List<string>();
+            string fechaFormateada = string.Empty;
             int idCliente = 0, idFin = 0;
             foreach (var cri in listcriterios)
             {
+                if (string.IsNullOrEmpty(cri.ParameterValue.ToString()))
+                {
+                    continue;
+                }
                 switch (cri.ParameterName)
                 {
                     case "fechaDesde":
@@ -642,7 +644,8 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out fechaDesde);
                             list = list.Where(x => x.fechadt >= fechaDesde);
-                            CurrentCriterio = string.Format("Fecha desde {0}", cri.ParameterValue);
+                            fechaFormateada = string.Format("{0}/{1}/{2}", fechaDesde.ToString("dd"), returMonthName(fechaDesde.Month), fechaDesde.ToString("yy"));
+                            CurrentCriterio = string.Format("Fecha desde: {0}", fechaFormateada);
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
@@ -651,7 +654,9 @@ namespace SistemaImbrino.Models
                         {
                             DateTime.TryParse(cri.ParameterValue.ToString(), out fechaHasta);
                             list = list.Where(x => x.fechadt <= fechaHasta);
-                            CurrentCriterio = string.Format("Fecha hasta {0}", cri.ParameterValue);
+                            fechaFormateada = string.Format("{0}/{1}/{2}", fechaHasta.ToString("dd"), returMonthName(fechaHasta.Month), fechaHasta.ToString("yy"));
+                            CurrentCriterio = $"{CurrentCriterio} y {string.Format("Fecha hasta: {0}", fechaFormateada)}";
+                            _listCriterio.RemoveAt(0);
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
@@ -677,7 +682,11 @@ namespace SistemaImbrino.Models
                     case "OrdenarPor":
                         if (string.IsNullOrWhiteSpace(cri.ParameterValue.ToString()) == false)
                         {
-                            CurrentCriterio = string.Format("Reporte ordenado por {0} ", cri.ParameterValue.ToString());
+                            string textoOrdenadoPor = cri.ParameterValue.ToString().ToLower() == "recibo" ?
+                                                        "número de recibo" :
+                                                        cri.ParameterValue.ToString();
+
+                            CurrentCriterio = string.Format("Reporte ordenado por {0} ", textoOrdenadoPor);
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
@@ -804,7 +813,7 @@ namespace SistemaImbrino.Models
             return list.ToList();
         }
 
-        private static List<vw_CuadreCaja> criteriosCuadreCajas(List<Parameters> listcriterios, ref string criterios, ref IQueryable<vw_CuadreCaja> list)
+        private static void criteriosCuadreCajas(List<Parameters> listcriterios, ref string criterios)
         {
             DateTime fechaDesde, fechaHasta;
             List<string> _listCriterio = new List<string>();
@@ -833,7 +842,6 @@ namespace SistemaImbrino.Models
             }
 
             criterios = string.Join(" al ", _listCriterio.ToArray());
-            return list.ToList();
         }
 
         private static List<VW_rptReciboIngreso> criteriosReciboIngreso(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_rptReciboIngreso> list)
@@ -859,7 +867,7 @@ namespace SistemaImbrino.Models
 
         private static List<VW_ConciliacionBancaria> criteriosConciliacionBancaria(List<Parameters> listcriterios, ref string criterios, ref IQueryable<VW_ConciliacionBancaria> list)
         {
-           
+
             List<string> _listCriterio = new List<string>();
 
             foreach (var cri in listcriterios)
@@ -884,7 +892,7 @@ namespace SistemaImbrino.Models
                             _listCriterio.Add(CurrentCriterio);
                         }
                         break;
-                }                      
+                }
             }
             criterios = string.Join(" al ", _listCriterio.ToArray());
             return list.ToList();
@@ -892,33 +900,10 @@ namespace SistemaImbrino.Models
 
         private static View_CuadreCajaResumen getResumenCuadreCaja()
         {
-            DB_IMBRINOEntities db = new DB_IMBRINOEntities();
-            List<String> ListOtrosIngresosNetos = new List<string>()
-            {
-                "OTROS_EC","OTROS_DT"
-            };
-
-            var resumen = db.vw_CuadreCaja
-               .GroupBy(x => new
-               {
-                   x.ID,
-                   x.Tipo,
-                   x.TextoTipo
-               })
-               .Select(x => new View_CuadreCajaResumen()
-               {
-                   IngresosNoNetos = db.vw_CuadreCaja.Where(z => z.Tipo == "INGRESOS_NN")
-                                   .Sum(z => z.MontoTotal),
-                   OtrosIngresosNetos =
-                           db.vw_CuadreCaja.Where(z => ListOtrosIngresosNetos
-                                       .Contains(z.Tipo))
-                               .Sum(z => z.MontoTotal),
-                   DepositoTranferencia = db.vw_CuadreCaja.Where(z => z.Tipo == "SALIDAS")
-                                   .Sum(z => z.MontoTotal),
-               })
-               .FirstOrDefault();
-            return resumen;
+            View_CuadreCajaGeneral ListCuadreCaja = View_generalClass.GetListCuadreCaja();
+            return ListCuadreCaja.Resumen;
         }
+
         public static FileStreamResult viewReportPDF(string url)
         {
             var fileStream = new FileStream(url,

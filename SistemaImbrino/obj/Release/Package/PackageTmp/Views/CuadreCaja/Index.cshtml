@@ -3,153 +3,231 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Title = "cuadre caja";
 	ViewBag.nameView = "cuadre caja";
+	bool isData = ViewBag.ListCuadreCaja.Resumen != null;
 }
 
 <div class="row">
-	<div class="col-xs-12 col-md-offset-10 col-md-2">
-		<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+	<input type="hidden" id="hdfechaDesde" />
+	<input type="hidden" id="hdfechaHasta" />
+	<div class="pull-right" style="padding-right:18px">
+		@if (isData)
+		{
+			<button id="btn-imprimir" class="btn bg-pink btn-block" data-loading-text="cargando..."><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+		}
 		<br />
 	</div>
-	
-	<div class="col-xs-12 col-md-12 ">
-		<div class="table-responsive">
-			<table id="tbl-cuadreCja" class="table table-condensed borderless">
-				<thead class="btn-defaultColorLite">
-					<tr>
-						<th>CLIENTE</th>
-						<th>RECIBO</th>
-						<th>DESCRIPCION</th>
-						<th class="text-right th-pd-right">DEBITO</th>
-						<th class="text-right th-pd-right">CREDITO</th>
-						<th class="text-right th-pd-right">BALANCE</th>
-					</tr>
-				</thead>
-				<tbody>
-					@if (ViewBag.ListCuadreCaja.Detalle != null)
-					{
-						decimal? balance = 0;
-						bool isCredito = false;
-						decimal? debito = 0;
-						decimal? credito = 0;
+	<div class="pull-left" style="padding-left:18px">
+		<p style="font-size:23px;">Cuadre de Caja del <span id="fechaTexto"></span></p>
+	</div>
 
-						foreach (var vw_cuadreCaja in (ViewBag.ListCuadreCaja.Detalle as IEnumerable<SistemaImbrino.Models.View_CuadreCaja>))
-						{
-							isCredito = vw_cuadreCaja.Tipo == "SALIDAS";
+	<div>
 
-							<tr>
-								<td colspan="6"><b>@vw_cuadreCaja.TipoTexto</b></td>
-							</tr>
-							foreach (var cuadreCaja in vw_cuadreCaja.Detalle)
-							{
-								debito = !isCredito ? cuadreCaja.MontoTotal : 0;
-								credito = isCredito ? cuadreCaja.MontoTotal : 0;
-								balance = (balance + debito) - credito;
-
+		<div class="col-xs-12 col-md-12">
+			@if (ViewBag.ListCuadreCaja.Detalle != null)
+			{
+				if (ViewBag.existeDetalle)
+				{
+					decimal? balance = 0;
+					bool isCredito = false;
+					decimal? debito = 0;
+					decimal? credito = 0;
+					<div class="table-responsive">
+						<table id="tbl-cuadreCja" class="table table-condensed borderless">
+							<thead class="btn-defaultColorLite">
 								<tr>
-									<td class="noPdTop noPdBottom">@cuadreCaja.Cliente</td>
-									<td class="noPdTop noPdBottom">@cuadreCaja.Recibo</td>
-									<td class="noPdTop noPdBottom">@cuadreCaja.Descripcion</td>
-									<td class="text-right th-pd-right noPdTop noPdBottom">
-										@{
-											if (debito > 0)
-											{
-												@String.Format("{0:n}", debito)
-											}
-											else
-											{
-												<label class="noPdTop">-</label>
-											}
-										}
-									</td>
-									<td class="text-right th-pd-right noPdTop noPdBottom">
-										@{
-											if (credito > 0)
-											{
-												@String.Format("{0:n}", credito)
-											}
-											else
-											{
-												<label class="noPdTop noPdBottom">-</label>
-											}
-										}
-									</td>
-									<td class="text-right th-pd-right noPdTop noPdBottom">@String.Format("{0:n}", balance)</td>
+									<th>CLIENTE</th>
+									<th class="text-center th-pd-right">RECIBO</th>
+									<th>CONCEPTO</th>
+									<th class="text-right th-pd-right">DEBITO</th>
+									<th class="text-right th-pd-right">CREDITO</th>
+									<th class="text-right th-pd-right">BALANCE</th>
 								</tr>
+							</thead>
+							<tbody>
 
-							}
-							<tr>
-								<td colspan="3"></td>
-								<td colspan="1" class="text-right th-pd-right"><p class="top-border"> </p><p class="top-border"> </p> <b>@String.Format("{0:n}", vw_cuadreCaja.TotalTipo)</b> </td>
-								<td colspan="2"></td>
-							</tr>
-						}
+								@foreach (var vw_cuadreCaja in (ViewBag.ListCuadreCaja.Detalle as IEnumerable<SistemaImbrino.Models.View_CuadreCaja>))
+								{
+									isCredito = vw_cuadreCaja.Tipo == "SALIDAS";
 
-					}
+									<tr>
+										<td colspan="6"><b style="font-size:16px">@vw_cuadreCaja.TipoTexto</b></td>
+									</tr>
+									foreach (var cuadreCaja in vw_cuadreCaja.Detalle)
+									{
+										debito = !isCredito ? cuadreCaja.MontoTotal : 0;
+										credito = isCredito ? cuadreCaja.MontoTotal : 0;
+										balance = (balance + debito) - credito;
 
-				</tbody>
-			</table>
+										<tr>
+											<td class="noPdTop noPdBottom" width="300" style="padding-left: 15px;">  @cuadreCaja.Cliente</td>
+											<td class="noPdTop noPdBottom text-center">@cuadreCaja.Recibo</td>
+											<td class="noPdTop noPdBottom">@cuadreCaja.Descripcion</td>
+											<td class="text-right th-pd-right noPdTop noPdBottom" width="110">
+												@{
+													if (debito > 0)
+													{
+														@String.Format("{0:n}", debito)
+													}
+													else
+													{
+														<label class="noPdTop">-</label>
+													}
+												}
+											</td>
+											<td class="text-right th-pd-right noPdTop noPdBottom" width="110">
+												@{
+													if (credito > 0)
+													{
+														@String.Format("{0:n}", credito)
+													}
+													else
+													{
+														<label class="noPdTop noPdBottom">-</label>
+													}
+												}
+											</td>
+											<td class="text-right th-pd-right noPdTop noPdBottom" width="110">
+												@String.Format("{0:n}", balance)
+											</td>
+										</tr>
+
+									}
+									int colDebito = vw_cuadreCaja.Tipo == "SALIDAS" ? 4 : 3;
+									<tr>
+										<td colspan="@colDebito"></td>
+										<td colspan="1" class="text-right th-pd-right"><p class="top-border"> </p><p class="top-border"> </p> <b>@String.Format("{0:n}", vw_cuadreCaja.TotalTipo)</b> </td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				}
+				else
+				{
+					<div class="alert btn-defaultColor text-center" style="font-size:26px;">
+						No existen datos registrado para este periodo de tiempo
+
+					</div>
+					<div class="col-sm-7 pull-right">
+						<a class="btn btn-lg bg-pink" href="@Url.Action("Index","Home")">Continuar</a>
+
+					</div>
+				}
+			}
+			@if (isData)
+			{
+				@Html.Partial("_cuadreCajaResumen", (SistemaImbrino.Models.View_CuadreCajaResumen)ViewBag.ListCuadreCaja.Resumen)
+
+			}
+
+		</div>
+		<div id="cartera-prestamos-caja" class="col-xs-12" style="padding-top:50px">
+			@Html.Action("_carteraPrestamo", "CarteraPrestamos");
 		</div>
 	</div>
-		@Html.Partial("_cuadreCajaResumen", (SistemaImbrino.Models.View_CuadreCajaResumen)ViewBag.ListCuadreCaja.Resumen)
+</div>
 
-	</div>
 
 @section scripts {
 	<script type="text/javascript">
 		$(document).ready(function () {
+			getFechasCierre();
 			$("#btn-imprimir").click(function () {
 				valuesFecha(this);
 			});
+			const urlResumen = "@Url.Action("GetCarteraPrestamoResumenAsync", "CarteraPrestamos")";
+			const urlDetalle = "@Url.Action("GetCarteraPrestamoDetalleAsync", "CarteraPrestamos")";
+			getResumenFinanciamiento(urlResumen, urlDetalle);
+		});
+	function getFechasCierre() {
+		const url = "@Url.Action("fechasCierres")";
+		$.ajax({
+		type: "POST",
+		url: url,
+		async: false,
+		data:
+		{
+
+		},
+		dataType: "json",
+		success: function (_data)
+		{
+			$("#hdfechaDesde").val(_data.Item1.FechaDesde);
+			$("#hdfechaHasta").val(_data.Item1.FechaHasta);
+			$("#fechaTexto").text(_data.Item2);
+		}
+		});
+	}
+	async function valuesFecha(currentBtn)
+	{
+		const { value: formValues } = await Swal.fire({
+		title: '<h1>REPORTE CUADRE DE CAJA</h1>',
+		html:
+			'<div class="row"> <div class="col-xs-6 form-group-lg"> '+			
+			'<input type="text" id="fechaDesde" disabled class="form-control swal2-input"> '+	
+			'</div>'+
+			'<div class="col-xs-6 form-group-lg">'+			
+			'<input disabled type="text" id="fechaHasta" class="form-control swal2-input">'+
+			'</div> '+
+		'</div>',
+		focusConfirm: false,
+		preConfirm: () => {
+		return {
+			FechaDesde: document.getElementById('fechaDesde').value,
+			FechaHasta: document.getElementById('fechaHasta').value
+		}
+		},
+		willOpen: () => {
+		const fechaDesde = $("#hdfechaDesde").val();
+		const fechaHasta = $("#hdfechaHasta").val();
+		const fechaDesdePartida = fechaDesde.split("-");
+		const fechaDesdeFormateada = `${fechaDesdePartida[2]}/${monthName(parseInt(fechaDesdePartida[1]) - 1)}/${fechaDesdePartida[0]}`;
+		const fechaHastaPartida = fechaHasta.split("-");
+		const fechaHastaFormateada = `${fechaHastaPartida[2]}/${monthName(parseInt(fechaHastaPartida[1]) - 1)}/${fechaHastaPartida[0]}`;
+
+		$("#fechaDesde").val(fechaDesdeFormateada);
+		$("#fechaHasta").val(fechaHastaFormateada);
+		$(".swal2-confirm").addClass("btn btn-lg");
+		$(".swal2-confirm").removeClass("swal2-confirm");
+		$(".swal2-cancel").addClass("btn btn-lg btn-danger");
+		$(".swal2-cancel").removeClass("swal2-cancel");
+		},
+		width: 600,
+		confirmButtonText: "Generar reporte",
+		confirmButtonColor: "#0293b2",
+		cancelButtonText: 'Cancelar',
+		showCancelButton: true,
 		});
 
-		async function valuesFecha(currentBtn) {
-			const { value: formValues } = await Swal.fire({
-				title: 'Seleciona el rango de fechas',
-				html:
-					'<div class="row"> <div class="col-xs-6">' +
-					'<input type="date" id="fechaDesde" class= "swal2-input"> </div>' +
-					'<div class="col-xs-6"><input type="date" id="fechaHasta"  class="swal2-input"></div></div>',
-				focusConfirm: false,
-				preConfirm: () => {
-					return {
-						FechaDesde: document.getElementById('fechaDesde').value,
-						FechaHasta: document.getElementById('fechaHasta').value
-					}
-				},
-				width: 600,
-				confirmButtonText: "Generar reporte",
-				confirmButtonColor: "#0293b2"
-			});
-
-			if (formValues)
-			{
-				var jsonFechas = JSON.stringify(formValues);
-				ImprimirReporte(jsonFechas, currentBtn);
-			}
-		}
-
-		function ImprimirReporte(jsonFechas, currentBtn)
+		if (formValues)
 		{
-			var url = "@Url.Action("PrintReport")";
-			var $btn = $(currentBtn).button('loading');
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    dataType: "json",
-					data: { json: jsonFechas},
-                    success: function (_data) {
-                        if (_data.Is_Success) {
-                            var url = "@Url.Action("generateReport")";
-                            window.open(url, "_new");
-                        } else {
-							MessageNotification(_data.Message, _data.Is_Success, true);
-                        }
-					},
-					complete: function () {
-						$btn.button('reset');
-					}
-                });
+		var jsonFechas = JSON.stringify(formValues);
+		ImprimirReporte(jsonFechas, currentBtn);
 		}
+	}
+
+	function ImprimirReporte(jsonFechas, currentBtn)
+	{
+	var url = "@Url.Action("PrintReport")";
+	var $btn = $(currentBtn).button('loading');
+
+	$.ajax({
+	type: "POST",
+	url: url,
+	dataType: "json",
+	data: { json: jsonFechas},
+	success: function (_data) {
+	if (_data.Is_Success) {
+	var url = "@Url.Action("generateReport")";
+	window.open(url, "_new");
+	} else {
+	MessageNotification(_data.Message, _data.Is_Success, true);
+	}
+	},
+	complete: function () {
+	$btn.button('reset');
+	}
+	});
+	}
 	</script>
 }

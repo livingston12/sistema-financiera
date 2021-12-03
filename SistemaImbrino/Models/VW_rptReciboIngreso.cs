@@ -26,5 +26,7 @@ namespace SistemaImbrino.Models
         public decimal Monto { get; set; }
         public string FormaPago { get; set; }
         public decimal BalancePendiente { get; set; }
+        public double ING_MONTOT { get; set; }
+        public int ING_NUMFIN { get; set; }
     }
 }

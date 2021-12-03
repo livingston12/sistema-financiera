@@ -1,11 +1,11 @@
 ﻿
 
 $(document).ready(function () {	
+	
 	$(".select").selectMania({
 		width: '100%',
 		size: 'small',
 		search: true
-
 	});
 	$(".dataTable").DataTable();	
 	
@@ -17,17 +17,111 @@ $(document).ready(function () {
 		dateFormat: 'dd-mm-yy',
 		monthNames: nameMonthComplete()
 	});
+
+	$('.datepicker').keyup(function (e) {
+		if (e.keyCode === 8 || e.keyCode === 46) {
+			$(this).val("");
+			$(this).removeAttr("datevalue");
+		}
+	});
+
+	
 });
+
+function getResumenFinanciamiento(urlResumen, urlDetalle) {
+	//var url = "@Url.Action("GetCarteraPrestamoResumenAsync")";
+
+	$.ajax({
+		type: "POST",
+		url: urlResumen,
+		async: true,
+		dataType: "json",
+		success: function (_data) {
+			const capital = _data.Capital;
+			const interes = _data.Interes;
+			$("#capital").text(number_format_js(capital, 2, 0));
+			$("#interes").text(number_format_js(interes, 2, 0));
+		}
+	}).then(
+		getCarteraPrestamos(urlDetalle)
+	);
+}
+function getCarteraPrestamos(url) {
+	{
+		//var url = "@Url.Action("GetCarteraPrestamoDetalleAsync")";
+
+		var table = $("#tbl-cuenta").DataTable({
+			destroy: true,
+			paging: false,
+			info: false,
+			searching: false,
+			ordering: false,
+			ajax: {
+				"url": url,
+				"type": "POST",
+				data: {},
+				dataType: "json",
+				dataSrc: ""
+			},
+			columns: [
+				{
+					"data": "Banco",
+				},
+				{
+					"data": "NumeroCuenta",
+				},
+				{
+					"data": "Monto",
+					render: function (data) {
+						return number_format_js(data, 2, 0);
+					},
+					className: "dt-body-right",
+
+				}
+
+			],
+			lengthChange: false,
+			footerCallback: function (row, data, start, end, display) {
+				var api = this.api();
+
+				// Remove the formatting to get integer data for summation
+				var intVal = function (i) {
+					return typeof i === 'string' ?
+						i.replace(/[\$,]/g, '') * 1 :
+						typeof i === 'number' ?
+							i : 0;
+				};
+
+				// --------------- monto
+				pageTotal = api
+					.column(2, { page: 'current' })
+					.data()
+					.reduce(function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0);
+				// Update footer
+				$(api.column(2).footer()).html(
+					number_format_js(pageTotal, 2, 0)
+				);
+			}
+		});
+		$("th").removeClass("sorting_asc");
+
+	}
+}
+
 // insertar valor fecha
 function ValidarFechas(currentInput,date, datepicker)
 {
-	
 	if (date.length !== 0) {
 		var indexcurrentMonth = Number(datepicker.currentMonth);
 		var currentDay = datepicker.currentDay;
 		var currentYear = datepicker.currentYear;
 		var currentDate = currentDay + "-" + monthName(indexcurrentMonth) + "-" + currentYear;
+		indexcurrentMonth = indexcurrentMonth + 1;
+		var month = indexcurrentMonth < 10 ? '0' + indexcurrentMonth : indexcurrentMonth;
 		$(currentInput).val(currentDate);
+		$(currentInput).attr("dateValue", `${currentYear}-${month}-${currentDay}`);
 		validarTexto(currentInput);
 		
 	}
@@ -145,8 +239,6 @@ function validarNumero(input) {
 	var currentDiv = $("#dv" + currentinput.attr("id"));
 	var currentSpan = $("#span" + currentinput.attr("id"));
 
-
-
 	if (inputLenth === 0) {
 
 		currentDiv.removeClass("has-success");
@@ -168,7 +260,6 @@ function monthName(monthNumber) {
 	var months = new Array('ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'),
 		curMonth = months[monthNumber];
 	return curMonth;
-
 }
 
 // Obtener el numero  del mes
@@ -244,7 +335,6 @@ function MessageNotification(messsage, isSucces, isButton = false, isButtonError
 					
 			}
 		});
-
 	}
 
 	else {
@@ -279,8 +369,13 @@ function doSearch(tableId, searchID) {
         }
         if (found) {
             if (found2 && i % 2 === 0 || isVisible === '0') {
-                tableReg.rows[i].style.display = 'none';
-            } else {
+				tableReg.rows[i].style.display = 'none';
+			}
+			else if (searchText === "" && tableReg.rows[i].id.indexOf("filaH")) {
+				tableReg.rows[i].style.display = 'none';
+				tableReg.rows[i].classList.remove("finded");
+			}
+			else {
 				tableReg.rows[i].style.display = 'table-row';
 				tableReg.rows[i].classList.add("finded");
             }
@@ -338,19 +433,6 @@ function AddItemArray2(_value, array, json) {
 		} else {
 			array.push(json);
 		}
-
-		//array.forEach(function (index, key) {
-		//Obtener Header key
-		//if (index.numCuota === _value) {
-		//	removeItemArray(key, array);
-		//	//array.push(json);
-		//} else {
-		//	array.push(json);
-		//}
-
-
-
-		//});
 
 	}
 	return array;
@@ -444,6 +526,7 @@ function GetBancos(id = 'BANCO', url = "") {
 	});
 }
 
+// Cuentas bancarias
 function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "") {
 	$.ajax({
 		type: "GET",
@@ -460,7 +543,6 @@ function GetCuentasBancarias(id = 'CUENTA_BANCARIA', valor, url = "") {
 }
 
 // Creditos bancarios
-
 async function GetTipoCredito(id = 'TIPO_CREDITO', url = "") {
 	await $.ajax({
 		type: "GET",
@@ -475,6 +557,7 @@ async function GetTipoCredito(id = 'TIPO_CREDITO', url = "") {
 		}
 	});
 }
+
 async function GetTipoSalida(id = 'TIPO_SALIDA', url = "") {
 	$.ajax({
 		type: "GET",
@@ -490,6 +573,7 @@ async function GetTipoSalida(id = 'TIPO_SALIDA', url = "") {
 	});
 }	
 // Debitos bancarios
+
 
 function GetTipoEntrada(id = 'TIPO_SALIDA', url = "")
 {
@@ -521,4 +605,11 @@ function GetTipoDebito(id = 'TIPO_SALIDA', url = "")
 			llenarDropdows(_data, id, "tipo de debito", true, true);
 		}
 	});
+}
+
+function getDateName(date) {
+	var dateParts = date.split("-");
+	var month = Number.parseInt(dateParts[1]);
+	var currentDate = dateParts[2] + "/" + monthName(month-1) + "/" + dateParts[0];
+	return currentDate;
 }

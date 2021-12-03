@@ -1,11 +1,8 @@
-﻿
+﻿@model SistemaImbrino.Models.View_cobrosHeader
 @{
-	ViewBag.Title = "Cobros disponibles";
+	ViewBag.Title = "Financiamientos activos";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 
 <div class="hero-callout">
 
@@ -13,115 +10,140 @@
 	<input type="hidden" id="Fecha_pago" value="" />
 	
 	<div class="row">
+		
 		<div class="col-sm-3" style="float:right;">
-			<div class="input-group input-group-lg ">
+			<div class="input-group input-group col-sm-10 pull-right" style="top:-17px">
 				<span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon1" aria-hidden="true"></span>
 				<input type="search" id="txt_search" value="@ViewBag.valor" style="top:1px" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon1" onkeyup="doSearch('tbl_headerCuotas', 'txt_search');doSearch('tbl_DetalleCuotas', 'txt_search');" />
 			</div>
 		</div>
 	</div>
 
-	<br />
-
-	<table id="tbl_headerCuotas" class="table table-bordered">
-		<thead class="btn-defaultColorLite">
-			<tr>
-				<th></th>
-				<th>CLIENTE</th>
-				<th class="text-center">BALANCE TOTAL</th>
-				<th class="text-center">CAPITAL TOTAL</th>
-				<th class="text-center">INTERES TOTAL</th>
-				<th class="text-center">MORA TOTAL</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var CuotasVen in ViewBag.listCobrosHeader)
-			{
-				string isVisible = CuotasVen.CountT > 1 ? "1" : "0";
-
-				<tr role="row" id="filaH-@CuotasVen.ClienteId" isVisible="1">
-					<td align="center">
-						@if (CuotasVen.CountT > 1)
-						{
-							<span class="glyphicon glyphicon-plus-sign  btn text-success" style="cursor:pointer" clienteId="@CuotasVen.ClienteId"></span>
-						}
-						else
-						{
-							<a class="control-label a"> @CuotasVen.FinID </a>
-						}
-					</td>
-
-
-					<td>@CuotasVen.cliente</td>
-					@*<td class="text-center">@CuotasVen.CountT</td>*@
-					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.montoTotal) </td>@*@String.Format("{0:n}", CuotasVen.montoTotal)*@
-					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.capitalTotal)</td>
-					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.interesTotal)</td>
-					<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
-
+	<div class="table-responsive">
+		<table id="tbl_headerCuotas" class="table table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="text-center">NUMERO</th>
+					<th>CLIENTE</th>
+					<th class="text-center">BALANCE</th>
+					<th class="text-center">CAPITAL</th>
+					<th class="text-center">INTERES</th>
+					<th class="text-center">MORA</th>
 				</tr>
-				if (isVisible == "1")
+			</thead>
+			<tbody>
+				@if (Model.Detalle != null)
 				{
-					<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
-						<td></td>
 
-						<td colspan="5">
-							@*@Html.Partial("_CobrosDetalleCliente", new { cliente = CuotasVen.cliente })*@
-							@Html.Partial("_CobrosDetalleCliente", (SistemaImbrino.Models.View_cobrosHeader)CuotasVen)
-						</td>
-					</tr>
+					foreach (var CuotasVen in Model.Detalle)
+					{
+						string isVisible = CuotasVen.CountT > 1 ? "1" : "0";
+
+						<tr role="row" id="filaH-@CuotasVen.ClienteId" isVisible="1">
+							<td align="center">
+								@if (isVisible == "1")
+								{
+									<span class="glyphicon glyphicon-plus-sign  btn text-success" style="cursor:pointer" clienteId="@CuotasVen.ClienteId"></span>
+								}
+								else
+								{
+									<a class="control-label a"> @CuotasVen.FinID </a>
+								}
+							</td>
+
+
+							<td>@CuotasVen.cliente</td>
+							<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.montoTotal) </td>
+							<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.capitalTotal)</td>
+							<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.interesTotal)</td>
+							<td class="text-center">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(CuotasVen.moraTotal)</td>
+
+						</tr>
+						if (isVisible == "1")
+						{
+							<tr id="fila-@CuotasVen.ClienteId" style="display:none" isVisible="@isVisible">
+								<td></td>
+								<td colspan="5">
+									@Html.Action("DetalleCobro", "CobrosHeader", new { cliente = CuotasVen.cliente })
+								</td>
+							</tr>
+						}
+					}
 				}
 
-			}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 </div>
-		
+@section scripts {
 
-
-	@section scripts {
-
-		<script type="text/javascript">
-			var FinID = "";
-			$(document).ready(function () {
-				if ($("#txt_search").val() != "")
-				{
-					doSearch('tbl_headerCuotas', 'txt_search');
-					doSearch('tbl_DetalleCuotas', 'txt_search');
-				}
-				$("#txt_search").change(function () {
-					
-					
-				});
-				$("#Fecha_pago").val("");
-				$(".a").click(function () {
-					FinID = $(this).text();
-					mensajeCuotas();
-				});			
-
+	<script>
+		$(document).ready(function () {
+			if ($("#txt_search").val() != "") {
+				doSearch('tbl_headerCuotas', 'txt_search');
+				doSearch('tbl_DetalleCuotas', 'txt_search');
+			}
+			$(".pages").click(function ()
+			{		
+				const currentPage = $(this);
+				const page = currentPage.attr("page");
 				
-				 function  mensajeCuotas()
+				$(".pages").each((x, page) => {
+					$(page).removeClass("CurrentPage");
+					var pageNumber = x + 1;
+					$("#li-" + pageNumber).removeClass("active");
+				});
+				currentPage.addClass("CurrentPage");
+				$("#li-" + page).addClass("active");
+				getData(page, 20);
+			});
+
+			$("#pageLimit").change(function () {
+				var limit = $(this).val();
+				console.log(limit);
+			});
+			
+			function getData(page, limit)
+			{
+				var url = "@Url.Action("prueba")";
+
+                $.ajax({
+                    type: "POST",
+					url: url,
+					async: true,
+					data: { page: page, limit: limit},
+					success: function (_data) {
+						$("#body-content").html(_data);
+					}
+                });
+			}
+
+			$("#Fecha_pago").val("");
+			$(".a").click(function () {
+				FinID = $(this).text();
+				mensajeCuotas();
+			});
+
+			 function  mensajeCuotas()
 				{
 					 $("#Fecha_pago").val("");
 					 MensajeFechaCorte().then((result) => {
 						 if (result) {
 							 var Fecha_pago = $("#Fecha_pago").val();
 							 window.location.href = "@Url.Action("index","cobros")" + "?FinID=" + FinID + "&_Fecha_pago=" + Fecha_pago;
-						 } 
-						 
+						 }
+
 
 					 });
 					 $('.swal2-input').attr("type", "date");
-					 
-					 
-					
-				
+					 var date = new Date().toISOString().slice(0, 10);
+					 $('.swal2-input').val(date);
 
 				}
 
 				async function MensajeFechaCorte(_finID) {
 					const { value: fecha } = await Swal.fire({
-						title: 'Fecha pago',
+						title: 'Fecha de pago',
 						input: 'text',
 						inputPlaceholder: 'dd-mm-yy',
 						showCancelButton: true,
@@ -129,57 +151,48 @@
 							if (!fecha || fecha.length < 9) {
 								return 'Debe ingresar una fecha valida'
 							}
+						},
+						willOpen: () => {
+
 						}
 					});
 
-					
+
 					if (fecha) {
 						$("#Fecha_pago").val(fecha);
 						return true;
 					} else {
-						
+
 						return false;
-					} 
-					
-					}
-				
-
-                //$('#tbl_headerCuotas').DataTable();
-                $('#tbl_headerCuotas table').DataTable({
-                    "searching": false,
-                    "lengthChange": false,
-                    "paging": false,
-                    "ordering": true,
-                    "info": false                    
-                });
-               
-             
-				$("#tbl_headerCuotas tbody span").click(function () {
-					var cliente = $(this).attr("clienteId");
-					var fila = $("#fila-" + cliente);
-					var filaH = $("#filaH-" + cliente);
-
-					if (fila.css("display") == "none") {
-						fila.css("display", "table-row");
-						// Se elimina el signo de mas(+) y se pone el de menos(-)
-						$(this).removeClass("glyphicon-plus-sign");
-						$(this).removeClass("text-success");
-						$(this).addClass("glyphicon-minus-sign");
-						$(this).addClass("text-danger");
-						filaH.addClass("warning");
-
-					} else {
-						fila.css("display", "none");
-						// Se elimina el signo de menos(-) y se pone el de mas(+)
-						$(this).removeClass("glyphicon-minus-sign");
-						$(this).removeClass("text-danger");
-						$(this).addClass("glyphicon-plus-sign");
-						$(this).addClass("text-success");
-						filaH.removeClass("warning");
 					}
 
-				});
+				}
+
+			$("#tbl_headerCuotas tbody span").click(function () {
+				const currentInput = $(this);
+				const clienteId = currentInput.attr("clienteid");
+				const fila = $("#fila-" + clienteId);
+
+				if (fila.css("display") == "none") {
+					fila.css("display", "table-row");
+
+					// Se elimina el signo de mas(+) y se pone el de menos(-)
+					currentInput.removeClass("glyphicon-plus-sign");
+					currentInput.removeClass("text-success");
+					currentInput.addClass("glyphicon-minus-sign");
+					currentInput.addClass("text-danger");
+					fila.addClass("warning");
+				} else {
+					fila.css("display", "none");
+
+					// Se elimina el signo de menos(-) y se pone el de mas(+)
+					currentInput.removeClass("glyphicon-minus-sign");
+					currentInput.removeClass("text-danger");
+					currentInput.addClass("glyphicon-plus-sign");
+					currentInput.addClass("text-success");
+					fila.removeClass("warning");
+				}
 			});
-		</script>
-
-	}
+		});
+	</script>
+}

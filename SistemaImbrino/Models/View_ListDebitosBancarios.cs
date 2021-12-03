@@ -12,7 +12,7 @@ namespace SistemaImbrino.Models
         public int ID_BANCO { get; set; }
         public string BANCO
         {
-            get { return BaseController.getBanco(ID_BANCO); }
+            get { return BaseController.getBanco(ID_BANCO).Result; }
         }
         public int ID_CUENTA_BANCARIA { get; set; }
         
@@ -28,7 +28,7 @@ namespace SistemaImbrino.Models
         public int ID_TIPO_DEBITO { get; set; }
         public string TIPO_DEBITO
         {
-            get { return BaseController.getTipoDebito(ID_TIPO_ENTRADA); }
+            get { return BaseController.getTipoDebito(ID_TIPO_DEBITO); }
         }
         public decimal MONTO { get; set; }
         public DateTime? FECHAdt { get; set; }

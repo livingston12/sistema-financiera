@@ -1,0 +1,21 @@
+﻿@model SistemaImbrino.Models.ZONA
+
+
+
+<tr>
+	@{
+		string nombre_completo = Model.ZON_DESCRI;
+	}
+	<td class="">
+		@nombre_completo
+	</td>
+	
+
+
+	<td class="col-lg-1 text-center">
+		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.ZON_CODIGO)" id="Ceditar" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentZona(@Model.ZON_CODIGO,'@nombre_completo')" id="Celiminar" aria-hidden="true"></span>
+
+	</td>
+
+</tr>

@@ -1,0 +1,29 @@
+﻿@model SistemaImbrino.Models.CTABANCO
+
+
+<input type="hidden" id="CTA_CODIGO" name="CTA_CODIGO"/>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="ECTA_BANCO">Banco</label>
+		<div class="form-group" id="dvECTA_BANCO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTA_BANCO"><i class="glyphicon glyphicon-home"></i></label>
+				<select id="ECTA_BANCO" class="form-control select"></select>
+				<span id="spanECTA_BANCO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="ECTA_NUMERO">Cuenta</label>
+		<div class="form-group" id="dvECTA_NUMERO">
+			<div class="input-group">
+				<label class="input-group-addon" for="ECTA_NUMERO"><i class="glyphicon glyphicon-subtitles"></i></label>
+				@Html.EditorFor(model => model.CTA_NUMERO, new { htmlAttributes = new { @class = "form-control texto", @id = "ECTA_NUMERO" } })
+				<span id="spanECTA_NUMERO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+</div>
+

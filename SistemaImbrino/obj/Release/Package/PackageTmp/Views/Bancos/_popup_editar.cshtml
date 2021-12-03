@@ -1,0 +1,74 @@
+﻿@model SistemaImbrino.Models.BANCO
+
+
+<input type="hidden" id="BCO_CODIGO" name="BCO_CODIGO"/>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_NOMBRE">Nombre</label>
+		<div class="form-group" id="dvEBCO_NOMBRE">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_NOMBRE"><i class="glyphicon glyphicon-home"></i></label>
+				@Html.EditorFor(model => model.BCO_NOMBRE, new { htmlAttributes = new { @class = "form-control texto", @id = "EBCO_NOMBRE" } })
+				<span id="spanEBCO_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_ABREVI">Abreviado</label>
+		<div class="form-group" id="dvEBCO_ABREVI">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_ABREVI"><i class="glyphicon glyphicon-eye-open"></i></label>
+				@Html.EditorFor(model => model.BCO_ABREVI, new { htmlAttributes = new { @class = "form-control texto", @id = "EBCO_ABREVI" } })
+				<span id="spanEBCO_ABREVI" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_SUCURS">Sucursal</label>
+		<div class="form-group" id="dvEBCO_SUCURS">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_SUCURS"><i class="glyphicon glyphicon-road"></i></label>
+				@Html.EditorFor(model => model.BCO_SUCURS, new { htmlAttributes = new { @class = "form-control texto", @id = "EBCO_SUCURS" } })
+				<span id="spanEBCO_SUCURS" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_TELEF1">Telefono 1</label>
+		<div class="form-group" id="dvEBCO_TELEF1">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_TELEF1"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF1, new { htmlAttributes = new { @class = "form-control texto telefono", @id = "EBCO_TELEF1" } })
+				<span id="spanEBCO_TELEF1" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_TELEF2">Telefono 2</label>
+		<div class="form-group" id="dvEBCO_TELEF2">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_TELEF2"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF2, new { htmlAttributes = new { @class = "form-control texto telefono", @id = "EBCO_TELEF2" } })
+				<span id="spanEBCO_TELEF2" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EBCO_TELEF3">Telefono 3</label>
+		<div class="form-group" id="dvEBCO_TELEF3">
+			<div class="input-group">
+				<label class="input-group-addon" for="EBCO_TELEF3"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.BCO_TELEF3, new { htmlAttributes = new { @class = "form-control texto telefono", @id = "EBCO_TELEF3" } })
+				<span id="spanEBCO_TELEF3" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+

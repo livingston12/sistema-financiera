@@ -2,7 +2,7 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = "Maestro fiadores";
+	ViewBag.Title = "Fiadores";
 	ViewBag.nameView = "Fiador";
 }
 
@@ -13,13 +13,13 @@
 
 
 	<div class="col-xs-12 col-sm-6 col-lg-4 ">
-		<label class="control-label" for="CTE_NOMBRE">Nombre</label>
-		<div class="form-group" id="dvCTE_NOMBRE">
+		<label class="control-label" for="FIA_NOMBRE">Nombre</label>
+		<div class="form-group" id="dvFIA_NOMBRE">
 			<div class="input-group">
 				<label class="input-group-addon" for="FIA_NOMBRE"><i class="glyphicon glyphicon-user"></i></label>
 				@*<input type="text" class="form-control widtTotal" placeholder="Cliente" id="cliente">*@
-				@Html.EditorFor(model => model.FIA_NOMBRE, new { htmlAttributes = new { @class = "form-control texto" } })
-				<span id="spanCTE_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+				@Html.EditorFor(model => model.FIA_NOMBRE, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanFIA_NOMBRE" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
 	</div>
@@ -31,7 +31,7 @@
 		<div class="form-group" id="dvFIA_CEDULA">
 			<div class="input-group">
 				<label class="input-group-addon" for="FIA_CEDULA"><i class="glyphicon glyphicon-credit-card"></i></label>
-				@Html.EditorFor(model => model.FIA_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula" } })
+				@Html.EditorFor(model => model.FIA_CEDULA, new { htmlAttributes = new { @class = "form-control texto cedula widtTotal" } })
 				<span id="spanFIA_CEDULA" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 		<div class="form-group" id="dvFIA_TELEFO">
 			<div class="input-group">
 				<label class="input-group-addon" for="FIA_TELEFO"><i class="glyphicon glyphicon-phone"></i></label>
-				@Html.EditorFor(model => model.FIA_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono" } })
+				@Html.EditorFor(model => model.FIA_TELEFO, new { htmlAttributes = new { @class = "form-control texto telefono widtTotal" } })
 				<span id="spanFIA_TELEFO" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 			<div class="input-group">
 				<label class="input-group-addon" for="FIA_DIRECC"><i class="glyphicon glyphicon-bed"></i></label>
 				@*@Html.TextAreaFor(model => model.FIA_DIRECC, new { htmlAttributes = new { @class = "form-control", @rows = 2 } })*@
-				<textarea id="FIA_DIRECC" name="FIA_DIRECC" rows="2" class="form-control" > </textarea>
+				<textarea id="FIA_DIRECC" name="FIA_DIRECC" rows="2" class="form-control widtTotal" > </textarea>
 				<span id="spanFIA_DIRECC" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 
 
 <div class="row">
-	<div class="col-xs-12 col-md-3">
+	<div class="col-xs-12 col-md-2">
 		<input type="submit" value="Crear" id="btn_crearFiador" class="btn btn-success btn-block" />
 	</div>
 
@@ -77,10 +77,10 @@
 		<table id="tbl-fiador" class="table table-condensed table-hover table-bordered">
 			<thead class="btn-defaultColorLite">
 				<tr>
-					<th>NOMBRE COMPLETO</th>
-					<th>CEDULA</th>
-					<th>TELEFONO</th>
-					<th>DIRECCION</th>
+					<th class="th-pd-no-left">NOMBRE</th>
+					<th class="th-pd-no-left">CEDULA</th>
+					<th class="th-pd-no-left">TELEFONO</th>
+					<th class="th-pd-no-left">DIRECCION</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -115,7 +115,7 @@
 				@Html.Partial("_popup_editar")
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success pull-left" id="btn_EditarFiador">Actualizar</button>
+				<button type="button" data-loading-text="Cargando..." class="btn btn-success pull-left" id="btn_EditarFiador">Actualizar</button>
 				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
 
 			</div>
@@ -136,10 +136,10 @@
 
 			$("#btn_crearFiador").click(function (e)
 			{
-				insertarEditarFiador("I");
+				insertarEditarFiador("I", this);
 			});
 			$("#btn_EditarFiador").click(function (e) {
-				insertarEditarFiador("U");
+				insertarEditarFiador("U", this);
 			});
 
 			$(".btn-cancelarPop").click(function (e) {
@@ -147,9 +147,10 @@
 			});
 		});
 
-		function insertarEditarFiador(typeAction)
+		function insertarEditarFiador(typeAction, currentBtn)
 		{
 			url = typeAction == "I" ? "@Url.Action("CrearFiador")" : "@Url.Action("ActualizarFiador")";
+			var $btn = $(currentBtn).button('loading');
 
 			var _CTE_CODIGO = typeAction == "I" ? "0" : $("#FIA_CODIGO").val().trim();
 
@@ -172,12 +173,14 @@
 				)
 				{
 					MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+					$btn.button('reset');
 					return;
 				}
 
 			if (_FIA_CEDULA.length != 11 && typeAction == "I")
 				{
 					MessageNotification("El formato de la cedula es incorrecto", false);
+					$btn.button('reset');
 					return;
 				}
 				//var url = "@Url.Action("CrearFiador")";
@@ -198,6 +201,9 @@
 				{
 					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
 
+				},
+				complete: function () {
+					$btn.button('reset');
 				}
 			});
 
@@ -213,7 +219,7 @@
 			swal.fire({
 				position: 'center',
 				icon: "warning",
-				title: "Seguro que desea eliminar el cliente " + nombre + " ?" ,
+				title: "Seguro que desea eliminar el fiador " + nombre + " ?" ,
 				showCancelButton: true,
 				confirmButtonColor: '#f0ad4e',
 				confirmButtonText: 'SI'

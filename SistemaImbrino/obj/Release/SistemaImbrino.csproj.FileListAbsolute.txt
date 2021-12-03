@@ -196,3 +196,9 @@ E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Re
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Release\SistemaImbrino.csproj.CopyComplete
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Release\SistemaImbrino.dll
 E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\obj\Release\SistemaImbrino.pdb
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CarteraPrestamos.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ConciliacionBancaria.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CarteraPrestamos.cs
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\ConciliacionBancaria.cs
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CuotasVencidas - Copy.rpt
+E:\Proyectos de trabajo\Sistema imbrino\sistema-financiera\SistemaImbrino\bin\Reportes\CuotasVencidas - Copy.cs

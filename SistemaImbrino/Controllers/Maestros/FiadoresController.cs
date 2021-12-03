@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers.Maestros
 {
+    [Authorize(Roles = "fiadores,admin")]
     public class FiadoresController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();

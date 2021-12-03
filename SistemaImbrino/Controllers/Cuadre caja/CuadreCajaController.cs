@@ -1,23 +1,27 @@
-﻿using SistemaImbrino.Models;
+﻿using SistemaImbrino.App_Start;
+using SistemaImbrino.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using static SistemaImbrino.Models.Parameters;
 
 namespace SistemaImbrino.Controllers.Cuadre_Caja
 {
+    [Authorize(Roles = "cuadrecaja,admin")]
     public class cuadreCajaController : BaseController
     {
-       private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
 
         // GET: CierreCaja
         public ActionResult Index()
         {
-            DateTime Fecha = DateTime.Now.AddDays(-10);
-            ViewBag.ListCuadreCaja = GetListCuadreCaja(Fecha);
+            var data = View_generalClass.GetListCuadreCaja();
+            ViewBag.ListCuadreCaja = data;
+            ViewBag.existeDetalle = data.ExisteDetalle;
             return View();
         }
+
         public ActionResult _cuadreCajaResumen()
         {
             return PartialView();
@@ -87,6 +91,23 @@ namespace SistemaImbrino.Controllers.Cuadre_Caja
             }
         }
 
+        public async Task<ActionResult> fechasCierres()
+        {
+            (View_fechas data, string textoFecha) result;
+            result.data = new View_fechas() {
+                FechaDesde = DateTime.Now.Date.ToString("yyyy-MM-dd"),
+                FechaHasta = DateTime.Now.Date.ToString("yyyy-MM-dd")
+            };
+            try
+            {
+                result.data = await fechasCierreCaja();
+            }
+            catch
+            {
 
+            }
+            result.textoFecha = $"{returnDate(result.data.FechaDesdeDt.Value)} al {returnDate(result.data.FechaHastaDt)}";
+          return Json(result);
+        }
     }
 }

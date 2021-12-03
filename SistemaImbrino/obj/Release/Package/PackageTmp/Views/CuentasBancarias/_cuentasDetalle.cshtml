@@ -1,0 +1,36 @@
+﻿@model SistemaImbrino.Models.CTABANCO
+
+@{ 
+	int banco = 0;
+	int.TryParse(Model.CTA_BANCO, out banco);
+}
+
+<tr>
+	@{
+		string nombre_completo = Model.CTA_NUMERO;
+	}
+	<td class="">
+		@SistemaImbrino.Controllers.BaseController.getBanco(banco).Result
+	</td>
+	<td class="">
+		@nombre_completo
+	</td>
+	<td class="">
+		@Model.CTA_BALCOR
+	</td>
+	<td class="">
+		@Model.CTA_BALFEC
+	</td>
+	<td class="">
+		@Model.CTA_FECCOR
+	</td>
+
+
+
+	<td class="col-lg-1 text-center">
+		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.CTA_CODIGO)" id="Ceditar" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentCuenta(@Model.CTA_CODIGO,'@nombre_completo')" id="Celiminar" aria-hidden="true"></span>
+
+	</td>
+
+</tr>

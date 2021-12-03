@@ -4,12 +4,31 @@
 	decimal monto = 0;
 
 	decimal Mora = 0;
+	string tipoPago = "Mora a pagar";
+
+	if (ViewBag.tipoCobro == "Abono cargo adicional")
+	{
+		tipoPago = "Monto a abonar";
+	}
+
+	if (ViewBag.tipoCobro == "Abono a cuota")
+	{
+		tipoPago = "Monto cuota";
+
+	}
+
+	if (ViewBag.tipoCobro == "Registrar mora como cargo")
+	{
+		tipoPago = "Mora a registrar";
+
+	}
+
 
 	if (ViewBag.tipoCobro == "Pago"
-			|| ViewBag.tipoCobro == "Saldo cuota"
-			|| ViewBag.tipoCobro == "Saldo incluye pago de mora"
-			|| ViewBag.tipoCobro == "Registrar mora como cargo"
-		)
+|| ViewBag.tipoCobro == "Saldo cuota"
+|| ViewBag.tipoCobro == "Saldo incluye pago de mora"
+|| ViewBag.tipoCobro == "Registrar mora como cargo"
+)
 	{
 		monto = Model.MONTO;
 
@@ -46,14 +65,14 @@
 
 
 <div class="row">
-	<div class="col-md-4 text-left ">
-		<label id="lblMonto">Monto</label>
-		<input type="text" max="@Model.MONTO" value="@monto" class="form-control" id="modal_monto">
+	<div class="col-md-4 text-center">
+		<label id="lblMonto">Monto cuota</label>
+		<input type="text" max="@Model.MONTO" value="@monto" class="form-control number numberDecimal" id="modal_monto">
 	</div>
 
 	<div class="col-md-4 text-center ">
-		<label>Mora</label>
-		<input type="text" max="@Model.mora" value="@Mora" class="form-control" id="modal_mora">
+		<label>@tipoPago</label>
+		<input type="text" max="@Model.mora" value="@Mora" class="form-control number numberDecimal" id="modal_mora">
 
 	</div>
 </div>

@@ -1,10 +1,12 @@
 ﻿using SistemaImbrino.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace SistemaImbrino.Controllers.Maestros
 {
+    [Authorize(Roles = "clientes,admin")]
     public class ClientesController : BaseController
     {
         private DB_IMBRINOEntities _db = new DB_IMBRINOEntities();
@@ -77,6 +79,7 @@ namespace SistemaImbrino.Controllers.Maestros
                 Listcliente.CTE_TIPO = cliente.CTE_TIPO;
                 Listcliente.CTE_TELEFO = cliente.CTE_TELEFO;
                 Listcliente.CTE_CEDULA = cliente.CTE_CEDULA;
+                Listcliente.CTE_TELEFO2 = cliente.CTE_TELEFO2;
 
                 _db.Entry(Listcliente).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
@@ -159,6 +162,7 @@ namespace SistemaImbrino.Controllers.Maestros
                                                 CTE_DIRECC = x.CTE_DIRECC.Trim(),
                                                 x.CTE_CEDULA,
                                                 x.CTE_TELEFO,
+                                                x.CTE_TELEFO2,
                                                 x.CTE_ZONA,
                                                 x.CTE_TIPO
                                             })
