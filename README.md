@@ -80,8 +80,8 @@ Modules from project:
   - loan portfolio
 
 ### Built With
-<a href="https://github.com/livingston12"> livingston12 </a> 
-
+* `ASP.NET MVC` 
+* `SQL SERVER`
 
 <!-- GETTING STARTED -->
 ## Getting Started
