@@ -1,5 +1,5 @@
 <!--
-repo name: Proyecto-Cierre-API
+repo name: sistema-financiera
 description: An awesome App to finacial system
 github name:  livingston12
 link: https://github.com/livingston12/sistema-financiera
@@ -15,7 +15,7 @@ email: livingstonreynoso@gmail.com
 <br />
 <p align="center">
     
-<h3 align="center"><a href="https://github.com/livingston12/sistema-financiera">sistema-financiera</a></h3>
+<h3 align="center"><a href="https://github.com/livingston12/sistema-financiera">Sistema Financiera</a></h3>
     <p align="center">
         An awesome App to finacial system      
     </p>
