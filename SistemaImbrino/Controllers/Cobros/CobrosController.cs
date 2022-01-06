@@ -40,7 +40,7 @@ namespace SistemaImbrino.Controllers
         }
 
         // GET: Cobros
-        public async Task<ActionResult> Index(string FinID = "", string _Fecha_pago = null)
+        public ActionResult Index(string FinID = "", string _Fecha_pago = null)
         {
             _db = new DB_IMBRINOEntities();
             ReturnFechapago(_Fecha_pago);
@@ -50,11 +50,11 @@ namespace SistemaImbrino.Controllers
             string strOtro = "otros";
             
             int.TryParse(FinID, out FinIDint);
-            await getTotalCuotas(FinIDint);
+            getTotalCuotas(FinIDint);
 
-            VW_rptFinAtrasados listAtrasados = await _db.VW_rptFinAtrasados
+            VW_rptFinAtrasados listAtrasados = _db.VW_rptFinAtrasados
                                                         .Where(x => x.C__FIN == FinIDint)
-                                                        .FirstOrDefaultAsync();
+                                                        .FirstOrDefault();
             if (FinID == "" || listAtrasados == null)
                 return RedirectToAction("Index", "CobrosHeader");
             ViewBag.ListAtrasados = listAtrasados;
@@ -68,11 +68,11 @@ namespace SistemaImbrino.Controllers
             return View();
         }
 
-        public async Task<int?> getTotalCuotas(int numFin)
+        public int? getTotalCuotas(int numFin)
         {
             string fecha_pagado = string.Empty;
-            ViewBag.CUOTA_PENDIENTE = await _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin && x.CUO_FECHAP == fecha_pagado).CountAsync();
-            ViewBag.CUOTA_TOTAL = await _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin).CountAsync();
+            ViewBag.CUOTA_PENDIENTE = _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin && x.CUO_FECHAP == fecha_pagado).Count();
+            ViewBag.CUOTA_TOTAL = _db.CUOTA.Where(x => x.CUO_NUMFAC == numFin).Count();
             return null;
         }
 
@@ -614,7 +614,7 @@ namespace SistemaImbrino.Controllers
             return result;
         }
 
-        public async Task<JsonResult> cobroTotal(string _numFin, decimal descuentoInte, decimal descuentoMora, string tipoPago, string _Fecha_pago = null)
+        public JsonResult cobroTotal(string _numFin, decimal descuentoInte, decimal descuentoMora, string tipoPago, string _Fecha_pago = null)
         {
             message Messajson = new message();
             ReturnFechapago(_Fecha_pago);
