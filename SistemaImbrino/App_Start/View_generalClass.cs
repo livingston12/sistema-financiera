@@ -264,22 +264,22 @@ namespace SistemaImbrino.App_Start
                     CuotasTotales.AddRange(detalleByTipo.CUOTAS_EC.ToList());
                 }
 
-                if (detalleByTipo.CUOTAS_DT != null)
+                if (detalleByTipo.CUOTAS_DT.Any())
                 {
                     CuotasTotales.AddRange(detalleByTipo.CUOTAS_DT.ToList());
                 }
 
-                if (detalleByTipo.OTROS_EC != null)
+                if (detalleByTipo.OTROS_EC.Any())
                 {
                     CuotasTotales.AddRange(detalleByTipo.OTROS_EC.ToList());
                 }
 
-                if (detalleByTipo.OTROS_DT != null)
+                if (detalleByTipo.OTROS_DT.Any())
                 {
                     CuotasTotales.AddRange(detalleByTipo.OTROS_DT.ToList());
                 }
 
-                if (detalleByTipo.SALIDAS != null)
+                if (detalleByTipo.SALIDAS.Any())
                 {
                     CuotasTotales.AddRange(detalleByTipo.SALIDAS.ToList());
                 }

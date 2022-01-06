@@ -156,7 +156,7 @@ namespace SistemaImbrino.Models
 
                 case ReportName.IngresoCuotas:
                     tituloReporte = "Ingresos";
-                    IQueryable<VW_rptRegistroNCF> _iqIC = db.VW_rptRegistroNCF.Where(x => x.ING_MONTOT > 0);
+                    IQueryable<VW_rptRegistroNCF> _iqIC = db.VW_rptRegistroNCF;
                     List<VW_rptRegistroNCF> _listIC = new List<VW_rptRegistroNCF>();
 
                     urlReporte = string.Format("{0}\\{1}.rpt", urlReporte, txt_ReportName);

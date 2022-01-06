@@ -6,12 +6,14 @@
 	<title>@ViewBag.Title</title>
 	@Styles.Render("~/Content/css")
 	@Scripts.Render("~/bundles/modernizr")
-
+	@{
+		string claseHome = ViewBag.isHome != null ? "home" : "";
+	}
 </head>
-<body>
+<body >
 
 
-	<div class="navbar  navbar-fixed-top" id="menu">
+	<div class=" navbar  navbar-fixed-top" id="menu">
 		<div class="container-fluid">
 
 			<div class="navbar-header ">
@@ -27,7 +29,7 @@
 		</div>
 	</div>
 
-	<div class="container-fluid body-content" id="body-content">
+	<div class="container-fluid body-content @claseHome img-responsive" id="body-content">
 		<div class="bs-border  bs-border-top-info " style="padding-top:0px;">
 			@if (@ViewBag.Title != null)
 			{

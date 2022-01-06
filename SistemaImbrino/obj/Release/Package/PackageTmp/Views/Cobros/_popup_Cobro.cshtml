@@ -25,7 +25,6 @@
 
 
 	if (ViewBag.tipoCobro == "Pago"
-|| ViewBag.tipoCobro == "Saldo cuota"
 || ViewBag.tipoCobro == "Saldo incluye pago de mora"
 || ViewBag.tipoCobro == "Registrar mora como cargo"
 )
@@ -34,7 +33,9 @@
 
 		Mora = Model.mora;
 	}
-	else if (ViewBag.tipoCobro == "Saldo NO pago de la mora" || ViewBag.tipoCobro == "Abono NO pago de la mora")
+	else if (ViewBag.tipoCobro == "Saldo NO pago de la mora" ||
+			ViewBag.tipoCobro == "Abono NO pago de la mora" ||
+			ViewBag.tipoCobro == "Saldo cuota")
 	{
 		monto = Model.MONTO;
 

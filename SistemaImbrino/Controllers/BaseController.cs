@@ -101,7 +101,7 @@ namespace SistemaImbrino.Controllers
         }
 
 
-        public static Task<TipoCobro> ReturnTipoCobro(string tipo_Cobro)
+        public static TipoCobro ReturnTipoCobro(string tipo_Cobro)
         {
             TipoCobro returnTipo_cobro = TipoCobro.Pago;
             switch (tipo_Cobro)
@@ -122,7 +122,7 @@ namespace SistemaImbrino.Controllers
                     break;
             }
 
-            return Task.Run(() => returnTipo_cobro);
+            return returnTipo_cobro;
         }
 
         public static Task<View_cobrosHeader> CobrosHeader(string cliente = "", bool is_Procedure = false)
@@ -450,9 +450,9 @@ namespace SistemaImbrino.Controllers
             return month + 1;
         }
 
-        public async static Task<string> getTipoIngresoAsync(string ingresoId)
+        public static string getTipoIngresoAsync(string ingresoId)
         {
-            var ingresos = await db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToListAsync();
+            var ingresos = db.CARGO.Where(x => x.CAR_CODIGO == ingresoId).ToList();
             string ingreso = ingresos.Any() ? ingresos.FirstOrDefault().CAR_DESCRI : string.Empty;
             return ingreso.Trim();
         }

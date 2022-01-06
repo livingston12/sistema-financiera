@@ -38,9 +38,32 @@ namespace SistemaImbrino.Controllers
             {
                 View_ListFincaciamientos ListFinanciamiento = new View_ListFincaciamientos();
                 ListFinanciamiento = JsonConvert.DeserializeObject<View_ListFincaciamientos>(json);
-                OTROSCR otroCR = new OTROSCR();
-                otroCR = JsonConvert.DeserializeObject<OTROSCR>(jsonCheque);
-
+                
+                var viewOtroCR = JsonConvert.DeserializeObject<ViewOtrosCR>(jsonCheque);
+                var sptFecha = viewOtroCR.FECHA.Split('-');
+                string dia = sptFecha[0];
+                string mes = sptFecha[1];
+                string year = sptFecha[2];
+                DateTime currentFecha = DateTime.Parse($"{returMonthNumber(mes)}/{dia}/{year}");
+                
+                OTROSCR otroCR = new OTROSCR()
+                {
+                    BANCO = viewOtroCR.BANCO,
+                    BENEFICIARIO = viewOtroCR.BENEFICIARIO,
+                    CERRADO = viewOtroCR.CERRADO,
+                    CLIENTE = viewOtroCR.CLIENTE,
+                    CONCEPTO = viewOtroCR.CONCEPTO,
+                    CUENTA_BANCARIA = viewOtroCR.CUENTA_BANCARIA,
+                    MONTO = viewOtroCR.MONTO,
+                    NUMERO_CHEQUE = viewOtroCR.NUMERO_CHEQUE,
+                    TIPO_CREDITO = viewOtroCR.TIPO_CREDITO,
+                    TIPO_SALIDA = viewOtroCR.TIPO_SALIDA,
+                    VALIDADO = viewOtroCR.VALIDADO,
+                    ID = viewOtroCR.ID,
+                    FECHA = currentFecha,
+                    Activo = viewOtroCR.Activo
+                };
+                
                 foreach (var item in ListFinanciamiento.ListFinanciamientos)
                 {
                     item.Cliente = clienteID;
@@ -67,7 +90,7 @@ namespace SistemaImbrino.Controllers
 
                 ResultMessage = GuardarPrestamo(ListFinanciamiento, fecha, otroCR);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ResultMessage.Is_Success = false;
                 ResultMessage.Message = "Error inesperado: No se puede convertir el objeto";

@@ -1,6 +1,5 @@
 ﻿body {
 	padding-top: 0px;
-	padding-bottom: 20px;
 }
 
 a {
@@ -244,6 +243,12 @@ th.sorting_asc::after, th.sorting_desc::after, .sorting::after {
 	-ms-transform: scale(2);
 	-webkit-transform: scale(2);
 	padding: 10px;
+}
+.home {
+	background: url(img/logo.jpg);
+	background-repeat: no-repeat;
+	background-color: #daf1ff;
+	height: 100% !important;
 }
 
 @media (max-width: 420px) {

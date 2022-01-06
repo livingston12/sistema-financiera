@@ -307,6 +307,7 @@
     <Compile Include="Models\VENDEDOR.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewOtrosCR.cs" />
     <Compile Include="Models\View_CarteraPrestamos.cs" />
     <Compile Include="Models\View_cierreConciliacion.cs" />
     <Compile Include="Models\View_CuadreCaja.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="Models\View_ListDebitosBancarios.cs" />
     <Compile Include="Models\View_ListFincaciamientos.cs" />
     <Compile Include="Models\View_fincaciamientos.cs" />
+    <Compile Include="Models\View_OtrosDB.cs" />
     <Compile Include="Models\View_Recibos_User.cs" />
     <Compile Include="Models\View_ResultValue.cs" />
     <Compile Include="Models\VW_ConciliacionBancaria.cs">
