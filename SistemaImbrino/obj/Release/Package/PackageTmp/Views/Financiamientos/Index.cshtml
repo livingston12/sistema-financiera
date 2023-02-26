@@ -358,7 +358,7 @@
 					$("#MONTO").val($("#Monto").val());
 					$("#TIPO_SALIDA").val(1);
 					updateSelectMania("TIPO_SALIDA");
-					
+
 				}
 			});
 
@@ -384,73 +384,83 @@
 
 	function insertarCargo()
 	{
-		var _BANCO = $("#BANCO").val().trim();
-		var _CUENTA_BANCARIA = $("#CUENTA_BANCARIA").val();
-		var _NUMERO_CHEQUE = $("#NUMERO_CHEQUE").val().trim();
-		var _TIPO_CREDITO = $("#TIPO_CREDITO").val();
-		var _TIPO_SALIDA = $("#TIPO_SALIDA").val();
-		var _MONTO = $("#MONTO").val().replace(",","").trim();
-		var _FECHA = $("#FECHA").val().trim();
-		var _BENEFICIARIO = $("#BENEFICIARIO").val().trim();
-		var _CONCEPTO = $("#CONCEPTO").val().trim();
+		return new Promise((resolve,reject) => {
+			var _BANCO = $("#BANCO").val().trim();
+			var _CUENTA_BANCARIA = $("#CUENTA_BANCARIA").val();
+			var _NUMERO_CHEQUE = $("#NUMERO_CHEQUE").val().trim();
+			var _TIPO_CREDITO = $("#TIPO_CREDITO").val();
+			var _TIPO_SALIDA = $("#TIPO_SALIDA").val();
+			var _MONTO = $("#MONTO").val().replace(",", "").trim();
+			var _FECHA = $("#FECHA").val().trim();
+			var _BENEFICIARIO = $("#BENEFICIARIO").val().trim();
+			var _CONCEPTO = $("#CONCEPTO").val().trim();
 
-		if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
-			_TIPO_CREDITO == "0" || _TIPO_SALIDA == "0" ||
-			_MONTO == "" || _MONTO == "0" ||
-			_FECHA == ""  || _CONCEPTO == ""
-			)
-		{
-			MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
-			return;
-		}
-		OtrosCargos = [];
-		OtrosCargos =
-		{
-			BANCO: _BANCO
-			, CUENTA_BANCARIA: _CUENTA_BANCARIA
-			, NUMERO_CHEQUE: _NUMERO_CHEQUE
-			, TIPO_CREDITO: _TIPO_CREDITO
-			, TIPO_SALIDA: _TIPO_SALIDA
-			, MONTO: _MONTO
-			, FECHA: _FECHA
-			, BENEFICIARIO: _BENEFICIARIO
-			, CONCEPTO: _CONCEPTO
-		}
+			if (_BANCO == "0" || _CUENTA_BANCARIA == "0" ||
+				_TIPO_CREDITO == "0" || _TIPO_SALIDA == "0" ||
+				_MONTO == "" || _MONTO == "0" ||
+				_FECHA == "" || _CONCEPTO == ""
+			) {
+				//MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+				reject();
+			}
+			else {
+				OtrosCargos = [];
+				OtrosCargos =
+					{
+						BANCO: _BANCO
+						, CUENTA_BANCARIA: _CUENTA_BANCARIA
+						, NUMERO_CHEQUE: _NUMERO_CHEQUE
+						, TIPO_CREDITO: _TIPO_CREDITO
+						, TIPO_SALIDA: _TIPO_SALIDA
+						, MONTO: _MONTO
+						, FECHA: _FECHA
+						, BENEFICIARIO: _BENEFICIARIO
+						, CONCEPTO: _CONCEPTO
+					}
+				resolve();
+			}
+		});
+
+
 	}
 
 	function ActivarPrestamo(currentBtn)
 	{
-		insertarCargo();
-		var $btn = $(currentBtn).button('loading');
-		var currentinput = $("#Fecha").val().split("-");
-		var currentDay = currentinput[0];
-		var currentMonth = monthNumber(currentinput[1]);
-		var currentYear = currentinput[2];
-		var currentDate = new Date(currentYear, currentMonth - 1, currentDay);
-		var cliente = $("#cliente").val();
-		var fiador = $("#Fiador").val();
-		var promotor = $("#Promotor").val();
+		insertarCargo().then(() => {
+			var $btn = $(currentBtn).button('loading');
+			var currentinput = $("#Fecha").val().split("-");
+			var currentDay = currentinput[0];
+			var currentMonth = monthNumber(currentinput[1]);
+			var currentYear = currentinput[2];
+			var currentDate = new Date(currentYear, currentMonth - 1, currentDay);
+			var cliente = $("#cliente").val();
+			var fiador = $("#Fiador").val();
+			var promotor = $("#Promotor").val();
 
-		var url = "@Url.Action("activarPrestamo", "Financiamientos")";
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: {
-				json: JSON.stringify({ ListFinanciamientos: ListDataFinan })
-				, jsonCheque: JSON.stringify(OtrosCargos)
-				, fecha: currentDate.toISOString()
-				, clienteID: cliente
-				, fiadorID: fiador
-				, promotorID: promotor
-			},
-			dataType: "json",
-			success: function (_data) {
-				MessageNotification(_data.Message, _data.Is_Success, _data.Is_Success);
-			},
-			complete: function () {
-				$btn.button('reset');
-			}
-		});
+			var url = "@Url.Action("activarPrestamo", "Financiamientos")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					json: JSON.stringify({ ListFinanciamientos: ListDataFinan })
+					, jsonCheque: JSON.stringify(OtrosCargos)
+					, fecha: currentDate.toISOString()
+					, clienteID: cliente
+					, fiadorID: fiador
+					, promotorID: promotor
+				},
+				dataType: "json",
+				success: function (_data) {
+					MessageNotification(_data.Message, _data.Is_Success, _data.Is_Success);
+				},
+				complete: function () {
+					$btn.button('reset');
+				}
+			});
+		}).catch(() => {
+			MessageNotification("Todos los campos son obligatorios favor rellenar todos los campos", false);
+			});
+		
 	}
 
 		function generarAmortizacion(isCuotaAdicional = false)

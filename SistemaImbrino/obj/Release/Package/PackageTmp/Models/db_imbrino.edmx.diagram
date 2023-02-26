@@ -13,13 +13,8 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOFIN" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.FIADOR" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VENDEDOR" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="DB_IMBRINOModel.FACTURA" Width="1.5" PointX="10" PointY="13.125" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.FINANCY" Width="1.5" PointX="14.625" PointY="7.375" />
         <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_CLIENTE" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_FACTURA" />
         <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_FIADOR" />
         <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.CARTERA" Width="1.5" PointX="12.375" PointY="13.75" />
@@ -52,20 +47,25 @@
         <EntityTypeShape EntityType="DB_IMBRINOModel.OTROSDB" Width="1.5" PointX="20.375" PointY="0.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" Width="1.5" PointX="3.375" PointY="20.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" Width="1.5" PointX="20.375" PointY="11.75" />
-        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" Width="1.5" PointX="0.75" PointY="20.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" Width="1.5" PointX="14.375" PointY="20.75" />
-        <EntityTypeShape EntityType="DB_IMBRINOModel.SISTEMA" Width="1.5" PointX="16.375" PointY="20.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.vw_CuadreCaja" Width="1.5" PointX="21.375" PointY="15.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.VW_CuadreCajaSalidas" Width="2.25" PointX="21.375" PointY="5.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.Vw_SearchClientes_Fiadores" Width="1.5" PointX="22.375" PointY="0.75" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.ROLES" Width="1.5" PointX="24.625" PointY="8.375" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.TIPOS_USUARIOS" Width="1.5" PointX="22.375" PointY="11.375" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.USUARIO_ROLES" Width="1.5" PointX="26.875" PointY="11.25" />
-        <EntityTypeShape EntityType="DB_IMBRINOModel.USUARIOS" Width="1.5" PointX="24.625" PointY="11" />
         <AssociationConnector Association="DB_IMBRINOModel.FK__USUARIO_R__RolId__06B7F65E" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK__USUARIOS__Tipo__000AF8CF" />
-        <AssociationConnector Association="DB_IMBRINOModel.FK__USUARIO_R__Usuar__05C3D225" />
         <EntityTypeShape EntityType="DB_IMBRINOModel.vw_initialRols" Width="1.5" PointX="18.375" PointY="22.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.FACTURA" Width="1.5" PointX="10.375" PointY="12.875" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK_FINANCY_FACTURA" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.SISTEMA" Width="1.5" PointX="20.375" PointY="22.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" Width="1.5" PointX="0.75" PointY="20.75" />
+        <EntityTypeShape EntityType="DB_IMBRINOModel.USUARIOS" Width="1.5" PointX="24.625" PointY="11.75" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK__USUARIOS__Tipo__113584D1" />
+        <AssociationConnector Association="DB_IMBRINOModel.FK__USUARIO_R__Usuar__15FA39EE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

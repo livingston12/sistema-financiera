@@ -18,15 +18,16 @@ namespace SistemaImbrino.Models
         public string DireccionEmpresa { get; set; }
         public string RncEmpresa { get; set; }
         public string TelefonoEmpresa { get; set; }
+        public string Cliente { get; set; }
+        public decimal BalancePendiente { get; set; }
+        public int ING_NUMFIN { get; set; }
         public int Recibo { get; set; }
         public string CONCEPTO { get; set; }
         public string NCF { get; set; }
         public int Contrato { get; set; }
-        public string Cliente { get; set; }
         public decimal Monto { get; set; }
         public string FormaPago { get; set; }
-        public decimal BalancePendiente { get; set; }
         public double ING_MONTOT { get; set; }
-        public int ING_NUMFIN { get; set; }
+        public string Fecha { get; set; }
     }
 }

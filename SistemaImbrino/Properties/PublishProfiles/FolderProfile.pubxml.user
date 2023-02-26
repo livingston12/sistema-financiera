@@ -85,40 +85,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:44</publishTime>
     </File>
     <File Include="bin/Reportes/CarteraPrestamos.cs">
-      <publishTime>01/06/2022 14:31:20</publishTime>
+      <publishTime>09/17/2022 11:10:57</publishTime>
     </File>
     <File Include="bin/Reportes/CarteraPrestamos.rpt">
-      <publishTime>01/06/2022 14:31:19</publishTime>
+      <publishTime>09/17/2022 11:10:56</publishTime>
     </File>
     <File Include="bin/Reportes/ConciliacionBancaria.cs">
-      <publishTime>01/06/2022 14:31:21</publishTime>
+      <publishTime>09/17/2022 11:10:58</publishTime>
     </File>
     <File Include="bin/Reportes/ConciliacionBancaria.rpt">
-      <publishTime>01/06/2022 14:31:20</publishTime>
+      <publishTime>09/17/2022 11:10:57</publishTime>
     </File>
     <File Include="bin/Reportes/CreditosBancarios.cs">
-      <publishTime>01/06/2022 14:31:22</publishTime>
+      <publishTime>09/17/2022 11:10:58</publishTime>
     </File>
     <File Include="bin/Reportes/CreditosBancarios.rpt">
-      <publishTime>01/06/2022 14:31:21</publishTime>
+      <publishTime>09/17/2022 11:10:58</publishTime>
     </File>
     <File Include="bin/Reportes/CuadreCaja.cs">
-      <publishTime>01/06/2022 14:31:23</publishTime>
+      <publishTime>09/17/2022 11:11:00</publishTime>
     </File>
     <File Include="bin/Reportes/CuadreCaja.rpt">
-      <publishTime>01/06/2022 14:31:22</publishTime>
+      <publishTime>09/17/2022 11:10:58</publishTime>
     </File>
     <File Include="bin/Reportes/CuotasVencidas - Copy.cs">
-      <publishTime>12/08/2021 15:40:29</publishTime>
+      <publishTime>09/17/2022 11:10:56</publishTime>
     </File>
     <File Include="bin/Reportes/CuotasVencidas - Copy.rpt">
-      <publishTime>12/08/2021 15:40:28</publishTime>
+      <publishTime>09/17/2022 11:10:56</publishTime>
     </File>
     <File Include="bin/Reportes/CuotasVencidas.cs">
-      <publishTime>12/08/2021 15:40:35</publishTime>
+      <publishTime>09/17/2022 11:11:03</publishTime>
     </File>
     <File Include="bin/Reportes/CuotasVencidas.rpt">
-      <publishTime>12/08/2021 15:40:35</publishTime>
+      <publishTime>09/17/2022 11:11:02</publishTime>
     </File>
     <File Include="bin/Reportes/DebitosBancarios.cs">
       <publishTime>10/19/2021 18:05:53</publishTime>
@@ -127,46 +127,46 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/19/2021 18:05:53</publishTime>
     </File>
     <File Include="bin/Reportes/EstadoCuenta.cs">
-      <publishTime>01/06/2022 14:31:24</publishTime>
+      <publishTime>09/17/2022 11:11:00</publishTime>
     </File>
     <File Include="bin/Reportes/EstadoCuenta.rpt">
-      <publishTime>01/06/2022 14:31:23</publishTime>
+      <publishTime>09/17/2022 11:11:00</publishTime>
     </File>
     <File Include="bin/Reportes/Financiamientos_atrasados.cs">
-      <publishTime>01/06/2022 14:31:25</publishTime>
+      <publishTime>09/17/2022 11:11:01</publishTime>
     </File>
     <File Include="bin/Reportes/Financiamientos_atrasados.rpt">
-      <publishTime>01/06/2022 14:31:24</publishTime>
+      <publishTime>09/17/2022 11:11:00</publishTime>
     </File>
     <File Include="bin/Reportes/FinDetalle.cs">
-      <publishTime>01/06/2022 14:31:25</publishTime>
+      <publishTime>09/17/2022 11:11:03</publishTime>
     </File>
     <File Include="bin/Reportes/FinDetalle.rpt">
-      <publishTime>01/06/2022 14:31:25</publishTime>
+      <publishTime>09/17/2022 11:11:03</publishTime>
     </File>
     <File Include="bin/Reportes/FinHeader.cs">
-      <publishTime>01/06/2022 14:31:26</publishTime>
+      <publishTime>09/17/2022 11:11:04</publishTime>
     </File>
     <File Include="bin/Reportes/FinHeader.rpt">
-      <publishTime>01/06/2022 14:31:26</publishTime>
+      <publishTime>09/17/2022 11:11:04</publishTime>
     </File>
     <File Include="bin/Reportes/IngresoCuotas.cs">
-      <publishTime>01/06/2022 14:31:27</publishTime>
+      <publishTime>09/17/2022 11:11:05</publishTime>
     </File>
     <File Include="bin/Reportes/IngresoCuotas.rpt">
-      <publishTime>01/06/2022 14:31:26</publishTime>
+      <publishTime>09/17/2022 11:11:04</publishTime>
     </File>
     <File Include="bin/Reportes/ReciboIngreso.cs">
-      <publishTime>12/28/2021 15:18:00</publishTime>
+      <publishTime>04/05/2022 11:18:01</publishTime>
     </File>
     <File Include="bin/Reportes/ReciboIngreso.rpt">
-      <publishTime>12/28/2021 15:18:00</publishTime>
+      <publishTime>04/05/2022 11:18:01</publishTime>
     </File>
     <File Include="bin/Reportes/RegistroNCF.cs">
-      <publishTime>01/06/2022 14:31:19</publishTime>
+      <publishTime>09/17/2022 11:11:06</publishTime>
     </File>
     <File Include="bin/Reportes/RegistroNCF.rpt">
-      <publishTime>01/06/2022 14:31:18</publishTime>
+      <publishTime>09/17/2022 11:11:05</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/03/2021 13:02:44</publishTime>
@@ -250,10 +250,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="bin/SistemaImbrino.dll">
-      <publishTime>01/06/2022 14:38:50</publishTime>
+      <publishTime>09/17/2022 11:11:09</publishTime>
     </File>
     <File Include="bin/SistemaImbrino.pdb">
-      <publishTime>01/06/2022 14:38:50</publishTime>
+      <publishTime>09/17/2022 11:11:09</publishTime>
     </File>
     <File Include="bin/stdole.dll">
       <publishTime>10/24/2020 23:47:52</publishTime>
@@ -315,6 +315,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/Buttons.bootstrap.min.css">
       <publishTime>07/03/2021 10:01:10</publishTime>
     </File>
+    <File Include="Content/counterCard.css">
+      <publishTime>04/02/2022 12:10:26</publishTime>
+    </File>
     <File Include="Content/DataTables.bootstrap.min.css">
       <publishTime>07/03/2021 10:01:10</publishTime>
     </File>
@@ -326,6 +329,27 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/fixedHeader.dataTables.min.css">
       <publishTime>10/22/2021 10:26:09</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.min.css">
+      <publishTime>08/22/2019 13:35:31</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.eot">
+      <publishTime>08/22/2019 13:35:30</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.svg">
+      <publishTime>08/22/2019 13:35:30</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.ttf">
+      <publishTime>08/22/2019 13:35:30</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.woff">
+      <publishTime>08/22/2019 13:35:30</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.woff2">
+      <publishTime>08/22/2019 13:35:30</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/FontAwesome.otf">
+      <publishTime>08/22/2019 13:35:30</publishTime>
     </File>
     <File Include="Content/img/logo.jpg">
       <publishTime>11/15/2021 21:41:31</publishTime>
@@ -373,7 +397,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2021 16:26:04</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/16/2021 11:35:11</publishTime>
+      <publishTime>04/10/2022 16:38:52</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>06/03/2021 13:02:42</publishTime>
@@ -403,7 +427,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="Models/db_imbrino.edmx.diagram">
-      <publishTime>11/08/2021 17:51:35</publishTime>
+      <publishTime>04/10/2022 15:27:33</publishTime>
     </File>
     <File Include="Reportes/dtReportes.xsc">
       <publishTime>10/12/2021 22:34:45</publishTime>
@@ -445,7 +469,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/03/2021 10:01:10</publishTime>
     </File>
     <File Include="Scripts/GeneralScript.js">
-      <publishTime>11/07/2021 18:46:40</publishTime>
+      <publishTime>09/11/2022 19:31:03</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.js">
       <publishTime>06/03/2021 13:02:42</publishTime>
@@ -529,7 +553,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/12/2021 21:52:21</publishTime>
     </File>
     <File Include="Views/Clientes/index.cshtml">
-      <publishTime>10/20/2021 18:46:12</publishTime>
+      <publishTime>04/10/2022 15:00:53</publishTime>
     </File>
     <File Include="Views/Clientes/_clientesDetalle.cshtml">
       <publishTime>10/20/2021 18:43:03</publishTime>
@@ -538,19 +562,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2021 21:44:33</publishTime>
     </File>
     <File Include="Views/Cobros/Index.cshtml">
-      <publishTime>12/27/2021 15:20:51</publishTime>
+      <publishTime>09/17/2022 11:10:05</publishTime>
     </File>
     <File Include="Views/Cobros/_CobrosDetalle.cshtml">
-      <publishTime>10/19/2021 20:45:11</publishTime>
+      <publishTime>09/11/2022 19:11:10</publishTime>
     </File>
     <File Include="Views/Cobros/_CobrosHeader.cshtml">
       <publishTime>10/11/2021 19:55:47</publishTime>
     </File>
     <File Include="Views/Cobros/_popup_Cobro.cshtml">
-      <publishTime>12/27/2021 15:25:48</publishTime>
+      <publishTime>09/11/2022 19:10:45</publishTime>
     </File>
     <File Include="Views/Cobros/_popup_ProcesarPago.cshtml">
-      <publishTime>09/11/2021 11:20:23</publishTime>
+      <publishTime>09/11/2022 19:10:21</publishTime>
     </File>
     <File Include="Views/Cobros/_popup_ProcesarPagoTotal.cshtml">
       <publishTime>10/04/2021 23:48:57</publishTime>
@@ -619,13 +643,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="Views/Financiamientos/Index.cshtml">
-      <publishTime>11/11/2021 11:14:38</publishTime>
+      <publishTime>02/23/2022 12:25:07</publishTime>
     </File>
     <File Include="Views/FinanciamientosDetalle/FinanciamientosDetalle.cshtml">
       <publishTime>10/12/2021 23:13:56</publishTime>
     </File>
     <File Include="Views/FinanciamientosHeader/ConsultaFinanciamientos.cshtml">
-      <publishTime>10/20/2021 18:25:59</publishTime>
+      <publishTime>04/10/2022 12:00:56</publishTime>
     </File>
     <File Include="Views/FinAtrasados/Index.cshtml">
       <publishTime>06/03/2021 13:02:42</publishTime>
@@ -637,7 +661,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/16/2021 10:52:57</publishTime>
+      <publishTime>04/02/2022 13:04:00</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>11/25/2021 17:39:32</publishTime>
@@ -649,10 +673,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/25/2021 17:40:55</publishTime>
+      <publishTime>04/02/2022 10:27:15</publishTime>
     </File>
     <File Include="Views/Shared/_MenuShared.cshtml">
-      <publishTime>11/12/2021 15:03:00</publishTime>
+      <publishTime>04/10/2022 13:58:05</publishTime>
+    </File>
+    <File Include="Views/Usuarios/Index.cshtml">
+      <publishTime>05/05/2022 01:12:18</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_agregarRoles.cshtml">
+      <publishTime>05/02/2022 02:48:44</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_cambiarPass.cshtml">
+      <publishTime>05/02/2022 00:27:52</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_popup_editar.cshtml">
+      <publishTime>04/10/2022 15:43:02</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_usuariosDetalle.cshtml">
+      <publishTime>05/02/2022 02:36:28</publishTime>
     </File>
     <File Include="Views/Vendedores/index.cshtml">
       <publishTime>11/12/2021 14:26:46</publishTime>
@@ -679,7 +718,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/03/2021 13:02:42</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/28/2021 15:18:02</publishTime>
+      <publishTime>09/03/2022 12:09:13</publishTime>
     </File>
   </ItemGroup>
 </Project>

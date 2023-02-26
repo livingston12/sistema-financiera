@@ -17,6 +17,11 @@
 						<div class="panel-body">
 							<ul class="nav navbar-nav">
 								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("usuarios"))
+								{
+									<li><a href="@Url.Action("Index", "usuarios")">usuarios</a></li>
+								}
+								@if (ViewContext.HttpContext.User.IsInRole("admin") ||
 									ViewContext.HttpContext.User.IsInRole("clientes"))
 								{
 									<li><a href="@Url.Action("Index", "Clientes")">Clientes</a></li>

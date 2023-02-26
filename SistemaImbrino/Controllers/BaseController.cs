@@ -16,7 +16,7 @@ namespace SistemaImbrino.Controllers
         public string MensajeErrorCath = "Error inesperado en la aplicacion Favor contactar a un soporte";
         private static string[] listaMeses = { "ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC" };
         public static string formatoFecha = "MM/dd/yyyy";
-
+        
 
         public enum TipoCobro
         {
@@ -99,7 +99,7 @@ namespace SistemaImbrino.Controllers
             INTERESES_PENDIENTES = 54,
             RECUPERACION_CREDITOS_CDC = 56
         }
-
+               
 
         public static TipoCobro ReturnTipoCobro(string tipo_Cobro)
         {
@@ -298,7 +298,12 @@ namespace SistemaImbrino.Controllers
                          && !string.IsNullOrEmpty(cLIENTE.CTE_TELEFO)
                          && !string.IsNullOrEmpty(cLIENTE.CTE_CEDULA)
                          && !string.IsNullOrEmpty(cLIENTE.CTE_DIRECC);
+        }
 
+        public bool validarUsuario(USUARIOS usuario)
+        {
+            bool value = !string.IsNullOrEmpty(usuario.Nombre) || !string.IsNullOrEmpty(usuario.Pass);
+            return value && usuario.Tipo != 0 || !string.IsNullOrEmpty(usuario.Usuario);
         }
 
         public bool validarOtrosCargo(OTROCARG Cargo)
@@ -594,7 +599,7 @@ namespace SistemaImbrino.Controllers
                     FAC_STATUS = status
 
                 };
-                db.FACTURA.Add(fACTURA);
+                db.Entry(fACTURA).State = EntityState.Added;
 
                 // -------------------------- Guardar en tabla   CUOTA --------------------------
 
@@ -646,7 +651,7 @@ namespace SistemaImbrino.Controllers
 
                 cartera.CAR_MONTOC += capitalTotal;
                 cartera.CAR_MONTOI += interesTotal;
-                GuardarCargo(OtroCargo, financiamiento.ListFinanciamientos.FirstOrDefault());
+                GuardarCargo(OtroCargo, financiamiento.ListFinanciamientos.FirstOrDefault(), LastFactura);
 
                 db.SaveChanges();
                 message.Is_Success = true;
@@ -662,16 +667,15 @@ namespace SistemaImbrino.Controllers
             return message;
         }
 
-        private static bool GuardarCargo(OTROSCR otroCargo, View_fincaciamientos fincaciamientos)
+        private static bool GuardarCargo(OTROSCR otroCargo, View_fincaciamientos fincaciamientos, int finId = 0)
         {
             bool insertado = false;
             try
             {
                 otroCargo.BENEFICIARIO = fincaciamientos.Cliente;
                 otroCargo.TIPO_SALIDA = 1;
-                otroCargo.MONTO = fincaciamientos.Monto;
-                otroCargo.FECHA = returDateFormat(fincaciamientos.Fecha);
                 otroCargo.Activo = true;
+                otroCargo.CLIENTE = finId;
                 db.OTROSCR.Add(otroCargo);
                 insertado = true;
             }

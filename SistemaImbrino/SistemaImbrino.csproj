@@ -149,13 +149,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseExtetionController.cs" />
     <Compile Include="Controllers\Caretera Prestamos\CarteraPrestamosController.cs" />
     <Compile Include="Controllers\Maestros\CagosController.cs" />
+    <Compile Include="Controllers\Maestros\UsuariosController.cs" />
     <Compile Include="Controllers\Maestros\ZonasController.cs" />
     <Compile Include="Controllers\Maestros\VendedoresController.cs" />
     <Compile Include="Controllers\Maestros\CuentasBancariasController.cs" />
     <Compile Include="Controllers\Maestros\BancosController.cs" />
     <Compile Include="Controllers\Reportes\ReImprimirReciboController.cs" />
+    <Compile Include="Extentions\dateExtension.cs" />
     <Compile Include="Extentions\EntityFramewrowkExtension.cs" />
     <Compile Include="Controllers\Automatitation.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -298,6 +301,12 @@
     <Compile Include="Models\TIPOS_USUARIOS.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TransactionLogs.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_ConsultaFinDetalle_Result.cs">
+      <DependentUpon>db_imbrino.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USUARIOS.cs">
       <DependentUpon>db_imbrino.tt</DependentUpon>
     </Compile>
@@ -316,6 +325,7 @@
     <Compile Include="Models\View_cobrosHeader.cs" />
     <Compile Include="Models\View_ConciliacionBancaria.cs" />
     <Compile Include="Models\View_consultaFinanciamientos.cs" />
+    <Compile Include="Models\View_CuotasSaldadas.cs" />
     <Compile Include="Models\View_Financiamiento_User.cs" />
     <Compile Include="App_Start\View_generalClass.cs" />
     <Compile Include="Models\View_ListCreditosBancarios.cs" />
@@ -504,8 +514,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\counterCard.css" />
     <Content Include="Content\Datatables.css" />
     <Content Include="Content\Buttons.bootstrap.min.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\img\logo.jpg" />
     <Content Include="Content\img\minus.jpg" />
     <Content Include="Content\img\plus.jpg" />
@@ -549,6 +562,11 @@
     <Content Include="fonts\select-mania-font.woff" />
     <Content Include="Content\sb-admin-2.min.css" />
     <Content Include="Content\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Reportes\dtReportes.xsc">
       <DependentUpon>dtReportes.xsd</DependentUpon>
@@ -599,8 +617,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cobros\Index.cshtml" />
     <Content Include="Views\Cobros\_CobrosHeader.cshtml" />
@@ -654,6 +670,11 @@
     <Content Include="Views\Cargos\_popup_editar.cshtml" />
     <Content Include="Views\Cargos\_cargosDetalle.cshtml" />
     <Content Include="Views\Cargos\index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\_usuariosDetalle.cshtml" />
+    <Content Include="Views\Usuarios\_popup_editar.cshtml" />
+    <Content Include="Views\Usuarios\_cambiarPass.cshtml" />
+    <Content Include="Views\Usuarios\_agregarRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

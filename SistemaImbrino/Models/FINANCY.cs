@@ -23,8 +23,8 @@ namespace SistemaImbrino.Models
         public int ID { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }
-        public virtual FACTURA FACTURA { get; set; }
         public virtual FIADOR FIADOR { get; set; }
         public virtual VENDEDOR VENDEDOR { get; set; }
+        public virtual FACTURA FACTURA { get; set; }
     }
 }

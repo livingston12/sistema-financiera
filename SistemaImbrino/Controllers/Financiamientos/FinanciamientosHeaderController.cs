@@ -57,6 +57,49 @@ namespace SistemaImbrino.Controllers.Financiamientos
             return listaFinanciamientos;
         }
 
+        public JsonResult eliminarFinanciamiento (int id)
+        {
+            message message;
+            try
+            {
+                string estatusPermitido = ((int)BaseController.Status.NUEVO).ToString();
+
+                var cuotas = db.CUOTA.Where(x => x.CUO_NUMFAC == id && x.CUO_STATUS == estatusPermitido).ToList();
+
+                if (!cuotas.Any())
+                {
+                    throw new Exception("El financiamiento no se puede eliminar solo se puede eliminar el status <b>NUEVO</b>");
+                }
+                var financy = db.FINANCY.FirstOrDefault(x => x.FIN_NUMERO == id);
+                var factura = db.FACTURA.FirstOrDefault(x => x.FAC_NUMERO == id);
+
+                db.CUOTA.RemoveRange(cuotas);
+                db.FINANCY.Remove(financy);
+                db.FACTURA.Remove(factura);
+
+                db.SaveChanges();
+
+                message = new message()
+                {
+                    Is_Success = true,
+                    Message = $"El financiamiento <b>{id}</b> fue eliminado correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                message = new message()
+                {
+                  Is_Success = false,
+                  Message = ex.Message
+                };
+
+                return Json(message);
+            }
+           
+
+            return Json(message);
+        }
+
         public JsonResult getCurrentStatus(string NameStatus)
         {
             IEnumerable<View_consultaFinanciamientos> consultaFin = new List<View_consultaFinanciamientos>();
@@ -73,6 +116,7 @@ namespace SistemaImbrino.Controllers.Financiamientos
             }
             return Json(consultaFin, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult PrintReport(string data = "",string status = "")
         {
             message mensajeReturn = new message();

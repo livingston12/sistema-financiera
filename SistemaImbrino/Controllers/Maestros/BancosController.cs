@@ -14,6 +14,7 @@ namespace SistemaImbrino.Controllers.Maestros
         {
             ViewBag.ListBancos = _db.BANCO.ToList();
             return View();
+            
         }
 
         public JsonResult CrearBanco(BANCO BANCO)
@@ -58,6 +59,7 @@ namespace SistemaImbrino.Controllers.Maestros
         public JsonResult ActualizarBanco(BANCO BANCO)
         {
             message message;
+            
             try
             {
                 var searchBanco = _db.BANCO.Where(x => x.BCO_CODIGO == BANCO.BCO_CODIGO).FirstOrDefault();

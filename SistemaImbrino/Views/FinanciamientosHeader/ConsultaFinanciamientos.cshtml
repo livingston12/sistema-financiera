@@ -35,7 +35,7 @@
 	<div class="row">
 		<div class="col-xs-6 col-md-2 pull-right">
 			@Html.ActionLink("Crear nuevo", "Index", "Financiamientos", null, new { @class = "btn btn-success btn-block" })
-			
+
 		</div>
 
 	</div>
@@ -52,6 +52,7 @@
 					<th class="text-right th-pd-right">Balance</th>
 					<th class="text-right th-pd-right">Capital</th>
 					<th class="text-right th-pd-right">Interes</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -81,6 +82,45 @@
 				},
 			]
 
+		function EliminarCurrentFin(id) {
+			console.log()
+			mensajeEliminarFin(id);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+			function mensajeEliminarFin(id) {
+				swal.fire({
+					position: 'center',
+					icon: "warning",
+					title: "Seguro que desea eliminar el financiamiento " + id + " ?" ,
+					showCancelButton: true,
+					confirmButtonColor: '#f0ad4e',
+					confirmButtonText: 'SI'
+				})
+				.then((result) => {
+					if (result.isConfirmed)
+						eliminarFin(id);
+				});
+			}
+
+			function eliminarFin(_id)
+			{
+				var url = "@Url.Action("eliminarFinanciamiento")";
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: {
+						id: _id
+					},
+					dataType: "json",
+					success: function (_data)
+					{
+						MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+					}
+				});
+			}
+
 		$(document).ready(function () {
 
 			llenarTblFin("btn-activo");
@@ -89,8 +129,8 @@
 			function searchValue() {
 				var myValue = $('#txt_search').val();
 				$("input[type=search]").val(myValue);
-				$("input[type=search]").keyup();	
-				$("tr").addClass("finded");				
+				$("input[type=search]").keyup();
+				$("tr").addClass("finded");
 			}
 
 			function llenarTblFin(currentBtn) {
@@ -161,16 +201,23 @@
 								return number_format_js(data, 2, 0);
 							},
 							className: "dt-body-right"
+						},
+						{
+							"data": "FinID"
+							, className: "dt-body-center"
 						}
 					],
 					lengthChange: true,
 					rowCallback: function (row, data) {
 
 						var html = `<a class="control-label" href="@Url.Action("Index","FinanciamientosDetalle")/index/` + data.FinID + `">` + data.FinID + `</a>`;
+						let htmlDelete = `<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentFin(${data.FinID})" id="Celiminar" />`
+
 						$('td:eq(0)', row).html(html);
+						$('td:eq(8)', row).html(htmlDelete);
 					}
 				});
-				
+
 			}
 			$("#txt_search").keyup(function () {
 				searchValue();
@@ -199,8 +246,8 @@
 				var $btn = $(this).button('loading');
 				var url = "@Url.Action("PrintReport")";
 				data = $("#tbl_headerfin").DataTable().rows({ filter: 'applied' }).data().toArray();
-				var json = JSON.stringify(data);				
-				
+				var json = JSON.stringify(data);
+
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -219,7 +266,7 @@
 					}
 
                 });
-            });
+			});
 		});
 	</script>
 

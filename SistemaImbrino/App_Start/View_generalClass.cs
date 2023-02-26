@@ -27,7 +27,7 @@ namespace SistemaImbrino.App_Start
             };
 
                 var Cuotas = db.vw_CuadreCaja
-                                .Where(x => x.isCuadrada == false //&&
+                                .Where(x => x.isCuadrada == false 
                                         //x.fechadt >= fechaCierre
                                         )
                                 .Select(x => new View_rptNCFAgrupado()

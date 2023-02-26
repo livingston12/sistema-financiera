@@ -1,4 +1,5 @@
-﻿using SistemaImbrino.Models;
+﻿using SistemaImbrino.Extentions;
+using SistemaImbrino.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace SistemaImbrino.Controllers
 
             if (currentUser != null)
             {
+                var isValidLogin = validateDateToLogin(currentUser);
+                if (!isValidLogin)
+                {
+                    return Json("Su usuario esta bloqueado temporalmente, favor pagar el servicio para seguir utilizandolo");
+                }
                 string roles = "";
                 List<int> userRoles = db.USUARIO_ROLES
                                     .Where(x => x.UsuarioId == currentUser.Id)
@@ -71,6 +77,16 @@ namespace SistemaImbrino.Controllers
         {
             var currentUser = db.USUARIOS.Where(x => x.Usuario == user && x.Pass == pass).FirstOrDefault();
             return currentUser;
+        }
+
+        private bool validateDateToLogin(USUARIOS usuario)
+        {
+            bool validated = false;
+            DateTime dateRegister = DateTime.Parse("02/13/2023");
+            DateTime? dateLogin = dateRegister.AddDays(1);
+            validated = dateLogin == null ? true : dateLogin.NotExpirationDate();
+
+            return validated;
         }
 
         public ActionResult Logout()

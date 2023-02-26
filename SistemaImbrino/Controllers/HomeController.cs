@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SistemaImbrino.App_Start;
+using SistemaImbrino.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,34 +11,33 @@ namespace SistemaImbrino.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private static DB_IMBRINOEntities db = new DB_IMBRINOEntities();
+
         public ActionResult Index()
         {
-            //string automaStr = System.Configuration.ConfigurationManager.AppSettings["Automatic"].ToString();
-            //bool auto = false;
+            DateTime today = DateTime.Today;
+            DateTime fechaDesde = DateTime.Parse($"{today.Month}-01-{today.Year}");
+            var dataNcf = db.VW_rptRegistroNCF
+                    .Where(x => x.fechadt >= fechaDesde && x.fechadt <= today)
+                    .ToList();
 
-            //bool.TryParse(automaStr, out auto);
+            var data = View_generalClass.GetListCuadreCaja();
+            decimal? entradas = data.Detalle
+                .Where(x => x.Tipo != "SALIDAS")
+                .Sum(x => x.Detalle.Sum(y => y.MontoTotal));
+            decimal? salidas = data.Detalle
+                .Where(x => x.Tipo == "SALIDAS")
+                .Sum(x => x.Detalle.Sum(y => y.MontoTotal));
+            ViewBag.totalBalanceCaja = entradas - salidas;
+            decimal? totalCobrados = dataNcf.Any()
+                ? dataNcf.Sum(x => x.ING_MONTOT) : 0;
 
-            //if (auto)
-            //{
-            //    Automatitation at = new Automatitation();
-            //    at.automatizarArchivos();
-            //}
-            Automatitation.initialDataDb();
+           ViewBag.totalCobrados = totalCobrados;
+           ViewBag.totalCuotasVencidas = db.VW_rptCuotasVencidas
+                .Where(x => x.fechadt < DateTime.Now)
+                .Sum(x => x.MONTO);
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+       
     }
 }

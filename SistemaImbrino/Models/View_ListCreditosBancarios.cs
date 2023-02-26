@@ -51,7 +51,30 @@ namespace SistemaImbrino.Models
             {
                 try
                 {
-                    return DateTime.Parse(FechaDesde);
+                    var datePart = FechaDesde.Split('/');
+                    DateTime fechaDesde = new DateTime();
+                    if (datePart.Length > 1)
+                    {
+                        string month = datePart[1];
+                        if (int.TryParse(month, out int monthNumber))
+                        {
+                            fechaDesde = DateTime.Parse(FechaDesde);
+                        }
+                        else
+                        {
+                            string day = datePart[0];
+                            string year = datePart[2];
+                            fechaDesde = DateTime
+                                .Parse(
+                                $"{BaseController.returMonthNumber(month)}/{day}/{year}"
+                                );
+                        }
+                    }
+                    else
+                    {
+                        fechaDesde = DateTime.Parse(FechaDesde);
+                    }
+                    return fechaDesde;
                 }
                 catch (Exception)
                 {
@@ -66,7 +89,30 @@ namespace SistemaImbrino.Models
             {
                 try
                 {
-                    return DateTime.Parse(FechaHasta);
+                    var datePart = FechaHasta.Split('/');
+                    DateTime fechaHasta = new DateTime();
+                    if (datePart.Length > 1)
+                    {
+                        string month = datePart[1];
+                        if (int.TryParse(month, out int monthNumber))
+                        {
+                            fechaHasta = DateTime.Parse(FechaDesde);
+                        }
+                        else
+                        {
+                            string day = datePart[0];
+                            string year = datePart[2];
+                            fechaHasta = DateTime
+                                .Parse(
+                                $"{BaseController.returMonthNumber(month)}/{day}/{year}"
+                                );
+                        }
+                    }
+                    else
+                    {
+                        fechaHasta = DateTime.Parse(FechaHasta);
+                    }
+                    return fechaHasta;
                 }
                 catch (Exception)
                 {

@@ -1,0 +1,43 @@
+﻿@model SistemaImbrino.Models.USUARIOS
+
+
+
+<tr>
+	@{
+		string nombre_completo = string.Format("{0} {1}", Model.Nombre, Model.Apellido);
+	}
+	<td width="600px" class="">
+		@nombre_completo
+	</td>
+	<td width="200px">@Model.Usuario</td>
+	<td class="text-center">
+		@{
+			string color = "", Tipo = Model.TIPOS_USUARIOS.Tipo;
+			if (Tipo == "Secretaria")
+			{
+				color = "label-default";
+			}
+			else
+			{
+				color = "label-success";
+			}
+
+		}
+		<label class="label text-center  @color">@Tipo</label>
+	</td>
+	<td class="col-lg-1 text-center">
+		<span class="glyphicon glyphicon-edit " onclick="editar_Popup(@Model.Id)" id="Ceditar" aria-hidden="true"
+			  data-toggle="tooltip" data-placement="top" title="Editar"></span>
+		<span class="glyphicon glyphicon-trash control-label" onclick="EliminarCurrentUsuario(@Model.Id,'@nombre_completo')" id="Celiminar" aria-hidden="true"
+			  data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
+		<span class="glyphicon glyphicon-lock control-label Ceditar" onclick="CambiarPass(@Model.Id, '@nombre_completo')" aria-hidden="true"
+			  data-toggle="tooltip" data-placement="top" title="Cambiar contraseña"></span>
+		@if (Tipo != "Administrador")
+		{
+			<span class="glyphicon glyphicon-object-align-left control-label Ceditar" onclick="AddRoles(@Model.Id, '@nombre_completo')" aria-hidden="true"
+				  data-toggle="tooltip" data-placement="top" title="Editar Roles"></span>
+		}
+
+	</td>
+
+</tr>

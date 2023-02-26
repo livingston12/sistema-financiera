@@ -12,26 +12,9 @@
     <EntitySet Name="TIPOFIN" EntityType="DB_IMBRINOModel.TIPOFIN" />
     <EntitySet Name="FIADOR" EntityType="DB_IMBRINOModel.FIADOR" />
     <EntitySet Name="VENDEDOR" EntityType="DB_IMBRINOModel.VENDEDOR" />
-    <EntitySet Name="FACTURA" EntityType="DB_IMBRINOModel.FACTURA" />
-    <AssociationSet Name="FK_FACTURA_FORMAPG" Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG">
-      <End Role="FORMAPG" EntitySet="FORMAPG" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FACTURA_TIPOFIN" Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN">
-      <End Role="TIPOFIN" EntitySet="TIPOFIN" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FACTURA_TIPOINT" Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT">
-      <End Role="TIPOINT" EntitySet="TIPOINT" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
     <EntitySet Name="FINANCY" EntityType="DB_IMBRINOModel.FINANCY" />
     <AssociationSet Name="FK_FINANCY_CLIENTE" Association="DB_IMBRINOModel.FK_FINANCY_CLIENTE">
       <End Role="CLIENTE" EntitySet="CLIENTE" />
-      <End Role="FINANCY" EntitySet="FINANCY" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FINANCY_FACTURA" Association="DB_IMBRINOModel.FK_FINANCY_FACTURA">
-      <End Role="FACTURA" EntitySet="FACTURA" />
       <End Role="FINANCY" EntitySet="FINANCY" />
     </AssociationSet>
     <AssociationSet Name="FK_FINANCY_FIADOR" Association="DB_IMBRINOModel.FK_FINANCY_FIADOR">
@@ -81,30 +64,50 @@
     <EntitySet Name="OTROSDB" EntityType="DB_IMBRINOModel.OTROSDB" />
     <EntitySet Name="VW_rptCreditosBancarios" EntityType="DB_IMBRINOModel.VW_rptCreditosBancarios" />
     <EntitySet Name="VW_rptDebitosBancarios" EntityType="DB_IMBRINOModel.VW_rptDebitosBancarios" />
-    <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
     <EntitySet Name="VW_ConciliacionBancaria" EntityType="DB_IMBRINOModel.VW_ConciliacionBancaria" />
     <FunctionImport Name="usp_CierreCaja" />
-    <EntitySet Name="SISTEMA" EntityType="DB_IMBRINOModel.SISTEMA" />
     <EntitySet Name="vw_CuadreCaja" EntityType="DB_IMBRINOModel.vw_CuadreCaja" />
     <EntitySet Name="VW_CuadreCajaSalidas" EntityType="DB_IMBRINOModel.VW_CuadreCajaSalidas" />
     <EntitySet Name="Vw_SearchClientes_Fiadores" EntityType="DB_IMBRINOModel.Vw_SearchClientes_Fiadores" />
     <EntitySet Name="ROLES" EntityType="DB_IMBRINOModel.ROLES" />
     <EntitySet Name="TIPOS_USUARIOS" EntityType="DB_IMBRINOModel.TIPOS_USUARIOS" />
     <EntitySet Name="USUARIO_ROLES" EntityType="DB_IMBRINOModel.USUARIO_ROLES" />
-    <EntitySet Name="USUARIOS" EntityType="DB_IMBRINOModel.USUARIOS" />
     <AssociationSet Name="FK__USUARIO_R__RolId__06B7F65E" Association="DB_IMBRINOModel.FK__USUARIO_R__RolId__06B7F65E">
       <End Role="ROLES" EntitySet="ROLES" />
       <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
     </AssociationSet>
-    <AssociationSet Name="FK__USUARIOS__Tipo__000AF8CF" Association="DB_IMBRINOModel.FK__USUARIOS__Tipo__000AF8CF">
+    <EntitySet Name="vw_initialRols" EntityType="DB_IMBRINOModel.vw_initialRols" />
+    <FunctionImport Name="usp_ConsultaFinDetalle" ReturnType="Collection(DB_IMBRINOModel.usp_ConsultaFinDetalle_Result)">
+      <Parameter Name="NUMFIN" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="FACTURA" EntityType="DB_IMBRINOModel.FACTURA" />
+    <AssociationSet Name="FK_FACTURA_FORMAPG" Association="DB_IMBRINOModel.FK_FACTURA_FORMAPG">
+      <End Role="FORMAPG" EntitySet="FORMAPG" />
+      <End Role="FACTURA" EntitySet="FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FACTURA_TIPOFIN" Association="DB_IMBRINOModel.FK_FACTURA_TIPOFIN">
+      <End Role="TIPOFIN" EntitySet="TIPOFIN" />
+      <End Role="FACTURA" EntitySet="FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FACTURA_TIPOINT" Association="DB_IMBRINOModel.FK_FACTURA_TIPOINT">
+      <End Role="TIPOINT" EntitySet="TIPOINT" />
+      <End Role="FACTURA" EntitySet="FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FINANCY_FACTURA" Association="DB_IMBRINOModel.FK_FINANCY_FACTURA">
+      <End Role="FACTURA" EntitySet="FACTURA" />
+      <End Role="FINANCY" EntitySet="FINANCY" />
+    </AssociationSet>
+    <EntitySet Name="SISTEMA" EntityType="DB_IMBRINOModel.SISTEMA" />
+    <EntitySet Name="VW_rptReciboIngreso" EntityType="DB_IMBRINOModel.VW_rptReciboIngreso" />
+    <EntitySet Name="USUARIOS" EntityType="DB_IMBRINOModel.USUARIOS" />
+    <AssociationSet Name="FK__USUARIOS__Tipo__113584D1" Association="DB_IMBRINOModel.FK__USUARIOS__Tipo__113584D1">
       <End Role="TIPOS_USUARIOS" EntitySet="TIPOS_USUARIOS" />
       <End Role="USUARIOS" EntitySet="USUARIOS" />
     </AssociationSet>
-    <AssociationSet Name="FK__USUARIO_R__Usuar__05C3D225" Association="DB_IMBRINOModel.FK__USUARIO_R__Usuar__05C3D225">
+    <AssociationSet Name="FK__USUARIO_R__Usuar__15FA39EE" Association="DB_IMBRINOModel.FK__USUARIO_R__Usuar__15FA39EE">
       <End Role="USUARIOS" EntitySet="USUARIOS" />
       <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
     </AssociationSet>
-    <EntitySet Name="vw_initialRols" EntityType="DB_IMBRINOModel.vw_initialRols" />
   </EntityContainer>
   <EntityType Name="INGOTRO">
     <Key>
@@ -201,62 +204,6 @@
     <Property Name="VEN_NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" FromRole="VENDEDOR" ToRole="FINANCY" />
   </EntityType>
-  <EntityType Name="FACTURA">
-    <Key>
-      <PropertyRef Name="FAC_NUMERO" />
-    </Key>
-    <Property Name="FAC_NUMERO" Type="Int32" Nullable="false" />
-    <Property Name="FAC_NUMFIN" Type="Int32" />
-    <Property Name="FAC_TIPINT" Type="Int32" />
-    <Property Name="FAC_FORMPG" Type="Int32" Nullable="true" />
-    <Property Name="FAC_TIPFIN" Type="Int32" />
-    <Property Name="FAC_MONTO" Type="Double" />
-    <Property Name="FAC_FECHA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="FAC_NUMCUO" Type="Int32" />
-    <Property Name="FAC_INTERE" Type="Double" />
-    <Property Name="FAC_GARANT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="FAC_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="FORMAPG" Relationship="DB_IMBRINOModel.FK_FACTURA_FORMAPG" FromRole="FACTURA" ToRole="FORMAPG" />
-    <NavigationProperty Name="TIPOFIN" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" FromRole="FACTURA" ToRole="TIPOFIN" />
-    <NavigationProperty Name="TIPOINT" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOINT" FromRole="FACTURA" ToRole="TIPOINT" />
-    <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FACTURA" ToRole="FINANCY" />
-  </EntityType>
-  <Association Name="FK_FACTURA_FORMAPG">
-    <End Type="DB_IMBRINOModel.FORMAPG" Role="FORMAPG" Multiplicity="0..1" />
-    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FORMAPG">
-        <PropertyRef Name="FOR_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_FORMPG" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FACTURA_TIPOFIN">
-    <End Type="DB_IMBRINOModel.TIPOFIN" Role="TIPOFIN" Multiplicity="0..1" />
-    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TIPOFIN">
-        <PropertyRef Name="TIP_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_TIPFIN" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FACTURA_TIPOINT">
-    <End Type="DB_IMBRINOModel.TIPOINT" Role="TIPOINT" Multiplicity="0..1" />
-    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TIPOINT">
-        <PropertyRef Name="TIP_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_TIPINT" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="FINANCY">
     <Key>
       <PropertyRef Name="ID" />
@@ -269,9 +216,9 @@
     <Property Name="FIN_STATUS" Type="Int32" />
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="CLIENTE" Relationship="DB_IMBRINOModel.FK_FINANCY_CLIENTE" FromRole="FINANCY" ToRole="CLIENTE" />
-    <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FINANCY" ToRole="FACTURA" />
     <NavigationProperty Name="FIADOR" Relationship="DB_IMBRINOModel.FK_FINANCY_FIADOR" FromRole="FINANCY" ToRole="FIADOR" />
     <NavigationProperty Name="VENDEDOR" Relationship="DB_IMBRINOModel.FK_FINANCY_VENDEDOR" FromRole="FINANCY" ToRole="VENDEDOR" />
+    <NavigationProperty Name="FACTURA" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FINANCY" ToRole="FACTURA" />
   </EntityType>
   <Association Name="FK_FINANCY_CLIENTE">
     <End Type="DB_IMBRINOModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
@@ -282,18 +229,6 @@
       </Principal>
       <Dependent Role="FINANCY">
         <PropertyRef Name="FIN_NUMCTE" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FINANCY_FACTURA">
-    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="0..1" />
-    <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FACTURA">
-        <PropertyRef Name="FAC_NUMERO" />
-      </Principal>
-      <Dependent Role="FINANCY">
-        <PropertyRef Name="FIN_NUMFAC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -742,16 +677,17 @@
   </EntityType>
   <EntityType Name="CARGO">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="id" />
     </Key>
     <Property Name="CAR_CODIGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="CAR_DESCRI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="enable" Type="Int32" Nullable="false" />
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="vw_ConsultaFinDetalle">
     <Key>
       <PropertyRef Name="ING_NUMREC" />
+      <PropertyRef Name="ING_NUMFIN" />
     </Key>
     <Property Name="ING_NUMREC" Type="Int32" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
@@ -914,25 +850,6 @@
     <Property Name="BANCO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="CUENTA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="VW_rptReciboIngreso">
-    <Key>
-      <PropertyRef Name="Recibo" />
-    </Key>
-    <Property Name="NombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="DireccionEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="RncEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="TelefonoEmpresa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Recibo" Type="Int32" Nullable="false" />
-    <Property Name="CONCEPTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Contrato" Type="Int32" Nullable="false" />
-    <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
-    <Property Name="Monto" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
-    <Property Name="FormaPago" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="ING_MONTOT" Type="Double" Nullable="false" />
-    <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="VW_ConciliacionBancaria">
     <Key>
       <PropertyRef Name="ID" />
@@ -954,33 +871,6 @@
     <Property Name="BALANCECORTE" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="TIPO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
     <Property Name="CERRADO" Type="Boolean" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SISTEMA">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="SIS_EMPRES" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_DIRECC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_TELEFO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_RNC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_DEPART" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_PASO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_SIGNAL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTCHE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTCLI" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTFIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTFIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTFAC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTREC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTVEN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTDEP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTCOM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_SENAL2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_ULTSAL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_NCF1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SIS_NCF2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="FECHA_CIERRE" Type="DateTime" Precision="0" Nullable="false" />
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="vw_CuadreCaja">
     <Key>
@@ -1074,7 +964,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Rol" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="USUARIO_ROLES" Relationship="DB_IMBRINOModel.FK__USUARIO_R__RolId__06B7F65E" FromRole="ROLES" ToRole="USUARIO_ROLES" />
   </EntityType>
   <EntityType Name="TIPOS_USUARIOS">
@@ -1083,7 +973,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIOS__Tipo__000AF8CF" FromRole="TIPOS_USUARIOS" ToRole="USUARIOS" />
+    <NavigationProperty Name="USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIOS__Tipo__113584D1" FromRole="TIPOS_USUARIOS" ToRole="USUARIOS" />
   </EntityType>
   <EntityType Name="USUARIO_ROLES">
     <Key>
@@ -1093,20 +983,7 @@
     <Property Name="UsuarioId" Type="Int32" Nullable="false" />
     <Property Name="RolId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ROLES" Relationship="DB_IMBRINOModel.FK__USUARIO_R__RolId__06B7F65E" FromRole="USUARIO_ROLES" ToRole="ROLES" />
-    <NavigationProperty Name="USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIO_R__Usuar__05C3D225" FromRole="USUARIO_ROLES" ToRole="USUARIOS" />
-  </EntityType>
-  <EntityType Name="USUARIOS">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-    <Property Name="Apellido" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-    <Property Name="Usuario" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="Pass" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-    <Property Name="Tipo" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="TIPOS_USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIOS__Tipo__000AF8CF" FromRole="USUARIOS" ToRole="TIPOS_USUARIOS" />
-    <NavigationProperty Name="USUARIO_ROLES" Relationship="DB_IMBRINOModel.FK__USUARIO_R__Usuar__05C3D225" FromRole="USUARIOS" ToRole="USUARIO_ROLES" />
+    <NavigationProperty Name="USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIO_R__Usuar__15FA39EE" FromRole="USUARIO_ROLES" ToRole="USUARIOS" />
   </EntityType>
   <Association Name="FK__USUARIO_R__RolId__06B7F65E">
     <End Type="DB_IMBRINOModel.ROLES" Role="ROLES" Multiplicity="1" />
@@ -1120,7 +997,171 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__USUARIOS__Tipo__000AF8CF">
+  <EntityType Name="vw_initialRols">
+    <Key>
+      <PropertyRef Name="rol" />
+    </Key>
+    <Property Name="rol" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="26" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="usp_ConsultaFinDetalle_Result">
+    <Property Type="Int32" Name="ING_NUMREC" Nullable="false" />
+    <Property Type="Int32" Name="ING_NUMFIN" Nullable="false" />
+    <Property Type="String" Name="ING_STATUS" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="ING_MONTOT" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="ING_MONTOC" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="ING_MONTOI" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Double" Name="ING_MONTOCAR" Nullable="false" />
+    <Property Type="String" Name="ING_FECHA" Nullable="false" MaxLength="29" />
+    <Property Type="String" Name="ING_FORMPG" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="ING_DESCRI" Nullable="false" />
+    <Property Type="String" Name="ING_NCF" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="tipo" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="cliente" Nullable="false" MaxLength="201" />
+  </ComplexType>
+  <EntityType Name="FACTURA">
+    <Key>
+      <PropertyRef Name="FAC_NUMERO" />
+    </Key>
+    <Property Name="FAC_NUMERO" Type="Int32" Nullable="false" />
+    <Property Name="FAC_NUMFIN" Type="Int32" />
+    <Property Name="FAC_TIPINT" Type="Int32" />
+    <Property Name="FAC_FORMPG" Type="Int32" />
+    <Property Name="FAC_TIPFIN" Type="Int32" />
+    <Property Name="FAC_MONTO" Type="Double" />
+    <Property Name="FAC_FECHA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="FAC_NUMCUO" Type="Int32" />
+    <Property Name="FAC_INTERE" Type="Double" />
+    <Property Name="FAC_GARANT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="FAC_STATUS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="FORMAPG" Relationship="DB_IMBRINOModel.FK_FACTURA_FORMAPG" FromRole="FACTURA" ToRole="FORMAPG" />
+    <NavigationProperty Name="TIPOFIN" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOFIN" FromRole="FACTURA" ToRole="TIPOFIN" />
+    <NavigationProperty Name="TIPOINT" Relationship="DB_IMBRINOModel.FK_FACTURA_TIPOINT" FromRole="FACTURA" ToRole="TIPOINT" />
+    <NavigationProperty Name="FINANCY" Relationship="DB_IMBRINOModel.FK_FINANCY_FACTURA" FromRole="FACTURA" ToRole="FINANCY" />
+  </EntityType>
+  <Association Name="FK_FACTURA_FORMAPG">
+    <End Type="DB_IMBRINOModel.FORMAPG" Role="FORMAPG" Multiplicity="0..1" />
+    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORMAPG">
+        <PropertyRef Name="FOR_CODIGO" />
+      </Principal>
+      <Dependent Role="FACTURA">
+        <PropertyRef Name="FAC_FORMPG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURA_TIPOFIN">
+    <End Type="DB_IMBRINOModel.TIPOFIN" Role="TIPOFIN" Multiplicity="0..1" />
+    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPOFIN">
+        <PropertyRef Name="TIP_CODIGO" />
+      </Principal>
+      <Dependent Role="FACTURA">
+        <PropertyRef Name="FAC_TIPFIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FACTURA_TIPOINT">
+    <End Type="DB_IMBRINOModel.TIPOINT" Role="TIPOINT" Multiplicity="0..1" />
+    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPOINT">
+        <PropertyRef Name="TIP_CODIGO" />
+      </Principal>
+      <Dependent Role="FACTURA">
+        <PropertyRef Name="FAC_TIPINT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FINANCY_FACTURA">
+    <End Type="DB_IMBRINOModel.FACTURA" Role="FACTURA" Multiplicity="0..1" />
+    <End Type="DB_IMBRINOModel.FINANCY" Role="FINANCY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACTURA">
+        <PropertyRef Name="FAC_NUMERO" />
+      </Principal>
+      <Dependent Role="FINANCY">
+        <PropertyRef Name="FIN_NUMFAC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SISTEMA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="SIS_EMPRES" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_DIRECC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_TELEFO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_RNC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_DEPART" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_PASO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_SIGNAL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTCHE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTCLI" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTFIA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTFIN" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTFAC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTREC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTVEN" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTDEP" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTCOM" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_SENAL2" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_ULTSAL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_NCF1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SIS_NCF2" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FECHA_CIERRE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="VW_rptReciboIngreso">
+    <Key>
+      <PropertyRef Name="NombreEmpresa" />
+      <PropertyRef Name="DireccionEmpresa" />
+      <PropertyRef Name="RncEmpresa" />
+      <PropertyRef Name="TelefonoEmpresa" />
+      <PropertyRef Name="Cliente" />
+      <PropertyRef Name="BalancePendiente" />
+      <PropertyRef Name="ING_NUMFIN" />
+      <PropertyRef Name="Recibo" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="NCF" />
+      <PropertyRef Name="Contrato" />
+      <PropertyRef Name="Monto" />
+      <PropertyRef Name="FormaPago" />
+      <PropertyRef Name="ING_MONTOT" />
+      <PropertyRef Name="Fecha" />
+    </Key>
+    <Property Name="NombreEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DireccionEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RncEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TelefonoEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Cliente" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+    <Property Name="BalancePendiente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ING_NUMFIN" Type="Int32" Nullable="false" />
+    <Property Name="Recibo" Type="Int32" Nullable="false" />
+    <Property Name="CONCEPTO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NCF" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Contrato" Type="Int32" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+    <Property Name="FormaPago" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="ING_MONTOT" Type="Double" Nullable="false" />
+    <Property Name="Fecha" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="USUARIOS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="Usuario" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Pass" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TIPOS_USUARIOS" Relationship="DB_IMBRINOModel.FK__USUARIOS__Tipo__113584D1" FromRole="USUARIOS" ToRole="TIPOS_USUARIOS" />
+    <NavigationProperty Name="USUARIO_ROLES" Relationship="DB_IMBRINOModel.FK__USUARIO_R__Usuar__15FA39EE" FromRole="USUARIOS" ToRole="USUARIO_ROLES" />
+  </EntityType>
+  <Association Name="FK__USUARIOS__Tipo__113584D1">
     <End Type="DB_IMBRINOModel.TIPOS_USUARIOS" Role="TIPOS_USUARIOS" Multiplicity="1" />
     <End Type="DB_IMBRINOModel.USUARIOS" Role="USUARIOS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1132,7 +1173,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__USUARIO_R__Usuar__05C3D225">
+  <Association Name="FK__USUARIO_R__Usuar__15FA39EE">
     <End Type="DB_IMBRINOModel.USUARIOS" Role="USUARIOS" Multiplicity="1" />
     <End Type="DB_IMBRINOModel.USUARIO_ROLES" Role="USUARIO_ROLES" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1144,12 +1185,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="vw_initialRols">
-    <Key>
-      <PropertyRef Name="rol" />
-      <PropertyRef Name="descripcion" />
-    </Key>
-    <Property Name="rol" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
-    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="26" FixedLength="false" Unicode="false" />
-  </EntityType>
 </Schema>

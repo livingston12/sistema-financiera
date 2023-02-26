@@ -20,13 +20,14 @@
 
 @Html.Partial("_CobrosHeader", (SistemaImbrino.Models.VW_rptFinAtrasados)ViewBag.ListAtrasados)
 
-
 <div class="row ">
 	@{
 		string classDisabled = ViewBag.isCobroTotal ? "disabled" : string.Empty;
 
 	}
 	<input type="hidden" id="Fecha_pago" value="@ViewBag.FechaPago" />
+	<input type="hidden" id="MaxNumRec" value="@ViewBag.MaxNumRec" />
+
 	<div class="col-sm-12 text-right pd-top-10">
 		<a id="btn-HeaderCuotas" class="btn btn-warning pull-left" onclick="window.history.back();"><span class="glyphicon glyphicon-triangle-left"></span> Atras</a>
 		<button id="btn-limpiar" class="btn btn-danger" onclick="document.location.reload();"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
@@ -44,6 +45,7 @@
 
 </div>
 <div class="table-responsive">
+	<button class="btn btn-defaultColorLite pull-right" style="color:white;" id="btn-showAll" data-loading-text="cargando..." style="cursor:pointer">Mostrar Saldados</button>
 	<table class="stripe row-border order-column" style="width:100%" id="tbl_detalleCuotasC">
 		<thead class="btn-defaultColor">
 			<tr>
@@ -55,6 +57,7 @@
 				<th class="text-center">Observaciones</th>
 				<th class="text-center">Tipo Cuota</th>
 				<th class="text-center">Tipo Pago</th>
+				<th class="text-center">Marcar pagada</th>
 			</tr>
 		</thead>
 
@@ -149,7 +152,44 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success pull-left" id="btn-crearDeposito" data-loading-text="cargando...">Cobrar</button>
-				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopupD">Cancelar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopupD" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal para abrir cuotas saldadas ----------------------------------------------->
+<div class="modal fade" id="cuoatasSaldadas" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				<button type="button" class="close btn-cerrar btn-cerrarPopup" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">C U O T A S |  S A L D A D A S  #<b id="modalNum_Fin"></b></h4>
+			</div>
+			<div class="modal-body" id="CuContainer">
+				<div class="table-responsive">
+					<table class="table table-condensed" id="tbl-cuotasSaldadas">
+						<thead>
+							<tr>
+								<th class="text-center">Cuota</th>
+								<th class="text-center">NumRec</th>
+								<th class="text-center">Capital</th>
+								<th class="text-center">Interes</th>
+								<th class="text-center">Total</th>
+								<th class="text-center">Vencimiento</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" id="btn-GuardarSaldada">Aplicar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelar btn-cerrarPopup">Cancelar</button>
+
 			</div>
 		</div>
 	</div>
@@ -164,8 +204,6 @@
 		var OtrosDepositos = [];
 		$(document).ready(function ()
 		{
-
-
 			HabilitarPrimeraceldaTabla();
 			$(".dw-cobro").selectMania('update');
 			const table = $('#tbl_detalleCuotasC').removeAttr('width').DataTable(
@@ -185,17 +223,70 @@
 				}
 			);
 
+			$("#btn-showAll").click(function ()
+			{
+				$('#tbl-cuotasSaldadas > tbody').empty();
+				Show_closeModal("#cuoatasSaldadas", true);
 
+				var url = "@Url.Action("GetCuotasSaldadas")";
+				var lblNumFin = $("#Num_Fin").text();
+				$.ajax({
+
+					type: "POST",
+					url: url,
+					dataType: "json",
+					data: {
+						FinID: lblNumFin
+					},
+					success: function (_data) {
+						$("#modalNum_Fin").text(lblNumFin);
+						_data.forEach((data, index) => {
+							const numRec = data.NumRec;
+							const numCuota = data.NumCuo;
+							const montoCapital = data.MontoCapital;
+							const montoInteres = data.MontoInteres;
+							const montoTotal = data.MontoTotal;
+							const fechaVencimiento = data.FechaVencimiento;
+
+							// Agregar tabla al popup
+							
+							$('#tbl-cuotasSaldadas > tbody:last-child').append(`'
+									<tr class="tr">
+										<td class="text-center"> <label id='${numCuota}-${index}'>${numCuota}</label> </td>
+										<td class="text-center"> <label id='${numRec}-${index}'>${numRec}</label> </td>
+										<td class="text-center"><label id='capital-${index}'>${montoCapital}</label> </td>
+										<td class="text-center"> <label id='interes-${index}'>${montoInteres}</label> </td>
+										<td class= "text-center"><label id='total-${index}'>${montoTotal}</label></td>
+										<td class= "text-center"><label id='fechaVencimiento-${index}'>${fechaVencimiento}</label></td>
+										<td class="text-center">
+										<select class="dropdown form-control dw-cobro select DinamicHeight" id="dw-${numCuota}"  cuota="${numCuota}">
+
+											<option value="1">NUEVO</option>
+											<option value="12">ABONADO</option>
+											<option value="11" selected>SALDADO</option>
+										</select>
+										</td>
+									</tr>'`);
+						});
+
+						// Guardar las cuotas como pendientes
+						$("#btn-GuardarSaldada").click(function () {
+							GuardarSaldadas(this);
+						});
+					}
+				});
+			});
 			$(".btn-cerrarPopupD").click(function () {
 				openModal("#DepositoModal", false);
 				$("#modal_forma_pago").val("");
 				$("#modal_forma_pago").trigger("change");
-			})
+			});
 
 			$("#btn-crearDeposito").click(function () {
 				var _url = $("#ProcesarCobroModal").data('url');
-				ProcesarCobros(_url,false,this);
-			})
+				ProcesarCobros(_url, false, this);
+			});
+
 			$("#modal_forma_pago").change(function ()
 			{
 				$("#btn-Cobrocompleto").attr("disabled",true);
@@ -212,6 +303,12 @@
 				{
 					$("#btn-Cobrocompleto").removeAttr("disabled");
 				}
+			});
+			$("#modal_aumento_recibo").change(function () {
+				const maxNum = parseInt($("#MaxNumRec").val());
+				const aumento = parseInt($(this).val());
+				const newRec = maxNum + aumento;
+				$("#modal-lblNewRec").html(newRec);
 			});
 			$("#BANCO").change(function ()
 			{
@@ -378,7 +475,6 @@
 				var observacion = GenerarObservacion(_tipoCobro, _monto,_mora,_otroCargo);
 
 				$("#lblTotalGeneral").html("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
-				console.log("Total: " + number_format_js(calcularTotal(), 2, '.', ','));
 
 				$("#lbl-" + _numcuota).html(observacion);
 				$("#lbl-" + _numcuota).addClass("text-primary");
@@ -446,10 +542,12 @@
 
 					LLenarDatosProcesarCobros(numFin, Subtotal, itebis, otroCargos, 0, 0, false, otroCargoAdicional);
 				}
+
 			});
 
 			$("#btn-Cobrocompleto").click(function ()
 			{
+				$(this).button('loading');
 				var _url = $("#ProcesarCobroModal").data('url');
 				isTotal = $("#modal_isTotal").val();
 				if (isTotal == "true")
@@ -518,11 +616,99 @@
                 $('#CobroModal').modal('hide');
 			})
 
+			$(".btn-cancelar,.btn-cerrarPopup").click(function () {
+				Show_closeModal("#cuoatasSaldadas");
+			});
+
 			$("#modal_descuentoMora").blur(function () {
 				validarNumero(this);
 			});
-	});
 
+		});
+
+		// Guardar las cuotas como pendientes
+		function GuardarSaldadas(btn) {
+			$(btn).button('loading');
+			let listValue = [];
+							$('#tbl-cuotasSaldadas tr').each(function (i, tr) {
+								// Retornar el header
+								if (i == 0) {
+									return;
+								}
+								const label = "label";
+								const tds = $(tr).find('td');
+								const NumFin = $("#Num_Fin").text();
+								const NumCuo = $(tds[0]).children(label).text();
+								const NumRec = $(tds[1]).children(label).text();
+								const Status = $(tr).find('td select').first().val();
+
+								// Guardar todo lo que no este saldado
+								if (Status != "11") {
+									listValue.push({
+										NumFin,
+										NumRec,
+										NumCuo,
+										Status
+									});
+								}
+
+							});
+							// Enviar datos
+							if (listValue.length == 0) return;
+							const url = "@Url.Action("GuardarCuotasPendientes")";
+							$.ajax({
+
+								type: "POST",
+								url: url,
+								dataType: "json",
+								data: { cuotasPendientes: listValue },
+								success: function (_data) {
+									MessageNotification(_data.Item2, !_data.Item1, true);
+								}
+							});
+		}
+
+
+		function marcarPagada(id) {
+			var currentChk = $(`#chk-${id}`);
+			Swal.fire({
+				title: `Seguro que desea poner como paga la cuota num: ${id}?`,
+				showDenyButton: true,
+				showCancelButton: false,
+				confirmButtonText: `SI`,
+				denyButtonText: `NO`,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					pagarCuotaSinRegistro(id);
+				} else if (result.isDenied) {
+					$(currentChk).prop('checked', false);
+				}
+			});
+
+		}
+
+		function pagarCuotaSinRegistro(cuotaId) {
+			const url = "@Url.Action("PagarCuota")";
+			const numFin = $("#Num_Fin").text();
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					numFin
+					,cuotaId
+				},
+				success: function (_data) {
+					if (!_data.Is_Success) {
+						$(`#chk-${cuotaId}`).prop("checked", false);
+					}
+					MessageNotification(_data.Message, _data.Is_Success, true, false, "@Url.Action("Index2", "CobrosHeader")" + "?findID=" + numFin);
+
+				}
+			});
+
+		}
 		// Hacer el clik automatico en aceptar ya que el cliente no requiere modificar ningun valor
 		function darClickAutomatico()
 		{
@@ -565,7 +751,9 @@
 			var sumMontos = (Subtotal + otroCargos + itebis + otrosCargoAdicional);
 			var total = sumMontos - descuento;
 			var subTotal = sumMontos;
+			const maxRec = $("#MaxNumRec").val();
 
+			$("#modal-lblNewRec").html(maxRec);
 			$("#modal_lblFin").html(numFin);
 			$("#modal_lblfecha").html(date.toDateString());
             $("#modal_lblDescuento").html(number_format_js(descuento, 2, '.', ','));
@@ -715,9 +903,10 @@
 				}
 		}
 
-		function HabilitarPrimeraceldaTabla() {
-
+		function HabilitarPrimeraceldaTabla()
+		{
 			$("#tbl_detalleCuotasC tbody tr:nth(0)").find("select").removeAttr("disabled");
+			$("#tbl_detalleCuotasC tbody tr:nth(0) td").find("input").removeAttr("disabled");
 		}
 
 		function ImprimirReporte(ReciboID, currentBtn, lblNumFin ="")
@@ -748,7 +937,6 @@
 		function openModal(id, open) {
 			Show_closeModal(id, open);
 			$("input").blur(function () {
-				debugger;
 				validarNumero(this);
 			});
 		}

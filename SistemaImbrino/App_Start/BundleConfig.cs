@@ -52,7 +52,9 @@ namespace SistemaImbrino
                       "~/Content/select-mania.min.css",
                       "~/Content/select-mania-theme-orange.css",
                       "~/Content/jquery-ui.min.css",
-                      "~/Content/jquery-ui.theme.min.css"
+                      "~/Content/jquery-ui.theme.min.css",
+                      "~/Content/counterCard.css",
+                      "~/content/font-awesome/css/font-awesome.min.css"
                       ));
         }
     }

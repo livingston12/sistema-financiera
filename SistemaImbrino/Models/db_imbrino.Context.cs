@@ -35,7 +35,6 @@ namespace SistemaImbrino.Models
         public virtual DbSet<TIPOFIN> TIPOFIN { get; set; }
         public virtual DbSet<FIADOR> FIADOR { get; set; }
         public virtual DbSet<VENDEDOR> VENDEDOR { get; set; }
-        public virtual DbSet<FACTURA> FACTURA { get; set; }
         public virtual DbSet<FINANCY> FINANCY { get; set; }
         public virtual DbSet<CARTERA> CARTERA { get; set; }
         public virtual DbSet<ESTDCTA> ESTDCTA { get; set; }
@@ -65,17 +64,19 @@ namespace SistemaImbrino.Models
         public virtual DbSet<OTROSDB> OTROSDB { get; set; }
         public virtual DbSet<VW_rptCreditosBancarios> VW_rptCreditosBancarios { get; set; }
         public virtual DbSet<VW_rptDebitosBancarios> VW_rptDebitosBancarios { get; set; }
-        public virtual DbSet<VW_rptReciboIngreso> VW_rptReciboIngreso { get; set; }
         public virtual DbSet<VW_ConciliacionBancaria> VW_ConciliacionBancaria { get; set; }
-        public virtual DbSet<SISTEMA> SISTEMA { get; set; }
         public virtual DbSet<vw_CuadreCaja> vw_CuadreCaja { get; set; }
         public virtual DbSet<VW_CuadreCajaSalidas> VW_CuadreCajaSalidas { get; set; }
         public virtual DbSet<Vw_SearchClientes_Fiadores> Vw_SearchClientes_Fiadores { get; set; }
         public virtual DbSet<ROLES> ROLES { get; set; }
         public virtual DbSet<TIPOS_USUARIOS> TIPOS_USUARIOS { get; set; }
         public virtual DbSet<USUARIO_ROLES> USUARIO_ROLES { get; set; }
-        public virtual DbSet<USUARIOS> USUARIOS { get; set; }
         public virtual DbSet<vw_initialRols> vw_initialRols { get; set; }
+        public virtual DbSet<FACTURA> FACTURA { get; set; }
+        public virtual DbSet<SISTEMA> SISTEMA { get; set; }
+        public virtual DbSet<VW_rptReciboIngreso> VW_rptReciboIngreso { get; set; }
+        public virtual DbSet<USUARIOS> USUARIOS { get; set; }
+        public virtual DbSet<TransactionLogs> TransactionLogs { get; set; }
     
         public virtual ObjectResult<ColumnsTables_Result> ColumnsTables(string table_name)
         {
@@ -98,6 +99,15 @@ namespace SistemaImbrino.Models
         public virtual int usp_CierreCaja()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_CierreCaja");
+        }
+    
+        public virtual ObjectResult<usp_ConsultaFinDetalle_Result> usp_ConsultaFinDetalle(Nullable<int> nUMFIN)
+        {
+            var nUMFINParameter = nUMFIN.HasValue ?
+                new ObjectParameter("NUMFIN", nUMFIN) :
+                new ObjectParameter("NUMFIN", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ConsultaFinDetalle_Result>("usp_ConsultaFinDetalle", nUMFINParameter);
         }
     }
 }

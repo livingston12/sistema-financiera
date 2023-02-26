@@ -1,0 +1,35 @@
+﻿<style>
+	#selectable .ui-selecting {
+		background: #FECA40;
+	}
+
+	#selectable .ui-selected {
+		background: #F39814;
+		color: white;
+	}
+
+	#selectable {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 90%;
+	}
+
+		#selectable li {
+			margin: 3px;
+			padding: 0.4em;
+			font-size: 1.4em;
+		}
+</style>
+
+
+
+<ol id="selectable">
+	@foreach (var item in ViewBag.allRoles)
+	{
+		string className = item.hasRole ? "ui-selected" : "";
+		
+		<li class="ui-widget-content @className" id="@item.value">@item.name</li>
+	}
+</ol>
+

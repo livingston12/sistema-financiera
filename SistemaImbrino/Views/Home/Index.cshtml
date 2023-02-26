@@ -1,6 +1,85 @@
 ﻿@{
-	ViewBag.isHome = true;
+	ViewBag.isHome = false;
 }
+<style>
+	.hover-zoom :hover {
+		height: 160px;
+		opacity:0.7;
+		cursor: pointer;
+		text-decoration: none;
+	}
+	
+</style>
+<div class="container-fluid">
+	<h2>Ingresos Generales</h2>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="card-counter danger">
+				<i class="fa fa-download"></i>
+				<span class="count-numbers">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(@ViewBag.totalCuotasVencidas)</span>
+				<span class="count-name">Monto total vencidos</span>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card-counter primary">
+				<i class="fa fa-exchange"></i>
+				<span class="count-numbers">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(@ViewBag.totalBalanceCaja)</span>
+				<span class="count-name">Balance pendiente Caja</span>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card-counter success">
+				<i class="fa fa-dollar"></i>
+				<span class="count-numbers">@CustomHtmlHelper.Helpers.HtmlExtensions.NumberFormat(@ViewBag.totalCobrados)</span>
+				<span class="count-name">Total cobros (mes)</span>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<h2>Acceso Directo a pantallas</h2>
+	<div class="row">
+		@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+						ViewContext.HttpContext.User.IsInRole("cobros"))
+		{
+			<a class="no-a" href="@Url.Action("Index", "CobrosHeader")">
+				<div class="col-md-4 hover-zoom">
+					<div class="card-counter danger">
+						<i class="fa fa-dollar"></i>
+						<span class="count-numbers">Cobros</span>
+					</div>
+				</div>
+			</a>
+		}
+
+		@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+									ViewContext.HttpContext.User.IsInRole("cuadrecaja"))
+		{
+			<a class="no-a" href="@Url.Action("Index", "cuadreCaja")">
+				<div class="col-md-4 hover-zoom">
+					<div class="card-counter primary">
+						<i class="fa  fa-balance-scale"></i>
+						<span class="count-numbers">Cuadre Caja</span>
+					</div>
+				</div>
+			</a>
+		}
+
+		@if (ViewContext.HttpContext.User.IsInRole("admin") ||
+				ViewContext.HttpContext.User.IsInRole("financiamientosHeader"))
+		{
+			<a class="no-a" href="@Url.Action("Index", "FinanciamientosHeader")">
+				<div class="col-md-4 hover-zoom">
+					<div class="card-counter success">
+						<i class="fa fa-line-chart" style="font-size:5rem"></i>
+						<span class="count-numbers">Financiamientos</span>
+					</div>
+				</div>
+			</a>
+			
+		}
+
+		</div>
+</div>
 
 
 

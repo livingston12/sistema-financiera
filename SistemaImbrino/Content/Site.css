@@ -26,7 +26,7 @@ textarea {
 	font-weight: normal !important;
 }
 
-#Ceditar {
+#Ceditar, .Ceditar {
 	color: #f0ad4e;
 	background-color: white;
 }
@@ -41,12 +41,12 @@ textarea {
 	background-color: white;
 }
 
-#Ceditar:hover, #Celiminar:hover {
-	cursor: pointer;
-	font-size: 18px;
-}
+	#Ceditar:hover, #Celiminar:hover, .Ceditar:hover {
+		cursor: pointer;
+		font-size: 18px;
+	}
 
-#Ceditar:hover {
+#Ceditar:hover, .Ceditar:hover {
 	color: #ffac37;
 	background-color: white;
 }

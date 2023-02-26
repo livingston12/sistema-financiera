@@ -100,23 +100,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FACTURA">
-      <EntityTypeMapping TypeName="DB_IMBRINOModel.FACTURA">
-        <MappingFragment StoreEntitySet="FACTURA">
-          <ScalarProperty Name="FAC_STATUS" ColumnName="FAC_STATUS" />
-          <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
-          <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
-          <ScalarProperty Name="FAC_NUMCUO" ColumnName="FAC_NUMCUO" />
-          <ScalarProperty Name="FAC_FECHA" ColumnName="FAC_FECHA" />
-          <ScalarProperty Name="FAC_MONTO" ColumnName="FAC_MONTO" />
-          <ScalarProperty Name="FAC_TIPFIN" ColumnName="FAC_TIPFIN" />
-          <ScalarProperty Name="FAC_FORMPG" ColumnName="FAC_FORMPG" />
-          <ScalarProperty Name="FAC_TIPINT" ColumnName="FAC_TIPINT" />
-          <ScalarProperty Name="FAC_NUMFIN" ColumnName="FAC_NUMFIN" />
-          <ScalarProperty Name="FAC_NUMERO" ColumnName="FAC_NUMERO" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FINANCY">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.FINANCY">
         <MappingFragment StoreEntitySet="FINANCY">
@@ -451,7 +434,7 @@
     <EntitySetMapping Name="CARGO">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.CARGO">
         <MappingFragment StoreEntitySet="CARGO">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="enable" ColumnName="enable" />
           <ScalarProperty Name="CAR_DESCRI" ColumnName="CAR_DESCRI" />
           <ScalarProperty Name="CAR_CODIGO" ColumnName="CAR_CODIGO" />
@@ -622,26 +605,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VW_rptReciboIngreso">
-      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptReciboIngreso">
-        <MappingFragment StoreEntitySet="VW_rptReciboIngreso">
-          <ScalarProperty Name="Contrato" ColumnName="Contrato" />
-          <ScalarProperty Name="NCF" ColumnName="NCF" />
-          <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
-          <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
-          <ScalarProperty Name="BalancePendiente" ColumnName="BalancePendiente" />
-          <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
-          <ScalarProperty Name="Monto" ColumnName="Monto" />
-          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
-          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
-          <ScalarProperty Name="Recibo" ColumnName="Recibo" />
-          <ScalarProperty Name="TelefonoEmpresa" ColumnName="TelefonoEmpresa" />
-          <ScalarProperty Name="RncEmpresa" ColumnName="RncEmpresa" />
-          <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
-          <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="VW_ConciliacionBancaria">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_ConciliacionBancaria">
         <MappingFragment StoreEntitySet="VW_ConciliacionBancaria">
@@ -661,34 +624,6 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="usp_CierreCaja" FunctionName="DB_IMBRINOModel.Store.usp_CierreCaja" />
-    <EntitySetMapping Name="SISTEMA">
-      <EntityTypeMapping TypeName="DB_IMBRINOModel.SISTEMA">
-        <MappingFragment StoreEntitySet="SISTEMA">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="FECHA_CIERRE" ColumnName="FECHA_CIERRE" />
-          <ScalarProperty Name="SIS_NCF2" ColumnName="SIS_NCF2" />
-          <ScalarProperty Name="SIS_NCF1" ColumnName="SIS_NCF1" />
-          <ScalarProperty Name="SIS_ULTSAL" ColumnName="SIS_ULTSAL" />
-          <ScalarProperty Name="SIS_SENAL2" ColumnName="SIS_SENAL2" />
-          <ScalarProperty Name="SIS_ULTCOM" ColumnName="SIS_ULTCOM" />
-          <ScalarProperty Name="SIS_ULTDEP" ColumnName="SIS_ULTDEP" />
-          <ScalarProperty Name="SIS_ULTVEN" ColumnName="SIS_ULTVEN" />
-          <ScalarProperty Name="SIS_ULTREC" ColumnName="SIS_ULTREC" />
-          <ScalarProperty Name="SIS_ULTFAC" ColumnName="SIS_ULTFAC" />
-          <ScalarProperty Name="SIS_ULTFIN" ColumnName="SIS_ULTFIN" />
-          <ScalarProperty Name="SIS_ULTFIA" ColumnName="SIS_ULTFIA" />
-          <ScalarProperty Name="SIS_ULTCLI" ColumnName="SIS_ULTCLI" />
-          <ScalarProperty Name="SIS_ULTCHE" ColumnName="SIS_ULTCHE" />
-          <ScalarProperty Name="SIS_SIGNAL" ColumnName="SIS_SIGNAL" />
-          <ScalarProperty Name="SIS_PASO" ColumnName="SIS_PASO" />
-          <ScalarProperty Name="SIS_DEPART" ColumnName="SIS_DEPART" />
-          <ScalarProperty Name="SIS_RNC" ColumnName="SIS_RNC" />
-          <ScalarProperty Name="SIS_TELEFO" ColumnName="SIS_TELEFO" />
-          <ScalarProperty Name="SIS_DIRECC" ColumnName="SIS_DIRECC" />
-          <ScalarProperty Name="SIS_EMPRES" ColumnName="SIS_EMPRES" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vw_CuadreCaja">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_CuadreCaja">
         <MappingFragment StoreEntitySet="vw_CuadreCaja">
@@ -781,6 +716,99 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vw_initialRols">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_initialRols">
+        <MappingFragment StoreEntitySet="vw_initialRols">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_ConsultaFinDetalle" FunctionName="DB_IMBRINOModel.Store.usp_ConsultaFinDetalle">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DB_IMBRINOModel.usp_ConsultaFinDetalle_Result">
+          <ScalarProperty Name="ING_NUMREC" ColumnName="ING_NUMREC" />
+          <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+          <ScalarProperty Name="ING_STATUS" ColumnName="ING_STATUS" />
+          <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+          <ScalarProperty Name="ING_MONTOC" ColumnName="ING_MONTOC" />
+          <ScalarProperty Name="ING_MONTOI" ColumnName="ING_MONTOI" />
+          <ScalarProperty Name="ING_MONTOCAR" ColumnName="ING_MONTOCAR" />
+          <ScalarProperty Name="ING_FECHA" ColumnName="ING_FECHA" />
+          <ScalarProperty Name="ING_FORMPG" ColumnName="ING_FORMPG" />
+          <ScalarProperty Name="ING_DESCRI" ColumnName="ING_DESCRI" />
+          <ScalarProperty Name="ING_NCF" ColumnName="ING_NCF" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="FACTURA">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.FACTURA">
+        <MappingFragment StoreEntitySet="FACTURA">
+          <ScalarProperty Name="FAC_STATUS" ColumnName="FAC_STATUS" />
+          <ScalarProperty Name="FAC_GARANT" ColumnName="FAC_GARANT" />
+          <ScalarProperty Name="FAC_INTERE" ColumnName="FAC_INTERE" />
+          <ScalarProperty Name="FAC_NUMCUO" ColumnName="FAC_NUMCUO" />
+          <ScalarProperty Name="FAC_FECHA" ColumnName="FAC_FECHA" />
+          <ScalarProperty Name="FAC_MONTO" ColumnName="FAC_MONTO" />
+          <ScalarProperty Name="FAC_TIPFIN" ColumnName="FAC_TIPFIN" />
+          <ScalarProperty Name="FAC_FORMPG" ColumnName="FAC_FORMPG" />
+          <ScalarProperty Name="FAC_TIPINT" ColumnName="FAC_TIPINT" />
+          <ScalarProperty Name="FAC_NUMFIN" ColumnName="FAC_NUMFIN" />
+          <ScalarProperty Name="FAC_NUMERO" ColumnName="FAC_NUMERO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SISTEMA">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.SISTEMA">
+        <MappingFragment StoreEntitySet="SISTEMA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FECHA_CIERRE" ColumnName="FECHA_CIERRE" />
+          <ScalarProperty Name="SIS_NCF2" ColumnName="SIS_NCF2" />
+          <ScalarProperty Name="SIS_NCF1" ColumnName="SIS_NCF1" />
+          <ScalarProperty Name="SIS_ULTSAL" ColumnName="SIS_ULTSAL" />
+          <ScalarProperty Name="SIS_SENAL2" ColumnName="SIS_SENAL2" />
+          <ScalarProperty Name="SIS_ULTCOM" ColumnName="SIS_ULTCOM" />
+          <ScalarProperty Name="SIS_ULTDEP" ColumnName="SIS_ULTDEP" />
+          <ScalarProperty Name="SIS_ULTVEN" ColumnName="SIS_ULTVEN" />
+          <ScalarProperty Name="SIS_ULTREC" ColumnName="SIS_ULTREC" />
+          <ScalarProperty Name="SIS_ULTFAC" ColumnName="SIS_ULTFAC" />
+          <ScalarProperty Name="SIS_ULTFIN" ColumnName="SIS_ULTFIN" />
+          <ScalarProperty Name="SIS_ULTFIA" ColumnName="SIS_ULTFIA" />
+          <ScalarProperty Name="SIS_ULTCLI" ColumnName="SIS_ULTCLI" />
+          <ScalarProperty Name="SIS_ULTCHE" ColumnName="SIS_ULTCHE" />
+          <ScalarProperty Name="SIS_SIGNAL" ColumnName="SIS_SIGNAL" />
+          <ScalarProperty Name="SIS_PASO" ColumnName="SIS_PASO" />
+          <ScalarProperty Name="SIS_DEPART" ColumnName="SIS_DEPART" />
+          <ScalarProperty Name="SIS_RNC" ColumnName="SIS_RNC" />
+          <ScalarProperty Name="SIS_TELEFO" ColumnName="SIS_TELEFO" />
+          <ScalarProperty Name="SIS_DIRECC" ColumnName="SIS_DIRECC" />
+          <ScalarProperty Name="SIS_EMPRES" ColumnName="SIS_EMPRES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_rptReciboIngreso">
+      <EntityTypeMapping TypeName="DB_IMBRINOModel.VW_rptReciboIngreso">
+        <MappingFragment StoreEntitySet="VW_rptReciboIngreso">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ING_MONTOT" ColumnName="ING_MONTOT" />
+          <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+          <ScalarProperty Name="NCF" ColumnName="NCF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="Recibo" ColumnName="Recibo" />
+          <ScalarProperty Name="ING_NUMFIN" ColumnName="ING_NUMFIN" />
+          <ScalarProperty Name="BalancePendiente" ColumnName="BalancePendiente" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="TelefonoEmpresa" ColumnName="TelefonoEmpresa" />
+          <ScalarProperty Name="RncEmpresa" ColumnName="RncEmpresa" />
+          <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
+          <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="USUARIOS">
       <EntityTypeMapping TypeName="DB_IMBRINOModel.USUARIOS">
         <MappingFragment StoreEntitySet="USUARIOS">
@@ -790,14 +818,6 @@
           <ScalarProperty Name="Apellido" ColumnName="Apellido" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_initialRols">
-      <EntityTypeMapping TypeName="DB_IMBRINOModel.vw_initialRols">
-        <MappingFragment StoreEntitySet="vw_initialRols">
-          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-          <ScalarProperty Name="rol" ColumnName="rol" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

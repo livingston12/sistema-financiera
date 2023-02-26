@@ -65,7 +65,7 @@ function getCarteraPrestamos(url) {
 			},
 			columns: [
 				{
-					"data": "Banco",
+					"data": "Banco"
 				},
 				{
 					"data": "NumeroCuenta",

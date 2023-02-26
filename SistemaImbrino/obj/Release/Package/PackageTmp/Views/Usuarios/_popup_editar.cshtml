@@ -1,0 +1,51 @@
+﻿@model SistemaImbrino.Models.USUARIOS
+
+
+<input type="hidden" id="Id" name="Id"/>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="ENombre">NOMBRE</label>
+		<div class="form-group" id="dvENombre">
+			<div class="input-group">
+				<label class="input-group-addon" for="ENombre"><i class="glyphicon glyphicon-user"></i></label>
+				@Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control texto", @id = "ENombre" } })
+				<span id="spanENombre" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="EApellido">APELLIDO</label>
+		<div class="form-group" id="dvEApellido">
+			<div class="input-group">
+				<label class="input-group-addon" for="EApellido"><i class="glyphicon glyphicon-font"></i></label>
+				@Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @id = "EApellido" } })
+				<span id="spanEApellido" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6 ">
+		<label class="control-label" for="EUsuario">USUARIO</label>
+		<div class="form-group" id="dvEUsuario">
+			<div class="input-group">
+				<label class="input-group-addon" for="EUsuario"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control texto", @id = "EUsuario" } })
+				<span id="spanEUsuario" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-6">
+		<label class="control-label" for="ETipo">TIPO</label>
+		<div class="form-group" id="dvETipo">
+			<div class="input-group">
+				<label class="input-group-addon" for="ETipo"><i class="glyphicon glyphicon-object-align-left"></i></label>
+				<select class="form-control" id="ETipo" name="ETipo"></select>
+				<span id="spanETipo" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+

@@ -88,7 +88,6 @@
 					<option value="18" class="@classCssSiMora">Abono (no pago de la mora)</option>
 					}
 				</optgroup>
-
 			}
 
 			@if (classCssNoMora == "Sivisible")
@@ -98,5 +97,8 @@
 			}
 		</select>
 
+	</td>
+	<td>
+		<input type="checkbox" class="form-control" id="chk-@NumCuota" disabled="disabled" onclick="marcarPagada(@NumCuota)" />
 	</td>
 </tr>

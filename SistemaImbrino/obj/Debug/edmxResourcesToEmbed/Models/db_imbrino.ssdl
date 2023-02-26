@@ -39,12 +39,12 @@
   </EntityType>
   <EntityType Name="CARGO">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="id" />
     </Key>
     <Property Name="CAR_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CAR_DESCRI" Type="varchar" MaxLength="100" />
     <Property Name="enable" Type="int" Nullable="false" />
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="CARTERA">
     <Key>
@@ -119,6 +119,8 @@
     <Property Name="EST_STATUS" Type="varchar" MaxLength="5" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="FACTURA">
     <Key>
       <PropertyRef Name="FAC_NUMERO" />
@@ -135,6 +137,8 @@
     <Property Name="FAC_GARANT" Type="varchar" MaxLength="150" />
     <Property Name="FAC_STATUS" Type="varchar" MaxLength="5" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.FIADOR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="FIADOR">
     <Key>
       <PropertyRef Name="FIA_CODIGO" />
@@ -158,6 +162,8 @@
     <Property Name="FIN_STATUS" Type="int" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.FORMAPG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="FORMAPG">
     <Key>
       <PropertyRef Name="FOR_CODIGO" />
@@ -200,6 +206,8 @@
     <Property Name="ING_NCF" Type="varchar" MaxLength="100" />
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.INGRESO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="INGRESO">
     <Key>
       <PropertyRef Name="ING_CODIGO" />
@@ -215,7 +223,7 @@
     <Property Name="CAR_SECU" Type="varchar" MaxLength="100" />
     <Property Name="CAR_CODCAR" Type="varchar" MaxLength="100" />
     <Property Name="CAR_NUMREC" Type="varchar" MaxLength="100" />
-    <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CAR_STATUS" Type="varchar" MaxLength="100" />
     <Property Name="CAR_MONTOT" Type="varchar" MaxLength="100" />
     <Property Name="CAR_FECHAR" Type="varchar" MaxLength="100" />
     <Property Name="CAR_FECHAP" Type="varchar" MaxLength="100" />
@@ -265,7 +273,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Rol" Type="varchar" MaxLength="75" Nullable="false" />
-    <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="75" Nullable="false" />
   </EntityType>
   <EntityType Name="SISTEMA">
     <Key>
@@ -329,6 +337,8 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DESCRIPCION" Type="varchar" MaxLength="150" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.TIPOFIN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="TIPOFIN">
     <Key>
       <PropertyRef Name="TIP_CODIGO" />
@@ -336,6 +346,8 @@
     <Property Name="TIP_CODIGO" Type="int" Nullable="false" />
     <Property Name="TIP_DESCRI" Type="varchar" MaxLength="100" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.TIPOINT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="TIPOINT">
     <Key>
       <PropertyRef Name="TIP_CODIGO" />
@@ -349,6 +361,16 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="NameMethod" Type="varchar" MaxLength="75" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" />
   </EntityType>
   <EntityType Name="USUARIO_ROLES">
     <Key>
@@ -369,6 +391,8 @@
     <Property Name="Pass" Type="varchar" MaxLength="75" Nullable="false" />
     <Property Name="Tipo" Type="int" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.dbo.VENDEDOR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VENDEDOR">
     <Key>
       <PropertyRef Name="VEN_CODIGO" />
@@ -383,6 +407,8 @@
     <Property Name="ZON_CODIGO" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="ZON_DESCRI" Type="varchar" MaxLength="100" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_RINO.STG.archivos_subir' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="archivos_subir">
     <Key>
       <PropertyRef Name="ID" />
@@ -390,10 +416,10 @@
     <Property Name="nombreArchivo" Type="varchar" MaxLength="100" />
     <Property Name="nombreTabla" Type="varchar" MaxLength="100" />
     <Property Name="subir" Type="bit" />
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_ConciliacionBancaria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_ConciliacionBancaria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_ConciliacionBancaria">
     <Key>
       <PropertyRef Name="ID" />
@@ -417,7 +443,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_ConciliacionBancaria' does not h
     <Property Name="CERRADO" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.vw_ConsultaFin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_ConsultaFin">
     <Key>
       <PropertyRef Name="FAC_NUMFIN" />
@@ -434,10 +460,11 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFin' does not have a pri
     <Property Name="cliente" Type="varchar" MaxLength="201" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.vw_ConsultaFinDetalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_ConsultaFinDetalle">
     <Key>
       <PropertyRef Name="ING_NUMREC" />
+      <PropertyRef Name="ING_NUMFIN" />
     </Key>
     <Property Name="ING_NUMREC" Type="int" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
@@ -454,7 +481,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_ConsultaFinDetalle' does not hav
     <Property Name="cliente" Type="varchar" MaxLength="201" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.vw_CuadreCaja' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_CuadreCaja">
     <Key>
       <PropertyRef Name="ING_NUMREC" />
@@ -506,7 +533,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.vw_CuadreCaja' does not have a prim
     <Property Name="montoOtro" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_CuadreCajaSalidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_CuadreCajaSalidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_CuadreCajaSalidas">
     <Key>
       <PropertyRef Name="ID" />
@@ -526,17 +553,16 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_CuadreCajaSalidas' does not have
     <Property Name="keyId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.vw_initialRols' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.vw_initialRols' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_initialRols">
     <Key>
       <PropertyRef Name="rol" />
-      <PropertyRef Name="descripcion" />
     </Key>
     <Property Name="rol" Type="varchar" MaxLength="21" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="26" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCreditosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptCreditosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptCreditosBancarios">
     <Key>
       <PropertyRef Name="ID" />
@@ -557,7 +583,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCreditosBancarios' does not h
     <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptCuotasVencidas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptCuotasVencidas">
     <Key>
       <PropertyRef Name="C__FIN" />
@@ -629,7 +655,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptCuotasVencidas' does not have
     <Property Name="tipo" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptDebitosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptDebitosBancarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptDebitosBancarios">
     <Key>
       <PropertyRef Name="ID" />
@@ -655,7 +681,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptDebitosBancarios' does not ha
     <Property Name="CUENTA" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptEstadoCuenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptEstadoCuenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptEstadoCuenta">
     <Key>
       <PropertyRef Name="C__FIN" />
@@ -685,7 +711,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptEstadoCuenta' does not have a
     <Property Name="Fecha" Type="date" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptFinAtrasados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptFinAtrasados">
     <Key>
       <PropertyRef Name="C__FIN" />
@@ -754,7 +780,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados' does not have a
     <Property Name="fecha" Type="varchar" MaxLength="11" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptFinAtrasados_details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptFinAtrasados_details">
     <Key>
       <PropertyRef Name="C__FIN" />
@@ -776,28 +802,43 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptFinAtrasados_details' does no
     <Property Name="fechadt" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptReciboIngreso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptReciboIngreso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptReciboIngreso">
     <Key>
+      <PropertyRef Name="NombreEmpresa" />
+      <PropertyRef Name="DireccionEmpresa" />
+      <PropertyRef Name="RncEmpresa" />
+      <PropertyRef Name="TelefonoEmpresa" />
+      <PropertyRef Name="Cliente" />
+      <PropertyRef Name="BalancePendiente" />
+      <PropertyRef Name="ING_NUMFIN" />
       <PropertyRef Name="Recibo" />
+      <PropertyRef Name="CONCEPTO" />
+      <PropertyRef Name="NCF" />
+      <PropertyRef Name="Contrato" />
+      <PropertyRef Name="Monto" />
+      <PropertyRef Name="FormaPago" />
+      <PropertyRef Name="ING_MONTOT" />
+      <PropertyRef Name="Fecha" />
     </Key>
     <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="DireccionEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="RncEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="TelefonoEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Cliente" Type="varchar" MaxLength="201" Nullable="false" />
     <Property Name="BalancePendiente" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
-    <Property Name="NCF" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Contrato" Type="int" Nullable="false" />
     <Property Name="Recibo" Type="int" Nullable="false" />
     <Property Name="CONCEPTO" Type="varchar(max)" Nullable="false" />
+    <Property Name="NCF" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Contrato" Type="int" Nullable="false" />
     <Property Name="Monto" Type="decimal" Precision="19" Scale="2" Nullable="false" />
     <Property Name="FormaPago" Type="varchar" MaxLength="13" Nullable="false" />
     <Property Name="ING_MONTOT" Type="float" Nullable="false" />
+    <Property Name="Fecha" Type="varchar" MaxLength="11" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.VW_rptRegistroNCF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="VW_rptRegistroNCF">
     <Key>
       <PropertyRef Name="ING_NUMREC" />
@@ -817,11 +858,11 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
       <PropertyRef Name="year" />
       <PropertyRef Name="mesAbr" />
       <PropertyRef Name="MORA" />
+      <PropertyRef Name="OTRO" />
       <PropertyRef Name="Cliente" />
       <PropertyRef Name="ClienteId" />
       <PropertyRef Name="fechadt" />
       <PropertyRef Name="isCuadrada" />
-      <PropertyRef Name="OTRO" />
     </Key>
     <Property Name="ING_NUMREC" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="ING_NUMFIN" Type="int" Nullable="false" />
@@ -847,7 +888,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.VW_rptRegistroNCF' does not have a 
     <Property Name="isCuadrada" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DB_RINO.dbo.Vw_SearchClientes_Fiadores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Vw_SearchClientes_Fiadores">
     <Key>
       <PropertyRef Name="CTE_CODIGO" />
@@ -866,7 +907,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <Property Name="zonaId" Type="varchar" MaxLength="100" />
     <Property Name="type" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__USUARIO_R__RolId__06B7F65E">
+  <Association Name="FK__USUARIO_R__RolId__37FA4C37">
     <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
     <End Role="USUARIO_ROLES" Type="Self.USUARIO_ROLES" Multiplicity="*" />
     <ReferentialConstraint>
@@ -878,7 +919,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__USUARIO_R__Usuar__05C3D225">
+  <Association Name="FK__USUARIO_R__Usuar__3CBF0154">
     <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="1" />
     <End Role="USUARIO_ROLES" Type="Self.USUARIO_ROLES" Multiplicity="*" />
     <ReferentialConstraint>
@@ -890,7 +931,7 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__USUARIOS__Tipo__000AF8CF">
+  <Association Name="FK__USUARIOS__Tipo__3BCADD1B">
     <End Role="TIPOS_USUARIOS" Type="Self.TIPOS_USUARIOS" Multiplicity="1" />
     <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -926,82 +967,13 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FACTURA_FORMAPG">
-    <End Role="FORMAPG" Type="Self.FORMAPG" Multiplicity="0..1" />
-    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FORMAPG">
-        <PropertyRef Name="FOR_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_FORMPG" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FACTURA_TIPOFIN">
-    <End Role="TIPOFIN" Type="Self.TIPOFIN" Multiplicity="0..1" />
-    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TIPOFIN">
-        <PropertyRef Name="TIP_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_TIPFIN" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FACTURA_TIPOINT">
-    <End Role="TIPOINT" Type="Self.TIPOINT" Multiplicity="0..1" />
-    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TIPOINT">
-        <PropertyRef Name="TIP_CODIGO" />
-      </Principal>
-      <Dependent Role="FACTURA">
-        <PropertyRef Name="FAC_TIPINT" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FINANCY_CLIENTE">
-    <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
-    <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CLIENTE">
-        <PropertyRef Name="CTE_CODIGO" />
-      </Principal>
-      <Dependent Role="FINANCY">
-        <PropertyRef Name="FIN_NUMCTE" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FINANCY_FACTURA">
-    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="0..1" />
-    <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FACTURA">
-        <PropertyRef Name="FAC_NUMERO" />
-      </Principal>
-      <Dependent Role="FINANCY">
-        <PropertyRef Name="FIN_NUMFAC" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FINANCY_VENDEDOR">
-    <End Role="VENDEDOR" Type="Self.VENDEDOR" Multiplicity="0..1" />
-    <End Role="FINANCY" Type="Self.FINANCY" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VENDEDOR">
-        <PropertyRef Name="VEN_CODIGO" />
-      </Principal>
-      <Dependent Role="FINANCY">
-        <PropertyRef Name="FIN_NUMVEN" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Function Name="sp_cuotasVencidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Fecha_Pago" Type="date" Mode="In" />
   </Function>
   <Function Name="usp_CierreCaja" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_ConsultaFinDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NUMFIN" Type="int" Mode="In" />
+  </Function>
   <Function Name="ColumnsTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STG">
     <Parameter Name="table_name" Type="varchar" Mode="In" />
   </Function>
@@ -1015,13 +987,9 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="CTABANCO" EntityType="Self.CTABANCO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CUOTA" EntityType="Self.CUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ESTDCTA" EntityType="Self.ESTDCTA" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="FACTURA" EntityType="Self.FACTURA" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="FIADOR" EntityType="Self.FIADOR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FINANCY" EntityType="Self.FINANCY" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="FORMAPG" EntityType="Self.FORMAPG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INGCUOTA" EntityType="Self.INGCUOTA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INGOTRO" EntityType="Self.INGOTRO" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="INGRESO" EntityType="Self.INGRESO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROCARG" EntityType="Self.OTROCARG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROSCR" EntityType="Self.OTROSCR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTROSDB" EntityType="Self.OTROSDB" Schema="dbo" store:Type="Tables" />
@@ -1032,14 +1000,75 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <EntitySet Name="TIPOCTE" EntityType="Self.TIPOCTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPODB1" EntityType="Self.TIPODB1" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPODB2" EntityType="Self.TIPODB2" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOS_USUARIOS" EntityType="Self.TIPOS_USUARIOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionLogs" EntityType="Self.TransactionLogs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USUARIO_ROLES" EntityType="Self.USUARIO_ROLES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ZONA" EntityType="Self.ZONA" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" Schema="STG" store:Type="Tables" />
+    <EntitySet Name="FACTURA" EntityType="Self.FACTURA" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [FACTURA].[FAC_NUMERO] AS [FAC_NUMERO], 
+    [FACTURA].[FAC_NUMFIN] AS [FAC_NUMFIN], 
+    [FACTURA].[FAC_TIPINT] AS [FAC_TIPINT], 
+    [FACTURA].[FAC_FORMPG] AS [FAC_FORMPG], 
+    [FACTURA].[FAC_TIPFIN] AS [FAC_TIPFIN], 
+    [FACTURA].[FAC_MONTO] AS [FAC_MONTO], 
+    [FACTURA].[FAC_FECHA] AS [FAC_FECHA], 
+    [FACTURA].[FAC_NUMCUO] AS [FAC_NUMCUO], 
+    [FACTURA].[FAC_INTERE] AS [FAC_INTERE], 
+    [FACTURA].[FAC_GARANT] AS [FAC_GARANT], 
+    [FACTURA].[FAC_STATUS] AS [FAC_STATUS]
+    FROM [dbo].[FACTURA] AS [FACTURA]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="FIADOR" EntityType="Self.FIADOR" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [FIADOR].[FIA_CODIGO] AS [FIA_CODIGO], 
+    [FIADOR].[FIA_NOMBRE] AS [FIA_NOMBRE], 
+    [FIADOR].[FIA_CEDULA] AS [FIA_CEDULA], 
+    [FIADOR].[FIA_TELEFO] AS [FIA_TELEFO], 
+    [FIADOR].[FIA_DIRECC] AS [FIA_DIRECC], 
+    [FIADOR].[FIA_CODCTE] AS [FIA_CODCTE]
+    FROM [dbo].[FIADOR] AS [FIADOR]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="FORMAPG" EntityType="Self.FORMAPG" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [FORMAPG].[FOR_CODIGO] AS [FOR_CODIGO], 
+    [FORMAPG].[FOR_DESCRI] AS [FOR_DESCRI], 
+    [FORMAPG].[FOR_PERIOD] AS [FOR_PERIOD]
+    FROM [dbo].[FORMAPG] AS [FORMAPG]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="INGRESO" EntityType="Self.INGRESO" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [INGRESO].[ING_CODIGO] AS [ING_CODIGO], 
+    [INGRESO].[ING_DESCRI] AS [ING_DESCRI]
+    FROM [dbo].[INGRESO] AS [INGRESO]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TIPOFIN" EntityType="Self.TIPOFIN" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TIPOFIN].[TIP_CODIGO] AS [TIP_CODIGO], 
+    [TIPOFIN].[TIP_DESCRI] AS [TIP_DESCRI]
+    FROM [dbo].[TIPOFIN] AS [TIPOFIN]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TIPOINT" EntityType="Self.TIPOINT" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TIPOINT].[TIP_CODIGO] AS [TIP_CODIGO], 
+    [TIPOINT].[TIP_DESCRI] AS [TIP_DESCRI]
+    FROM [dbo].[TIPOINT] AS [TIPOINT]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VENDEDOR" EntityType="Self.VENDEDOR" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VENDEDOR].[VEN_CODIGO] AS [VEN_CODIGO], 
+    [VENDEDOR].[VEN_NOMBRE] AS [VEN_NOMBRE]
+    FROM [dbo].[VENDEDOR] AS [VENDEDOR]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="archivos_subir" EntityType="Self.archivos_subir" store:Type="Tables" store:Schema="STG">
+      <DefiningQuery>SELECT 
+    [archivos_subir].[nombreArchivo] AS [nombreArchivo], 
+    [archivos_subir].[nombreTabla] AS [nombreTabla], 
+    [archivos_subir].[subir] AS [subir], 
+    [archivos_subir].[ID] AS [ID]
+    FROM [STG].[archivos_subir] AS [archivos_subir]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="VW_ConciliacionBancaria" EntityType="Self.VW_ConciliacionBancaria" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [VW_ConciliacionBancaria].[ID] AS [ID], 
@@ -1282,13 +1311,14 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [VW_rptReciboIngreso].[Cliente] AS [Cliente], 
     [VW_rptReciboIngreso].[BalancePendiente] AS [BalancePendiente], 
     [VW_rptReciboIngreso].[ING_NUMFIN] AS [ING_NUMFIN], 
-    [VW_rptReciboIngreso].[NCF] AS [NCF], 
-    [VW_rptReciboIngreso].[Contrato] AS [Contrato], 
     [VW_rptReciboIngreso].[Recibo] AS [Recibo], 
     [VW_rptReciboIngreso].[CONCEPTO] AS [CONCEPTO], 
+    [VW_rptReciboIngreso].[NCF] AS [NCF], 
+    [VW_rptReciboIngreso].[Contrato] AS [Contrato], 
     [VW_rptReciboIngreso].[Monto] AS [Monto], 
     [VW_rptReciboIngreso].[FormaPago] AS [FormaPago], 
-    [VW_rptReciboIngreso].[ING_MONTOT] AS [ING_MONTOT]
+    [VW_rptReciboIngreso].[ING_MONTOT] AS [ING_MONTOT], 
+    [VW_rptReciboIngreso].[Fecha] AS [Fecha]
     FROM [dbo].[VW_rptReciboIngreso] AS [VW_rptReciboIngreso]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="VW_rptRegistroNCF" EntityType="Self.VW_rptRegistroNCF" store:Type="Views" store:Schema="dbo">
@@ -1333,15 +1363,15 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     [Vw_SearchClientes_Fiadores].[type] AS [type]
     FROM [dbo].[Vw_SearchClientes_Fiadores] AS [Vw_SearchClientes_Fiadores]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK__USUARIO_R__RolId__06B7F65E" Association="Self.FK__USUARIO_R__RolId__06B7F65E">
+    <AssociationSet Name="FK__USUARIO_R__RolId__37FA4C37" Association="Self.FK__USUARIO_R__RolId__37FA4C37">
       <End Role="ROLES" EntitySet="ROLES" />
       <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
     </AssociationSet>
-    <AssociationSet Name="FK__USUARIO_R__Usuar__05C3D225" Association="Self.FK__USUARIO_R__Usuar__05C3D225">
+    <AssociationSet Name="FK__USUARIO_R__Usuar__3CBF0154" Association="Self.FK__USUARIO_R__Usuar__3CBF0154">
       <End Role="USUARIOS" EntitySet="USUARIOS" />
       <End Role="USUARIO_ROLES" EntitySet="USUARIO_ROLES" />
     </AssociationSet>
-    <AssociationSet Name="FK__USUARIOS__Tipo__000AF8CF" Association="Self.FK__USUARIOS__Tipo__000AF8CF">
+    <AssociationSet Name="FK__USUARIOS__Tipo__3BCADD1B" Association="Self.FK__USUARIOS__Tipo__3BCADD1B">
       <End Role="TIPOS_USUARIOS" EntitySet="TIPOS_USUARIOS" />
       <End Role="USUARIOS" EntitySet="USUARIOS" />
     </AssociationSet>
@@ -1352,30 +1382,6 @@ warning 6002: The table/view 'DB_IMBRINO.dbo.Vw_SearchClientes_Fiadores' does no
     <AssociationSet Name="FK_CLIENTE_ZONA" Association="Self.FK_CLIENTE_ZONA">
       <End Role="ZONA" EntitySet="ZONA" />
       <End Role="CLIENTE" EntitySet="CLIENTE" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FACTURA_FORMAPG" Association="Self.FK_FACTURA_FORMAPG">
-      <End Role="FORMAPG" EntitySet="FORMAPG" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FACTURA_TIPOFIN" Association="Self.FK_FACTURA_TIPOFIN">
-      <End Role="TIPOFIN" EntitySet="TIPOFIN" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FACTURA_TIPOINT" Association="Self.FK_FACTURA_TIPOINT">
-      <End Role="TIPOINT" EntitySet="TIPOINT" />
-      <End Role="FACTURA" EntitySet="FACTURA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FINANCY_CLIENTE" Association="Self.FK_FINANCY_CLIENTE">
-      <End Role="CLIENTE" EntitySet="CLIENTE" />
-      <End Role="FINANCY" EntitySet="FINANCY" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FINANCY_FACTURA" Association="Self.FK_FINANCY_FACTURA">
-      <End Role="FACTURA" EntitySet="FACTURA" />
-      <End Role="FINANCY" EntitySet="FINANCY" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FINANCY_VENDEDOR" Association="Self.FK_FINANCY_VENDEDOR">
-      <End Role="VENDEDOR" EntitySet="VENDEDOR" />
-      <End Role="FINANCY" EntitySet="FINANCY" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

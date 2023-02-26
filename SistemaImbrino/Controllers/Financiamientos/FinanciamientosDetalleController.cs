@@ -19,7 +19,10 @@ namespace SistemaImbrino.Controllers.Financiamientos
             int clienteId = 0;
             int.TryParse(id, out clienteId);
             var listDetalle = _db.vw_ConsultaFinDetalle
-                                .Where(x => x.ING_NUMFIN == clienteId);                                
+                                .Where(x => x.ING_NUMFIN == clienteId);
+                                //.Distinct()
+                                //.OrderBy(x =>x.ING_NUMREC).ThenBy(x=>x.ING_FECHA);
+            
             ViewBag.finID = id;
             ViewBag.Cliente = listDetalle.Any() 
                                 ? listDetalle.FirstOrDefault().cliente
@@ -30,31 +33,30 @@ namespace SistemaImbrino.Controllers.Financiamientos
 
         public ActionResult getCurrentFindDetalle(int id =0)
         {
-
-            IQueryable<View_consultaFinanciamientos> listDetalle = _db.vw_ConsultaFinDetalle
+            IQueryable<View_consultaFinanciamientos> listDetalle = _db.usp_ConsultaFinDetalle(id)
                                  .Where(x => x.ING_NUMFIN == id)
-                                 .GroupBy(x =>  x.ING_NUMREC)
+                                 .GroupBy(x => new { x.ING_NUMREC, x.tipo })
                                  .Select(x => new View_consultaFinanciamientos
                                  {
-                                     Cliente = x.Where(z=> z.ING_NUMREC == x.Key)
+                                     Cliente = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                 .FirstOrDefault().cliente,
-                                     Fecha = x.Where(z => z.ING_NUMREC == x.Key)
+                                     Fecha = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                               .FirstOrDefault().ING_FECHA,
-                                     Descripcion = x.Where(z => z.ING_NUMREC == x.Key)
+                                     Descripcion = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                     .FirstOrDefault().ING_DESCRI,
                                      BalanceGeneral = x.Max(z => z.ING_MONTOT),
                                      detail = new consultaFinanciamientosDetalle
                                      {
-                                         Capital = x.Where(z => z.ING_NUMREC == x.Key)
+                                         Capital = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                     .FirstOrDefault().ING_MONTOC,
-                                         Interes = x.Where(z => z.ING_NUMREC == x.Key)
+                                         Interes = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                     .FirstOrDefault().ING_MONTOI,
-                                         Monto = x.Where(z => z.ING_NUMREC == x.Key)
+                                         Monto = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                   .FirstOrDefault().ING_MONTOCAR,
-                                         Tipo = x.Where(z => z.ING_NUMREC == x.Key)
+                                         Tipo = x.Where(z => z.ING_NUMREC == x.Key.ING_NUMREC && z.tipo == x.Key.tipo)
                                                  .FirstOrDefault().tipo
                                      }                                    
-                                 });
+                                 }).AsQueryable();
             
            
             return Json(listDetalle, JsonRequestBehavior.AllowGet);

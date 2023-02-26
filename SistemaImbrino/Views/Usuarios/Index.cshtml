@@ -1,0 +1,428 @@
+﻿@model SistemaImbrino.Models.USUARIOS
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Usuarios";
+	ViewBag.nameView = "Usuario";
+}
+
+
+
+<div class="row">
+	@Html.AntiForgeryToken()
+
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="Nombre">NOMBRE</label>
+		<div class="form-group" id="dvNombre">
+			<div class="input-group">
+				<label class="input-group-addon" for="Nombre"><i class="glyphicon glyphicon-user"></i></label>
+				@Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanNombre" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="Apellido">APELLIDO</label>
+		<div class="form-group" id="dvApellido">
+			<div class="input-group">
+				<label class="input-group-addon" for="Apellido"><i class="glyphicon glyphicon-font"></i></label>
+				@Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanApellido" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="Usuario">USUARIO</label>
+		<div class="form-group" id="dvUsuario">
+			<div class="input-group">
+				<label class="input-group-addon" for="Usuario"><i class="glyphicon glyphicon-credit-card"></i></label>
+				@Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control texto widtTotal" } })
+				<span id="spanUsuario" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4 ">
+		<label class="control-label" for="Pass">CONTRASEÑA</label>
+		<div class="form-group" id="dvPass">
+			<div class="input-group">
+				<label class="input-group-addon" for="Pass"><i class="glyphicon glyphicon-phone"></i></label>
+				@Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control texto widtTotal", @type="password" } })
+				<span id="spanPass" class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-lg-4">
+		<label class="control-label" for="Tipo">TIPO</label>
+		<div class="form-group" id="dvTipo">
+			<div class="input-group">
+				<label class="input-group-addon" for="Tipo"><i class="glyphicon glyphicon-object-align-left"></i></label>
+				<select class="form-control" id="Tipo" name="Tipo"></select>
+				<span id="spanTipo" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12 col-md-2">
+		<input type="submit" value="Crear" id="btn_crearUsuario" class="btn btn-success btn-block" />
+	</div>
+
+</div>
+
+<br />
+<div class="row">
+	<div class="table-responsive">
+		<table id="tbl-cliente" class="table table-condensed table-hover table-bordered">
+			<thead class="btn-defaultColorLite">
+				<tr>
+					<th class="th-pd-no-left">NOMBRE</th>
+					<th class="th-pd-no-left">USUARIO</th>
+					<th class="th-pd-no-left text-center">TIPO</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ViewBag.ListUsuarios != null)
+				{
+					foreach (var vw_usuario in ViewBag.ListUsuarios)
+					{
+						@Html.Partial("_usuariosDetalle", (SistemaImbrino.Models.USUARIOS)vw_usuario)
+					}
+
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+
+
+<!--------------------------------------- Modal Editar usuario ----------------------------------------------->
+<div class="modal fade" id="modalCeditar" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarCliente")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_popup_editar")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn_EditarUsuario">Actualizar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal Cambiar contraseña ----------------------------------------------->
+<div class="modal fade" id="modalCambiarPass" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("ActualizarPass")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Editar @ViewBag.nameView <span id="nombreUsuario"></span>
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body">
+				@Html.Partial("_cambiarPass")
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn_cambiarPass">Guardar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--------------------------------------- Modal Agregar roles ----------------------------------------------->
+<div class="modal fade" id="modalAgregarRoles" tabindex="-1" data-backdrop="static" data-keyboard="false" data-url='@Url.Action("AgregarRoles")' role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-warning">
+				Roles @ViewBag.nameView de <span id="nombreUsuario"></span>
+				<button type="button" class="close  btn-cancelarPop" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"> </h4>
+			</div>
+			<div class="modal-body" id="rolesBody">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success pull-left" data-loading-text="cargando..." id="btn_agregarRoles">Guardar</button>
+				<button type="button" class="btn btn-danger pull-right btn-cancelarPop">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+		let jsonRoles = [];
+		$(document).ready(function () {
+			
+			GetTiposUsuarios();
+			$("#Tipo").selectMania({
+				width: '100%',
+				size: 'small',
+				search: false
+			});
+
+			$("#tbl-cliente").DataTable();
+
+			$("input").blur(function () {
+				validarTexto(this);
+			});
+
+			$("#btn_crearUsuario").click(function ()
+			{
+				insertarEditarUsuario("I", this);
+			});
+
+			$("#btn_EditarUsuario").click(function () {
+				insertarEditarUsuario("U", this);
+			});
+
+			$("#btn_agregarRoles").click(function () {
+				const url = "@Url.Action("AgregarRoles")";
+				const usuarioId = $("#idUsuario").val();
+
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: {
+						rolIds: jsonRoles,
+						usuarioId
+					},
+					dataType: "json",
+					success: function (_data)
+					{
+						MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+					}
+				});
+			});
+
+			$("#btn_cambiarPass").click(function () {
+
+				const newPass = $("#NewPass").val();
+				const usuarioId = $("#idUsuario").val();
+
+				var url = "@Url.Action("ActualizarPass")";
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: {
+						newPass,
+						usuarioId
+					},
+					dataType: "json",
+					success: function (_data)
+					{
+						MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+					}
+				});
+
+			});
+
+			$(".btn-cancelarPop").click(function (e) {
+				Show_closeModal("#modalCeditar", false);
+				Show_closeModal("#modalCambiarPass", false);
+				Show_closeModal("#modalAgregarRoles", false);
+			});
+		});
+
+		function CambiarPass(id, nombre) {
+			Show_closeModal("#modalCambiarPass", true);
+			console.log(nombre);
+			$("#nombreUsuario").html(nombre);
+			$("#idUsuario").val(id);
+		}
+		function AddRoles(id, nombre) {
+			Show_closeModal("#modalAgregarRoles", true);
+			$("#nombreUsuario").html(nombre);
+			$("#idUsuario").val(id);
+			
+			const url = "@Url.Action("_agregarRoles")";
+			const idUsuario = id;
+
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					idUsuario
+				},
+				dataType: "html",
+				success: function (_data)
+				{
+					
+					$("#rolesBody").html(_data);
+					$("#selectable").selectable({
+						autoRefresh: false,
+						stop: function () {
+							jsonRoles = [];
+							$(".ui-selected", this).each(function () {
+								var index = $("#selectable li").index(this);
+								const current = $("#selectable li")[index];
+								const id = $(current).prop("id");
+								
+								addJsonRoles(id);
+							});
+						}
+					});
+				}
+			});
+		}
+
+		function addJsonRoles(id) {
+			const index = jsonRoles.findIndex(x => x === id);
+			if (index == -1) {
+				jsonRoles.push(id);
+			} 
+		}
+
+		function insertarEditarUsuario(typeAction, currentBtn)
+		{
+			url = typeAction == "I" ? "@Url.Action("CrearUsuario")" : "@Url.Action("ActualizarUsuario")";
+			var $btn = $(currentBtn).button('loading');
+			var _Id = typeAction == "I" ? "0" : $("#Id").val().trim();
+
+			var E = typeAction == "I" ? "" : "E";
+			var _Nombre = $("#" + E +"Nombre").val().trim();
+			var _Apellido = $("#" + E +"Apellido").val().trim();
+			var _Usuario = $("#" + E + "Usuario").val().trim();
+
+			var _Pass = $("#" + E + "Pass").val();
+			var _Tipo = $("#" + E + "Tipo").val();
+
+			if (_Nombre == "" ||
+				_Usuario == "" || _Pass == "" ||
+				_Tipo == "0"
+			)
+			{
+				MessageNotification("Favor llenar los campos obligatorios que son <b>(Nombre,Usuario,Contraseña,Tipo)</b>", false);
+				$btn.button('reset');
+				return;
+			}
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				data:
+				{
+					 Id: _Id
+					,Nombre: _Nombre
+					,Apellido: _Apellido
+					,Usuario: _Usuario
+					,Pass: _Pass
+					,Tipo: _Tipo
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				},
+				complete: function () {
+						$btn.button('reset');
+				}
+			});
+		}
+
+		function GetTiposUsuarios(id = "Tipo") {
+			var url = "@Url.Action("GetTiposUsuarios")";
+			$.ajax({
+				type: "GET",
+				url: url,
+				async: false,
+				dataType: "json",
+				success: function (_data)
+				{
+
+					llenarDropdows(_data, id, "tipo de usuario", true, id == "Tipo");
+				}
+			});
+		}
+
+		function EliminarCurrentUsuario(id, nombre) {
+			mensajeEliminarUsuario(id, nombre);
+			$(".swal2-cancel").text("NO");
+			$(".swal2-cancel").focus();
+		}
+
+		function mensajeEliminarUsuario(id, nombre) {
+			swal.fire({
+				position: 'center',
+				icon: "warning",
+				title: "Seguro que desea eliminar el Usuario " + nombre + " ?" ,
+				showCancelButton: true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText: 'SI'
+
+			}).then((result) => {
+				if (result.isConfirmed)
+					eliminarCliente(id);
+				});
+		}
+
+		function eliminarCliente(_id)
+		{
+			var url = "@Url.Action("EliminarUsuario")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					id: _id
+				},
+				dataType: "json",
+				success: function (_data)
+				{
+					MessageNotification(_data.Message, _data.Is_Success, true, _data.Is_Success, "@Url.Action("Index")");
+				}
+			});
+		}
+
+		function editar_Popup(_id)
+		{
+			$("#Id").val(_id);
+
+			Show_closeModal("#modalCeditar", true);
+
+			$("#ENombre").empty();
+			$("#EApellido").empty();
+			$("#EUsuario").empty();
+			$("#ETipo").empty();
+			GetTiposUsuarios("ETipo");
+
+			var url = "@Url.Action("GetCurrentUsuario")";
+			$.ajax({
+				type: "POST",
+				url: url,
+				dataType: "json",
+				data: {
+					id: _id
+				},
+				success: function (_data)
+				{
+					$("#ENombre").val(_data.Nombre)
+					$("#EApellido").val(_data.Apellido)
+					$("#EUsuario").val(_data.Usuario)
+					$("#ETipo").val(_data.Tipo)
+					$("#Id").val(_id);
+				}
+			});
+		}
+	</script>
+}
+
